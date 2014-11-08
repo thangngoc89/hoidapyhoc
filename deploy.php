@@ -17,7 +17,14 @@
  * configuration options there instead of here. That way, you won't have to edit
  * the configuration again if you download the new version of `deploy.php`.
  */
-if (file_exists(basename(__FILE__, '.php') . '-config.php')) require_once basename(__FILE__, '.php') . '-config.php';
+if(isset($_GET['config']))
+{
+    $configName = $_GET['config'];
+    $configFile = "deploy-config-".$configName.".php";
+    if (file_exists($configFile)){
+        require_once ($configFile);
+    }
+}
 
 /**
  * Protect the script from unauthorized access by using a secret access token.
@@ -58,14 +65,9 @@ if (!defined('PARENT_DIR')) define('PARENT_DIR', '/tmp/simple-php-git-deploy/');
  * If you want to work with many repository in this, add target_dir to you request url, this script will make dir and clone your repository in to.
  *
  */
-if (isset($_GET['target_dir']) && (is_dir($_GET['target_dir'])) ) {
-    define("TARGET_DIR", PARENT_DIR . $_GET['target_dir']);
-} else {
-    if (!defined('TARGET_DIR')) {
-        define("TARGET_DIR", PARENT_DIR . "respo-" . md5(REMOTE_REPOSITORY));
-    }
+if (!defined('TARGET_DIR')) {
+    define("TARGET_DIR", PARENT_DIR . "respo-" . md5(REMOTE_REPOSITORY));
 }
-
 /**
  * Whether to delete the files that are not in the repository but are on the
  * local (server) machine.
@@ -106,12 +108,8 @@ if (!defined('TMP_DIR')) define('TMP_DIR', '/tmp/spgd-' . md5(REMOTE_REPOSITORY)
  * It's useful NOT to clean up in order to only fetch changes on the next
  * deployment.
  */
-if (isset($_GET['clean_up'])) {
-    define("CLEAN_UP", $_GET['clean_up']);
-} else {
-    if (!defined('TARGET_DIR')) {
-        define("CLEAN_UP", true);
-    }
+if (!defined('TARGET_DIR')) {
+    define("CLEAN_UP", true);
 }
 
 /**

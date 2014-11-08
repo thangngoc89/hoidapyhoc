@@ -13,7 +13,7 @@
 /**
  * It's preferable to configure the script using `deploy-config.php` file.
  *
- * Rename `deploy-config.example.php` to `deploy-config.php` and edit the
+ * Rename `deploy-config.php` to `deploy-config.php` and edit the
  * configuration options there instead of here. That way, you won't have to edit
  * the configuration again if you download the new version of `deploy.php`.
  */
@@ -51,8 +51,20 @@ if (!defined('BRANCH')) define('BRANCH', 'master');
  *
  * @var string Full path including the trailing slash
  */
-if (!defined('TARGET_DIR')) define('TARGET_DIR', '/tmp/simple-php-git-deploy/');
+if (!defined('PARENT_DIR')) define('PARENT_DIR', '/tmp/simple-php-git-deploy/');
 
+/**
+ * If you want to work with only one repository, you must define this variable in the config file
+ * If you want to work with many repository in this, add target_dir to you request url, this script will make dir and clone your repository in to.
+ *
+ */
+if(!defined('TARGET_DIR')) {
+	if (isset($_GET['target_dir'])) {
+		define("TARGET_DIR", PARENT_DIR . $_GET['target_dir']);
+	}else{
+		define("TARGET_DIR", PARENT_DIR . "respo-" . md5(REMOTE_REPOSITORY));
+	}
+}
 /**
  * Whether to delete the files that are not in the repository but are on the
  * local (server) machine.
@@ -145,7 +157,6 @@ if (!defined('COMPOSER_OPTIONS')) define('COMPOSER_OPTIONS', '--no-dev');
  */
 if (!defined('EMAIL_ON_ERROR')) define('EMAIL_ON_ERROR', false);
 
-// ===========================================[ Configuration end ]===
 
 // If there's authorization error, set the correct HTTP header.
 if (!isset($_GET['sat']) || $_GET['sat'] !== SECRET_ACCESS_TOKEN || SECRET_ACCESS_TOKEN === 'BetterChangeMeNowOrSufferTheConsequences') {

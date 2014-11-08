@@ -19,7 +19,7 @@
  *
  * @var string
  */
-define('SECRET_ACCESS_TOKEN', 'BetterChangeMeNowOrSufferTheConsequences');
+define('SECRET_ACCESS_TOKEN', 'thisismysecret');
 
 /**
  * The address of the remote Git repository that contains the code that's being
@@ -28,7 +28,7 @@ define('SECRET_ACCESS_TOKEN', 'BetterChangeMeNowOrSufferTheConsequences');
  *
  * @var string
  */
-define('REMOTE_REPOSITORY', 'https://github.com/markomarkovic/simple-php-git-deploy.git');
+define('REMOTE_REPOSITORY', 'https://bitbucket.org/nguyenvanduocit/senvietgenesis.git');
 
 /**
  * The branch that's being deployed.
@@ -44,7 +44,7 @@ define('BRANCH', 'master');
  *
  * @var string Full path including the trailing slash
  */
-define('TARGET_DIR', '/tmp/simple-php-git-deploy/');
+define('PARENT_DIR', '/tmp/');
 
 /**
  * Whether to delete the files that are not in the repository but are on the
@@ -58,6 +58,11 @@ define('TARGET_DIR', '/tmp/simple-php-git-deploy/');
  * @var boolean
  */
 define('DELETE_FILES', false);
+
+/**
+ * the array of username in github, only user contain below will allow to deploy
+ */
+define('USER', 'nguyenvanduocit');
 
 /**
  * The directories and files that are to be excluded when updating the code.

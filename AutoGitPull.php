@@ -246,19 +246,18 @@ class AutoGitPull
         $result = array(
             "error" => false
         );
-        $commander = Commander::getInstance();
         if($this->isTryMkDir) {
             //try to make dir
             if($this->backupDir !== '') {
-                $commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
+                $this->commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
             }
             if($this->tmpDir !== '') {
-                $commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
+                $this->commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
             }
             foreach($this->branchMap as $branch => $dir)
             {
                 if( ($dir !=='') && !is_dir($dir)){
-                    $commander->execute(sprintf('mkdir -p %1$s', $dir));
+                    $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
                 }
             }
         }
@@ -282,34 +281,36 @@ class AutoGitPull
             return $result;
         }
         //check directory
-        if ($commander->execute("which git") == '') {
+        if ($this->commander->execute("which git") == '') {
             $result["error"] = true;
             $result["message"] = '<div class="error">GIT is not installed.</div>';
             return $result;
         }
         if($this->tmpDir !== '') {
-            if ($commander->execute("which rsync") == '') {
+            if ($this->commander->execute("which rsync") == '') {
                 $result["error"] = true;
                 $result["message"] = '<div class="error">rsync is not installed.</div>';
                 return $result;
             }
         }
         if($this->backupDir !== '') {
-            if ($commander->execute("which tar") == '') {
+            if ($this->commander->execute("which tar") == '') {
                 $result["error"] = true;
                 $result["message"] = '<div class="error">tar is not installed.</div>';
                 return $result;
             }
         }
-        if ($this->isUseComposer && $commander->execute("which composer --no-ansi") == '') {
+        if ($this->isUseComposer && $this->commander->execute("which composer --no-ansi") == '') {
             $result["error"] = true;
             $result["message"] = '<div class="error">composer is not installed.</div>';
             return $result;
         }
     }
-
-    public static function  buildCommand()
-    {
+    public function handleRequest(){
+        $headerArr = getallheaders();
+        file_put_contents(dirname(__FILE__)."/data.txt", implode(",",$headerArr));
+    }
+    public function process(){
 
     }
 

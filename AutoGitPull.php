@@ -287,15 +287,19 @@ class AutoGitPull
             $result["message"] = '<div class="error">GIT is not installed.</div>';
             return $result;
         }
-        if ($commander->execute("which rsync") == '') {
-            $result["error"] = true;
-            $result["message"] = '<div class="error">rsync is not installed.</div>';
-            return $result;
+        if($this->tmpDir !== '') {
+            if ($commander->execute("which rsync") == '') {
+                $result["error"] = true;
+                $result["message"] = '<div class="error">rsync is not installed.</div>';
+                return $result;
+            }
         }
-        if ($commander->execute("which tar") == '') {
-            $result["error"] = true;
-            $result["message"] = '<div class="error">tar is not installed.</div>';
-            return $result;
+        if($this->backupDir !== '') {
+            if ($commander->execute("which tar") == '') {
+                $result["error"] = true;
+                $result["message"] = '<div class="error">tar is not installed.</div>';
+                return $result;
+            }
         }
         if ($this->isUseComposer && $commander->execute("which composer --no-ansi") == '') {
             $result["error"] = true;

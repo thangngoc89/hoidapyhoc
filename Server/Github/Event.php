@@ -13,14 +13,19 @@ use AutoGitPuller\Util\Error;
 
 class Event extends BaseEvent{
     //https://developer.github.com/v3/activity/events/types/#pushevent
-   public function processRequest($secret = ''){
+    function __construct($key='', $username='',$password='')
+    {
+        parent::__construct($key, $username, $password);
+    }
+
+    public function processRequest(){
        $headers = getallheaders();
        $hubSignature = $headers['X-Hub-Signature'];
        $payload = file_get_contents('php://input');
        $data = json_decode($payload);
-       if($secret!=='') {
+       if($this->secretkey!=='') {
            list($algo, $hash) = explode('=', $hubSignature, 2);
-           $payloadHash = hash_hmac($algo, $payload, $secret);
+           $payloadHash = hash_hmac($algo, $payload, $this->secretkey);
            if ($hash !== $payloadHash) {
                return new Error("","Secret key was not matched.");
            }
@@ -38,6 +43,16 @@ class Event extends BaseEvent{
     }
     public function getRepositoryName(){
         return $this->repository->name?$this->repository->name:'';
+    }
+    public function getRepositoryGitURL(){
+        if( ($this->username !=='') && ( $this->password != '' ) ) {
+            $gitURL = sprintf('https://%1$s:%2$s@github.com/%1$s/%3$s.git', $this->username, $this->password, $this->getRepositoryName());
+        }
+        else
+        {
+            $gitURL = $this->repository->clone_url;
+        }
+        return $gitURL;
     }
     public function getRepositoryBranch(){
         return $this->repository->branchName;

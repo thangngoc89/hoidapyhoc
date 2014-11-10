@@ -21,6 +21,10 @@ class Commander {
 
         return $instance;
     }
+
+    /**
+     * @param String $command
+     */
     public function enqueue($command){
         $this->commands[] = $command;
     }

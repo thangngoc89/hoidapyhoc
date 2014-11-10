@@ -12,6 +12,16 @@ class BaseEvent
 {
     protected $author; //the author, who maked event
     protected $repository;
+    protected $secretkey;
+    protected $username;
+    protected $password;
+
+    function __construct( $secretkey = '', $username = '', $password = '')
+    {
+        $this->secretkey = $secretkey;
+        $this->username = $username;
+        $this->password = $password;
+    }
 
     public function processRequest()
     {

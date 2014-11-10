@@ -190,6 +190,8 @@ class AutoGitPull
     protected $isTryMkDir;
     protected $commander;
     protected $repositoryName;
+    protected $username;
+    protected $password;
     protected $event;
 
     /**
@@ -245,6 +247,8 @@ class AutoGitPull
             "backupDir" => '',
             "isTryMkDir" => true,
             "isUseComposer" => false,
+            "username"=>'',
+            'password' =>''
         );
         $args = array_merge($default, $args);
         $this->secretKey = $args["secretKey"];
@@ -258,6 +262,8 @@ class AutoGitPull
         $this->isUseComposer = $args["isUseComposer"];
         $this->emailOnError = $args["emailOnError"];
         $this->isTryMkDir = $args["isTryMkDir"];
+        $this->username = $args["username"];
+        $this->password = $args["password"];
     }
 
     public function checkEnvironment()
@@ -267,13 +273,13 @@ class AutoGitPull
         );
         if ($this->isTryMkDir) {
             //try to make dir
-            if ($this->backupDir !== '') {
+            if ( ($this->backupDir !== '') && (!is_dir($this->backupDir)) ) {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
             }
-            if ($this->tmpDir !== '') {
+            if ( ($this->tmpDir !== '') && (!is_dir($this->tmpDir)) ) {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
             }
-            //Check
+            //try to create dir
             foreach ($this->branchMap as $branch => $dir) {
                 if (($dir !== '') && !is_dir($dir)) {
                     $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
@@ -287,6 +293,7 @@ class AutoGitPull
                 }
             }
         }
+        //Check if dir exist and write able
         foreach ($this->branchMap as $branch => $dir) {
             if (!is_dir($dir) || !is_writable($dir)) {
                 return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
@@ -311,27 +318,32 @@ class AutoGitPull
         if ($this->commander->execute("which git") == '') {
             return new \AutoGitPuller\Util\Error("", "GIT is not installed.");
         }
+        //only use rsync when have tmp dir
         if ($this->tmpDir !== '') {
             if ($this->commander->execute("which rsync") == '') {
                 return new \AutoGitPuller\Util\Error("", "rsync is not installed.");
             }
         }
+        //only user tar when backup
         if ($this->backupDir !== '') {
             if ($this->commander->execute("which tar") == '') {
                 return new \AutoGitPuller\Util\Error("", "tar is not installed.");
             }
         }
-        if ($this->isUseComposer && $this->commander->execute("which composer --no-ansi") == '') {
-            return new \AutoGitPuller\Util\Error("", "composer is not installed.");
+        //only use composer when...
+        if ($this->isUseComposer) {
+            if($this->commander->execute("which composer --no-ansi") == '') {
+                return new \AutoGitPuller\Util\Error("", "composer is not installed.");
+            }
         }
     }
-
+    //handle and processing postdata from git
     public function handleRequest()
     {
         $headerString = "";
 
-        $eventHandler = new \AutoGitPuller\Server\Github\Event();
-        $isValidatedRequest = $eventHandler->processRequest($this->secretKey);
+        $eventHandler = new \AutoGitPuller\Server\Github\Event($this->secretKey);
+        $isValidatedRequest = $eventHandler->processRequest();
 
         if ($isValidatedRequest instanceof \AutoGitPuller\Util\Error) {
             return $isValidatedRequest;
@@ -347,10 +359,22 @@ class AutoGitPull
             return new Error("", "This commiter is now allowed");
         }
     }
-
+    //build git command
     private function doPull()
     {
+        if($this->tmpDir !=='')
+        {
+            $this->commander->enqueue(sprintf(
+                'git clone --depth=1 --branch %s %s %s'
+                , $this->event->getRepositoryBranch()
+                , $this->event->getRepositoryGitURL()
+                , $this->tmpDir
+            ));
+        }
+        else
+        {
 
+        }
     }
 
 }

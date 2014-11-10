@@ -8,7 +8,7 @@ $default = array(
     "secretKey" => "mysecretkey",
     "repository"=>"",
     "branchMap" => array(
-        "master" =>"/master/"
+        "master" =>dirname(__FILE__)."/master/"
     ),
     "authorMap" =>array(
         "nguyenvanduocit"=>"/"
@@ -16,7 +16,7 @@ $default = array(
     "exclude" => array(),
     "tmpDir" => "reponsive",
     "isNeedClearUp" => false,
-    "backupDir" => "/backup/",
+    "backupDir" => dirname(__FILE__)."/backup/",
     "isUseComposer" => false,
     "isEmailOnError" => true,
     "notifyEmail" => "nguyenvanduocit@gmail.com"

@@ -150,7 +150,7 @@ class AutoGitPull
     }
 
     /**
-     * @param mixed $emailOn\AutoGitPuller\Util\Error
+     * @param mixed $emailOn \AutoGitPuller\Util\Error
      */
     public function setEmailOnError($emailOnError)
     {
@@ -174,7 +174,7 @@ class AutoGitPull
     }
 
     /**
-     * @param mixed $isEmailOn\AutoGitPuller\Util\Error
+     * @param mixed $isEmailOn \AutoGitPuller\Util\Error
      */
     protected $secretKey;
     protected $branchMap; //map branch to directory
@@ -210,6 +210,28 @@ class AutoGitPull
 
     function __construct($args = array())
     {
+
+        $this->init($args);
+
+        $this->event = $this->handleRequest();
+
+        if ($this->event instanceof \AutoGitPuller\Util\Error) {
+            die($this->event->getMessage());
+        }
+        file_put_contents(dirname(__FILE__) . "/data.txt", $this->event->getRepositoryBranch());
+        $this->commander = \AutoGitPuller\Util\Commander::getInstance();
+
+        $checkResult = $this->checkEnvironment();
+
+        if ($checkResult instanceof \AutoGitPuller\Util\Error) {
+            die($checkResult->getMessage());
+        }
+
+        echo $this->commander->getOutput();
+    }
+
+    protected function init($args = array())
+    {
         $default = array(
             "secretKey" => '',
             "repository" => '',
@@ -222,7 +244,7 @@ class AutoGitPull
             "isTryMkDir" => true,
             "isUseComposer" => false,
         );
-        $args = array_merge($default,$args);
+        $args = array_merge($default, $args);
         $this->secretKey = $args["secretKey"];
         $this->repositoryName = $args["repository"];
         $this->branchMap = $args["branchMap"];
@@ -234,24 +256,6 @@ class AutoGitPull
         $this->isUseComposer = $args["isUseComposer"];
         $this->emailOnError = $args["emailOnError"];
         $this->isTryMkDir = $args["isTryMkDir"];
-
-        $this->event = $this->handleRequest();
-
-        if($this->event instanceof \AutoGitPuller\Util\Error)
-        {
-            die($this->event->getMessage());
-        }
-        file_put_contents(dirname(__FILE__)."data.txt",$this->event->getRepositoryBranch());
-        $this->commander = \AutoGitPuller\Util\Commander::getInstance();
-
-        $checkResult = $this->checkEnvironment();
-
-        if($checkResult instanceof \AutoGitPuller\Util\Error)
-        {
-            die($checkResult->getMessage());
-        }
-
-        echo $this->commander->getOutput();
     }
 
     public function checkEnvironment()
@@ -259,45 +263,43 @@ class AutoGitPull
         $result = array(
             "error" => false
         );
-        if($this->isTryMkDir) {
+        if ($this->isTryMkDir) {
             //try to make dir
-            if($this->backupDir !== '') {
+            if ($this->backupDir !== '') {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
             }
-            if($this->tmpDir !== '') {
+            if ($this->tmpDir !== '') {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
             }
-            foreach($this->branchMap as $branch => $dir)
-            {
-                if( ($dir !=='') && !is_dir($dir)){
+            foreach ($this->branchMap as $branch => $dir) {
+                if (($dir !== '') && !is_dir($dir)) {
                     $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
                 }
             }
         }
-        foreach($this->branchMap as $branch => $dir)
-        {
-            if(!is_dir($dir) || !is_writable($dir)){
-                return new \AutoGitPuller\Util\Error("",sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
+        foreach ($this->branchMap as $branch => $dir) {
+            if (!is_dir($dir) || !is_writable($dir)) {
+                return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
             }
         }
         //check backup dir
         if (($this->backupDir != '') && (!is_dir($this->backupDir) || !is_writable($this->backupDir))) {
-            return new \AutoGitPuller\Util\Error("",sprintf('Backup <code>`%s`</code> does not exists or is not writeable.', $this->backupDir));
+            return new \AutoGitPuller\Util\Error("", sprintf('Backup <code>`%s`</code> does not exists or is not writeable.', $this->backupDir));
         }
         //Check tmp dir
         if (($this->tmpDir != '') && (!is_dir($this->tmpDir) || !is_writable($this->tmpDir))) {
-            return new \AutoGitPuller\Util\Error("",sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
+            return new \AutoGitPuller\Util\Error("", sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
         }
         //check directory
         if ($this->commander->execute("which git") == '') {
-            return new \AutoGitPuller\Util\Error("","GIT is not installed.");
+            return new \AutoGitPuller\Util\Error("", "GIT is not installed.");
         }
-        if($this->tmpDir !== '') {
+        if ($this->tmpDir !== '') {
             if ($this->commander->execute("which rsync") == '') {
-                return new \AutoGitPuller\Util\Error("","rsync is not installed.");
+                return new \AutoGitPuller\Util\Error("", "rsync is not installed.");
             }
         }
-        if($this->backupDir !== '') {
+        if ($this->backupDir !== '') {
             if ($this->commander->execute("which tar") == '') {
                 return new \AutoGitPuller\Util\Error("", "tar is not installed.");
             }
@@ -306,32 +308,31 @@ class AutoGitPull
             return new \AutoGitPuller\Util\Error("", "composer is not installed.");
         }
     }
-    public function handleRequest(){
+
+    public function handleRequest()
+    {
         $headerString = "";
 
         $eventHandler = new \AutoGitPuller\Server\Github\Event();
         $isValidatedRequest = $eventHandler->processRequest($this->secretKey);
 
-        if($isValidatedRequest instanceof \AutoGitPuller\Util\Error)
-        {
+        if ($isValidatedRequest instanceof \AutoGitPuller\Util\Error) {
             return $isValidatedRequest;
         }
         //check if commiter id is map with dir
-        if($this->authorMap[$eventHandler->getCommiterUsername()] !== '')
-        {
-            if($this->branchMap[$eventHandler->getRepositoryBranch()] !== '')
-            {
+        if ($this->authorMap[$eventHandler->getCommiterUsername()] !== '') {
+            if ($this->branchMap[$eventHandler->getRepositoryBranch()] !== '') {
                 return $eventHandler;
+            } else {
+                return new Error("", "Branch is not allowed");
             }
-            else{
-                return new Error("","Branch is not allowed");
-            }
-        }
-        else{
-            return new Error("","This commiter is now allowed");
+        } else {
+            return new Error("", "This commiter is now allowed");
         }
     }
-    public function process(){
+
+    public function process()
+    {
 
     }
 

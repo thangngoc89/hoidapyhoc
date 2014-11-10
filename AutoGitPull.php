@@ -292,9 +292,14 @@ class AutoGitPull
             $result["message"] = '<div class="error">rsync is not installed.</div>';
             return $result;
         }
-        if ($commander->execute("which dfsd") == '') {
+        if ($commander->execute("which tar") == '') {
             $result["error"] = true;
             $result["message"] = '<div class="error">tar is not installed.</div>';
+            return $result;
+        }
+        if ($commander->execute("which composer --no-ansi") == '') {
+            $result["error"] = true;
+            $result["message"] = '<div class="error">composer is not installed.</div>';
             return $result;
         }
     }

@@ -202,7 +202,8 @@ class AutoGitPull
     protected $isUseComposer;
     protected $emailOnError;
     protected $notifyEmail;
-
+    protected $log;
+    protected $commander;
     function __construct($params = array())
     {
         $default = array(
@@ -226,16 +227,21 @@ class AutoGitPull
         $this->backupDir = $params["backupDir"];
         $this->isUseComposer = $params["isUseComposer"];
         $this->emailOnError = $params["emailOnError"];
+        $this->commander = Commander::getInstance();
         $checkResult = $this->checkEnvironment();
         if($checkResult["error"]){
             echo $checkResult["message"];
         }
+        echo $this->commander->getOutput();
     }
     public function checkEnvironment(){
         $result = array(
             "error" => false
         );
         $commander = Commander::getInstance();
+        //try to make dir
+        $commander->execute("mkdir %1$",$this->backupDir);
+        $commander->execute("mkdir %1$",$this->tmpDir);
         //check backup dir
         if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
             $result["error"] = true;
@@ -245,7 +251,7 @@ class AutoGitPull
         //Check tmp dir
         if ( ($this->tmpDir!='') &&  (!is_dir($this->tmpDir) || !is_writable($this->tmpDir)) ) {
             $result["error"] = true;
-            $result["message"] = sprintf('<div class="error">Temp dir <code>`%s`</code> does not exists or is not writeable.</div>', $this->backupDir);
+            $result["message"] = sprintf('<div class="error">Temp dir <code>`%s`</code> does not exists or is not writeable.</div>', $this->tmpDir);
             return $result;
         }
         //check directory

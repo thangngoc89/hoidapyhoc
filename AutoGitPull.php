@@ -204,6 +204,7 @@ class AutoGitPull
     protected $emailOnError;
     protected $notifyEmail;
     protected $log;
+    protected $isTryMkDir;
     protected $commander;
 
     function __construct($params = array())
@@ -217,6 +218,7 @@ class AutoGitPull
             "tmpDir" => "",
             "isNeedClearUp" => false,
             "backupDir" => "",
+            "isTryMkDir" => true,
             "isUseComposer" => false,
         );
         $this->secretKey = $params["secretKey"];
@@ -229,6 +231,7 @@ class AutoGitPull
         $this->backupDir = $params["backupDir"];
         $this->isUseComposer = $params["isUseComposer"];
         $this->emailOnError = $params["emailOnError"];
+        $this->isTryMkDir = $params["isTryMkDir"];
         $this->commander = Commander::getInstance();
         $checkResult = $this->checkEnvironment();
         if ($checkResult["error"]) {
@@ -243,9 +246,11 @@ class AutoGitPull
             "error" => false
         );
         $commander = Commander::getInstance();
-        //try to make dir
-        $commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
-        $commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
+        if($this->isTryMkDir) {
+            //try to make dir
+            $commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
+            $commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
+        }
         //check backup dir
         if (($this->backupDir != '') && (!is_dir($this->backupDir) || !is_writable($this->backupDir))) {
             $result["error"] = true;

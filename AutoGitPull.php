@@ -13,46 +13,22 @@ use AutoGitPuller\Util\Commander;
 
 class AutoGitPull
 {
-     /**
-     * @param mixed $isEmailOnError
+    /**
+     * @return mixed
      */
-    public function setIsEmailOnError($isEmailOnError)
+    public function getIsNeedClearUp()
     {
-        $this->isEmailOnError = $isEmailOnError;
+        return $this->isNeedClearUp;
     }
-    protected $secretKey;
-    protected $repository;
-    protected $branchMap; //map branch to directory
-    protected $authorMap; //map author to directory
-    protected $exclude;
-    protected $tmpDir;
-    protected $isNeedClearUp;
-    protected $backupDir;
-    protected $isUseComposer;
-    protected $isEmailOnError;
-    protected $notifyEmail;
 
-    function __construct($params = array())
+    /**
+     * @param mixed $isNeedClearUp
+     */
+    public function setIsNeedClearUp($isNeedClearUp)
     {
-        $this->secretKey = $params["secretKey"];
-        $this->repository = $params["repository"];
-        $this->branchMap = $params["branchMap"];
-        $this->authorMap = $params["authorMap"];
-        $this->exclude = $params["exclude"];
-        $this->tmpDir = $params["tmpDir"];
-        $this->isNeedClearUp = $params["isNeedClearUp"];
-        $this->backupDir = $params["backupDir"];
-        $this->isUseComposer = $params["isUseComposer"];
-        $this->isEmailOnError = $params["isEmailOnError"];
-        $this->checkEnvironment();
+        $this->isNeedClearUp = $isNeedClearUp;
     }
-    public function checkEnvironment(){
-        $commander = Commander::getInstance();
-        var_dump($commander->execute("which git"));
-    }
-    public static function  buildCommand(){
 
-    }
     /**
      * @return mixed
      */
@@ -152,22 +128,6 @@ class AutoGitPull
     /**
      * @return mixed
      */
-    public function getIsNeedClearUp()
-    {
-        return $this->isNeedClearUp;
-    }
-
-    /**
-     * @param mixed $isNeedClearUp
-     */
-    public function setIsNeedClearUp($isNeedClearUp)
-    {
-        $this->isNeedClearUp = $isNeedClearUp;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBackupDir()
     {
         return $this->backupDir;
@@ -184,7 +144,7 @@ class AutoGitPull
     /**
      * @return mixed
      */
-    public function getIsUseCOmposer()
+    public function getIsUseComposer()
     {
         return $this->isUseComposer;
     }
@@ -192,7 +152,7 @@ class AutoGitPull
     /**
      * @param mixed $isUseComposer
      */
-    public function setIsUseCOmposer($isUseComposer)
+    public function setIsUseComposer($isUseComposer)
     {
         $this->isUseComposer = $isUseComposer;
     }
@@ -200,9 +160,85 @@ class AutoGitPull
     /**
      * @return mixed
      */
-    public function getIsEmailOnError()
+    public function getEmailOnError()
     {
-        return $this->isEmailOnError;
+        return $this->emailOnError;
+    }
+
+    /**
+     * @param mixed $emailOnError
+     */
+    public function setEmailOnError($emailOnError)
+    {
+        $this->emailOnError = $emailOnError;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotifyEmail()
+    {
+        return $this->notifyEmail;
+    }
+
+    /**
+     * @param mixed $notifyEmail
+     */
+    public function setNotifyEmail($notifyEmail)
+    {
+        $this->notifyEmail = $notifyEmail;
+    }
+     /**
+     * @param mixed $isEmailOnError
+     */
+    protected $secretKey;
+    protected $repository;
+    protected $branchMap; //map branch to directory
+    protected $authorMap; //map author to directory
+    protected $exclude;
+    protected $tmpDir;
+    protected $isNeedClearUp;
+    protected $backupDir;
+    protected $isUseComposer;
+    protected $emailOnError;
+    protected $notifyEmail;
+
+    function __construct($params = array())
+    {
+        $default = array(
+            "secretKey"=>"",
+            "repository"=>"",
+            "branchMap"=>array(), //id=>dir
+            "authorMap"=>array(),
+            "exclude"=>array(),
+            "tmpDir"=>"",
+            "isNeedClearUp"=>false,
+            "backupDir"=>"",
+            "isUseComposer"=>false,
+        );
+        $this->secretKey = $params["secretKey"];
+        $this->repository = $params["repository"];
+        $this->branchMap = $params["branchMap"];
+        $this->authorMap = $params["authorMap"];
+        $this->exclude = $params["exclude"];
+        $this->tmpDir = $params["tmpDir"];
+        $this->isNeedClearUp = $params["isNeedClearUp"];
+        $this->backupDir = $params["backupDir"];
+        $this->isUseComposer = $params["isUseComposer"];
+        $this->emailOnError = $params["emailOnError"];
+        $this->checkEnvironment();
+    }
+    public function checkEnvironment(){
+        $commander = Commander::getInstance();
+        //check backup dir
+        if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
+            return sprintf('<div class="error">BACKUP_DIR `%s` does not exists or is not writeable.</div>', $this->backupDir);
+        }
+        //check directory
+        var_dump($commander->execute("which git"));
+    }
+    public static function  buildCommand(){
+
     }
 
 }

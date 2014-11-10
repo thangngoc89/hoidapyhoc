@@ -207,7 +207,7 @@ class AutoGitPull
     protected $isTryMkDir;
     protected $commander;
 
-    function __construct($params = array())
+    function __construct($args = array())
     {
         $default = array(
             "secretKey" => "",
@@ -221,17 +221,18 @@ class AutoGitPull
             "isTryMkDir" => true,
             "isUseComposer" => false,
         );
-        $this->secretKey = $params["secretKey"];
-        $this->repository = $params["repository"];
-        $this->branchMap = $params["branchMap"];
-        $this->authorMap = $params["authorMap"];
-        $this->exclude = $params["exclude"];
-        $this->tmpDir = $params["tmpDir"];
-        $this->isNeedClearUp = $params["isNeedClearUp"];
-        $this->backupDir = $params["backupDir"];
-        $this->isUseComposer = $params["isUseComposer"];
-        $this->emailOnError = $params["emailOnError"];
-        $this->isTryMkDir = $params["isTryMkDir"];
+        $args = array_merge($default,$args);
+        $this->secretKey = $args["secretKey"];
+        $this->repository = $args["repository"];
+        $this->branchMap = $args["branchMap"];
+        $this->authorMap = $args["authorMap"];
+        $this->exclude = $args["exclude"];
+        $this->tmpDir = $args["tmpDir"];
+        $this->isNeedClearUp = $args["isNeedClearUp"];
+        $this->backupDir = $args["backupDir"];
+        $this->isUseComposer = $args["isUseComposer"];
+        $this->emailOnError = $args["emailOnError"];
+        $this->isTryMkDir = $args["isTryMkDir"];
         $this->commander = Commander::getInstance();
         $checkResult = $this->checkEnvironment();
         if ($checkResult["error"]) {
@@ -277,8 +278,15 @@ class AutoGitPull
             return $result;
         }
         //check directory
-        if ($commander->execute("which git")) {
-
+        if ($commander->execute("which git") !== '') {
+            $result["error"] = true;
+            $result["message"] = '<div class="error">GIT is not installed.</div>';
+            return $result;
+        }
+        if ($commander->execute("which rsync") !== '') {
+            $result["error"] = true;
+            $result["message"] = '<div class="error">rsync is not installed.</div>';
+            return $result;
         }
     }
 

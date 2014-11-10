@@ -288,9 +288,9 @@ class AutoGitPull
             $result["message"] = '<div class="error">rsync is not installed.</div>';
             return $result;
         }
-        if ($commander->execute("which tar") !== '') {
+        if ($commander->execute("which dfsd") !== '') {
             $result["error"] = true;
-            $result["message"] = '<div class="error">rsync is not installed.</div>';
+            $result["message"] = '<div class="error">tar is not installed.</div>';
             return $result;
         }
     }

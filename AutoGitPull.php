@@ -210,7 +210,7 @@ class AutoGitPull
 
     function __construct($args = array())
     {
-
+        //init properties
         $this->init($args);
 
         $this->event = $this->handleRequest();
@@ -218,6 +218,7 @@ class AutoGitPull
         if ($this->event instanceof \AutoGitPuller\Util\Error) {
             die($this->event->getMessage());
         }
+
         file_put_contents(dirname(__FILE__) . "/data.txt", $this->event->getRepositoryBranch());
         $this->commander = \AutoGitPuller\Util\Commander::getInstance();
 

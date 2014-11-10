@@ -1,9 +1,7 @@
 <?php
-namespace AutoGitPuller;
 require_once "Util/Commander.php";
 require_once "AutoGitPull.php";
-use AutoGitPuller;
-define("PARENT_DIR", dirname(__FILE__)."/../");
+define("PARENT_DIR", dirname(__FILE__)."/data/");
 $default = array(
     "secretKey" => "mysecretkey",
     "repository"=>"",

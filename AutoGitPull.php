@@ -238,13 +238,20 @@ class AutoGitPull
         $commander = Commander::getInstance();
         //check backup dir
         if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
-            echo $commander->execute(sprintf("mkdir %s",$this->backupDir));
             $result["error"] = true;
-            $result["message"] = sprintf('<div class="error">BACKUP_DIR `%s` does not exists or is not writeable.</div>', $this->backupDir);
+            $result["message"] = sprintf('<div class="error">Backup <code>`%s`</code> does not exists or is not writeable.</div>', $this->backupDir);
+            return $result;
+        }
+        //Check tmp dir
+        if ( ($this->tmpDir!='') &&  (!is_dir($this->tmpDir) || !is_writable($this->tmpDir)) ) {
+            $result["error"] = true;
+            $result["message"] = sprintf('<div class="error">Temp dir <code>`%s`</code> does not exists or is not writeable.</div>', $this->backupDir);
             return $result;
         }
         //check directory
-        var_dump($commander->execute("which git"));
+        if($commander->execute("which git")){
+
+        }
     }
     public static function  buildCommand(){
 

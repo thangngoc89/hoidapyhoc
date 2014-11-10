@@ -9,6 +9,7 @@
 
 namespace AutoGitPuller;
 
+use AutoGitPuller\Server\Github\Event;
 use AutoGitPuller\Util\Commander;
 use AutoGitPuller\Util\Error;
 
@@ -302,17 +303,24 @@ class AutoGitPull
         }
     }
     public function handleRequest(){
-        $headerArr = getallheaders();
         $headerString = "";
-        foreach($headerArr as $key => $value)
+
+        $eventHandler = new \AutoGitPuller\Server\Github\Event();
+        $requestData = $eventHandler->processRequest($this->secretKey);
+
+        if($requestData instanceof Error)
+        {
+            file_put_contents(dirname(__FILE__)."/data.txt", "Secret key is not validated");
+            return $requestData;
+        }
+
+        foreach($requestData as $key => $value)
         {
             $headerString .= $key.":".$value ."\n";
         }
         file_put_contents(dirname(__FILE__)."/data.txt", $headerString);
-        //if(){}
-        if($headerArr['X-Github-Event'] !== 'push'){
-            return new Error("","Event is not push");
-        }
+
+        return $requestData;
     }
     public function process(){
 

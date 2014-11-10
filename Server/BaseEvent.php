@@ -9,11 +9,11 @@
 namespace AutoGitPuller\Server;
 
 class BaseEvent {
-    protected $event; // Name of the event that triggered this delivery.
-    protected $signature; //HMAC hex digest of the payload, using the hook’s secret as the key (if configured).
-    protected $delivery; //Unique ID for this delivery
     protected $author; //the author, who maked event
     protected $repository;
+    public function processRequest(){
+        return '';
+    }
     /**
      * @return mixed
      */

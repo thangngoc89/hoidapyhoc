@@ -8,12 +8,16 @@
 
 namespace AutoGitPuller\Server;
 
-class BaseEvent {
+class BaseEvent
+{
     protected $author; //the author, who maked event
     protected $repository;
-    public function processRequest(){
+
+    public function processRequest()
+    {
         return '';
     }
+
     /**
      * @return mixed
      */
@@ -85,16 +89,22 @@ class BaseEvent {
     {
         return $this->repository;
     }
+
     public function getCommiterUsername()
     {
         return '';
     }
-    public function getRepositoryName(){
+
+    public function getRepositoryName()
+    {
         return '';
     }
-    public function getRepositoryBranch(){
+
+    public function getRepositoryBranch()
+    {
         return '';
     }
+
     /**
      * @param mixed $repository
      */

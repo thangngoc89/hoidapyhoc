@@ -240,8 +240,8 @@ class AutoGitPull
         );
         $commander = Commander::getInstance();
         //try to make dir
-        $commander->execute("mkdir %1$",$this->backupDir);
-        $commander->execute("mkdir %1$",$this->tmpDir);
+        $commander->execute('mkdir %1$',$this->backupDir);
+        $commander->execute('mkdir %1$',$this->tmpDir);
         //check backup dir
         if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
             $result["error"] = true;

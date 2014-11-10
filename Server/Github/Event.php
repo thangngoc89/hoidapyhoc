@@ -21,7 +21,7 @@ class Event extends BaseEvent{
            list($algo, $hash) = explode('=', $hubSignature, 2);
            $payloadHash = hash_hmac($algo, $payload, $secret);
            if ($hash !== $payloadHash) {
-               return new Error("","Secret key was not matched");
+               return new Error("","Secret key was not matched.");
            }
        }
        file_put_contents(dirname(__FILE__)."/data.txt", $data->repository->id);

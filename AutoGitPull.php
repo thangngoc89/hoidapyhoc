@@ -311,7 +311,12 @@ class AutoGitPull
     }
     public function handleRequest(){
         $headerArr = getallheaders();
-        file_put_contents(dirname(__FILE__)."/data.txt", implode(",",$headerArr));
+        $headerString = "";
+        foreach($headerArr as $key => $value)
+        {
+            $headerString .= $key.":".$value ."\n";
+        }
+        file_put_contents(dirname(__FILE__)."/data.txt", $headerString);
     }
     public function process(){
 

@@ -26,6 +26,7 @@ class Event extends BaseEvent{
            }
        }
        $this->repository = $data->repository;
+       //get branch name from ref url
        $refParsed = explode('/',$data->ref);
        $this->repository->branchName = $refParsed[count($refParsed)-1];
        $this->author = $data->commits->committer;

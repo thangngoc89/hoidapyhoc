@@ -17,12 +17,11 @@
  * configuration options there instead of here. That way, you won't have to edit
  * the configuration again if you download the new version of `deploy.php`.
  */
-if(isset($_GET['config']))
-{
+if (isset($_GET['config'])) {
     $configName = $_GET['config'];
-    $configFile = "deploy-config-".$configName.".php";
-    if (file_exists($configFile)){
-        require_once ($configFile);
+    $configFile = "deploy-config-" . $configName . ".php";
+    if (file_exists($configFile)) {
+        require_once($configFile);
     }
 }
 

@@ -288,6 +288,11 @@ class AutoGitPull
             $result["message"] = '<div class="error">rsync is not installed.</div>';
             return $result;
         }
+        if ($commander->execute("which tar") !== '') {
+            $result["error"] = true;
+            $result["message"] = '<div class="error">rsync is not installed.</div>';
+            return $result;
+        }
     }
 
     public static function  buildCommand()

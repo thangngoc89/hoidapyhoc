@@ -12,10 +12,10 @@ $default = array(
     "secretKey" => '',
     "repository"=>'',
     "branchMap" => array(
-        "master" =>PARENT_DIR."/master",
+        "multi_config" =>PARENT_DIR."/multi_config",
     ),
     "authorMap" =>array(
-        "nguyenvanduocit"=>".",
+        "nguyenvanduocit"=>"/duoc",
     ),
     "exclude" => array(),
     "tmpDir" => PARENT_DIR."/tmp",

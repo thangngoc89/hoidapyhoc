@@ -219,7 +219,6 @@ class AutoGitPull
             die($this->event->getMessage());
         }
 
-        file_put_contents(dirname(__FILE__) . "/data.txt", $this->event->getRepositoryBranch());
         $this->commander = \AutoGitPuller\Util\Commander::getInstance();
 
         $checkResult = $this->checkEnvironment();
@@ -227,6 +226,8 @@ class AutoGitPull
         if ($checkResult instanceof \AutoGitPuller\Util\Error) {
             die($checkResult->getMessage());
         }
+
+        $pullResult = $this->doPull();
 
         echo $this->commander->getOutput();
     }
@@ -275,6 +276,13 @@ class AutoGitPull
             foreach ($this->branchMap as $branch => $dir) {
                 if (($dir !== '') && !is_dir($dir)) {
                     $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
+                }
+                foreach($this->authorMap as $author => $authorDir)
+                {
+                    $authorDirPath =  $dir."/".$authorDir;
+                    if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
+                        $this->commander->execute(sprintf('mkdir -p %1$s', $authorDirPath));
+                    }
                 }
             }
         }
@@ -332,7 +340,7 @@ class AutoGitPull
         }
     }
 
-    public function process()
+    private function doPull()
     {
 
     }

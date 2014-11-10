@@ -9,6 +9,8 @@
 
 namespace AutoGitPuller;
 
+use AutoGitPuller\Util\Error;
+
 class AutoGitPull
 {
     /**
@@ -41,22 +43,6 @@ class AutoGitPull
     public function setSecretKey($secretKey)
     {
         $this->secretKey = $secretKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * @param mixed $repository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
     }
 
     /**
@@ -191,7 +177,6 @@ class AutoGitPull
      * @param mixed $isEmailOn\AutoGitPuller\Util\Error
      */
     protected $secretKey;
-    protected $repository;
     protected $branchMap; //map branch to directory
     protected $authorMap; //map author to directory
     protected $exclude;
@@ -204,7 +189,24 @@ class AutoGitPull
     protected $log;
     protected $isTryMkDir;
     protected $commander;
+    protected $repositoryName;
     protected $event;
+
+    /**
+     * @return mixed
+     */
+    public function getRepositoryName()
+    {
+        return $this->repositoryName;
+    }
+
+    /**
+     * @param mixed $repository
+     */
+    public function setRepositoryName($repository)
+    {
+        $this->repositoryName = $repository;
+    }
 
     function __construct($args = array())
     {
@@ -222,7 +224,7 @@ class AutoGitPull
         );
         $args = array_merge($default,$args);
         $this->secretKey = $args["secretKey"];
-        $this->repository = $args["repository"];
+        $this->repositoryName = $args["repository"];
         $this->branchMap = $args["branchMap"];
         $this->authorMap = $args["authorMap"];
         $this->exclude = $args["exclude"];
@@ -239,8 +241,9 @@ class AutoGitPull
         {
             die($this->event->getMessage());
         }
-
+        file_put_contents(dirname(__FILE__)."data.txt",$this->event->getRepositoryBranch());
         $this->commander = \AutoGitPuller\Util\Commander::getInstance();
+
         $checkResult = $this->checkEnvironment();
 
         if($checkResult instanceof \AutoGitPuller\Util\Error)
@@ -307,20 +310,26 @@ class AutoGitPull
         $headerString = "";
 
         $eventHandler = new \AutoGitPuller\Server\Github\Event();
-        $requestData = $eventHandler->processRequest($this->secretKey);
+        $isValidatedRequest = $eventHandler->processRequest($this->secretKey);
 
-        if($requestData instanceof \AutoGitPuller\Util\Error)
+        if($isValidatedRequest instanceof \AutoGitPuller\Util\Error)
         {
-            return $requestData;
+            return $isValidatedRequest;
         }
-
-        foreach($requestData as $key => $value)
+        //check if commiter id is map with dir
+        if($this->authorMap[$eventHandler->getCommiterUsername()] !== '')
         {
-            $headerString .= $key.":".$value ."\n";
+            if($this->branchMap[$eventHandler->getRepositoryBranch()] !== '')
+            {
+                return $eventHandler;
+            }
+            else{
+                return new Error("","Branch is not allowed");
+            }
         }
-        file_put_contents(dirname(__FILE__)."/data.txt", $headerString);
-
-        return $requestData;
+        else{
+            return new Error("","This commiter is now allowed");
+        }
     }
     public function process(){
 

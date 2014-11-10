@@ -12,6 +12,7 @@ use AutoGitPuller\Server\BaseEvent;
 use AutoGitPuller\Util\Error;
 
 class Event extends BaseEvent{
+    //https://developer.github.com/v3/activity/events/types/#pushevent
    public function processRequest($secret = ''){
        $headers = getallheaders();
        $hubSignature = $headers['X-Hub-Signature'];
@@ -24,7 +25,22 @@ class Event extends BaseEvent{
                return new Error("","Secret key was not matched.");
            }
        }
-       file_put_contents(dirname(__FILE__)."/data.txt", $data->repository->id);
-       return $data;
+       $this->repository = $data->repository;
+       $this->author = $data->commits->committer;
+       return true;
    }
+    public function getCommiterUsername()
+    {
+        return $this->author->username?$this->author->username:'';
+    }
+    public function getRepositoryName(){
+        return $this->repository->name?$this->repository->name:'';
+    }
+    public function getRepositoryBranch(){
+        $brachName = '';
+        $branchURL = $this->repository->branches_url;
+        $branchParse = explode('/',$branchURL);
+        $brachName = $branchParse[count($branchParse)-1];
+        return $brachName;
+    }
 }

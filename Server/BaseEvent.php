@@ -85,7 +85,16 @@ class BaseEvent {
     {
         return $this->repository;
     }
-
+    public function getCommiterUsername()
+    {
+        return '';
+    }
+    public function getRepositoryName(){
+        return '';
+    }
+    public function getRepositoryBranch(){
+        return '';
+    }
     /**
      * @param mixed $repository
      */

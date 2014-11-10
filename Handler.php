@@ -24,7 +24,7 @@ $default = array(
     "isUseComposer" => false,
     "isEmailOnError" => true,
     "isTryMkDir" => true,
-    "notifyEmail" => "nguyenvandudfsdfocit@gmail.com"
+    "notifyEmail" => "nguyenvanduasdfasdfdfsdfocit@gmail.com"
 );
 $args = array();
 $args = array_merge($default, $args);

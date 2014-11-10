@@ -18,6 +18,7 @@ $default = array(
     "backupDir" => "",
     "isUseComposer" => false,
     "isEmailOnError" => true,
+    "isTryMkDir" => true,
     "notifyEmail" => "nguyenvanduocit@gmail.com"
 );
 $args = array();

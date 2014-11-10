@@ -9,10 +9,6 @@
 
 namespace AutoGitPuller;
 
-use AutoGitPuller\Server\Github\Event;
-use AutoGitPuller\Util\Commander;
-use AutoGitPuller\Util\Error;
-
 class AutoGitPull
 {
     /**
@@ -168,7 +164,7 @@ class AutoGitPull
     }
 
     /**
-     * @param mixed $emailOnError
+     * @param mixed $emailOn\AutoGitPuller\Util\Error
      */
     public function setEmailOnError($emailOnError)
     {
@@ -192,7 +188,7 @@ class AutoGitPull
     }
 
     /**
-     * @param mixed $isEmailOnError
+     * @param mixed $isEmailOn\AutoGitPuller\Util\Error
      */
     protected $secretKey;
     protected $repository;
@@ -236,13 +232,13 @@ class AutoGitPull
         $this->emailOnError = $args["emailOnError"];
         $this->isTryMkDir = $args["isTryMkDir"];
 
-        $this->commander = Commander::getInstance();
+        $this->commander = \AutoGitPuller\Util\Commander::getInstance();
 
         $this->handleRequest();
 
         $checkResult = $this->checkEnvironment();
 
-        if($checkResult instanceof Error)
+        if($checkResult instanceof \AutoGitPuller\Util\Error)
         {
             die($checkResult->getMessage());
         }
@@ -273,33 +269,33 @@ class AutoGitPull
         foreach($this->branchMap as $branch => $dir)
         {
             if(!is_dir($dir) || !is_writable($dir)){
-                return new Error("",sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
+                return new \AutoGitPuller\Util\Error("",sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
             }
         }
         //check backup dir
         if (($this->backupDir != '') && (!is_dir($this->backupDir) || !is_writable($this->backupDir))) {
-            return new Error("",sprintf('Backup <code>`%s`</code> does not exists or is not writeable.', $this->backupDir));
+            return new \AutoGitPuller\Util\Error("",sprintf('Backup <code>`%s`</code> does not exists or is not writeable.', $this->backupDir));
         }
         //Check tmp dir
         if (($this->tmpDir != '') && (!is_dir($this->tmpDir) || !is_writable($this->tmpDir))) {
-            return new Error("",sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
+            return new \AutoGitPuller\Util\Error("",sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
         }
         //check directory
         if ($this->commander->execute("which git") == '') {
-            return new Error("","GIT is not installed.");
+            return new \AutoGitPuller\Util\Error("","GIT is not installed.");
         }
         if($this->tmpDir !== '') {
             if ($this->commander->execute("which rsync") == '') {
-                return new Error("","rsync is not installed.");
+                return new \AutoGitPuller\Util\Error("","rsync is not installed.");
             }
         }
         if($this->backupDir !== '') {
             if ($this->commander->execute("which tar") == '') {
-                return new Error("", "tar is not installed.");
+                return new \AutoGitPuller\Util\Error("", "tar is not installed.");
             }
         }
         if ($this->isUseComposer && $this->commander->execute("which composer --no-ansi") == '') {
-            return new Error("", "composer is not installed.");
+            return new \AutoGitPuller\Util\Error("", "composer is not installed.");
         }
     }
     public function handleRequest(){
@@ -308,7 +304,7 @@ class AutoGitPull
         $eventHandler = new \AutoGitPuller\Server\Github\Event();
         $requestData = $eventHandler->processRequest($this->secretKey);
 
-        if($requestData instanceof Error)
+        if($requestData instanceof \AutoGitPuller\Util\Error)
         {
             file_put_contents(dirname(__FILE__)."/data.txt", "Secret key is not validated");
             return $requestData;

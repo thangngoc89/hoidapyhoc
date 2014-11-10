@@ -370,6 +370,12 @@ class AutoGitPull
                 , $this->event->getRepositoryGitURL()
                 , $this->tmpDir
             ));
+            file_put_contents(dirname(__FILE__)."/data.txt",sprintf(
+                'git clone --depth=1 --branch %s %s %s'
+                , $this->event->getRepositoryBranch()
+                , $this->event->getRepositoryGitURL()
+                , $this->tmpDir
+            ));
         }
         else
         {

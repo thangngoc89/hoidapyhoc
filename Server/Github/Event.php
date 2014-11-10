@@ -26,6 +26,8 @@ class Event extends BaseEvent{
            }
        }
        $this->repository = $data->repository;
+       $refParsed = explode('/',$data->ref);
+       $this->repository->branchName = $refParsed[count($refParsed)-1];
        $this->author = $data->commits->committer;
        return true;
    }
@@ -37,10 +39,6 @@ class Event extends BaseEvent{
         return $this->repository->name?$this->repository->name:'';
     }
     public function getRepositoryBranch(){
-        $brachName = '';
-        $branchURL = $this->repository->full_name;
-        $branchParse = explode('/',$branchURL);//sdf
-        $brachName = $branchParse[count($branchParse)-1];
-        return $brachName;
+        return $this->repository->branchName;
     }
 }

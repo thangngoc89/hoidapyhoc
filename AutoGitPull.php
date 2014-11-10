@@ -233,6 +233,9 @@ class AutoGitPull
         $this->isUseComposer = $args["isUseComposer"];
         $this->emailOnError = $args["emailOnError"];
         $this->isTryMkDir = $args["isTryMkDir"];
+
+        $this->handleRequest();
+
         $this->commander = Commander::getInstance();
         $checkResult = $this->checkEnvironment();
         if ($checkResult["error"]) {

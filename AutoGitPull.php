@@ -238,6 +238,7 @@ class AutoGitPull
         $commander = Commander::getInstance();
         //check backup dir
         if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
+            echo $commander->execute(sprintf("mkdir %s",$this->backupDir));
             $result["error"] = true;
             $result["message"] = sprintf('<div class="error">BACKUP_DIR `%s` does not exists or is not writeable.</div>', $this->backupDir);
             return $result;

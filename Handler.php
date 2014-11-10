@@ -13,7 +13,7 @@ $default = array(
         "nguyenvanduocit"=>"."
     ),
     "exclude" => array(),
-    "tmpDir" => PARENT_DIR."/reponsive",
+    "tmpDir" => PARENT_DIR."/tmp",
     "isNeedClearUp" => false,
     "backupDir" => "",
     "isUseComposer" => false,

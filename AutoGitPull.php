@@ -250,6 +250,19 @@ class AutoGitPull
             //try to make dir
             $commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
             $commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
+            foreach($this->branchMap as $branch => $dir)
+            {
+                if(!is_dir($dir)){
+                    $commander->execute(sprintf('mkdir -p %1$s', $dir));
+                }
+            }
+        }
+        foreach($this->branchMap as $branch => $dir)
+        {
+            if(!is_dir($dir) || !is_writable($dir)){
+                $result["error"] = true;
+                $result["message"] = sprintf('<div class="error">Branch dir:  <code>`%s`</code> does not exists or is not writeable.</div>', $dir);
+            }
         }
         //check backup dir
         if (($this->backupDir != '') && (!is_dir($this->backupDir) || !is_writable($this->backupDir))) {

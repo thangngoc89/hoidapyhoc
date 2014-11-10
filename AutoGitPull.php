@@ -226,13 +226,21 @@ class AutoGitPull
         $this->backupDir = $params["backupDir"];
         $this->isUseComposer = $params["isUseComposer"];
         $this->emailOnError = $params["emailOnError"];
-        $this->checkEnvironment();
+        $checkResult = $this->checkEnvironment();
+        if($checkResult["error"]){
+            echo $checkResult["message"];
+        }
     }
     public function checkEnvironment(){
+        $result = array(
+            "error" => false
+        );
         $commander = Commander::getInstance();
         //check backup dir
         if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
-            return sprintf('<div class="error">BACKUP_DIR `%s` does not exists or is not writeable.</div>', $this->backupDir);
+            $result["error"] = true;
+            $result["message"] = sprintf('<div class="error">BACKUP_DIR `%s` does not exists or is not writeable.</div>', $this->backupDir);
+            return $result;
         }
         //check directory
         var_dump($commander->execute("which git"));

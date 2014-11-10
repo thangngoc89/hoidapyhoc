@@ -209,14 +209,14 @@ class AutoGitPull
     function __construct($args = array())
     {
         $default = array(
-            "secretKey" => "",
-            "repository" => "",
+            "secretKey" => '',
+            "repository" => '',
             "branchMap" => array(), //id=>dir
             "authorMap" => array(),
             "exclude" => array(),
-            "tmpDir" => "",
+            "tmpDir" => '',
             "isNeedClearUp" => false,
-            "backupDir" => "",
+            "backupDir" => '',
             "isTryMkDir" => true,
             "isUseComposer" => false,
         );

@@ -9,8 +9,8 @@ require_once "AutoGitPull.php";
 use AutoGitPuller\AutoGitPull;
 define("PARENT_DIR", dirname(__FILE__)."/data");
 $default = array(
-    "secretKey" => "",
-    "repository"=>"",
+    "secretKey" => '',
+    "repository"=>'',
     "branchMap" => array(
         "master" =>PARENT_DIR."/master",
     ),
@@ -20,7 +20,7 @@ $default = array(
     "exclude" => array(),
     "tmpDir" => PARENT_DIR."/tmp",
     "isNeedClearUp" => false,
-    "backupDir" => "",
+    "backupDir" => '',
     "isUseComposer" => false,
     "isEmailOnError" => true,
     "isTryMkDir" => true,

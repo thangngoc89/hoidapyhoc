@@ -249,11 +249,15 @@ class AutoGitPull
         $commander = Commander::getInstance();
         if($this->isTryMkDir) {
             //try to make dir
-            $commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
-            $commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
+            if($this->backupDir !== '') {
+                $commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
+            }
+            if($this->tmpDir !== '') {
+                $commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
+            }
             foreach($this->branchMap as $branch => $dir)
             {
-                if(!is_dir($dir)){
+                if( ($dir !=='') && !is_dir($dir)){
                     $commander->execute(sprintf('mkdir -p %1$s', $dir));
                 }
             }

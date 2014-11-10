@@ -7,10 +7,10 @@ $default = array(
     "secretKey" => "mysecretkey",
     "repository"=>"",
     "branchMap" => array(
-        "master" =>PARENT_DIR."/master"
+        "master" =>PARENT_DIR."/master",
     ),
     "authorMap" =>array(
-        "nguyenvanduocit"=>"."
+        "nguyenvanduocit"=>".",
     ),
     "exclude" => array(),
     "tmpDir" => PARENT_DIR."/tmp",

@@ -188,7 +188,8 @@ class AutoGitPull
     {
         $this->notifyEmail = $notifyEmail;
     }
-     /**
+
+    /**
      * @param mixed $isEmailOnError
      */
     protected $secretKey;
@@ -204,18 +205,19 @@ class AutoGitPull
     protected $notifyEmail;
     protected $log;
     protected $commander;
+
     function __construct($params = array())
     {
         $default = array(
-            "secretKey"=>"",
-            "repository"=>"",
-            "branchMap"=>array(), //id=>dir
-            "authorMap"=>array(),
-            "exclude"=>array(),
-            "tmpDir"=>"",
-            "isNeedClearUp"=>false,
-            "backupDir"=>"",
-            "isUseComposer"=>false,
+            "secretKey" => "",
+            "repository" => "",
+            "branchMap" => array(), //id=>dir
+            "authorMap" => array(),
+            "exclude" => array(),
+            "tmpDir" => "",
+            "isNeedClearUp" => false,
+            "backupDir" => "",
+            "isUseComposer" => false,
         );
         $this->secretKey = $params["secretKey"];
         $this->repository = $params["repository"];
@@ -229,37 +231,41 @@ class AutoGitPull
         $this->emailOnError = $params["emailOnError"];
         $this->commander = Commander::getInstance();
         $checkResult = $this->checkEnvironment();
-        if($checkResult["error"]){
+        if ($checkResult["error"]) {
             echo $checkResult["message"];
         }
         echo $this->commander->getOutput();
     }
-    public function checkEnvironment(){
+
+    public function checkEnvironment()
+    {
         $result = array(
             "error" => false
         );
         $commander = Commander::getInstance();
         //try to make dir
-        $commander->execute('mkdir %1$',$this->backupDir);
-        $commander->execute('mkdir %1$',$this->tmpDir);
+        $commander->execute(sprintf('mkdir %1$', $this->backupDir));
+        $commander->execute(sprintf('mkdir %1$', $this->tmpDir));
         //check backup dir
-        if ( ($this->backupDir!='') &&  (!is_dir($this->backupDir) || !is_writable($this->backupDir)) ) {
+        if (($this->backupDir != '') && (!is_dir($this->backupDir) || !is_writable($this->backupDir))) {
             $result["error"] = true;
             $result["message"] = sprintf('<div class="error">Backup <code>`%s`</code> does not exists or is not writeable.</div>', $this->backupDir);
             return $result;
         }
         //Check tmp dir
-        if ( ($this->tmpDir!='') &&  (!is_dir($this->tmpDir) || !is_writable($this->tmpDir)) ) {
+        if (($this->tmpDir != '') && (!is_dir($this->tmpDir) || !is_writable($this->tmpDir))) {
             $result["error"] = true;
             $result["message"] = sprintf('<div class="error">Temp dir <code>`%s`</code> does not exists or is not writeable.</div>', $this->tmpDir);
             return $result;
         }
         //check directory
-        if($commander->execute("which git")){
+        if ($commander->execute("which git")) {
 
         }
     }
-    public static function  buildCommand(){
+
+    public static function  buildCommand()
+    {
 
     }
 

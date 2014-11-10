@@ -19,7 +19,6 @@ class Event extends BaseEvent{
        $data = json_decode($payload);
        if($secret!=='') {
            list($algo, $hash) = explode('=', $hubSignature, 2);
-           var_dump($hubSignature);
            $payloadHash = hash_hmac($algo, $payload, $secret);
            if ($hash !== $payloadHash) {
                return new Error("","Secret key was not matched");

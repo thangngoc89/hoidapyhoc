@@ -309,7 +309,7 @@ class AutoGitPull
             $headerString .= $key.":".$value ."\n";
         }
         file_put_contents(dirname(__FILE__)."/data.txt", $headerString);
-
+        //if(){}
         if($headerArr['X-Github-Event'] !== 'push'){
             return new Error("","Event is not push");
         }

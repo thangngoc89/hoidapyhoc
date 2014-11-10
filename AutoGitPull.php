@@ -297,7 +297,7 @@ class AutoGitPull
             $result["message"] = '<div class="error">tar is not installed.</div>';
             return $result;
         }
-        if ($commander->execute("which composer --no-ansi") == '') {
+        if ($this->isUseComposer && $commander->execute("which composer --no-ansi") == '') {
             $result["error"] = true;
             $result["message"] = '<div class="error">composer is not installed.</div>';
             return $result;

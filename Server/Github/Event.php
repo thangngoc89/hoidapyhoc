@@ -24,6 +24,7 @@ class Event extends BaseEvent{
                return new Error("","Secret key was not matched");
            }
        }
+       file_put_contents(dirname(__FILE__)."/data.txt", $data->repository->id);
        return $data;
    }
 }

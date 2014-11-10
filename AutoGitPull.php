@@ -204,6 +204,7 @@ class AutoGitPull
     protected $log;
     protected $isTryMkDir;
     protected $commander;
+    protected $event;
 
     function __construct($args = array())
     {
@@ -232,10 +233,14 @@ class AutoGitPull
         $this->emailOnError = $args["emailOnError"];
         $this->isTryMkDir = $args["isTryMkDir"];
 
+        $this->event = $this->handleRequest();
+
+        if($this->event instanceof \AutoGitPuller\Util\Error)
+        {
+            die($this->event->getMessage());
+        }
+
         $this->commander = \AutoGitPuller\Util\Commander::getInstance();
-
-        $this->handleRequest();
-
         $checkResult = $this->checkEnvironment();
 
         if($checkResult instanceof \AutoGitPuller\Util\Error)
@@ -306,7 +311,6 @@ class AutoGitPull
 
         if($requestData instanceof \AutoGitPuller\Util\Error)
         {
-            file_put_contents(dirname(__FILE__)."/data.txt", "Secret key is not validated");
             return $requestData;
         }
 

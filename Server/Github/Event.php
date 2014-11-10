@@ -39,7 +39,7 @@ class Event extends BaseEvent{
     public function getRepositoryBranch(){
         $brachName = '';
         $branchURL = $this->repository->full_name;
-        $branchParse = explode('/',$branchURL);
+        $branchParse = explode('/',$branchURL);//sdf
         $brachName = $branchParse[count($branchParse)-1];
         return $brachName;
     }

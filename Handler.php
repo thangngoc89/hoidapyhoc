@@ -2,20 +2,20 @@
 require_once "Util/Commander.php";
 require_once "AutoGitPull.php";
 use AutoGitPuller\AutoGitPull;
-define("PARENT_DIR", dirname(__FILE__)."/data/");
+define("PARENT_DIR", dirname(__FILE__)."/data");
 $default = array(
     "secretKey" => "mysecretkey",
     "repository"=>"",
     "branchMap" => array(
-        "master" =>PARENT_DIR."/master/"
+        "master" =>PARENT_DIR."/master"
     ),
     "authorMap" =>array(
-        "nguyenvanduocit"=>"/"
+        "nguyenvanduocit"=>"."
     ),
     "exclude" => array(),
-    "tmpDir" => PARENT_DIR."reponsive",
+    "tmpDir" => PARENT_DIR."/reponsive",
     "isNeedClearUp" => false,
-    "backupDir" => PARENT_DIR."/backup/",
+    "backupDir" => PARENT_DIR."/backup",
     "isUseComposer" => false,
     "isEmailOnError" => true,
     "notifyEmail" => "nguyenvanduocit@gmail.com"

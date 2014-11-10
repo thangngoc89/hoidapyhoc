@@ -273,6 +273,7 @@ class AutoGitPull
             if ($this->tmpDir !== '') {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
             }
+            //Check
             foreach ($this->branchMap as $branch => $dir) {
                 if (($dir !== '') && !is_dir($dir)) {
                     $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
@@ -289,6 +290,13 @@ class AutoGitPull
         foreach ($this->branchMap as $branch => $dir) {
             if (!is_dir($dir) || !is_writable($dir)) {
                 return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
+            }
+            foreach($this->authorMap as $author => $authorDir)
+            {
+                $authorDirPath =  $dir."/".$authorDir;
+                if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
+                    return new Error("", sprintf('Author dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
+                }
             }
         }
         //check backup dir

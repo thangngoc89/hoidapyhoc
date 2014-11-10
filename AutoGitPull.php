@@ -10,6 +10,7 @@
 namespace AutoGitPuller;
 
 use AutoGitPuller\Util\Commander;
+use AutoGitPuller\Util\Error;
 
 class AutoGitPull
 {
@@ -234,13 +235,17 @@ class AutoGitPull
         $this->emailOnError = $args["emailOnError"];
         $this->isTryMkDir = $args["isTryMkDir"];
 
+        $this->commander = Commander::getInstance();
+
         $this->handleRequest();
 
-        $this->commander = Commander::getInstance();
         $checkResult = $this->checkEnvironment();
-        if ($checkResult["error"]) {
-            echo $checkResult["message"];
+
+        if($checkResult instanceof Error)
+        {
+            die($checkResult->getMessage());
         }
+
         echo $this->commander->getOutput();
     }
 
@@ -267,46 +272,33 @@ class AutoGitPull
         foreach($this->branchMap as $branch => $dir)
         {
             if(!is_dir($dir) || !is_writable($dir)){
-                $result["error"] = true;
-                $result["message"] = sprintf('<div class="error">Branch dir:  <code>`%s`</code> does not exists or is not writeable.</div>', $dir);
+                return new Error("",sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
             }
         }
         //check backup dir
         if (($this->backupDir != '') && (!is_dir($this->backupDir) || !is_writable($this->backupDir))) {
-            $result["error"] = true;
-            $result["message"] = sprintf('<div class="error">Backup <code>`%s`</code> does not exists or is not writeable.</div>', $this->backupDir);
-            return $result;
+            return new Error("",sprintf('Backup <code>`%s`</code> does not exists or is not writeable.', $this->backupDir));
         }
         //Check tmp dir
         if (($this->tmpDir != '') && (!is_dir($this->tmpDir) || !is_writable($this->tmpDir))) {
-            $result["error"] = true;
-            $result["message"] = sprintf('<div class="error">Temp dir <code>`%s`</code> does not exists or is not writeable.</div>', $this->tmpDir);
-            return $result;
+            return new Error("",sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
         }
         //check directory
         if ($this->commander->execute("which git") == '') {
-            $result["error"] = true;
-            $result["message"] = '<div class="error">GIT is not installed.</div>';
-            return $result;
+            return new Error("","GIT is not installed.");
         }
         if($this->tmpDir !== '') {
             if ($this->commander->execute("which rsync") == '') {
-                $result["error"] = true;
-                $result["message"] = '<div class="error">rsync is not installed.</div>';
-                return $result;
+                return new Error("","rsync is not installed.");
             }
         }
         if($this->backupDir !== '') {
             if ($this->commander->execute("which tar") == '') {
-                $result["error"] = true;
-                $result["message"] = '<div class="error">tar is not installed.</div>';
-                return $result;
+                return new Error("", "tar is not installed.");
             }
         }
         if ($this->isUseComposer && $this->commander->execute("which composer --no-ansi") == '') {
-            $result["error"] = true;
-            $result["message"] = '<div class="error">composer is not installed.</div>';
-            return $result;
+            return new Error("", "composer is not installed.");
         }
     }
     public function handleRequest(){
@@ -317,6 +309,10 @@ class AutoGitPull
             $headerString .= $key.":".$value ."\n";
         }
         file_put_contents(dirname(__FILE__)."/data.txt", $headerString);
+
+        if($headerArr['X-Github-Event'] !== 'push'){
+            return new Error("","Event is not push");
+        }
     }
     public function process(){
 

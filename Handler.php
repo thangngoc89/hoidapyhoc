@@ -9,7 +9,7 @@ require_once "AutoGitPull.php";
 use AutoGitPuller\AutoGitPull;
 define("PARENT_DIR", dirname(__FILE__)."/data");
 $default = array(
-    "secretKey" => "mysecretkey",
+    "secretKey" => "",
     "repository"=>"",
     "branchMap" => array(
         "master" =>PARENT_DIR."/master",

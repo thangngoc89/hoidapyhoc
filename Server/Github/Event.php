@@ -37,7 +37,7 @@ class Event extends BaseEvent{
         return $this->repository->name?$this->repository->name:'';
     }
     public function getRepositoryBranch(){
-        $brachName = '';
+        $brachName = '';//sdfsdf
         return $branchURL = $this->repository->branches_url;
         $branchParse = explode('/',$branchURL);
         $brachName = $branchParse[count($branchParse)-1];

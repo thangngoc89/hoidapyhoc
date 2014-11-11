@@ -13,165 +13,6 @@ use AutoGitPuller\Util\Error;
 
 class AutoGitPull
 {
-    /**
-     * @return mixed
-     */
-    public function getIsNeedClearUp()
-    {
-        return $this->isNeedClearUp;
-    }
-
-    /**
-     * @param mixed $isNeedClearUp
-     */
-    public function setIsNeedClearUp($isNeedClearUp)
-    {
-        $this->isNeedClearUp = $isNeedClearUp;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSecretKey()
-    {
-        return $this->secretKey;
-    }
-
-    /**
-     * @param mixed $secretKey
-     */
-    public function setSecretKey($secretKey)
-    {
-        $this->secretKey = $secretKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBranchMap()
-    {
-        return $this->branchMap;
-    }
-
-    /**
-     * @param mixed $branchMap
-     */
-    public function setBranchMap($branchMap)
-    {
-        $this->branchMap = $branchMap;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthorMap()
-    {
-        return $this->authorMap;
-    }
-
-    /**
-     * @param mixed $authorMap
-     */
-    public function setAuthorMap($authorMap)
-    {
-        $this->authorMap = $authorMap;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getExclude()
-    {
-        return $this->exclude;
-    }
-
-    /**
-     * @param mixed $exclude
-     */
-    public function setExclude($exclude)
-    {
-        $this->exclude = $exclude;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTmpDir()
-    {
-        return $this->tmpDir;
-    }
-
-    /**
-     * @param mixed $tmpDir
-     */
-    public function setTmpDir($tmpDir)
-    {
-        $this->tmpDir = $tmpDir;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBackupDir()
-    {
-        return $this->backupDir;
-    }
-
-    /**
-     * @param mixed $backupDir
-     */
-    public function setBackupDir($backupDir)
-    {
-        $this->backupDir = $backupDir;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsUseComposer()
-    {
-        return $this->isUseComposer;
-    }
-
-    /**
-     * @param mixed $isUseComposer
-     */
-    public function setIsUseComposer($isUseComposer)
-    {
-        $this->isUseComposer = $isUseComposer;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmailOnError()
-    {
-        return $this->emailOnError;
-    }
-
-    /**
-     * @param mixed $emailOn \AutoGitPuller\Util\Error
-     */
-    public function setEmailOnError($emailOnError)
-    {
-        $this->emailOnError = $emailOnError;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNotifyEmail()
-    {
-        return $this->notifyEmail;
-    }
-
-    /**
-     * @param mixed $notifyEmail
-     */
-    public function setNotifyEmail($notifyEmail)
-    {
-        $this->notifyEmail = $notifyEmail;
-    }
 
     /**
      * @param mixed $isEmailOn \AutoGitPuller\Util\Error
@@ -188,27 +29,15 @@ class AutoGitPull
     protected $notifyEmail;
     protected $log;
     protected $isTryMkDir;
+    protected $composerOptions;
     protected $commander;
     protected $repositoryName;
+    protected $canDeleteFile;
+    protected $isNeedVersionFile;
     protected $username;
     protected $password;
     protected $event;
 
-    /**
-     * @return mixed
-     */
-    public function getRepositoryName()
-    {
-        return $this->repositoryName;
-    }
-
-    /**
-     * @param mixed $repository
-     */
-    public function setRepositoryName($repository)
-    {
-        $this->repositoryName = $repository;
-    }
 
     function __construct($args = array())
     {
@@ -246,9 +75,12 @@ class AutoGitPull
             "isNeedClearUp" => false,
             "backupDir" => '',
             "isTryMkDir" => true,
+            "canDeleteFile" => true,
             "isUseComposer" => false,
-            "username"=>'',
-            'password' =>''
+            'isNeedVersionFile' => true,
+            'composerOptions' => '--no-dev',
+            "username" => '',
+            'password' => ''
         );
         $args = array_merge($default, $args);
         $this->secretKey = $args["secretKey"];
@@ -257,13 +89,16 @@ class AutoGitPull
         $this->authorMap = $args["authorMap"];
         $this->exclude = $args["exclude"];
         $this->tmpDir = $args["tmpDir"];
+        $this->canDeleteFile = $args["canDeleteFile"];
         $this->isNeedClearUp = $args["isNeedClearUp"];
         $this->backupDir = $args["backupDir"];
         $this->isUseComposer = $args["isUseComposer"];
         $this->emailOnError = $args["emailOnError"];
+        $this->isNeedVersionFile = $args["isNeedVersionFile"];
         $this->isTryMkDir = $args["isTryMkDir"];
         $this->username = $args["username"];
         $this->password = $args["password"];
+        $this->composerOptions = $args['composerOptions'];
     }
 
     public function checkEnvironment()
@@ -273,10 +108,10 @@ class AutoGitPull
         );
         if ($this->isTryMkDir) {
             //try to make dir
-            if ( ($this->backupDir !== '') && (!is_dir($this->backupDir)) ) {
+            if (($this->backupDir !== '') && (!is_dir($this->backupDir))) {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->backupDir));
             }
-            if ( ($this->tmpDir !== '') && (!is_dir($this->tmpDir)) ) {
+            if (($this->tmpDir !== '') && (!is_dir($this->tmpDir))) {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
             }
             //try to create dir
@@ -284,9 +119,8 @@ class AutoGitPull
                 if (($dir !== '') && !is_dir($dir)) {
                     $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
                 }
-                foreach($this->authorMap as $author => $authorDir)
-                {
-                    $authorDirPath =  $dir."/".$authorDir;
+                foreach ($this->authorMap as $author => $authorDir) {
+                    $authorDirPath = $dir . "/" . $authorDir;
                     if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
                         $this->commander->execute(sprintf('mkdir -p %1$s', $authorDirPath));
                     }
@@ -298,9 +132,8 @@ class AutoGitPull
             if (!is_dir($dir) || !is_writable($dir)) {
                 return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
             }
-            foreach($this->authorMap as $author => $authorDir)
-            {
-                $authorDirPath =  $dir."/".$authorDir;
+            foreach ($this->authorMap as $author => $authorDir) {
+                $authorDirPath = $dir . "/" . $authorDir;
                 if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
                     return new Error("", sprintf('Author dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
                 }
@@ -332,11 +165,12 @@ class AutoGitPull
         }
         //only use composer when...
         if ($this->isUseComposer) {
-            if($this->commander->execute("which composer --no-ansi") == '') {
+            if ($this->commander->execute("which composer --no-ansi") == '') {
                 return new \AutoGitPuller\Util\Error("", "composer is not installed.");
             }
         }
     }
+
     //handle and processing postdata from git
     public function handleRequest()
     {
@@ -359,28 +193,116 @@ class AutoGitPull
             return new Error("", "This commiter is now allowed");
         }
     }
+
     //build git command
     private function doPull()
     {
-        if($this->tmpDir !=='')
-        {
-            $this->commander->enqueue(sprintf(
-                'git clone --depth=1 --branch %s %s %s'
-                , $this->event->getRepositoryBranch()
-                , $this->event->getRepositoryGitURL()
-                , $this->tmpDir
-            ));
-            file_put_contents(dirname(__FILE__)."/data.txt",sprintf(
-                'git clone --depth=1 --branch %s %s %s'
-                , $this->event->getRepositoryBranch()
-                , $this->event->getRepositoryGitURL()
-                , $this->tmpDir
-            ));
-        }
-        else
-        {
+        $branchName = $this->event->getRepositoryBranch();
+        $committer = $this->event->getCommiterUsername();
+        $gitURL = $this->event->getRepositoryGitURL();
+        $tmpDir = $this->tmpDir;
+        $isUsersync = false;
+        $repositoryDir = sprintf('/%1$s/%2$s/', $this->branchMap[$branchName], $this->authorMap[$committer]);
 
+        //Check if use rsync
+        if ($tmpDir !== '') //rsync
+        {
+            $isUsersync = true;
+            $targetDir = $tmpDir . "/" . $repositoryDir;
+        } else //not use rsync
+        {
+            $targetDir = $repositoryDir;
         }
+        //check if need backup
+        if ( ($this->backupDir !== '') && (is_dir($repositoryDir))) {
+            $this->doBackup($this->backupDir, $repositoryDir);
+        }
+
+        //check if git init on target dir
+        if (is_dir($targetDir . "/.git")) {
+            $this->doFetch($branchName, $targetDir);
+        } else {
+            $this->doClone($gitURL, $targetDir, $branchName);
+        }
+        if($this->isUseComposer)
+        {
+            $this->doComposer($targetDir);
+        }
+        if($isUsersync)
+        {
+            $this->doRSYNC($targetDir, $repositoryDir);
+        }
+        if($this->isNeedClearUp){
+            $this->doCleanUp($tmpDir);
+        }
+        $this->commander->execute();
     }
 
+    private function doClone($gitURL, $targetDir, $branchName)
+    {
+        $this->commander->enqueue(sprintf(
+            'git clone --depth=1 --branch %1$s %2$s %3$s'
+            , $branchName
+            , $gitURL
+            , $targetDir
+        ));
+    }
+    private function doFetch($branchName, $targetDir)
+    {
+        $this->commander->enqueue(sprintf(
+            'git --git-dir="%1$s.git" --work-tree="%2%s" fetch origin %3$s'
+            , $targetDir
+            , $targetDir
+            , $branchName
+        ));
+        $this->commander->execute(sprintf(
+            'git --git-dir="%1$s.git" --work-tree="%2$s" reset --hard FETCH_HEAD'
+            , $targetDir
+            , $targetDir
+        ));
+        $this->commander->enqueue(sprintf(
+            'git submodule update --init --recursive'
+        ));
+    }
+
+    private function doBackup($backupDir, $targetDir)
+    {
+        $this->commander->enqueue(sprintf(
+            "tar --exclude='%s*' -czf %s/%s-%s-%s.tar.gz %s*"
+            , $backupDir
+            , $backupDir
+            , basename($targetDir)
+            , md5($targetDir)
+            , date('YmdHis')
+            , $targetDir // We're backing up this directory into BACKUP_DIR
+        ));
+    }
+    private function doComposer($targetDir){
+        $this->commander->enqueue(sprintf(
+            'composer --no-ansi --no-interaction --no-progress --working-dir=%s install %s'
+            , $targetDir
+            , $this->composerOptions
+        ));
+    }
+    private function doRSYNC($source, $dest){
+        $exclude = '';
+        foreach($this->exclude as $exc)
+        {
+            $exclude .= ' --exclude=' . $exc;
+        }
+        $this->commander->enqueue(sprintf(
+            'rsync -rltgoDzvO %s %s %s %s'
+            , $source
+            , $dest
+            , ($this->canDeleteFile) ? '--delete-after' : ''
+            , $exclude
+        ));
+    }
+    private function doCleanUp($dir)
+    {
+        $this->commander->enqueue(sprintf(
+            'rm -rf %s'
+            , $dir
+        ));
+    }
 }

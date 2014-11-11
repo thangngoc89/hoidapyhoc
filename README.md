@@ -1,4 +1,4 @@
-asldkfjalskdfj lskjdf lskdfj xzcvzx cv,m lsdkfjowierjklj
+asldkfjalskdfj lskjdf lskdfj xzcvzx cv,m asdf asdfas dfasdfa sdfsdfasdfwerlsdkfjowierjklj
 # Simple PHP Git deploy script
 _Automatically deploy the code using PHP and Git._
 

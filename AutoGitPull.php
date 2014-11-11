@@ -203,7 +203,7 @@ class AutoGitPull
         $tmpDir = $this->tmpDir;
         $isUsersync = false;
         $repositoryDir = sprintf('/%1$s/%2$s/', $this->branchMap[$branchName], $this->authorMap[$committer]);
-
+        file_put_contents(PARENT_DIR."/log.txt",$repositoryDir);
         //Check if use rsync
         if ($tmpDir !== '') //rsync
         {
@@ -291,7 +291,7 @@ class AutoGitPull
             $exclude .= ' --exclude=' . $exc;
         }
         $this->commander->enqueue(sprintf(
-            'rsync -rltgoDzvO %s %s %s %s'
+            'rsync -rltgoDzvO %1$s %2$s %3$s %4$s'
             , $source
             , $dest
             , ($this->canDeleteFile) ? '--delete-after' : ''

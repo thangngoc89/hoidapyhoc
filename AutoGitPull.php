@@ -240,7 +240,7 @@ class AutoGitPull
         if($isUsersync)
         {
 
-            $this->doRSYNC($targetDir, $repositoryDir);
+            $this->doRSYNC($targetDir, $this->targetDir . $repositoryDir);
         }
         if($this->isNeedClearUp){
             $this->doCleanUp($tmpDir);

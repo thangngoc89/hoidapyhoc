@@ -31,7 +31,6 @@ class Commander {
     public function checkRequirements(){}
 
     public function execute($command = ''){
-        ob_start();
         if($command != '')
         {
             $this->output[$command] = shell_exec($command);
@@ -44,20 +43,21 @@ class Commander {
             }
             else {
                 foreach ($this->commands as $command) {
+                    ob_start();
                     $tmp = array();
-                    exec($command . ' 2>&1', $tmp, $return_code); // Execute the command
+                    exec($command . ' 2>&1', $tmp, $return_code);
+
                     printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))
                     );
                     $result = ob_get_contents();
-                    ob_flush();
                     file_put_contents(PARENT_DIR."/log.txt",$result,FILE_APPEND);
+                    ob_end_clean();
                     if ($return_code !== 0) {
                         break;
                     }
                 }
-                ob_end_clean();
                 $this->commands = array();
             }
         }

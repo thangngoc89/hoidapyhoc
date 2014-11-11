@@ -16,7 +16,7 @@ class Logger {
     }
     public static function logEnd(){
         $result = ob_get_contents();
-        file_put_contents("log.html",$result);
+        file_put_contents(PARENT_DIR."/log.html",$result);
         ob_end_clean();
     }
 }

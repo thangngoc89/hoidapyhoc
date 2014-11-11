@@ -34,7 +34,7 @@ class Event extends BaseEvent{
        //get branch name from ref url
        $refParsed = explode('/',$data->ref);
        $this->repository->branchName = $refParsed[count($refParsed)-1];
-       $this->author = $data->commits->head_commit->committer;
+       $this->author = $data->head_commit->committer;
        return true;
    }
     public function getCommiterUsername()

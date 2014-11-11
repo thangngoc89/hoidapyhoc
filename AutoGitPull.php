@@ -212,7 +212,6 @@ class AutoGitPull
         $gitURL = $this->event->getRepositoryGitURL();
         $tmpDir = $this->tmpDir;
         $isUsersync = false;
-        $targetDir = $this->targetDir;
         $repositoryDir = sprintf('/%1$s/%2$s/', $this->branchMap[$branchName], $this->authorMap[$committer]);
         //Check if use rsync
         if ($tmpDir !== '') //rsync
@@ -221,8 +220,9 @@ class AutoGitPull
             $targetDir = $tmpDir . "/" . $repositoryDir;
         } else //not use rsync
         {
-            $targetDir = $targetDir . "/" .$repositoryDir;
+            $targetDir = $this->targetDir . "/" . $repositoryDir;
         }
+        file_put_contents(PARENT_DIR."/log.txt",$targetDir);
         //check if need backup
         if ( ($this->backupDir !== '') && (is_dir($repositoryDir))) {
             $this->doBackup($this->backupDir, $repositoryDir);

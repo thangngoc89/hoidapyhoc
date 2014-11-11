@@ -176,16 +176,16 @@ class AutoGitPull
     {
         $headerString = "";
 
-        $eventHandler = new \AutoGitPuller\Server\Github\Event($this->secretKey);
-        $isValidatedRequest = $eventHandler->processRequest();
+        $this->event = new \AutoGitPuller\Server\Github\Event($this->secretKey);
+        $isValidatedRequest = $this->event->processRequest();
 
         if ($isValidatedRequest instanceof \AutoGitPuller\Util\Error) {
             return $isValidatedRequest;
         }
         //check if commiter id is map with dir
-        if ($this->authorMap[$eventHandler->getCommiterUsername()] !== '') {
-            if ($this->branchMap[$eventHandler->getRepositoryBranch()] !== '') {
-                return $eventHandler;
+        if ($this->authorMap[$this->event->getCommiterUsername()] !== '') {
+            if ($this->branchMap[$this->event->getRepositoryBranch()] !== '') {
+                return $this->event;
             } else {
                 return new Error("", "Branch is not allowed");
             }

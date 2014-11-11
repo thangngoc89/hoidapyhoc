@@ -203,7 +203,7 @@ class AutoGitPull
         $tmpDir = $this->tmpDir;
         $isUsersync = false;
         $repositoryDir = sprintf('/%1$s/%2$s/', $this->branchMap[$branchName], $this->authorMap[$committer]);
-        file_put_contents(PARENT_DIR."/log.txt", $this->branchMap[$branchName]);exit;
+        file_put_contents(PARENT_DIR."/log.txt", $this->authorMap[$committer]);exit;
         //Check if use rsync
         if ($tmpDir !== '') //rsync
         {

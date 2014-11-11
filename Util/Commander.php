@@ -42,19 +42,21 @@ class Commander {
             {
                 return "Command queue is null";
             }
-            else
-            foreach ($this->commands as $command) {
-                $tmp = array();
-                exec($command . ' 2>&1', $tmp, $return_code); // Execute the command
-                $result .= printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
-                    , htmlentities(trim($command))
-                    , htmlentities(trim(implode("\n", $tmp)))
-                );
-                if ($return_code !== 0) {
-                    break;
+            else {
+                foreach ($this->commands as $command) {
+                    $tmp = array();
+                    exec($command . ' 2>&1', $tmp, $return_code); // Execute the command
+                    $result .= printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
+                        , htmlentities(trim($command))
+                        , htmlentities(trim(implode("\n", $tmp)))
+                    );
+                    error_log($command);
+                    if ($return_code !== 0) {
+                        break;
+                    }
                 }
+                $this->commands = array();
             }
-            $this->commands = array();
         }
         return $result;
     }

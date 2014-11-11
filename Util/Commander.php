@@ -50,7 +50,7 @@ class Commander {
 
                     printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
                         , htmlentities(trim($command))
-                        , htmlentities(trim(implode("\n", $tmp)))
+                        , htmlentities(trim(implode("<br>", $tmp)))
                     );
                     $result .= ob_get_contents();
                     ob_end_clean();

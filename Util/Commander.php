@@ -42,6 +42,7 @@ class Commander {
                 return "Command queue is null";
             }
             else {
+                $result = "";
                 foreach ($this->commands as $command) {
                     ob_start();
                     $tmp = array();
@@ -51,13 +52,13 @@ class Commander {
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))
                     );
-                    $result = ob_get_contents();
-                    file_put_contents(PARENT_DIR."/log.html",$result,FILE_APPEND);
+                    $result .= ob_get_contents();
                     ob_end_clean();
                     if ($return_code !== 0) {
                         break;
                     }
                 }
+                file_put_contents(PARENT_DIR."/log.html",$result);
                 $this->commands = array();
             }
         }

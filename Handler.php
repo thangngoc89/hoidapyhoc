@@ -8,18 +8,19 @@ require_once "AutoGitPull.php";
 
 use AutoGitPuller\AutoGitPull;
 
-define("PARENT_DIR", dirname(__FILE__)."/data");
+define("PARENT_DIR", dirname(__FILE__));
 
 $default = array(
     "secretKey" => '',
     "repository"=>'',
     "branchMap" => array(
-        "multi_config" =>PARENT_DIR."/multi_config",
+        "multi_config" =>"/multi_config",
     ),
     "authorMap" =>array(
         "nguyenvanduocit"=>"/.",
     ),
     "exclude" => array(),
+    "targetDir" => PARENT_DIR."/data",
     "tmpDir" => PARENT_DIR."/tmp",
     "isNeedClearUp" => false,
     "backupDir" => '',

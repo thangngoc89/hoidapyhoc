@@ -22,6 +22,7 @@ class AutoGitPull
     protected $authorMap; //map author to directory
     protected $exclude;
     protected $tmpDir;
+    protected $targetDir;
     protected $isNeedClearUp;
     protected $backupDir;
     protected $isUseComposer;
@@ -72,6 +73,7 @@ class AutoGitPull
             "authorMap" => array(),
             "exclude" => array(),
             "tmpDir" => '',
+            "targetDir" => '',
             "isNeedClearUp" => false,
             "backupDir" => '',
             "isTryMkDir" => true,
@@ -89,6 +91,7 @@ class AutoGitPull
         $this->authorMap = $args["authorMap"];
         $this->exclude = $args["exclude"];
         $this->tmpDir = $args["tmpDir"];
+        $this->targetDir = $args["targetDir"];
         $this->canDeleteFile = $args["canDeleteFile"];
         $this->isNeedClearUp = $args["isNeedClearUp"];
         $this->backupDir = $args["backupDir"];
@@ -114,6 +117,9 @@ class AutoGitPull
             if (($this->tmpDir !== '') && (!is_dir($this->tmpDir))) {
                 $this->commander->execute(sprintf('mkdir -p %1$s', $this->tmpDir));
             }
+            if (($this->targetDir !== '') && (!is_dir($this->targetDir))) {
+                $this->commander->execute(sprintf('mkdir -p %1$s', $this->targetDir));
+            }
             //try to create dir
             foreach ($this->branchMap as $branch => $dir) {
                 if (($dir !== '') && !is_dir($dir)) {
@@ -129,11 +135,12 @@ class AutoGitPull
         }
         //Check if dir exist and write able
         foreach ($this->branchMap as $branch => $dir) {
-            if (!is_dir($dir) || !is_writable($dir)) {
-                return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
+            $targetDir = $this->targetDir ."/".$dir;
+            if (!is_dir($targetDir) || !is_writable($targetDir)) {
+                return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $targetDir));
             }
             foreach ($this->authorMap as $author => $authorDir) {
-                $authorDirPath = $dir . "/" . $authorDir;
+                $authorDirPath = $targetDir . "/" . $authorDir;
                 if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
                     return new Error("", sprintf('Author dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
                 }
@@ -146,6 +153,9 @@ class AutoGitPull
         //Check tmp dir
         if (($this->tmpDir != '') && (!is_dir($this->tmpDir) || !is_writable($this->tmpDir))) {
             return new \AutoGitPuller\Util\Error("", sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
+        }
+        if (($this->targetDir != '') && (!is_dir($this->targetDir) || !is_writable($this->targetDir))) {
+            return new \AutoGitPuller\Util\Error("", sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->targetDir));
         }
         //check directory
         if ($this->commander->execute("which git") == '') {
@@ -202,6 +212,7 @@ class AutoGitPull
         $gitURL = $this->event->getRepositoryGitURL();
         $tmpDir = $this->tmpDir;
         $isUsersync = false;
+        $targetDir = $this->targetDir;
         $repositoryDir = sprintf('/%1$s/%2$s/', $this->branchMap[$branchName], $this->authorMap[$committer]);
         //Check if use rsync
         if ($tmpDir !== '') //rsync
@@ -210,7 +221,7 @@ class AutoGitPull
             $targetDir = $tmpDir . "/" . $repositoryDir;
         } else //not use rsync
         {
-            $targetDir = $repositoryDir;
+            $targetDir = $targetDir . "/" .$repositoryDir;
         }
         //check if need backup
         if ( ($this->backupDir !== '') && (is_dir($repositoryDir))) {
@@ -229,6 +240,7 @@ class AutoGitPull
         }
         if($isUsersync)
         {
+
             $this->doRSYNC($targetDir, $repositoryDir);
         }
         if($this->isNeedClearUp){
@@ -289,7 +301,6 @@ class AutoGitPull
         {
             $exclude .= ' --exclude=' . $exc;
         }
-        file_put_contents(PARENT_DIR."/log.txt",$source . ":" . $dest);exit;
         $this->commander->enqueue(sprintf(
             'rsync -rltgoDzvO %1$s %2$s %3$s %4$s'
             , $source

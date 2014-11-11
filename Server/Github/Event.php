@@ -35,7 +35,7 @@ class Event extends BaseEvent{
        $refParsed = explode('/',$data->ref);
        $this->repository->branchName = $refParsed[count($refParsed)-1];
        $this->author = $data->commits->committer;
-        file_put_contents(PARENT_DIR."/log.txt", $data->commits->committer->username);exit;
+        file_put_contents(PARENT_DIR."/log.txt", $data->compare);exit;
        return true;
    }
     public function getCommiterUsername()

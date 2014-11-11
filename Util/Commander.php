@@ -57,7 +57,7 @@ class Commander {
                     }
                 }
                 $this->commands = array();
-                file_put_contents(PARENT_DIR."/log.txt",$result);
+                //file_put_contents(PARENT_DIR."/log.txt",$result);
                 return $result;
             }
         }

@@ -56,10 +56,10 @@ class Commander {
                     }
                 }
                 $this->commands = array();
-                file_put_contents("../log.txt",$result);
+                file_put_contents("/../log.txt",$result);
+                return $result;
             }
         }
-        return $result;
     }
     public function getOutput(){
         $html = "<div class='console_result'>";

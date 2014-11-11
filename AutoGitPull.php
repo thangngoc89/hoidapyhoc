@@ -217,12 +217,11 @@ class AutoGitPull
         if ($tmpDir !== '') //rsync
         {
             $isUsersync = true;
-            $targetDir = $tmpDir . "/" . $repositoryDir;
+            $targetDir = $tmpDir . $repositoryDir;
         } else //not use rsync
         {
-            $targetDir = $this->targetDir . "/" . $repositoryDir;
+            $targetDir = $this->targetDir . $repositoryDir;
         }
-        file_put_contents(PARENT_DIR."/log.txt",$targetDir);exit;
         //check if need backup
         if ( ($this->backupDir !== '') && (is_dir($repositoryDir))) {
             $this->doBackup($this->backupDir, $repositoryDir);

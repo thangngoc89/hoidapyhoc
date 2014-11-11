@@ -44,7 +44,6 @@ class Commander {
             else {
                 $result = "";
                 foreach ($this->commands as $command) {
-                    ob_start();
                     $tmp = array();
                     exec($command . ' 2>&1', $tmp, $return_code);
 
@@ -52,13 +51,10 @@ class Commander {
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("<br>", $tmp)))
                     );
-                    $result .= ob_get_contents();
-                    ob_end_clean();
                     if ($return_code !== 0) {
                         break;
                     }
                 }
-                file_put_contents(PARENT_DIR."/log.html",$result);
                 $this->commands = array();
             }
         }

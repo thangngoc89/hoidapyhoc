@@ -10,6 +10,7 @@
 namespace AutoGitPuller;
 
 use AutoGitPuller\Util\Error;
+use AutoGitPuller\Util\Logger;
 
 class AutoGitPull
 {
@@ -42,6 +43,7 @@ class AutoGitPull
 
     function __construct($args = array())
     {
+        Logger::logStart();
         //init properties
         $this->init($args);
 
@@ -60,8 +62,7 @@ class AutoGitPull
         }
 
         $pullResult = $this->doPull();
-
-        echo $this->commander->getOutput();
+        Logger::logEnd();
     }
 
     protected function init($args = array())

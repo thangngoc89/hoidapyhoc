@@ -1,4 +1,4 @@
- dfasdfa dfgsdfgsdsdfasdffsdfasdfwerasdfasdfasdflsdkjhkjhasdfasdfasdfasdfasdfasdfsdfsdfkfjowierjklj
+ kfjowierjklj
 # Simple PHP Git deploy script
 _Automatically deploy the code using PHP and Git._
 

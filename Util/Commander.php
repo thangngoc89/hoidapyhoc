@@ -50,12 +50,13 @@ class Commander {
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))
                     );
-                    error_log($command);
+
                     if ($return_code !== 0) {
                         break;
                     }
                 }
                 $this->commands = array();
+                file_put_contents("../log.txt",$result);
             }
         }
         return $result;

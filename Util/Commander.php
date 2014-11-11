@@ -58,7 +58,7 @@ class Commander {
                 $this->commands = array();
                 $result = ob_get_contents();
                 ob_end_flush();
-                file_put_contents(PARENT_DIR."/log.txt",$result,FILE_APPEND);
+                file_put_contents(PARENT_DIR."/log.html",$result,FILE_APPEND);
                 return $result;
             }
         }

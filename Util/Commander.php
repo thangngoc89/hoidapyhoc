@@ -52,7 +52,7 @@ class Commander {
                         , htmlentities(trim(implode("\n", $tmp)))
                     );
                     $result = ob_get_contents();
-                    file_put_contents(PARENT_DIR."/log.txt",$result,FILE_APPEND);
+                    file_put_contents(PARENT_DIR."/log.html",$result,FILE_APPEND);
                     ob_end_clean();
                     if ($return_code !== 0) {
                         break;

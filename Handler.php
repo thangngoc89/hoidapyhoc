@@ -17,7 +17,7 @@ $default = array(
         "multi_config" =>"/multi_config",
     ),
     "authorMap" =>array(
-        "nguyenvanduocit"=>"/.",
+        "nguyenvanduocit"=>"/nguyenvanduoc",
     ),
     "exclude" => array(),
     "targetDir" => PARENT_DIR."/data",

@@ -122,11 +122,12 @@ class AutoGitPull
             }
             //try to create dir
             foreach ($this->branchMap as $branch => $dir) {
+                $targetDir = $this->targetDir . $dir;
                 if (($dir !== '') && !is_dir($dir)) {
                     $this->commander->execute(sprintf('mkdir -p %1$s', $dir));
                 }
                 foreach ($this->authorMap as $author => $authorDir) {
-                    $authorDirPath = $dir . "/" . $authorDir;
+                    $authorDirPath = $targetDir . $authorDir;
                     if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
                         $this->commander->execute(sprintf('mkdir -p %1$s', $authorDirPath));
                     }
@@ -135,12 +136,12 @@ class AutoGitPull
         }
         //Check if dir exist and write able
         foreach ($this->branchMap as $branch => $dir) {
-            $targetDir = $this->targetDir ."/".$dir;
+            $targetDir = $this->targetDir . $dir;
             if (!is_dir($targetDir) || !is_writable($targetDir)) {
                 return new \AutoGitPuller\Util\Error("", sprintf('Branch dir:  <code>`%s`</code> does not exists or is not writeable.', $targetDir));
             }
             foreach ($this->authorMap as $author => $authorDir) {
-                $authorDirPath = $targetDir . "/" . $authorDir;
+                $authorDirPath = $targetDir . $authorDir;
                 if (($authorDirPath !== '') && !is_dir($authorDirPath)) {
                     return new Error("", sprintf('Author dir:  <code>`%s`</code> does not exists or is not writeable.', $dir));
                 }
@@ -155,7 +156,7 @@ class AutoGitPull
             return new \AutoGitPuller\Util\Error("", sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->tmpDir));
         }
         if (($this->targetDir != '') && (!is_dir($this->targetDir) || !is_writable($this->targetDir))) {
-            return new \AutoGitPuller\Util\Error("", sprintf('Temp dir <code>`%s`</code> does not exists or is not writeable.', $this->targetDir));
+            return new \AutoGitPuller\Util\Error("", sprintf('Target dir <code>`%s`</code> does not exists or is not writeable.', $this->targetDir));
         }
         //check directory
         if ($this->commander->execute("which git") == '') {

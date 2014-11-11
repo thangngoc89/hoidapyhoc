@@ -47,7 +47,7 @@ class Commander {
                     $tmp = array();
                     exec($command . ' 2>&1', $tmp, $return_code);
 
-                    printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div><br>'
+                    printf('<div class="command-row"><span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div></div>'
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))
                     );

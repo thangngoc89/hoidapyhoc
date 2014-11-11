@@ -44,8 +44,15 @@ class Commander {
             }
             else
             foreach ($this->commands as $command) {
-                $this->output[$command] = shell_exec($command);
-                $result .= $this->output[$command];
+                $tmp = array();
+                exec($command . ' 2>&1', $tmp, $return_code); // Execute the command
+                $result .= printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
+                    , htmlentities(trim($command))
+                    , htmlentities(trim(implode("\n", $tmp)))
+                );
+                if ($return_code !== 0) {
+                    break;
+                }
             }
             $this->commands = array();
         }

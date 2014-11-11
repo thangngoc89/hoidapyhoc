@@ -46,10 +46,10 @@ class Commander {
                 foreach ($this->commands as $command) {
                     $tmp = array();
                     exec($command . ' 2>&1', $tmp, $return_code); // Execute the command
-                    printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
+                    /*printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))
-                    );
+                    );*/
 
                     if ($return_code !== 0) {
                         break;
@@ -58,7 +58,7 @@ class Commander {
                 $this->commands = array();
                 $result = ob_get_contents();
                 ob_end_flush();
-                file_put_contents(PARENT_DIR."/log.html",$result,FILE_APPEND);
+                file_put_contents(PARENT_DIR."/log.txt",$result,FILE_APPEND);
                 return $result;
             }
         }

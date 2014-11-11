@@ -46,7 +46,6 @@ class Commander {
                 foreach ($this->commands as $command) {
                     $tmp = array();
                     exec($command . ' 2>&1', $tmp, $return_code);
-
                     printf('<div class="command-row"><span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div></div>'
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))

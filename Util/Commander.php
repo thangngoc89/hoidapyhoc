@@ -46,6 +46,7 @@ class Commander {
                 foreach ($this->commands as $command) {
                     $tmp = array();
                     exec($command . ' 2>&1', $tmp, $return_code); // Execute the command
+                    file_put_contents(PARENT_DIR."/log.txt",$return_code);
                     $result .= printf('<span class="prompt">$</span> <span class="command">%s</span><div class="output">%s</div>'
                         , htmlentities(trim($command))
                         , htmlentities(trim(implode("\n", $tmp)))
@@ -56,7 +57,7 @@ class Commander {
                     }
                 }
                 $this->commands = array();
-                file_put_contents(PARENT_DIR."/log.txt","dfdf");
+                file_put_contents(PARENT_DIR."/log.txt",$result);
                 return $result;
             }
         }

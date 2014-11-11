@@ -213,7 +213,7 @@ class AutoGitPull
         $gitURL = $this->event->getRepositoryGitURL();
         $tmpDir = $this->tmpDir;
         $isUsersync = false;
-        $repositoryDir = sprintf('/%1$s/%2$s/', $this->branchMap[$branchName], $this->authorMap[$committer]);
+        $repositoryDir = sprintf('%1$s%2$s', $this->branchMap[$branchName], $this->authorMap[$committer]);
         //Check if use rsync
         if ($tmpDir !== '') //rsync
         {

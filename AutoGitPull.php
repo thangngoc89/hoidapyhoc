@@ -47,21 +47,24 @@ class AutoGitPull
         //init properties
         $this->init($args);
 
-        $this->event = $this->handleRequest();
+        $handlerResult = $this->handleRequest();
 
-        if ($this->event instanceof \AutoGitPuller\Util\Error) {
-            die($this->event->getMessage());
+        if ($handlerResult instanceof \AutoGitPuller\Util\Error) {
+            echo $handlerResult->getMessage();
         }
+        else {
+            $this->commander = \AutoGitPuller\Util\Commander::getInstance();
 
-        $this->commander = \AutoGitPuller\Util\Commander::getInstance();
+            $checkResult = $this->checkEnvironment();
 
-        $checkResult = $this->checkEnvironment();
-
-        if ($checkResult instanceof \AutoGitPuller\Util\Error) {
-            die($checkResult->getMessage());
+            if ($checkResult instanceof \AutoGitPuller\Util\Error) {
+                echo $checkResult->getMessage();
+            }
+            else
+            {
+                $pullResult = $this->doPull();
+            }
         }
-
-        $pullResult = $this->doPull();
         Logger::logEnd();
     }
 
@@ -83,7 +86,8 @@ class AutoGitPull
             'isNeedVersionFile' => true,
             'composerOptions' => '--no-dev',
             "username" => '',
-            'password' => ''
+            'password' => '',
+            'emailOnError' => 'phoenixsinh@gmail.com'
         );
         $args = array_merge($default, $args);
         $this->secretKey = $args["secretKey"];
@@ -187,22 +191,26 @@ class AutoGitPull
     public function handleRequest()
     {
         $headerString = "";
-
-        $this->event = new \AutoGitPuller\Server\Github\Event($this->secretKey);
+        if( isset($_SERVER['HTTP_X_GITHUB_DELIVERY'])) {
+            $this->event = new \AutoGitPuller\Server\Github\Event($this->secretKey, $this->username, $this->password);
+        }
+        else{
+            $this->event = new \AutoGitPuller\Server\Bitbuck\Event($this->secretKey, $this->username, $this->password);
+        }
         $isValidatedRequest = $this->event->processRequest();
 
         if ($isValidatedRequest instanceof \AutoGitPuller\Util\Error) {
             return $isValidatedRequest;
         }
         //check if commiter id is map with dir
-        if ($this->authorMap[$this->event->getCommiterUsername()] !== '') {
-            if ($this->branchMap[$this->event->getRepositoryBranch()] !== '') {
-                return $this->event;
+        if ( array_key_exists($this->event->getCommiterUsername(), $this->authorMap) ) {
+            if ( array_key_exists($this->event->getRepositoryBranch(), $this->branchMap) ) {
+                return true;
             } else {
                 return new Error("", "Branch is not allowed");
             }
         } else {
-            return new Error("", "This commiter is now allowed");
+            return new Error("", "This commiter is not allowed");
         }
     }
 
@@ -225,8 +233,8 @@ class AutoGitPull
             $targetDir = $this->targetDir . $repositoryDir;
         }
         //check if need backup
-        if ( ($this->backupDir !== '') && (is_dir($repositoryDir))) {
-            $this->doBackup($this->backupDir, $repositoryDir);
+        if ( ($this->backupDir !== '') && (is_dir($targetDir))) {
+            $this->doBackup($this->backupDir, $targetDir);
         }
 
         //check if git init on target dir
@@ -242,15 +250,20 @@ class AutoGitPull
         if($isUsersync)
         {
             $this->doRSYNC($targetDir, $this->targetDir . $repositoryDir);
-        }
-        if($this->isNeedClearUp){
-            $this->doCleanUp($tmpDir);
+            if($this->isNeedClearUp){
+                $this->doCleanUp($tmpDir);
+            }
         }
         $this->commander->execute();
     }
 
     private function doClone($gitURL, $targetDir, $branchName)
     {
+        //clean directory
+        $this->commander->enqueue(sprintf(
+            'rm -rf %1$s/*'
+            , $targetDir
+        ));
         $this->commander->enqueue(sprintf(
             'git clone --depth=1 --branch %1$s %2$s %3$s'
             , $branchName
@@ -261,16 +274,22 @@ class AutoGitPull
     private function doFetch($branchName, $targetDir)
     {
         $this->commander->enqueue(sprintf(
-            'git --git-dir="%1$s.git" --work-tree="%2%s" fetch origin %3$s'
+            'git --git-dir="%1$s.git" --work-tree="%2$s" fetch origin %3$s'
             , $targetDir
             , $targetDir
             , $branchName
         ));
-        $this->commander->execute(sprintf(
+        $this->commander->enqueue(sprintf(
             'git --git-dir="%1$s.git" --work-tree="%2$s" reset --hard FETCH_HEAD'
             , $targetDir
             , $targetDir
         ));
+
+        /*$this->commander->enqueue(sprintf(
+            'cd %1$s'
+            , $targetDir
+        ));*/
+
         $this->commander->enqueue(sprintf(
             'git submodule update --init --recursive'
         ));
@@ -278,15 +297,17 @@ class AutoGitPull
 
     private function doBackup($backupDir, $targetDir)
     {
-        $this->commander->enqueue(sprintf(
-            "tar --exclude='%s*' -czf %s/%s-%s-%s.tar.gz %s*"
-            , $backupDir
-            , $backupDir
-            , basename($targetDir)
-            , md5($targetDir)
-            , date('YmdHis')
-            , $targetDir // We're backing up this directory into BACKUP_DIR
-        ));
+        if (count(glob($targetDir."/*")) !== 0 ) { //Check if target dir is not empty
+            $this->commander->enqueue(sprintf(
+                "tar --exclude='%s*' -czf %s/%s-%s-%s.tar.gz %s*"
+                , $backupDir
+                , $backupDir
+                , basename($targetDir)
+                , md5($targetDir)
+                , date('YmdHis')
+                , $targetDir // We're backing up this directory into BACKUP_DIR
+            ));
+        }
     }
     private function doComposer($targetDir){
         $this->commander->enqueue(sprintf(

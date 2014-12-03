@@ -197,6 +197,7 @@ class AutoGitPull
         else{
             $this->event = new \AutoGitPuller\Server\Bitbuck\Event($this->secretKey, $this->username, $this->password);
         }
+
         $isValidatedRequest = $this->event->processRequest();
 
         if ($isValidatedRequest instanceof \AutoGitPuller\Util\Error) {

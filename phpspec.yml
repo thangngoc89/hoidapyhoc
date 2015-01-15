@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Quiz
+        psr4_prefix: Quiz
+        src_path: app

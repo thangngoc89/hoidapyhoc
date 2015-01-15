@@ -1,0 +1,80 @@
+
+.join h1 {
+  text-align: center;
+  margin-bottom: 1em;
+  margin-top: 0;
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+@media (max-width: 991px) {
+  .join h1 {
+    margin-bottom: 1em;
+  };
+}
+
+.plan {
+  color: #fff;
+  text-align: center;
+  min-height: 370px;
+  padding: 0 0 3em;
+  height: 370px;
+}
+
+@media (max-width: 991px) {
+  .plan {
+    margin-bottom: 50px;
+  };
+}
+
+.plan h2 {
+  margin-top: 0;
+  background: #9f1d08;
+  font-weight: 100;
+  line-height: 2em;
+  color: #fff;
+}
+
+.plan h3 {
+  font-size: 5.6em;
+  margin: 25px 0 35px 0;
+  color: #fff;
+  line-height: 1;
+}
+
+.plan p {
+  padding: 0 5em;
+  margin-bottom: 2em;
+  color: #fff;
+  font-size: 15px;
+}
+
+.plan.monthly {
+  background: #A7B3C2;
+}
+
+.plan.monthly h2.monthly-heading {
+  background: #7a8ca3;
+  border-bottom: 1px solid #6b7f98;
+}
+
+.plan.yearly {
+  background: $base-color;
+  color: #555;
+}
+
+@media (max-width: 991px) {
+  .plan.yearly {
+    height: inherit;
+    -webkit-transform: scale(1);
+  }
+
+  .plan.yearly p {
+    padding: 0 6em;
+  };
+}
+
+.plan.yearly h2.yearly-heading {
+  background: #e82a0c;
+  border-bottom: 1px solid $base-color-dark;
+}

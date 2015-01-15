@@ -1,0 +1,184 @@
+
+.avatar .img-circle {
+  background: #fff;
+  padding: 3px;
+  border: 1px solid #c5c5c5;
+}
+
+.avatar .img-circle:hover {
+  background: $base-color;
+}
+
+.banner-profile {
+  padding: 1.5em 0;
+  overflow: visible;
+  min-height: 200px;
+  border-top: none !important;
+}
+
+.banner-profile .container {
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .banner-profile {
+    padding: 2em 0;
+  };
+}
+
+.banner-profile__links {
+  color: #fff;
+  font-size: 1.1em;
+  padding-left: 0;
+  float: right;
+  text-align: right;
+}
+
+@media (max-width: 991px) {
+  .banner-profile__links {
+    display: none;
+  };
+}
+
+.banner-profile__links li {
+  font-size: 0.9em;
+  line-height: 2.2em;
+  font-family: $font-family-base;
+}
+
+.banner-profile__links a {
+  color: #fff;
+}
+
+.banner-profile__links a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.banner-profile__links i {
+  color: #fff;
+  padding-right: 4px;
+  vertical-align: middle;
+}
+
+.profile__name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 40px;
+  display: inline-block;
+  position: relative;
+  top: 29px;
+  line-height: 1em;
+  margin: 0;
+  float: left;
+}
+
+.profile__name a {
+  color: inherit;
+}
+
+.profile__name a:hover {
+  color: #c5c5c5;
+  text-decoration: none;
+}
+
+.profile__avatar {
+  border: 1px solid #f88c7b;
+  padding: 5px;
+  width: 190px;
+  float: left;
+}
+
+@media (max-width: 991px) {
+  .profile__avatar {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    margin-left: auto;
+    float: none;
+  };
+}
+
+.profile__avatar:hover {
+  border: 1px solid $base-color;
+}
+
+.profile__stats {
+  background: #333;
+  border-bottom: 1px solid #555;
+}
+
+@media (max-width: 991px) {
+  .profile__stats {
+    display: none;
+  };
+}
+
+.profile__stats .container {
+  position: relative;
+}
+
+.profile__stats ul {
+  padding: 1em 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.profile__stats li {
+  display: inline;
+  float: right;
+  margin-left: 5em;
+  text-align: right;
+}
+
+button#editProfile {
+  vertical-align: top;
+  margin-left: 11px;
+}
+
+.profile__stats-count {
+  color: #fff;
+  font-size: 31px;
+  font-weight: 300;
+}
+
+.profile__stats-heading {
+  display: block;
+  color: #c5c5c5;
+  margin-bottom: 0.3em;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.profile__stats-heading a {
+  color: #c5c5c5;
+}
+
+li.profile__stats-join-date {
+  margin-right: 0;
+  float: right;
+}
+
+.profile-forum-participation .media {
+  //  max-height: 400px;
+  //  overflow-y: auto;
+}
+
+.profile-forum-participation .media-heading {
+  color: #313131;
+  font-size: 1.2em;
+  margin-bottom: 0.6em;
+}
+
+.profile-forum-participation .media-heading a {
+  color: $base-color;
+}
+
+.profile-forum-participation .media-heading a:hover {
+  color: $base-color-dark;
+}
+
+.profile-forum-participation .media-body {
+  font-size: 0.8em;
+  width: 80%;
+}

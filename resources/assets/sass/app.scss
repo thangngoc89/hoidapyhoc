@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+@import 'base/config';
+@import 'base/prefixer';
+
+@import 'components/boostrap';
+@import 'partials/transitions';
+@import 'partials/font-icon';
+
+/* Components */
+@import 'partials/nav';
+@import 'partials/pagination';
+@import 'partials/loginModal';
+@import 'partials/buttons';
+
+/* Page */
+
+@import 'quiz/quiz';
+@import 'quiz/history';
+
+@import 'partials/login';
+@import 'partials/home';
+@import 'components/unsort';
+@import 'partials/avatar-banner-profile';
+
+
+@import 'quiz/quiz-sidebar';
+
+
+@import '../../../bower_components/toastr/toastr';
+
+
+
+
+

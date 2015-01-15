@@ -1,0 +1,14 @@
+{
+  "name": "Hỏi Đáp Y Học",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "~3.3.0",
+    "jquery": "~1.9.1",
+    "toastr": "~2.1.0",
+    "animate.css": "master",
+    "jScrollPane": "master",
+    "jquery-form": "~3.46.0",
+    "wow": "~1.0.2",
+      "sticky-kit": "~1.1.1"
+  }
+}

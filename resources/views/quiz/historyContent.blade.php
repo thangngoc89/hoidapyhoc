@@ -1,0 +1,104 @@
+<div class="col-md-8 threads-inner white">
+    <div class="lessons-nav lessons-nav--forum inline-nav">
+         <div class="container">
+             <ul class="lessons-nav__primary">
+                 <li class="active">
+                     <a href="#test">Đề thi</a>
+                 </li>
+                 <li>
+                    <a href="#comment">Bình luận</a>
+                 </li>
+             </ul>
+         </div>
+     </div>
+    <div class="wrap">
+         @include('quiz.partials.content')
+    </div>
+</div>
+<div id="conversations-sidebar" class="col-md-4 white" id="answer_block">
+    <div class="lessons-nav lessons-nav--forum inline-nav">
+        <div class="container">
+           <div class="result-box">
+               <ul>
+                   <li class="pull-left">
+                       <strong>Bạn đạt được:</strong>
+                       <span class="text-error"> {{ $history->score }} điểm</span>
+                   </li>
+                   <li class="pull-right">
+                       <strong>Kết quả:</strong>
+                       <span class="text-error"> TRƯỢT</span>
+                   </li>
+               </ul>
+               <div class="row no-padding">
+                    <dl class="col-md-8 dl-horizontal score">
+                        <dt>Điểm cao nhất:</dt>
+                        <dd>7.5<dd>
+                        <dt>Điểm trung bình:</dt>
+                        <dd>1.25</dd>
+                        <dt>Xếp hạng:</dt>
+                        <dd>9&nbsp;/&nbsp;15</dd>
+                    </dl>
+                   <dl class="col-md-4 dl-horizontal dl-custome desc">
+                        <dt><a class="icontest-option op-choice" href="#"></a></dt>
+                        <dd>Đáp án</dd>
+                        <dt><a class="icontest-option op-true" href="#"></a></dt>
+                        <dd>đúng</dd>
+                        <dt><a class="icontest-option op-fail" href="#"></a></dt>
+                        <dd>sai</dd>
+                    </dl>
+               </div>
+           </div>
+        </div>
+    </div>
+    @if ($history)
+    <div class="quiz-sidebar-section">
+        <div class="statistic-box testHeader" >
+            <div class="userAnswerCount" value="0">
+                <strong>Phần trả lời: </strong>
+                <span id="answeredCount">{{ $history->answeredCount() }}</span>
+                /
+                <span id="totalAnswer">{{ $t->question->count() }}</span>
+            </div>
+        </div>
+        <div class="answer-box option_test" id="option_test">
+            <table class="table_test_result" width="100%" border="0">
+                <tbody>
+                <?php
+                    $i=$t->begin;
+                    $option = ['a','b','c','d','e'];
+                    $userChoices = str_split($history->answer,1);
+                ?>
+                @foreach( $t->question as $index => $q)
+                <tr class="ansRow" data-qindex="{{ $i }}" data-qid="{{ $q->id }}" data-content="{{ $q->content }}">
+                    <td align="center">{{$i}}.</td>
+                    <?php
+                        $rightAnswer = strtolower($q->right_answer);
+                        $userChoice = strtolower($userChoices[$index]);
+                        foreach($option as $op)
+                        {
+                            if (($rightAnswer == $op) && ($userChoice == $op))
+                                $iconType = 'op-true';
+                            elseif ($userChoice == $op)
+                                $iconType = 'op-fail';
+                            elseif ($rightAnswer == $op)
+                                $iconType = 'op-choice';
+                            else $iconType = 'op-'.$op;
+                            echo '<td><a class="icontest-option '.$iconType.'" href="javascript:void(0);">'.$op.'</a></td>';
+                        }
+                    ?>
+                    <td>
+                        <a data-original-title="Xem gợi ý" href="javascript:void(0);" class="iconHint " data-toggle="tooltip" title="" data-questionid="63963">
+                            <i class="zn-icon icon-hint"></i>
+                        </a>
+                    </td>
+                </tr>
+                <?php $i++; ?>
+                @endforeach
+
+                </tbody>
+            </table>
+            <input name="testId" value="2063" type="hidden">
+        </div>
+    </div>
+    @endif
+</div>

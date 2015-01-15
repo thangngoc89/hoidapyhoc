@@ -11,13 +11,26 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', function(){
+    return view('index');
+});
 
 Route::get('home', 'HomeController@index');
 
-get('auth/external/{provider}','Auth\AuthController@external');
+Route::get('auth/external/{provider}','Auth\AuthController@external');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::group(array('prefix' => 'quiz'), function()
+{
+    Route::get('/t/{slug}', 'QuizController@show');
+    Route::get('/t/{slug}/ket-qua/{id}', 'QuizController@showHistory');
+    Route::get('/{filter?}/{info?}', 'QuizController@index');
+
+    Route::get('/create', array('before' => 'auth', 'uses' => 'QuizController@create'));
+    Route::get('/edit/{id}', array('before' => 'auth', 'uses' => 'QuizController@edit'));
+
+});

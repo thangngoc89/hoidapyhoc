@@ -1,0 +1,43 @@
+.bird .modal-footer .bird-btn {
+  margin-left: 5px;
+  float: right;
+}
+.bird-btn {
+  text-transform: none;
+  font-weight: normal;
+}
+a.bird-btn {
+  color: #999;
+}
+a.bird-btn:hover{
+  color: #999;
+  text-decoration: none;
+}
+.bird-btn {
+  border-radius: 3px;
+  background-color: $grey-light;
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 14px;
+  color: #999;
+  display: inline-block;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: medium none;
+  white-space: nowrap;
+}
+.bird-btn:hover,
+a.bird-btn:hover {
+  text-decoration: none;
+  background: $grey-darker;
+  color: $white;
+}
+.bird-btn:active {
+  outline: none;
+  background: #00aa58;
+  color: #fff;
+}
+
+.bird-btn:focus {
+  outline: none;
+}

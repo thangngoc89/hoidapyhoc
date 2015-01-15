@@ -1,0 +1,126 @@
+.result-box {
+//  padding: 20px;
+  min-height: 80px;
+  overflow: hidden;
+}
+.result-box > ul {
+  margin: 0 0 10px 0;
+  padding: 10px 0 30px 0;
+  overflow: hidden;
+  border-bottom: 1px solid #d7d7d7;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.result-box > ul > li {
+  display: inline;
+}
+
+.result-box > ul > li span {
+  color: #25ae6c;
+}
+
+.result-box dl.score {
+  margin: 0;
+  padding: 0 0 0 15px;
+}
+
+.result-box dl.score > dt {
+  text-align: left;
+  text-transform: uppercase;
+  width: 140px;
+//  line-height: 2;
+  margin: 0 0 5px 0;
+}
+
+.result-box dl.score > dd {
+  margin-left: 125px;
+  font-size: 14px;
+}
+
+.result-box dl.desc {
+  margin: 0;
+  padding: 0;
+}
+
+.result-box dl.desc > dt {
+  width: 25px;
+  margin: 0 0 5px 0;
+}
+
+.result-box dl.desc > dt > a {
+  text-indent: -9999;
+}
+
+.result-box dl.desc > dd {
+  margin-left: 35px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+
+.ansRow:hover{
+  background-color: #25ae6c !important;
+
+}
+.ansRow.active td {
+  background-color: #25ae6c !important;
+  color: #fff;
+}
+
+.ansRow {
+  cursor: pointer;
+}
+
+.iconHint {
+  color: #999;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+
+}
+
+.iconHint .zn-icon{
+  opacity: 0.2;
+}
+
+.iconHint .zn-icon:hover{
+  opacity: 0.5;
+}
+
+.iconHint.ready .zn-icon:hover{
+  opacity: 1.0;
+}
+
+.iconHint.ready .zn-icon{
+  opacity: 1.0;
+
+}
+
+.active .iconHint.ready .zn-icon{
+  opacity: 0.6;
+}
+
+.active .iconHint {
+  color: #fff;
+}
+
+.iconHint:hover {
+  color: #333;
+
+}
+
+.ansHintModal .tab-pane {
+  display: none;
+}
+
+.ansHintModal .tab-pane.active {
+  display: block;
+}
+.icon-hint {
+  width: 24px;
+  height: 24px;
+  background: url("/assets/img/icon/icon-hint.png") no-repeat scroll center center transparent;
+  display: inline-block;
+}

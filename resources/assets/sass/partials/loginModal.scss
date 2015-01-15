@@ -1,0 +1,87 @@
+#loginModal .modal-dialog {
+  width: 300px;
+}
+
+#loginModal .modal-body {
+  height: 100px;
+}
+
+#loginModal input.input-block-level {
+  width: 100%;
+  float: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 30px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+#loginModal label {
+  float: left;
+  width: 100%;
+}
+
+#loginModal label {
+  font-size: 12px;
+}
+
+#loginModal b {
+  font-size: 12px;
+}
+
+#loginModal hr {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.socialAnchors {
+  width: 100%;
+  margin-bottom: 20px;
+  float: left;
+
+}
+
+.socialAnchors > div {
+  width: 100%;
+  margin: 0 auto;
+
+}
+
+
+.socialAnchors a {
+  width: 100%;
+  height: 36px;
+  display: inline-block;
+  float: left;
+  margin-right: 3px;
+  margin-left: 2px;
+  box-sizing: border-box;
+  color: #FFF !important;
+  text-align: left;
+  padding-left: 55px;
+  margin-bottom: 5px;
+  background-repeat: no-repeat;
+  transition-duration: 0.2s;
+  font-size: 12px;
+  border-radius: 2px;
+  font-weight: bold;
+  border-left: 5px solid #000;
+  padding-top: 10px;
+  background-position: 8px 2px;
+}
+.socialAnchors .google {
+  background-color: #DD4B39;
+  border-color: #DD4B39;
+  background-image: url("/assets/img/icon/icon-google-login.png");
+}
+.socialAnchors .google:hover {
+  border-color: #C93220;
+}
+.socialAnchors .facebook {
+  background-color: #3577C2;
+  border-color: #3577C2;
+  background-image: url("/assets/img/icon/icon-facebook-login.png");
+}
+.socialAnchors .facebook:hover {
+  border-color: #2761A3;
+}

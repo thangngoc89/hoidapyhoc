@@ -15,14 +15,6 @@
 
     <span class="section-heading-divider"></span>
     <div class="threads-inner profile-forum-participation">
-    <?php
-        $history = \Quiz\Models\History::where('user_id',$user->id)
-                            ->with('test')
-                            ->orderBy('created_at','DESC')
-                            ->take(5)
-                            ->get();
-
-    ?>
     @if ($history->count() > 0)
         @foreach ($history as $h)
             <article class="media media--conversation">

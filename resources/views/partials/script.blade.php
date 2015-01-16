@@ -24,10 +24,18 @@
 <script src="{{ elixir('js/all.js') }}"></script>
 <script src="{{ elixir('js/script.js') }}"></script>
 <script>
+@foreach (['success','error','warning','info'] as $notice)
+    @if ($message = Session::get($notice))
+        @if(is_array($message))
+            @foreach ($message as $m)
 
-@if (Session::has('message'))
-    toastr['warning'](' {{Session::get('message')}} ');
-@endif
+                toastr['{{ $notice }}'](' {{ $m }} ');
+            @endforeach
+        @else
+            toastr['{{ $notice }}'](' {{ $message }} ');
+        @endif
+    @endif
+@endforeach
 </script>
 
 @yield('script')

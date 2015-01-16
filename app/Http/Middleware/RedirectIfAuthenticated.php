@@ -35,7 +35,8 @@ class RedirectIfAuthenticated {
 	{
 		if ($this->auth->check())
 		{
-			return new RedirectResponse(url('/'));
+			return redirect('/')
+                        ->with('info', 'Bạn đã đăng nhập vào hệ thống');
 		}
 
 		return $next($request);

@@ -3,6 +3,7 @@
 use Illuminate\Auth\Guard;
 use Quiz\Http\Requests\UserRegisterFinishRequest;
 use Quiz\Models\User;
+use Quiz\Models\History;
 
 class UserController extends Controller {
     /**
@@ -13,15 +14,22 @@ class UserController extends Controller {
      * @var User
      */
     private $user;
+    /**
+     * @var History
+     */
+    private $history;
 
     /**
      * @param Guard $auth
+     * @param User $user
+     * @param History $history
      */
-    public function __construct(Guard $auth, User $user)
+    public function __construct(Guard $auth, User $user, History $history)
     {
         $this->middleware('auth');
         $this->auth = $auth;
         $this->user = $user;
+        $this->history = $history;
     }
 
     public function getFinish()
@@ -41,11 +49,17 @@ class UserController extends Controller {
 
         return redirect()->back();
     }
-    public function profile($username, User $user)
+    public function profile($username)
     {
         $user = $this->user->findByUsernameOrFail($username);
-//        dd($user);
-        return view('user.profile',compact('user'));
+
+        $history = $this->history->where('user_id',$user->id)
+            ->with('test')
+            ->orderBy('created_at','DESC')
+            ->take(5)
+            ->get();
+
+        return view('user.profile',compact('user','history'));
     }
 
 }

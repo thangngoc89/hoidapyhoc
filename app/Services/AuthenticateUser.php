@@ -31,13 +31,19 @@ class AuthenticateUser {
      */
     public function __construct(UserRepository $user, Socialite $socialite, Guard $auth)
     {
-
         $this->user = $user;
         $this->socialite = $socialite;
         $this->auth = $auth;
     }
 
 
+    /**
+     *
+     * @param $provider
+     * @param $hasCode
+     * @param AuthenticateUserListener $listener
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function execute($provider, $hasCode, AuthenticateUserListener $listener)
     {
         if ( ! $hasCode) return $this->getAuthorizationFirst($provider);
@@ -53,6 +59,7 @@ class AuthenticateUser {
     }
 
     /**
+     * Redirect user to provider to authorization
      * @param $driver
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -62,6 +69,7 @@ class AuthenticateUser {
     }
 
     /**
+     * Get User Information from provider
      * @param $provider
      * @return \Laravel\Socialite\Contracts\User
      */

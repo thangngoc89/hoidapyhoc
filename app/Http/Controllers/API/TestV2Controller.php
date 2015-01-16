@@ -151,7 +151,7 @@ class TestV2Controller extends APIController {
 
             $history->score = $score;
             $history->answer = $answerString;
-            $history->is_first = ( History::firsttime($user->id, $id) ) ? true : false;
+            $history->is_first = ( $this->history->firsttime($user->id, $id) ) ? true : false;
             $history->isDone = true;
             $history->save();
 

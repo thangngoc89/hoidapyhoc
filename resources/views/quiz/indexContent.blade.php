@@ -4,7 +4,7 @@
              <li class="{{ (Request::is('quiz')) ? 'active' : '' }}">
                  <a href="{{ URL::to('quiz') }}">Tất cả</a> </li>
 
-             @if (Auth::check())
+             @if (\Auth::check())
              <li class="{{ (Request::is('quiz/hasHistory')) ? 'active' : '' }}">
                  <a href="{{ URL::to('quiz/hasHistory') }}">Đề bạn đã thi</a> </li>
              @endif
@@ -33,12 +33,11 @@
  </div>
  <div class="wrap">
      @foreach ($tests as $t)
-         <article class="media media--conversation updated">
+         <article class="media media--conversation @if (!in_array($t->id, $doneTestId)) updated @endif">
              <div class="media--conversation__avatar">
                  <a href="{{ $t->user->profileLink() }}">
                      <img class="media-object media--conversation__object" src="{{ $t->user->getAvatar() }}" alt="{{ $t->user->getName() }}">
                  </a>
-
              </div>
 
              <div class="media-body media--conversation__body">

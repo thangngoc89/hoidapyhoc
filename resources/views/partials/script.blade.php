@@ -28,7 +28,6 @@
     @if ($message = Session::get($notice))
         @if(is_array($message))
             @foreach ($message as $m)
-
                 toastr['{{ $notice }}'](' {{ $m }} ');
             @endforeach
         @else
@@ -36,6 +35,12 @@
         @endif
     @endif
 @endforeach
+
+@if ($message = $errors->all())
+    @foreach ($message as $m)
+        toastr['{{ 'error' }}'](' {{ $m }} ');
+    @endforeach
+@endif
 </script>
 
 @yield('script')

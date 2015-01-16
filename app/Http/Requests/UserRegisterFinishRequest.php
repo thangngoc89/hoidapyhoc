@@ -1,6 +1,6 @@
 <?php namespace Quiz\Http\Requests;
 
-use Quiz\Http\Requests\Request;
+use Illuminate\Validation\Validator;
 
 class UserRegisterFinishRequest extends Request {
 
@@ -48,14 +48,18 @@ class UserRegisterFinishRequest extends Request {
         return $this->redirector->to('/');
     }
 
+
     /**
      * @return array
      */
     public function messages()
     {
         return [
-            'username.unique' => 'Tên thành viên này đã có người sử dụngphp',
-//            'email.unique' => 'Email already taken m8',
+            'required'      => 'Bạn phải nhập :attribute.',
+            'min'           => ':attribute phải có độ dài tối thiểu :min',
+            'username.required' => 'Tên thành viên là trường bắt buộc',
+            'username.unique' => 'Tên thành viên này đã có người sử dụng',
+            'name.min'     => 'Tên có độ dài tối thiểu 6 kí tự'
         ];
     }
 

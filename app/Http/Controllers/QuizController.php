@@ -90,7 +90,9 @@ class QuizController extends Controller {
             ->with('question','category','user','history')
             ->paginate(10);
 
-        return view('quiz.index',compact('tests','categories','filter','c','name'));
+        $doneTestId = $this->test->doneTestId($this->auth->user());
+
+        return view('quiz.index',compact('tests','categories','filter','c','name','doneTestId'));
 	}
 
 	/**
@@ -123,12 +125,14 @@ class QuizController extends Controller {
 	 */
 	public function show($slug)
 	{
+        // TODO: User have to click on start to do test
+
         $t = $this->test->findBySlugOrFail($slug);
         $history = false;
 
         if ($this->auth->check())
         {
-
+            // TODO: Many things have to done here
             $history = $this->history->firstOrNew(
                 array(
                     'user_id' => $this->auth->user()->id,
@@ -136,7 +140,6 @@ class QuizController extends Controller {
                     'isDone'  => 0
             ));
             $history->save();
-
         }
 
         return view('quiz.do',compact('t','history'));

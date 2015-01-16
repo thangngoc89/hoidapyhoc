@@ -52,6 +52,23 @@ class Exam extends Model {
 
         return $tests;
     }
+
+    /**
+     * Return an array of done test by user
+     * @param $user
+     * @return mixed
+     */
+    public function doneTestId($user)
+    {
+        $tests = $this->select('tests.id')
+            ->join('history', 'history.test_id', '=', 'tests.id')
+            ->where('history.user_id', $user->id)
+            ->groupBy('id')
+            ->get()
+            ->modelKeys();
+
+        return $tests;
+    }
     public function link()
     {
         return url('/quiz').'/t/'.$this->slug;

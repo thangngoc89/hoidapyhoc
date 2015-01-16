@@ -35,12 +35,8 @@ class AuthController extends Controller implements AuthenticateUserListener{
      */
     public function userHasLoggedIn($user)
     {
-        if (is_null($user->username))
-        {
-            return redirect('user/finish');
-        }
-
-        return redirect()->intended(\Session::get('return'));
+        return redirect()->intended(\Session::get('return'))
+                ->with('success','Chào mừng bạn đến với Hỏi Đáp Y Học');
     }
 
     /**
@@ -49,7 +45,9 @@ class AuthController extends Controller implements AuthenticateUserListener{
     public function getLogout()
     {
         $this->auth->logout();
-        return redirect()->intended(\Input::get('return'));
+
+        return redirect()->intended(\Input::get('return'))
+                ->with('success','Hẹn gặp lại bạn lần sau');
     }
 
 

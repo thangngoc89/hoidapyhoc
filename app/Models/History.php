@@ -10,28 +10,43 @@ class History extends Model {
     {
         return $this->belongsTo('Quiz\Models\Exam');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo('Quiz\Models\User','user_id');
     }
-    public static function firstTime($user_id, $test_id )
+
+    /**
+     * @param $user_id
+     * @param $test_id
+     * @return bool
+     */
+    public function firstTime($user_id, $test_id )
     {
-        $history  = History::where('test_id','=',$test_id)
+        $history  = $this->where('test_id','=',$test_id)
             ->where('user_id','=',$user_id)
             ->count();
         if ($history == 0)
             return true;
-        else return false;
+        else
+            return false;
     }
 
-    public function date($date=null)
+    /**
+     * @return mixed
+     */
+    public function date()
     {
-        if(is_null($date)) {
-            $date = $this->created_at;
-        }
-
-        return \Date::parse($date)->diffForHumans();
+        return $this->created_at->diffForHumans();
     }
+
+    /**
+     * @return int
+     * Count answerd question
+     */
     public function answeredCount(){
         return strlen(str_replace('_','',$this->answer));
     }

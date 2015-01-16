@@ -40,7 +40,8 @@ class Authenticate {
 			}
 			else
 			{
-				return redirect()->guest('auth/login');
+				return redirect()->guest('auth/login')
+                        ->with('warning','Bạn phải đăng nhập để truy cập trang');
 			}
 		}
 

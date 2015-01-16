@@ -4,18 +4,18 @@
 <div class="jumbotron">
     <div class="container">
         <div class="participation__avatar">
-            <a href="{{ $history->user->getProfile() }}">
+            <a href="{{ $history->user->profileLink() }}">
                 <img src="{{ $history->user->getAvatar() }}" class="img-circle" title ="{{ $history->user->getName() }}" alt="{{ $history->user->getName() }}">
             </a>
         </div>
-        <h2 class="jumbotron__heading">Kết quả thi của <a href="{{ $history->user->getProfile() }}"><strong>{{ $history->user->name}}</strong></a></h2>
+        <h2 class="jumbotron__heading">Kết quả thi của <a href="{{ $history->user->profileLink() }}"><strong>{{ $history->user->name}}</strong></a></h2>
         <h2 class="jumbotron_second-heading"><a href="{{ $t->link() }}">Đề thi {{ $t->name }}</a></h2>
         <h4 class="jumbotron__sub-heading">
             <a href="{{ $t->category->link() }}" class="btn btn-forum" style="color: #000;background-color:#{{ $t->category->color }}">
                 {{ $t->category->name }}
             </a>
             <span class="text-muted label-small last-updated">
-                đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
+                vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
                 | <a href="{{ $t->link() }}">{{ $t->question->count() }}</a> câu hỏi
                 | <a href="{{ $t->link() }}">{{ $t->thoigian }}</a> phút
             </span></h4>
@@ -33,8 +33,14 @@
 
 {{--Body Section--}}
 @section('body')
-<div class="row">
-    @include('quiz.historyContent')
+<div class="container">
+    <div class="row">
+    <?php
+    $key = 'history_'.$history->id;
+    ?>
+        @include('quiz.historyContent')
+
+    </div>
 </div>
 @stop
 @section('script')

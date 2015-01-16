@@ -1,0 +1,48 @@
+.quiz-button{
+  font-size: 0.857em;
+  font-weight: bold;
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 1;
+  background: $base-color;
+  color: $white;
+}
+
+.icontest-option {
+  background: url(/img/icon/icon-test_option.png);
+  height: 22px;
+  width: 22px;
+  text-indent: -9999px;
+  display: block;
+}
+.op-a {
+  background-position: 0 0;
+}
+.op-b {
+  background-position: -47px 0;
+}
+.op-c {
+  background-position: -94px 0;
+}
+.op-d {
+  background-position: -141px 0;
+}
+.op-e {
+  background-position: -188px 0;
+}
+.op-fail {
+  background-position: -329px 0;
+}
+.op-true {
+  background-position: -376px 0;
+}
+.op-choice {
+  background-position: -282px 0;
+}
+
+.icon-hint {
+  width: 24px;
+  height: 24px;
+  background: url("/img/icon/icon-hint.png") no-repeat scroll center center transparent;
+  display: inline-block;
+}

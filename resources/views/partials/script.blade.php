@@ -8,8 +8,8 @@
                 <div class="socialLogins">
                     <div class="socialAnchors">
                         <div>
-                            <a href="/login/oauth/Facebook?return={{ Request::url() }}" class="facebook">Facebook</a>
-                            <a href="/login/oauth/Google?return={{ Request::url() }}" class="google">Google</a>
+                            <a href="/auth/external/facebook?return={{ \Request::url() }}" class="facebook">Facebook</a>
+                            <a href="/auth/external/google?return={{ \Request::url() }}" class="google">Google</a>
                         </div>
                     </div>
                 </div>
@@ -21,14 +21,13 @@
     </div>
 </div>
 
-<script src="{{ asset('assets/javascript/redesign.min.js') }}"></script>
+<script src="{{ elixir('js/all.js') }}"></script>
+<script src="{{ elixir('js/script.js') }}"></script>
 <script>
-$(function() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrf"]').attr('content')
-        }
-    });
-});
+
+@if (Session::has('message'))
+    toastr['warning'](' {{Session::get('message')}} ');
+@endif
 </script>
+
 @yield('script')

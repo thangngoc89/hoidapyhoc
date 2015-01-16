@@ -35,7 +35,7 @@
      @foreach ($tests as $t)
          <article class="media media--conversation updated">
              <div class="media--conversation__avatar">
-                 <a href="{{ $t->user->getProfile() }}">
+                 <a href="{{ $t->user->profileLink() }}">
                      <img class="media-object media--conversation__object" src="{{ $t->user->getAvatar() }}" alt="{{ $t->user->getName() }}">
                  </a>
 
@@ -62,9 +62,9 @@
              </div>
          </article>
      @endforeach
-     <div class="forum-pagination">
-         <ul class="pagination">
-             {{ $paging }}
-         </ul>
-     </div>
+     {{--<div class="forum-pagination">--}}
+         {{--<ul class="pagination">--}}
+             {{--{{ $paging }}--}}
+         {{--</ul>--}}
+     {{--</div>--}}
  </div>

@@ -10,18 +10,16 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function(){
-    return view('index');
-});
-
-Route::get('home', 'HomeController@index');
-
 Route::get('auth/external/{provider}','Auth\AuthController@external');
+
+Route::get('/','HomeController@index');
+Route::get('thongke','HomeController@stat');
+Route::get('@{username}','UserController@profile');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
+    'user' => 'UserController',
 ]);
 
 Route::group(array('prefix' => 'quiz'), function()
@@ -34,3 +32,10 @@ Route::group(array('prefix' => 'quiz'), function()
     Route::get('/edit/{id}', array('before' => 'auth', 'uses' => 'QuizController@edit'));
 
 });
+
+Route::group(array('prefix' => 'api/v2'), function()
+{
+    post('tests/{id}/check', 'API\TestV2Controller@check');
+    Route::resource('tests', 'API\TestV2Controller');
+});
+

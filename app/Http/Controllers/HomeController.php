@@ -1,5 +1,9 @@
 <?php namespace Quiz\Http\Controllers;
 
+use Quiz\Models\Exam;
+use Quiz\Models\History;
+use Quiz\Models\User;
+
 class HomeController extends Controller {
 
 	/*
@@ -20,7 +24,7 @@ class HomeController extends Controller {
 	 */
 	public function __construct()
 	{
-		$this->middleware('auth');
+
 	}
 
 	/**
@@ -30,7 +34,24 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+        return view('index');
 	}
+    public function stat(User $user, Exam $test, History $history)
+    {
+
+
+        $key = 'siteStat';
+        if (\Cache::has($key)) {
+            $stat = \Cache::get($key);
+        } else {
+            $user = $user->count();
+            $test = $test->count();
+            $history = $history->count();
+
+            $stat = [$user,$test,$history];
+            \Cache::put($key, $stat, 30);
+        }
+        return view('site.stat', compact('stat'));
+    }
 
 }

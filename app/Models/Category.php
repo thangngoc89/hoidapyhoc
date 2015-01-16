@@ -13,11 +13,16 @@ class Category extends Model {
 
     public function test()
     {
-        return $this->hasMany('\Quiz\Models\Exam','cid');
+        return $this->hasMany('Quiz\Models\Exam','cid');
+    }
+
+    public function findBySlugOrFail($slug)
+    {
+        return $this->where('slug',$slug)->first();
     }
 
     public function link()
     {
-        return URL::to('/quiz/c').'/'.$this->slug;
+        return '/quiz/c/'.$this->slug;
     }
 }

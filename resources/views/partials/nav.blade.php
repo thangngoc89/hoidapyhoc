@@ -20,7 +20,7 @@
                     </a>
                 </li>
                 <li class="">
-                    <a href="/series" class="navbar-link">
+                    <a href="//ask.hoidapyhoc.com" class="navbar-link">
                         <i class="icon-chat-4"></i> Diễn đàn
                     </a>
                 </li>
@@ -41,7 +41,7 @@
 
                     <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                            <a href="{{ $user->getProfile() }}">
+                            <a href="{{ $user->profileLink() }}">
                                 <i class="icon-profile-1"></i> Trang cá nhân
                             </a>
                         </li>
@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{{ URL::to('user/logout') }}}?return={{ Request::url() }}">
+                            <a href="/auth/logout?return={{ Request::url() }}">
                                 <i class="icon-log-out-1"></i> Thoát
                             </a>
                         </li>

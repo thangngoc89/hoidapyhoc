@@ -8,40 +8,53 @@ class Exam extends Model {
 
     public function question()
     {
-        return $this->hasMany('Question');
+        return $this->hasMany('Quiz\Models\Question','test_id');
     }
     public function history()
     {
-        return $this->hasMany('History');
+        return $this->hasMany('Quiz\Models\History','test_id');
     }
     public function file()
     {
-        return $this->hasMany('uploadFile')->orderBy('id', 'desc');
+        return $this->hasMany('Quiz\Models\uploadFile','test_id')->orderBy('id', 'desc');
     }
     public function category()
     {
-        return $this->belongsTo('Category','cid');
+        return $this->belongsTo('Quiz\Models\Category','cid');
     }
     public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('Quiz\Models\User');
     }
-    /*public function comments()
-    {
-        return $this->morphMany('Fbf\LaravelComments\Comment', 'commentable');
-    }*/
 
+    public function findBySlugOrFail($slug)
+    {
+        $test = $this->with('question')->where('slug',$slug)->first();
+        if (is_null($test))
+            abort(404);
+        else return $test;
+    }
     public function date($date=null)
     {
         if(is_null($date)) {
-            $date = $this->created_at;
+            return $date = $this->created_at->diffForHumans();
         }
-        return Date::parse($date)->diffForHumans();
     }
+    public function doneTest($user)
+    {
+        $tests = $this->select('tests.id')
+            ->join('history', 'history.test_id', '=', 'tests.id')
+            ->where('history.user_id', $user->id)
+            ->groupBy('id')
+            ->get();
 
+        $tests = $this->whereIn('id',$tests->modelKeys());
+
+        return $tests;
+    }
     public function link()
     {
-        return Url::to('/quiz').'/t/'.$this->slug;
+        return url('/quiz').'/t/'.$this->slug;
     }
     public function countHistory()
     {

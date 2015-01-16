@@ -54,7 +54,7 @@
     <div class="quiz-sidebar-section">
         <div class="statistic-box testHeader" >
             <div class="userAnswerCount" value="0">
-                <strong>Phần trả lời: </strong>
+                <strong>Bạn đã trả lời: </strong>
                 <span id="answeredCount">{{ $history->answeredCount() }}</span>
                 /
                 <span id="totalAnswer">{{ $t->question->count() }}</span>
@@ -94,7 +94,6 @@
                 </tr>
                 <?php $i++; ?>
                 @endforeach
-
                 </tbody>
             </table>
             <input name="testId" value="2063" type="hidden">

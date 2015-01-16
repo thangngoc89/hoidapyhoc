@@ -1,10 +1,11 @@
 @extends('layouts.main')
 
+
 @section('jumbotron')
 <div class="jumbotron">
     <div class="container">
         <div class="participation__avatar">
-            <a href="{{ $t->user->getProfile() }}">
+            <a href="{{ $t->user->profileLink() }}">
                 <img src="{{ $t->user->getAvatar() }}" class="img-circle" title ="{{ $t->user->getName() }}" alt="{{ $t->user->getName() }}">
             </a>
         </div>
@@ -23,7 +24,7 @@
         </a>
     </div>
 </div>
-@stop
+@endsection
 
 
 @section('title')
@@ -32,9 +33,11 @@
 
 {{--Body Section--}}
 @section('body')
-{{--<div class="row">--}}
+<div class="container">
+    <div class="row">
     @include('quiz.doContent')
-{{--</div>--}}
+    </div>
+</div>
 @stop
 
 @section('script')
@@ -83,9 +86,17 @@ $(document).ready(function(){
         $('.timecou').html(hours + ":" + minutes + ":" + seconds);
     }
     function submitTest(){
-        if(confirm("Bạn có muốn nộp bài không ?")){
+        swal({
+          title: "Bạn có muốn nộp bài chứ?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "Có!",
+          closeOnConfirm: false
+        },
+        function(){
             sendSubmitTest();
-        }
+        });
     }
     function sendSubmitTest(){
         $.ajax({
@@ -105,9 +116,25 @@ $(document).ready(function(){
                 toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
             },
             success: function(data){
-                $("#btnSubmit").button('reset');
-                location.href = data.url;
-//                alert(result);
+
+                swal({
+                  title: "Bạn làm đúng "+data.score+'/'+data.totalQuestion+' câu hỏi',
+                  text: "Bạn có muốn xem lại kết quả chi tiết chứ?",
+                  type: "success",
+                  showCancelButton: true,
+                  confirmButtonClass: "btn-info",
+                  confirmButtonText: "Có chứ!",
+                  cancelButtonText: "Không, để làm lại!",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+                },
+                function(isConfirm) {
+                  if (isConfirm) {
+                    location.href = data.url;
+                  } else {
+                    location.href = location.href;
+                  }
+                });
             }
         });
     }
@@ -179,7 +206,6 @@ function resize_do(){
     if(width<=767){
         if(scrollTop>=100){
             $('#quiz-sidebar').addClass('quiz-side-fixed');
-            $('#quiz-sidebar').css('width',width);
         }
         else{
             $('#quiz-sidebar').removeClass('quiz-side-fixed');
@@ -190,7 +216,7 @@ $(document).ready(function(){
     resize_do();
     $(window).resize(function(){
         resize_do();
-    })
+    });
     $(window).scroll(function(){
         resize_do();
     });

@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <ul class="zeroed">
-                        <li><a href="{{ URL::to('quiz') }}">Quiz</a>
+                        <li><a href="/quiz">Quiz</a>
                         </li>
                         <li><a href="https://facebook.com/hoidapyhoc">Fanpage</a>
                         </li>
@@ -59,13 +59,13 @@
 
                 <div class="col-md-6">
                     <ul class="zeroed">
-                        <li><a href="https://laracasts.com/stats">Thống kê</a>
+                        <li><a href="/thongke">Thống kê</a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('user/login') }}">Đăng nhập</a>
+                            <a href="/auth/login">Đăng nhập</a>
                         <li>
                         <li>
-                            <a href="{{ URL::to('user/login') }}">Đăng Kí</a>
+                            <a href="/auth/login">Đăng Kí</a>
                         <li>
                     </ul>
                 </div>

@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers;
 
+use Illuminate\Auth\Guard;
 use Quiz\Models\Category;
 use Quiz\Models\History;
 use Quiz\Models\Exam;
@@ -23,20 +24,26 @@ class QuizController extends Controller {
      * @var History
      */
     private $history;
+    /**
+     * @var Guard
+     */
+    private $auth;
 
     /**
      * @param Category $category
      * @param Question $question
-     * @param Test $test
+     * @param Test|Exam $test
      * @param History $history
+     * @param Guard $auth
      */
-    public function __construct(Category $category, Question $question, Exam $test, History $history)
+    public function __construct(Category $category, Question $question, Exam $test, History $history, Guard $auth)
     {
 
         $this->category = $category;
         $this->question = $question;
         $this->test = $test;
         $this->history = $history;
+        $this->auth = $auth;
     }
 
     /**
@@ -46,44 +53,44 @@ class QuizController extends Controller {
      */
     public function index($filter = false, $info = false)
 	{
+        $c = false;
         switch($filter)
         {
             case 'hasHistory' :
-                // Get id of all done test by user.
-                $tests = $this->test->select('tests.id')
-                    ->join('history', 'history.test_id', '=', 'tests.id')
-                    ->where('history.user_id', Auth::user()->id)
-                    ->groupBy('id')
-                    ->get();
-
-                $tests = $this->test->whereIn('id',$tests->modelKeys());
+                if ($this->auth->check())
+                    $tests = $this->test->doneTest($this->auth->user());
+                $name = 'Các đề bạn đã làm';
                 break;
-            // Show Tests from A specific Category
+
             case 'c' :
-                $c = $this->category->where('slug', $info)->first();
-                if (is_null($c))
-                {
-                    return App::abort(404);
-                }
+                $c = $this->category->findBySlugOrFail($info);
                 $tests = $this->test->where('cid', $c->id);
+                $name = $c->name;
                 break;
 
-            default :
+            case null :
                 $tests = $this->test;
+                $name = 'Quiz';
+                break;
+            default :
+                abort(404);
                 break;
         }
-
-        $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
+        $categories = \Cache::remember('CategoryListDesc',30, function()
         {
-            return $categories->test->count();
+            $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
+            {
+                return $categories->test->count();
+            });
+            return $categories;
         });
+
+
         $tests = $tests->orderBy('tests.created_at','DESC')
             ->with('question','category','user','history')
-//            ->has('question')
             ->paginate(10);
-        $paging = (string)$tests->links();
 
-        return View::make('quiz.index',compact('tests','categories','filter','info','paging'));
+        return view('quiz.index',compact('tests','categories','filter','c','name'));
 	}
 
 	/**
@@ -116,40 +123,34 @@ class QuizController extends Controller {
 	 */
 	public function show($slug)
 	{
-        $t = $this->test->with('question')
-            ->where('slug', '=', $slug)
-            ->first();
-        // Check if the test exists
-        if (is_null($t))
-        {
-            return App::abort(404);
-        }
+        $t = $this->test->findBySlugOrFail($slug);
         $history = false;
-        if (Auth::check())
+
+        if ($this->auth->check())
         {
+
             $history = $this->history->firstOrNew(
                 array(
-                    'user_id' => Auth::user()->id,
+                    'user_id' => $this->auth->user()->id,
                     'test_id' => $t->id,
                     'isDone'  => 0
             ));
             $history->save();
+
         }
-        return View::make('quiz.do',compact('t','history'));
+
+        return view('quiz.do',compact('t','history'));
 	}
 
     public function showHistory($slug,$id)
     {
-        $t = $this->test->with('question')
-            ->where('slug', '=', $slug)
-            ->first();
-        // Check if the test exists
-        if (is_null($t))
-        {
-            return App::abort(404);
-        }
+        $t = $this->test->findBySlugOrFail($slug);
         $history = $this->history->with('user')->findOrFail($id);
-        return View::make('quiz.history',compact('t','history'));
+
+        if ($t->id != $history->test_id)
+            return redirect()->to('quiz/t/'.$slug)->with('message', 'Không tìm thấy kết quả');
+
+        return view('quiz.history',compact('t','history'));
     }
 
 

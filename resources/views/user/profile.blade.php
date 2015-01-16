@@ -1,8 +1,8 @@
-@extends('......layouts.main')
+@extends('layouts.main')
 
 
 @section('jumbotron')
-    @include('bannerProfile')
+    @include('user.bannerProfile')
 @stop
 
 @section('title')
@@ -16,7 +16,7 @@
     <span class="section-heading-divider"></span>
     <div class="threads-inner profile-forum-participation">
     <?php
-        $history = History::where('user_id',$user->id)
+        $history = \Quiz\Models\History::where('user_id',$user->id)
                             ->with('test')
                             ->orderBy('created_at','DESC')
                             ->take(5)
@@ -27,14 +27,14 @@
         @foreach ($history as $h)
             <article class="media media--conversation">
                 <div class="media--conversation__avatar">
-                    <a href="{{ $user->getProfile() }}">
+                    <a href="{{ $user->profileLink() }}">
                         <img class="media-object media--conversation__object" src="{{ $user->getAvatar() }}" alt="{{ $user->username }}">
                     </a>
                 </div>
                 <div class="media-body media--conversation__body">
                     <h5 class="media-heading media--conversation__heading">
                         {{ $h->date() }},
-                        <a href="{{ $user->getProfile() }}">{{ $user->getName() }}</a>
+                        <a href="{{ $user->profileLink() }}">{{ $user->getName() }}</a>
                         đã làm đề thi
                         <a href="{{ $h->test->link() }}">{{$h->test->name}}</a>
                     </h5>

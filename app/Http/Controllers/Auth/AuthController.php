@@ -23,6 +23,8 @@ class AuthController extends Controller implements AuthenticateUserListener{
 
     public function external($provider, AuthenticateUser $authenticateUser, Request $request)
     {
+        if ($request->has('return'))
+        \Session::put($request->only('return'));
         // AuthenticateUser
         return $authenticateUser->execute($provider, $request->has('state'), $this);
     }
@@ -35,10 +37,20 @@ class AuthController extends Controller implements AuthenticateUserListener{
     {
         if (is_null($user->username))
         {
-            return view('user.register',compact('user'));
+            return redirect('user/finish');
         }
 
-        return redirect()->intended($this->redirectPath('home'));
+        return redirect()->intended(\Session::get('return'));
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function getLogout()
+    {
+        $this->auth->logout();
+        return redirect()->intended(\Input::get('return'));
+    }
+
 
 }

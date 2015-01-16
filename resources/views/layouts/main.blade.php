@@ -7,11 +7,9 @@
             @include('partials.nav')
             @yield('jumbotron')
 
-            <div class="container">
-                <div class="row">
-                    @yield('body')
-                </div>
-            </div>
+            {{--<div class="container">--}}
+                @yield('body')
+            {{--</div>--}}
 
             <footer id="footer" class="wrap">
                 @include('partials.footer')

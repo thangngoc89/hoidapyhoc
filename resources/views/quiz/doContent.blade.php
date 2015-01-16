@@ -25,8 +25,8 @@
                     </span></a>
                  </li>
                  <li id="quiz-nav--forum__rankings" class="pull-right">
-                     <button id="btnSubmit" data-loading-text="Đang xử lí..." disabled="disabled" type="button" class="btn btn-forum submit-button">Nộp bài</button>
-                     <button id="btnSheet" type="button" class="btn btn-forum submit-button"><i class="fa fa-th-list"></i></button>
+                     <button id="btnSubmit" type="button" class="btn quiz-button" data-loading-text="Đang xử lí..." disabled="disabled" data-loading-text="Đang xử lí..." disabled="disabled" >Nộp bài</button>
+                     <button id="btnSheet" type="button" class="btn quiz-button"><i class="fa fa-th-list"></i></button>
                  </li>
 
              </ul>

@@ -9,6 +9,7 @@
     "jScrollPane": "master",
     "jquery-form": "~3.46.0",
     "wow": "~1.0.2",
-      "sticky-kit": "~1.1.1"
+    "sticky-kit": "~1.1.1",
+    "bootstrap-sweetalert": "~0.4.3"
   }
 }

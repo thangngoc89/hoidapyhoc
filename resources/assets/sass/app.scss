@@ -5,6 +5,7 @@
 
 @import 'components/boostrap';
 @import 'partials/transitions';
+@import 'quiz/button-icon';
 @import 'partials/font-icon';
 
 /* Components */
@@ -18,6 +19,7 @@
 @import 'quiz/quiz';
 @import 'quiz/history';
 
+
 @import 'partials/login';
 @import 'partials/home';
 @import 'components/unsort';
@@ -26,7 +28,7 @@
 
 @import 'quiz/quiz-sidebar';
 
-
+@import '../../../bower_components/bootstrap-sweetalert/lib/sweet-alert';
 @import '../../../bower_components/toastr/toastr';
 
 

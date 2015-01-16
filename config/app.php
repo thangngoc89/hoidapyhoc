@@ -39,7 +39,7 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Asia/Ho_Chi_Minh',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'vi',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
 	|
 	*/
 
-	'fallback_locale' => 'en',
+	'fallback_locale' => 'vi',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -135,7 +135,15 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
+        'Jenssegers\Date\DateServiceProvider',
+
+        /*
+         * Dev
+         */
+        'Barryvdh\Debugbar\ServiceProvider',
+
 		/*
 		 * Application Service Providers...
 		 */
@@ -191,6 +199,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
+        'Date'      => 'Jenssegers\Date\Date',
+        'Form'      => 'Illuminate\Html\FormFacade'
 	],
 
 ];

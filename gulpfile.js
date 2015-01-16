@@ -19,9 +19,14 @@ elixir(function(mix) {
             'bower_components/wow/dist/wow.min.js',
             'bower_components/sticky-kit/jquery.sticky-kit.js',
             'bower_components/jquery-form/jquery.form.js',
-            'resciurces/assets/js/jquery.alterclass.js',
-            'bower_components/toastr/toastr.js'
-        ])
-        .phpSpec()
-        .version('css/app.css');
+            'bower_components/toastr/toastr.js',
+            'bower_components/bootstrap-sweetalert/lib/sweet-alert.js'
+        ], "bower_components")
+        .scripts([
+            'assets/js/jquery.alterclass.js',
+            'assets/js/init.js',
+        ], 'resources','public/js/script.js')
+        //.phpSpec()
+        .phpUnit()
+        .version(['css/app.css','js/all.js','js/script.js']);
 });

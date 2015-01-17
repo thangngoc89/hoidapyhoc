@@ -3,8 +3,10 @@
 use Illuminate\Auth\Guard;
 use Quiz\Models\Category;
 use Quiz\Models\History;
-use Quiz\Models\Exam;
+use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\Question;
+
+use Illuminate\Http\Request;
 
 class QuizController extends Controller {
 
@@ -38,7 +40,6 @@ class QuizController extends Controller {
      */
     public function __construct(Category $category, Question $question, Exam $test, History $history, Guard $auth)
     {
-
         $this->category = $category;
         $this->question = $question;
         $this->test = $test;
@@ -76,6 +77,7 @@ class QuizController extends Controller {
                 abort(404);
                 break;
         }
+
         $categories = \Cache::remember('CategoryListDesc',30, function()
         {
             $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
@@ -85,12 +87,11 @@ class QuizController extends Controller {
             return $categories;
         });
 
-
         $tests = $tests->orderBy('tests.created_at','DESC')
             ->with('question','category','user','history')
             ->paginate(10);
 
-        $doneTestId = $this->test->doneTestId($this->auth->user());
+        $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
 
         return view('quiz.index',compact('tests','categories','filter','c','name','doneTestId'));
 	}
@@ -123,11 +124,16 @@ class QuizController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($slug)
+	public function show($slug, $id)
 	{
         // TODO: User have to click on start to do test
+        $t = $this->test->findOrFails($id);
 
-        $t = $this->test->findBySlugOrFail($slug);
+        if ($t->slug != $slug)
+        {
+            return redirect()->to($t->test);
+        }
+
         $history = false;
 
         if ($this->auth->check())
@@ -147,11 +153,12 @@ class QuizController extends Controller {
 
     public function showHistory($slug,$id)
     {
-        $t = $this->test->findBySlugOrFail($slug);
-        $history = $this->history->with('user')->findOrFail($id);
+        $history = $this->history->with('user','test')->findOrFail($id);
 
-        if ($t->id != $history->test_id)
-            return redirect()->to('quiz/t/'.$slug)->with('message', 'Không tìm thấy kết quả');
+        $t = $history->test;
+
+        if ($t->slug != $slug)
+            return redirect()->to('/quiz/ket-qua/'.$t->slug.'/'.$id);
 
         return view('quiz.history',compact('t','history'));
     }

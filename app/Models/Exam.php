@@ -6,6 +6,9 @@ class Exam extends Model {
 
     protected $table = 'tests';
 
+    /*
+     * Has Many Relationship
+     */
     public function question()
     {
         return $this->hasMany('Quiz\Models\Question','test_id');
@@ -18,6 +21,10 @@ class Exam extends Model {
     {
         return $this->hasMany('Quiz\Models\uploadFile','test_id')->orderBy('id', 'desc');
     }
+
+    /*
+     * Belongs to
+     */
     public function category()
     {
         return $this->belongsTo('Quiz\Models\Category','cid');
@@ -27,13 +34,6 @@ class Exam extends Model {
         return $this->belongsTo('Quiz\Models\User');
     }
 
-    public function findBySlugOrFail($slug)
-    {
-        $test = $this->with('question')->where('slug',$slug)->first();
-        if (is_null($test))
-            abort(404);
-        else return $test;
-    }
     public function date($date=null)
     {
         if(is_null($date)) {
@@ -53,26 +53,11 @@ class Exam extends Model {
         return $tests;
     }
 
-    /**
-     * Return an array of done test by user
-     * @param $user
-     * @return mixed
-     */
-    public function doneTestId($user)
-    {
-        $tests = $this->select('tests.id')
-            ->join('history', 'history.test_id', '=', 'tests.id')
-            ->where('history.user_id', $user->id)
-            ->groupBy('id')
-            ->get()
-            ->modelKeys();
-
-        return $tests;
-    }
     public function link()
     {
-        return url('/quiz').'/t/'.$this->slug;
+        return '/quiz/'.$this->slug.'/'.$this->id;
     }
+
     public function countHistory()
     {
        return $this->history->count();

@@ -33,7 +33,10 @@
  </div>
  <div class="wrap">
      @foreach ($tests as $t)
-         <article class="media media--conversation @if (!in_array($t->id, $doneTestId)) updated @endif">
+         <article class="media media--conversation
+            @if (!($doneTestId) || !in_array($t->id, $doneTestId))
+            updated
+            @endif">
              <div class="media--conversation__avatar">
                  <a href="{{ $t->user->profileLink() }}">
                      <img class="media-object media--conversation__object" src="{{ $t->user->getAvatar() }}" alt="{{ $t->user->getName() }}">

@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider {
 			'Illuminate\Contracts\Auth\Registrar',
 			'Quiz\Services\Registrar'
 		);
+
+        $this->app->bind(
+            'Quiz\lib\Repositories\Exam\ExamRepository',
+            'Quiz\lib\Repositories\Exam\EloquentExamRepository'
+        );
 	}
 
 }

@@ -1,5 +1,7 @@
 <?php namespace Quiz\Http\Controllers\Auth;
 
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\Registrar;
 use Quiz\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Quiz\Services\AuthenticateUser;
@@ -20,6 +22,21 @@ class AuthController extends Controller implements AuthenticateUserListener{
 	*/
 
 	use AuthenticatesAndRegistersUsers;
+
+    /**
+    * Create a new authentication controller instance.
+    *
+    * @param  \Illuminate\Contracts\Auth\Guard  $auth
+    * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
+    * @return void
+    */
+	public function __construct(Guard $auth, Registrar $registrar)
+	{
+		$this->auth = $auth;
+		$this->registrar = $registrar;
+
+		$this->middleware('guest', ['except' => 'getLogout']);
+	}
 
     public function external($provider, AuthenticateUser $authenticateUser, Request $request)
     {
@@ -44,6 +61,7 @@ class AuthController extends Controller implements AuthenticateUserListener{
      */
     public function getLogout()
     {
+
         $this->auth->logout();
 
         return redirect()->intended(\Input::get('return'))

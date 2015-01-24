@@ -162,7 +162,8 @@ class QuizController extends Controller {
 
     private function categoryList()
     {
-        $categories = \Cache::tags('category')->remember('categoryListDesc',30, function()
+        $key = 'categoryListDesc';
+        $categories = \Cache::tags('category')->remember($key,30, function()
         {
             $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
             {

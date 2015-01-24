@@ -2,7 +2,7 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Laravel\Socialite\Contracts\Factory as Socialite;
-use Quiz\lib\Repositories\UserRepository;
+use Quiz\lib\Repositories\User\UserRepository;
 
 
 /**

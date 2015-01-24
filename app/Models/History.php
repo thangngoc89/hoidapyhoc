@@ -6,6 +6,15 @@ class History extends Model {
 
     protected $table = 'history';
     protected $fillable = array('test_id','user_id');
+
+    public static function boot()
+    {
+        parent::boot();
+
+        History::saved(function($history){
+            \Cache::tags('history','user'.$history->user_id)->flush();
+        });
+    }
     public function test()
     {
         return $this->belongsTo('Quiz\Models\Exam');
@@ -43,6 +52,10 @@ class History extends Model {
         return $this->created_at->diffForHumans();
     }
 
+    public function link()
+    {
+        return '/quiz/ket-qua/'.$this->test->slug.'/'.$this->id;
+    }
     /**
      * @return int
      * Count answerd question

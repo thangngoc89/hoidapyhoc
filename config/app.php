@@ -139,6 +139,7 @@ return [
         'Laravel\Socialite\SocialiteServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
 
+
         /*
          * Dev
          */

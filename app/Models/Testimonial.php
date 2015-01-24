@@ -4,6 +4,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model {
 
+    public static function boot()
+    {
+        Testimonial::saved(function(){
+            \Cache::tags('testimonial')->flush();
+        });
+    }
 	// Add your validation rules here
 	public static $rules = [
 		'name'      => 'required',

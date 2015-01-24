@@ -20,7 +20,7 @@
                 | <a href="{{ $t->link() }}">{{ $t->thoigian }}</a> phút
             </span></h4>
         <a href="/quiz/create" class="btn btn-primary">
-            <i class="icon-bubble-chat-1"></i> Tạo đề thi mới
+            <i class="fa fa-plus"></i> Tạo đề thi mới
         </a>
     </div>
 </div>
@@ -35,9 +35,7 @@
 @section('body')
 <div class="container">
     <div class="row">
-    <?php
-    $key = 'history_'.$history->id;
-    ?>
+
         @include('quiz.historyContent')
 
     </div>

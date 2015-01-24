@@ -5,8 +5,8 @@ use Quiz\Models\Category;
 use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\Question;
-
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Pagination;
 
 class QuizController extends Controller {
 
@@ -42,9 +42,9 @@ class QuizController extends Controller {
     {
         $this->category = $category;
         $this->question = $question;
-        $this->test = $test;
-        $this->history = $history;
-        $this->auth = $auth;
+        $this->test     = $test;
+        $this->history  = $history;
+        $this->auth     = $auth;
     }
 
     /**
@@ -62,13 +62,11 @@ class QuizController extends Controller {
                     $tests = $this->test->doneTest($this->auth->user());
                 $name = 'Các đề bạn đã làm';
                 break;
-
             case 'c' :
                 $c = $this->category->findBySlugOrFail($info);
                 $tests = $this->test->where('cid', $c->id);
                 $name = $c->name;
                 break;
-
             case null :
                 $tests = $this->test;
                 $name = 'Quiz';
@@ -78,21 +76,17 @@ class QuizController extends Controller {
                 break;
         }
 
-        $categories = \Cache::remember('CategoryListDesc',30, function()
+        $categories = $this->categoryList();
+        $doneTestId = $this->doneTestId();
+
+        $key = 'index'.$filter.$info.\Input::get('page');
+
+        $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
-            $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
-            {
-                return $categories->test->count();
-            });
-            return $categories;
+            return $tests->orderBy('tests.created_at','DESC')
+                ->with('question','category','user','history')
+                ->paginate(10);
         });
-
-        $tests = $tests->orderBy('tests.created_at','DESC')
-            ->with('question','category','user','history')
-            ->paginate(10);
-
-        $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
-
         return view('quiz.index',compact('tests','categories','filter','c','name','doneTestId'));
 	}
 
@@ -103,18 +97,7 @@ class QuizController extends Controller {
 	 */
 	public function create()
 	{
-		//
-	}
-
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
+		return view('quiz.create');
 	}
 
 
@@ -126,41 +109,42 @@ class QuizController extends Controller {
 	 */
 	public function show($slug, $id)
 	{
-        // TODO: User have to click on start to do test
-        $t = $this->test->findOrFails($id);
+        $t = \Cache::tags('test')->rememberForever('test'.$id, function() use ($id) {
+            return $this->test->getFirstBy('id',$id, ['question','category','file']);
+        });
+
+        if (is_null($t)) abort(404);
 
         if ($t->slug != $slug)
-        {
             return redirect()->to($t->test);
-        }
-
-        $history = false;
-
+        $haveHistory = false;
         if ($this->auth->check())
         {
-            // TODO: Many things have to done here
-            $history = $this->history->firstOrNew(
-                array(
-                    'user_id' => $this->auth->user()->id,
-                    'test_id' => $t->id,
-                    'isDone'  => 0
-            ));
-            $history->save();
+            $haveHistory = $this->history
+                            ->where('test_id',$id)
+                            ->where('user_id',$this->auth->user()->id)
+                            ->get();
         }
-
-        return view('quiz.do',compact('t','history'));
+        // Define for blade template
+        $viewHistory = false;
+        return view('quiz.do',compact('t','haveHistory','viewHistory'));
 	}
 
     public function showHistory($slug,$id)
     {
-        $history = $this->history->with('user','test')->findOrFail($id);
+        $history = \Cache::tags('history')->rememberForever('history'.$id, function() use ($id){
+            return $this->history->with('user','test.question')->findOrFail($id);
+        });
 
         $t = $history->test;
 
         if ($t->slug != $slug)
             return redirect()->to('/quiz/ket-qua/'.$t->slug.'/'.$id);
 
-        return view('quiz.history',compact('t','history'));
+        // Define for blade template
+        $viewHistory = true;
+
+        return view('quiz.history',compact('t','history','viewHistory'));
     }
 
 
@@ -176,28 +160,23 @@ class QuizController extends Controller {
 	}
 
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    private function categoryList()
+    {
+        $categories = \Cache::tags('category')->remember('categoryListDesc',30, function()
+        {
+            $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
+            {
+                return $categories->test->count();
+            });
+            return $categories;
+        });
+        return $categories;
+    }
 
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
+    private function doneTestId()
+    {
+        $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
+        return $doneTestId;
+    }
 
 }

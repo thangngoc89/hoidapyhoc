@@ -6,6 +6,13 @@ class Exam extends Model {
 
     protected $table = 'tests';
 
+    public static function boot()
+    {
+        Exam::saved(function()
+        {
+            \Cache::tags('tests')->flush();
+        });
+    }
     /*
      * Has Many Relationship
      */
@@ -55,7 +62,7 @@ class Exam extends Model {
 
     public function link()
     {
-        return '/quiz/'.$this->slug.'/'.$this->id;
+        return '/quiz/lam-bai/'.$this->slug.'/'.$this->id;
     }
 
     public function countHistory()

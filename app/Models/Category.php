@@ -9,8 +9,12 @@ class Category extends Model {
     /**
      * @var Exam
      */
-    private $test;
-
+    public static function boot()
+    {
+        Category::saved(function(){
+            \Cache::tags('category')->flush();
+        });
+    }
     public function test()
     {
         return $this->hasMany('Quiz\Models\Exam','cid');

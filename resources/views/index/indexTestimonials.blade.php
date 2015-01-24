@@ -1,5 +1,5 @@
 <?php
-    $testimonial = \Quiz\Models\Testimonial::where('isHome','1')->limit(9)->get();
+
     $i=1;
 ?>
 

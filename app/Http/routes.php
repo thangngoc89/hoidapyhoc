@@ -10,33 +10,48 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+/** ------------------------------------------
+ *  Route constraint patterns
+ *  ------------------------------------------
+ */
+
+Route::pattern('id', '[0-9]+');
 
 get('/','HomeController@index');
 get('thongke','HomeController@stat');
+get('cleanCache','HomeController@cleanCache');
 
 get('@{username}','UserController@profile');
 
-Route::get('auth/external/{provider}','Auth\AuthController@external');
+get('auth/external/{provider}','Auth\AuthController@external');
+
+get('auth/edit','UserController@getFinish');
+post('auth/edit','UserController@postFinish');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
     'user' => 'UserController',
 ]);
 
+
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('{slug}/{id}', 'QuizController@show');
+    Route::get('lam-bai/{slug}/{id}', 'QuizController@show');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
-    Route::get('/{filter?}/{info?}', 'QuizController@index');
 
-    Route::get('/create', array('before' => 'auth', 'uses' => 'QuizController@create'));
-    Route::get('/edit/{id}', array('before' => 'auth', 'uses' => 'QuizController@edit'));
+    get('create','QuizController@create');
+    Route::get('/{filter?}/{info?}', 'QuizController@index');
 
 });
 
+
+
 Route::group(array('prefix' => 'api/v2'), function()
 {
+    get('tests/{id}/pull', 'API\TestV2Controller@pullPicture');
     post('tests/{id}/check', 'API\TestV2Controller@check');
+    post('tests/{id}/start', 'API\TestV2Controller@start');
     Route::resource('tests', 'API\TestV2Controller');
 });
 

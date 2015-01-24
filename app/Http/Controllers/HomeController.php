@@ -2,6 +2,7 @@
 
 use Quiz\Models\Exam;
 use Quiz\Models\History;
+use Quiz\Models\Testimonial;
 use Quiz\Models\User;
 
 class HomeController extends Controller {
@@ -32,13 +33,17 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Testimonial $testimonial)
 	{
-        return view('index');
+        $testimonial = \Cache::tags('testimonial')->rememberForever('indexTestimonial', function() use ($testimonial)
+        {
+            return $testimonial->where('isHome','1')->limit(9)->get();
+        });
+
+        return view('index',compact('testimonial'));
 	}
     public function stat(User $user, Exam $test, History $history)
     {
-
 
         $key = 'siteStat';
         if (\Cache::has($key)) {
@@ -52,6 +57,12 @@ class HomeController extends Controller {
             \Cache::put($key, $stat, 30);
         }
         return view('site.stat', compact('stat'));
+    }
+
+    public function cleanCache()
+    {
+        dd(\Cache::tags('history', 'user3')->get('profileUser3'));
+        \Cache::tags('history','user3')->flush();
     }
 
 }

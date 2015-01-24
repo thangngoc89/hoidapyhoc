@@ -24,23 +24,26 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
      */
     public function doneTestId($user)
     {
-        $tests = $this->model->select('tests.id')
-            ->join('history', 'history.test_id', '=', 'tests.id')
-            ->where('history.user_id', $user->id)
-            ->groupBy('id')
-            ->get()
-            ->modelKeys();
+        $key = 'userDoneTest'.$user->id;
+
+        $tests = \Cache::tags('history','user'.$user->id)
+                ->rememberForever($key,function() use ($user) {
+
+                    return $this->model->select('tests.id')
+                        ->join('history', 'history.test_id', '=', 'tests.id')
+                        ->where('history.user_id', $user->id)
+                        ->groupBy('id')
+                        ->get()
+                        ->modelKeys();
+                });
 
         return $tests;
     }
 
-    /**
-     * Interface Part
-     *
-     */
-
-    public function link()
+    public function doneTest($user)
     {
-        return '/quiz/'.$this->slug.'/'.$this->id;
+        $tests = $this->model->whereIn('id',$this->doneTestId($user));
+        return $tests;
     }
+
 }

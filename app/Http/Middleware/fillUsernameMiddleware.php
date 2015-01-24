@@ -26,12 +26,13 @@ class fillUsernameMiddleware {
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check() && $request->getRequestUri() != '/user/finish')
+        if ($this->auth->check() && $request->getRequestUri() != '/auth/edit')
         {
             if (is_null($this->auth->user()->username))
 
-                return redirect('user/finish')
+                return redirect('auth/edit')
                         ->with('info', 'Hãy điền các thông tin sau đây để tiếp tục');
+
         }
 
         return $next($request);

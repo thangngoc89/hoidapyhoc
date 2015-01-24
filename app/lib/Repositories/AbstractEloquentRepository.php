@@ -1,6 +1,5 @@
 <?php namespace Quiz\lib\Repositories;
 
-
 abstract class AbstractEloquentRepository {
 
     public function all()
@@ -15,7 +14,15 @@ abstract class AbstractEloquentRepository {
 
     public function findOrFails($id)
     {
-        return $this->model->findOrFail($id);
+        $entity = $this->find($id);
+        if (is_null($entity))
+            return abort(404);
+        return $entity;
+    }
+
+    public function where($key, $value)
+    {
+        return $this->model->where($key, $value);
     }
 
     /**
@@ -26,6 +33,16 @@ abstract class AbstractEloquentRepository {
     public function create($input)
     {
         return $this->model->create($input);
+    }
+
+    /**
+     * Mass Assignment Update entity
+     * @param $input
+     * @return mixed
+     */
+    public function update($input)
+    {
+        return $this->model->update($input);
     }
 
     /**
@@ -45,7 +62,7 @@ abstract class AbstractEloquentRepository {
      * @param array $with
      * @return mixed
      */
-    public function make(array $with = array())
+    public function with(array $with = array())
     {
         return $this->model->with($with);
     }
@@ -59,7 +76,7 @@ abstract class AbstractEloquentRepository {
      */
     public function getFirstBy($key, $value, array $with = array())
     {
-        return $this->make($with)->where($key, '=', $value)->first();
+        return $this->with($with)->where($key, '=', $value)->first();
     }
 
     /**
@@ -71,7 +88,7 @@ abstract class AbstractEloquentRepository {
      */
     public function getManyBy($key, $value, array $with = array())
     {
-        return $this->make($with)->where($key, '=', $value)->get();
+        return $this->with($with)->where($key, '=', $value)->get();
     }
 
     /**
@@ -81,7 +98,7 @@ abstract class AbstractEloquentRepository {
      */
     public function has($relation, array $with = array())
     {
-        $entity = $this->make($with);
+        $entity = $this->with($with);
 
         return $entity->has($relation)->get();
     }

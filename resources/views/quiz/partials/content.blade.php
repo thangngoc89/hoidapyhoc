@@ -3,12 +3,36 @@
 @if ($t->description)
    <blockquote>
        <p>
-       {{ $t->description }}
+       {!! $t->description !!}
        </p>
    </blockquote>
    @endif
 </div>
-<div id="quiz-content">
+@if (\Auth::check())
+<div id="quiz-rule" class="@if (($viewHistory)) hide @endif">
+
+    @if (isset($haveHistory))
+        <h3 class="text-center">Bạn đã làm đề này {{ $haveHistory->count()  }} lần</h3>
+        <ul>
+        @foreach ($haveHistory  as $h)
+            <li>
+                <a href="{{ $h->link() }}">Bạn đạt {{ $h->score }}/{{ $t->question->count() }} điểm vào {{ $h->date() }}</a>
+            </li>
+        @endforeach
+        </ul>
+    @endif
+    <h3 class="text-center" style="line-height:1.3em">Hãy nhấn <span class="color-red">BẮT ĐẦU</span> để làm bài</h3>
+    <h3 class="color-red">* LƯU Ý</h3>
+    <ul>
+        <li>Hãy đợi bài thi tải xong rồi nhấn làm bài</li>
+        <li>Số điểm lần đầu tiên làm bài sẽ có giá trị xếp hạng trong bài thi</li>
+        <li>Số điểm của bài thi chỉ có giá trị xếp hạng trong bài thi</li>
+        <li>Số điểm thi không được cộng vào điểm tổng</li>
+        <li>Hãy cố gắn đứng đầu <i class="iconsprite-mini iconmini-rank"></i> <span class="color-red">BẢNG ĐIỂM</span> nhé </li>
+    </ul>
+    <h3 class="text-center">Chúc bạn <span class="color-red">MAY MẮN</span></h3>
+</div>
+<div id="quiz-content" class="@if (!$viewHistory) hide @endif">
 
     @if ($t->is_file)
         <span class="color-red"><b>Chú ý: &nbsp;</b></span>
@@ -22,6 +46,7 @@
     @else
         {!! $t->content !!}
     @endif
+    <br/><br/><br/>
+    <h1 style="text-align :center">-- Hết --</h1>
 </div>
-<br/><br/><br/>
-<h1 style="text-align :center">-- Hết --</h1>
+@endif

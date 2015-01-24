@@ -2,7 +2,7 @@
 
 use Illuminate\Auth\Guard;
 use Quiz\Http\Requests\UserRegisterFinishRequest;
-use Quiz\Models\User;
+use Quiz\lib\Repositories\User\UserRepository as User;
 use Quiz\Models\History;
 
 class UserController extends Controller {
@@ -35,7 +35,10 @@ class UserController extends Controller {
     public function getFinish()
     {
         $user = $this->auth->user();
-        return view('user/finishRegistra',compact('user'));
+        if (!is_null($user->username))
+            #return redirect('/@'.$user->username)->with('info','Bạn đã hoàn thành đăng kí');
+
+        return view('user.finishRegistra',compact('user'));
     }
 
     /**
@@ -45,19 +48,22 @@ class UserController extends Controller {
     public function postFinish(UserRegisterFinishRequest $request)
     {
         $user = $this->user->find($this->auth->user()->id);
-        $user->fill($request->input())->save();
+        $user->update($request->input());
 
         return redirect()->back();
     }
     public function profile($username)
     {
-        $user = $this->user->findByUsernameOrFail($username);
+        $user = $this->user->getFirstBy('username', $username);
 
-        $history = $this->history->where('user_id',$user->id)
-            ->with('test')
-            ->orderBy('created_at','DESC')
-            ->take(5)
-            ->get();
+        $key = 'profileUserHistory'.$user->id;
+        $history = \Cache::tags('history','user'.$user->id)->remember($key, 10, function() use ($user) {
+            return $this->history->where('user_id',$user->id)
+                ->with('test','test.category','test.question')
+                ->orderBy('updated_at','DESC')
+                ->take(5)
+                ->get();
+        });
 
         return view('user.profile',compact('user','history'));
     }

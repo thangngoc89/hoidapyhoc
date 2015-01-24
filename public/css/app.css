@@ -1,4 +1,7 @@
 @charset "UTF-8";
+.color-red {
+  color: #FF0000; }
+
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
   display: block; }
 
@@ -6038,6 +6041,9 @@ th.visible-print, td.visible-print {
   background: #FF4742;
   color: #fff; }
 
+#btnSubmit {
+  display: none; }
+
 .icontest-option {
   background: url(/img/icon/icon-test_option.png);
   height: 22px;
@@ -11160,7 +11166,12 @@ li.profile__stats-join-date {
 
 #quiz-sidebar {
   border-left: 1px solid #dadada;
-  padding-left: 25px; }
+  padding-left: 25px;
+  margin-bottom: 2em; }
+
+@media (max-width: 767px) {
+  #quiz-sidebar {
+    margin-bottom: 0; } }
 
 /*
  * Quiz Nav
@@ -11311,6 +11322,29 @@ li.profile__stats-join-date {
   .answer-box {
     max-height: 10em;
     padding-bottom: 3em; } }
+
+.form-group, .form-row {
+  margin-bottom: 0.5em; }
+
+#frmTest {
+  font-size: 18px; }
+
+.nav-pills > li > a {
+  outline: 0;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background: #f1f1f1;
+  color: #1d1d1d;
+  margin-right: 5px;
+  font-size: 14px; }
+
+.nav-pills > li > a:hover {
+  color: #fff;
+  background-color: #428bca; }
+
+#answerModalArea {
+  width: 100%;
+  height: 10%; }
 
 @-webkit-keyframes showSweetAlert {
   0% {

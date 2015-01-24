@@ -88,7 +88,7 @@ Trang chủ
 <div class="text-center piece" id="level-up">
     <div class="container wrap">
         <h2 class="wow pulse alone">
-            <a href="{{ URL::to('quiz') }}">Khám phá Quiz</a> và <a href="{{ URL::to('user/login') }}">và tham gia cùng chúng tớ!</a>
+            <a href="/quiz">Khám phá Quiz</a> và <a href="/auth/login">và tham gia cùng chúng tớ!</a>
         </h2>
     </div>
 </div>

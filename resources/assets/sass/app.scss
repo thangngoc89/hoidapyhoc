@@ -3,6 +3,8 @@
 @import 'base/config';
 @import 'base/prefixer';
 
+@import 'base/global';
+
 @import 'components/boostrap';
 @import 'partials/transitions';
 @import 'quiz/button-icon';
@@ -28,6 +30,7 @@
 
 
 @import 'quiz/quiz-sidebar';
+@import 'quiz/create';
 
 @import '../../../bower_components/bootstrap-sweetalert/lib/sweet-alert';
 @import '../../../bower_components/toastr/toastr';

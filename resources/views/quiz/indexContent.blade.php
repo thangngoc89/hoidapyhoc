@@ -64,9 +64,9 @@
              </div>
          </article>
      @endforeach
-     {{--<div class="forum-pagination">--}}
-         {{--<ul class="pagination">--}}
-             {{--{{ $paging }}--}}
-         {{--</ul>--}}
-     {{--</div>--}}
+     <div class="forum-pagination">
+         <ul class="pagination">
+             {!! $tests->render() !!}
+         </ul>
+     </div>
  </div>

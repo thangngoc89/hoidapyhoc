@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d85b258ad0f4c51f9d9e136117ff9c56",
+    "hash": "7f80eba487095d2c6ee65fbd72556c74",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1738,6 +1738,49 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "sunra/php-simple-html-dom-parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunra/php-simple-html-dom-parser.git",
+                "reference": "89ee2ced64d54c3380cf955e7d370458773f119f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunra/php-simple-html-dom-parser/zipball/89ee2ced64d54c3380cf955e7d370458773f119f",
+                "reference": "89ee2ced64d54c3380cf955e7d370458773f119f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Sunra\\PhpSimple\\HtmlDomParser": "Src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sunra",
+                    "email": "sunra@yandex.ru",
+                    "homepage": "http://github.com/sunra"
+                }
+            ],
+            "description": "Composer adaptation of: A HTML DOM parser written in PHP5+ let you manipulate HTML in a very easy way! Require PHP 5+. Supports invalid HTML. Find tags on an HTML page with selectors just like jQuery. Extract contents from HTML in a single line.",
+            "homepage": "https://github.com/sunra/php-simple-html-dom-parser",
+            "keywords": [
+                "dom",
+                "html",
+                "parser"
+            ],
+            "time": "2014-07-08 18:25:34"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3545,7 +3588,8 @@
         "laravel/socialite": 20,
         "doctrine/dbal": 20,
         "jenssegers/date": 20,
-        "barryvdh/laravel-debugbar": 20
+        "barryvdh/laravel-debugbar": 20,
+        "sunra/php-simple-html-dom-parser": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

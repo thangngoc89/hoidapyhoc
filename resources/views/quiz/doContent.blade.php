@@ -25,14 +25,15 @@
                     </span></a>
                  </li>
                  <li id="quiz-nav--forum__rankings" class="pull-right">
-                     <button id="btnSubmit" type="button" class="btn quiz-button" data-loading-text="Đang xử lí..." disabled="disabled" data-loading-text="Đang xử lí..." disabled="disabled" >Nộp bài</button>
-                     <button id="btnSheet" type="button" class="btn quiz-button"><i class="fa fa-th-list"></i></button>
+                     <button id="btnStart" type="button" class="btn btn-primary">Bắt đầu</button>
+                     <button id="btnSubmit" type="button" class="btn btn-primary" data-loading-text="Đang xử lí..." disabled="disabled" >Nộp bài</button>
+                     <button id="btnSheet" type="button" class="btn btn-primary"><i class="fa fa-th-list"></i></button>
                  </li>
 
              </ul>
         </div>
     </div>
-    @if ($history)
+    @if (\Auth::check())
     <div class="quiz-sidebar-section">
         <div class="statistic-box testHeader">
             <div class="userAnswerCount" value="0">
@@ -71,7 +72,6 @@
                 </tbody>
                 </table>
                 <input type="hidden" name="test_id" value="{{ $t->id }}">
-                <input type="hidden" name="user_history_id" value="{{ $history->id }}">
             </form>
             <div id="resultForm"></div>
         </div>

@@ -10,7 +10,8 @@
         "laravel/socialite": "2.0.*@dev",
         "doctrine/dbal": "~2.6@dev",
 		"jenssegers/date": "dev-master",
-		"barryvdh/laravel-debugbar": "~1.8@dev"
+		"barryvdh/laravel-debugbar": "~1.8@dev",
+		"sunra/php-simple-html-dom-parser": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

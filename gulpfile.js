@@ -18,7 +18,6 @@ elixir(function(mix) {
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'bower_components/wow/dist/wow.min.js',
             'bower_components/sticky-kit/jquery.sticky-kit.js',
-            'bower_components/jquery-form/jquery.form.js',
             'bower_components/toastr/toastr.js',
             'bower_components/bootstrap-sweetalert/lib/sweet-alert.js',
             'bower_components/pace/pace.js'
@@ -26,8 +25,11 @@ elixir(function(mix) {
         .scripts([
             'assets/js/jquery.alterclass.js',
             'assets/js/init.js',
+            'assets/js/quiz/share.js',
+            'assets/js/quiz/history.js',
+            'assets/js/quiz/do.js',
+            'assets/js/quiz/create.js',
         ], 'resources','public/js/script.js')
         .phpSpec()
-        //.phpUnit()
         .version(['css/app.css','js/all.js','js/script.js']);
 });

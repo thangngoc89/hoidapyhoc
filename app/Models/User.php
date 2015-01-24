@@ -35,6 +35,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+
+    public static function boot()
+    {
+        parent::boot();
+
+        User::saved(function($user){
+            \Cache::tags('user'.$user->id)->flush();
+        });
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

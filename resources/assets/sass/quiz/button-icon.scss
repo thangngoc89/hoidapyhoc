@@ -7,6 +7,9 @@
   background: $base-color;
   color: $white;
 }
+#btnSubmit{
+  display: none;
+}
 
 .icontest-option {
   background: url(/img/icon/icon-test_option.png);

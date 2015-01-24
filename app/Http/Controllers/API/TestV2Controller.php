@@ -2,11 +2,10 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-//use Quiz\Models\User;
-use Quiz\Models\Exam;
+use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
 use Illuminate\Http\Response;
-use Illuminate\Contracts\Routing\ResponseFactory;
+use Quiz\Services\PullExternalImage;
 
 class TestV2Controller extends APIController {
 
@@ -16,6 +15,7 @@ class TestV2Controller extends APIController {
 	 * @return Response
 	 */
     protected $test;
+
     protected $history;
     /**
      * @var Request
@@ -34,11 +34,11 @@ class TestV2Controller extends APIController {
      */
     public function __construct(Exam $test, History $history, Request $request, Guard $auth)
     {
-
         $this->test         = $test;
         $this->history      = $history;
-        $this->request = $request;
-        $this->auth = $auth;
+        $this->request      = $request;
+        $this->auth         = $auth;
+        $this->middleware('auth', ['except' => 'index']);
     }
 	public function index()
 	{
@@ -70,8 +70,8 @@ class TestV2Controller extends APIController {
 	 */
 	public function store()
 	{
-		//
-	}
+        dd(\Input::all());
+    }
 
 
 	/**
@@ -120,6 +120,39 @@ class TestV2Controller extends APIController {
         return response()->json(\Input::all());
 	}
 
+    public function pullPicture($id, PullExternalImage $puller)
+    {
+        $test = $this->test->find($id);
+        return $puller->excute($test->content);
+    }
+    /**
+     * Create a new history for test
+     * @param $id
+     * @return mixed
+     */
+    public function start($id)
+    {
+        try{
+            $statusCode = 200;
+
+            $history = $this->history->firstOrCreate(
+                array(
+                    'user_id' => $this->auth->user()->id,
+                    'test_id' => \Input::get('test_id'),
+                    'isDone'  => 0
+                ));
+
+            $response= [
+                'user_history_id' => $history->id
+            ];
+
+            return response()->json($response, $statusCode);
+        }catch (\Exception $e){
+            $statusCode = 500;
+            $error = $e->getMessage();
+            return response()->json($error, $statusCode);
+        }
+    }
     /**
      * Check post and return right answer
      * @param $id
@@ -130,7 +163,7 @@ class TestV2Controller extends APIController {
             $statusCode = 200;
 
             $user = $this->auth->user();
-            $test = $this->test->with('question')->findOrFail($id);
+            $test = $this->test->getFirstBy('id',$id,['question']);
             $history = $this->history->findOrFail(\Input::get('user_history_id'));
 
             if ($history->user_id != $user->id) throw new \Exception ('Don\'t cheat man');
@@ -158,7 +191,7 @@ class TestV2Controller extends APIController {
             $response= [
                 'score' => $score,
                 'totalQuestion' => $test->question->count(),
-                'url'   => \URL::to('quiz/t').'/'.$test->slug.'/ket-qua/'.$history->id,
+                'url'   => '/quiz/ket-qua/'.$test->slug.'/'.$history->id,
             ];
 //            dd($score);
             return response()->json($response, $statusCode);

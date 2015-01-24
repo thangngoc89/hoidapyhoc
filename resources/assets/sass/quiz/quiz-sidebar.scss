@@ -2,12 +2,12 @@
 #quiz-sidebar {
   border-left: 1px solid $background;
   padding-left: 25px;
-  //  float: right;
+  margin-bottom: 2em;
 }
 
 @media (max-width: 767px) {
   #quiz-sidebar {
-    //display: none;
+    margin-bottom: 0;
   };
 }
 

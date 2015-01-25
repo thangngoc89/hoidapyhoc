@@ -23,4 +23,14 @@ class Upload extends Model {
     {
         return $this->belongsTo('Quiz\Models\User');
     }
+
+    public function url()
+    {
+        switch($this->location)
+        {
+            case 'local' :
+                return url('/uploads/'.$this->filename);
+                break;
+        }
+    }
 }

@@ -2,7 +2,7 @@ function quizCreateInt()
 {
     buttonListener();
     iconListener();
-
+    uploader();
     $('#frmTest').on('submit', function(event)
     {
         event.preventDefault();
@@ -208,5 +208,23 @@ function answerModal()
                 if (hint.val())
                     icon.addClass('hinted');
             });
+    });
+}
+
+function uploader()
+{
+    $("#uploadarea").uploadFile({
+        url:"/api/v2/files",
+        maxFileSize: 10*1024*1024,   //Bytes
+        allowedTypes: 'pdf',
+        showStatusAfterSuccess: false,
+        dragDropStr: "<span><b>Kéo và thả file vào đây để upload</b></span>",
+        sizeErrorStr: "quá lớn. Dung lượng file tối đa là ",
+        uploadErrorStr: "Đã có lỗi xảy ra trong quá trình upload",
+        uploadButtonClass:"btn btn-info",
+        onSuccess:function(files,data,xhr)
+        {
+            $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
+        }
     });
 }

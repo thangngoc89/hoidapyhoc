@@ -20,10 +20,14 @@ elixir(function(mix) {
             'bower_components/sticky-kit/jquery.sticky-kit.js',
             'bower_components/toastr/toastr.js',
             'bower_components/bootstrap-sweetalert/lib/sweet-alert.js',
-            'bower_components/pace/pace.js'
+            'bower_components/pace/pace.js',
+            'bower_components/medium-editor/dist/js/medium-editor.js',
+            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-plugin.js',
+            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js',
         ], "bower_components")
         .scripts([
             'assets/js/jquery.alterclass.js',
+            'assets/js/jquery.uploadfile.js',
             'assets/js/init.js',
             'assets/js/quiz/share.js',
             'assets/js/quiz/history.js',

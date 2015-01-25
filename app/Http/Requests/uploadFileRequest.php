@@ -25,7 +25,7 @@ class uploadFileRequest extends Request {
 	public function rules()
 	{
 		return [
-            'file'   => 'required|mimes:pdf,jpeg,bmp,png,jpg|max:10240000' //10MB - In kilobytes
+            'file'   => 'required|mimes:pdf,jpeg,bmp,png,jpg|max:10240' //10MB - In kilobytes
 		];
 	}
 

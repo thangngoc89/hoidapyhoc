@@ -38,11 +38,12 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="upload">
-                {!! Form::file('file_pdf'); !!}
                 <div class="description">
                     <label>Tệp tin</label><br>
                         Chọn file pdf để upload tài liệu (kích thước tối đa là 10MB)
                 </div>
+                <div id="uploadarea">Upload</div>
+                <div id="pdf"></div>
             </div>
           </div>
 

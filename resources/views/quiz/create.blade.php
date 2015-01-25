@@ -41,9 +41,6 @@
 @stop
 
 @section('script')
-<script src="/assets/vendor/medium-editor/js/medium-editor.min.js"></script>
-<script src="/assets/vendor/medium-editor/js/medium-editor-insert-plugin.all.min.js"></script>
-{{--<script src="/js/ckeditor/ckeditor.js"></script>--}}
 <script>
 var editorName = new MediumEditor('#name', {
     buttons: ['bold', 'italic'],

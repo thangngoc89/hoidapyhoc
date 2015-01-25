@@ -57,7 +57,13 @@ class UploadV2Controller extends APIController {
             $upload->filename = $filename;
             $upload->save();
         }
-        echo url('/uploads/'. $upload->filename);
+        //echo url('/uploads/'. $upload->filename);
+        $response = [
+            'filename' => $upload->filenname,
+            'url' => $upload->url()
+        ];
+        return response()->json($response,200);
+
 
     }
 } 

@@ -34,7 +34,7 @@
 {{--Body Section--}}
 @section('body')
 <div class="container">
-    <div class="row">
+    <div class="row" id="mainRow">
     @include('quiz.doContent')
     </div>
 </div>

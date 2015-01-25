@@ -11,6 +11,7 @@
     "wow": "~1.0.2",
     "sticky-kit": "~1.1.1",
     "bootstrap-sweetalert": "~0.4.3",
-    "pace": "~1.0.2"
+    "pace": "~1.0.2",
+    "medium-editor-insert-plugin": "~0.3.2"
   }
 }

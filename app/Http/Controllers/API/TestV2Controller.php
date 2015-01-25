@@ -70,7 +70,7 @@ class TestV2Controller extends APIController {
 	 */
 	public function store()
 	{
-        dd(\Input::all());
+        return response()->json(\Input::all(), 200);
     }
 
 
@@ -119,6 +119,28 @@ class TestV2Controller extends APIController {
 	{
         return response()->json(\Input::all());
 	}
+
+    /**
+     * Upload image endpoint
+     */
+    public function upload()
+    {
+        $file = \Input::file('file');
+        $input = array('image' => $file);
+        $rules = array(
+            'image' => 'image'
+        );
+        $validator = \Validator::make($input, $rules);
+        if ( $validator->fails()) {
+            return Response::json(array('success' => false, 'errors' => $validator->getMessageBag()->toArray()));
+        }
+
+        $fileName = time() . '-' . $file->getClientOriginalName();
+        $destination = public_path() . '/uploads/';
+        $file->move($destination, $fileName);
+
+        echo url('/uploads/'. $fileName);
+    }
 
     public function pullPicture($id, PullExternalImage $puller)
     {

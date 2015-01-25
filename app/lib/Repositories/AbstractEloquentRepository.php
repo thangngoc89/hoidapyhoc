@@ -25,6 +25,12 @@ abstract class AbstractEloquentRepository {
         return $this->model->where($key, $value);
     }
 
+    public function orWhere($key, $value)
+    {
+        return $this->model->orWhere($key, $value);
+    }
+
+
     /**
      * Create new entity with input
      * @param $input
@@ -101,5 +107,10 @@ abstract class AbstractEloquentRepository {
         $entity = $this->with($with);
 
         return $entity->has($relation)->get();
+    }
+
+    public function get()
+    {
+        return $this->get();
     }
 } 

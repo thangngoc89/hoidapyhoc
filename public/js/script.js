@@ -65,7 +65,7 @@ toastr.options = {
 
 function sticky()
 {
-    $("#quiz-sidebar, .threads-inner").stick_in_parent();
+    $("#quiz-sidebar, #mainRow").stick_in_parent();
 }
 function resize_do(){
     width=parseInt($(window).width());
@@ -264,126 +264,146 @@ function updateAnswerCount(){
 }
 function quizCreateInt()
 {
-    //sticky();
+    buttonListener();
+    iconListener();
 
-    // Init Test Icon
-    choiceDo();
-    answerModel();
-
-    changeTotalQuestion();
     $('#frmTest').on('submit', function(event)
     {
         event.preventDefault();
         post();
     });
+    sticky();
+    global.answerArray = [];
 }
+
 
 function post()
 {
-    console.log(filledAllAnswer());
-
     if (filledAllAnswer())
     {
-
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/api/v2/tests',
+            data: {
+                'name': editorName.serialize().name.value,
+                'description': editorDescription.serialize().description.value,
+                'content': editorContent.serialize().content.value,
+            },
+            error: function(data){
+                console.log(data.responseText);
+                toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+            },
+            success: function(data){
+                console.log(data);
+            }
+        });
     }
 }
-
-function changeTotalQuestion()
+function iconListener()
 {
-    element = $('#questionCount');
-    before = element.val();
+    // Init Test Icon
+    choiceDo();
+    answerModal();
+    sticky();
 
-    element.on('focusout', function()
-        {
-            after = element.val();
-            adjustQuestionTotal(after);
-            if (checkQuestionTotal() && (after < before))
-            {
-                swal({
-                        title: "Tổng số câu hỏi bạn vừa nhập vào nhỏ hơn ban đầu",
-                        text: "Bạn vẫn muốn thay đổi chứ?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-warning",
-                        confirmButtonText: "Có chứ!",
-                        cancelButtonText: "Không",
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            adjustQuestionTotal(after);
-                        }
-                    });
-            }
-        })
-        .on('keyup', function()
-        {
-            checkQuestionTotal();
-        })
-
+}
+function buttonListener()
+{
+    $('#btn-add').on('click', function(event)
+    {
+        event.preventDefault();
+        addQuestion($('#total_add').val());
+    });
+    $('#btn-remove').on('click', function(event)
+    {
+        event.preventDefault();
+        removeQuestion($('#total_remove').val());
+    });
 
 }
 
-function adjustQuestionTotal(num)
+function addQuestion(value)
 {
-    console.log(num);
-
-    for(i=1; i<= num; i++)
+    for(i=1; i<=value; i++)
     {
         qIndex = $('.ansRow:last').data('question-order');
-        addNewLine(qIndex+1);
+        addNewRow(qIndex+1);
     }
-    choiceDo();
+    iconListener();
+    totalQuestion();
 }
-function addNewLine(index)
+
+function removeQuestion(value)
 {
-    console.log('added');
-    row = '<tr class="ansRow" data-question-order="{{$i}}">' +
+    if (totalQuestion() - parseInt(value) <1)
+    {
+        toastr['warning']('Tổng số câu hỏi không được nhỏ hơn 1');
+        return false;
+    }
+    qIndex = $('.ansRow:last').data('question-order');
+    toIndex = parseInt(qIndex)-parseInt(value);
+
+    for(i=qIndex; i>toIndex; i--)
+    {
+        console.log('delete '+i);
+        $('tr[data-question-order="'+i+'"]').remove();
+    }
+    totalQuestion();
+
+}
+
+function addNewRow(index)
+{
+    row = '<tr class="ansRow" data-question-order="'+index+'">' +
     '<td align="center" class="questionNumber">'+index+'.</td>';
 
     ['a','b','c','d','e'].forEach(function(option)
         {
-            row  += '<td><a id="a_'+index+'_a" rel="1" class="icontest-option op-a" href="#"">a</a>'+
-            '<input type="hidden" id="answer_'+index+'_a" name="answer_'+index+'_1" value="0">'+
+            row  += '<td><a id="a_'+index+'_'+option+'" rel="1" class="icontest-option op-'+option+'" href="#"">'+option+'</a>'+
+            '<input type="hidden" id="answer_'+index+'_'+option+'" name="answer_'+index+'_'+option+'" value="0">'+
             '</td>';
         }
     );
-    row += '<td><a href="javscript::void(0)"><i class="zn-icon icon-hint"></i></a></td></tr>';
+    row += '<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint"></i></a></td></tr>';
 
     $('#answer>tbody').append(row);
 }
 
+function totalQuestion()
+{
+    total = $('.ansRow').length;
+    $('#total').html(total);
+
+    return total;
+}
 function filledAllAnswer()
 {
     unanswered = $('.ansRow:not(".answered")').length;
+    if (unanswered != 0)
+        toastr['warning']('Bạn chưa điền đầy đủ đáp án cho các câu hỏi');
     return unanswered == 0;
 }
 
-function answerModel()
+function answerModal()
 {
     $('.icon-hint').on('click', function()
     {
         qIndex = $(this).closest('tr').data('question-order');
         hint = $('#answerModalArea');
+        icon = $(this);
+        currentValue = (global.answerArray[qIndex]) ? global.answerArray[qIndex] : '';
+        hint.val(currentValue);
 
-        hint.val('');
         $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+qIndex);
 
         $('#answerModal').modal()
             .on('hide.bs.modal', function()
             {
-                answerArray[qIndex] = hint.val();
+                global.answerArray[qIndex] = hint.val();
+                icon.removeClass('hinted');
+                if (hint.val())
+                    icon.addClass('hinted');
             });
     });
-}
-
-function checkQuestionTotal()
-{
-    val = $('#questionCount').val();
-    //console.log(parseInt(val));
-    if (!(parseInt(val) >= 1))
-    {
-        toastr['warning']('Tổng số câu hỏi không được nhỏ hơn 1');
-        return false;
-    } else
-        return true;
 }

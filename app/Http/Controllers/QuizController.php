@@ -19,7 +19,7 @@ class QuizController extends Controller {
      */
     private $question;
     /**
-     * @var Test
+     * @var Exam
      */
     private $test;
     /**
@@ -34,7 +34,7 @@ class QuizController extends Controller {
     /**
      * @param Category $category
      * @param Question $question
-     * @param Test|Exam $test
+     * @param Exam $test
      * @param History $history
      * @param Guard $auth
      */
@@ -107,16 +107,19 @@ class QuizController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($slug, $id)
+	public function show($slug = null, $id = null)
 	{
-        $t = \Cache::tags('test')->rememberForever('test'.$id, function() use ($id) {
-            return $this->test->getFirstBy('id',$id, ['question','category','file']);
+        $t = \Cache::tags('test')->rememberForever('test'.$id, function() use ($id, &$slug) {
+            if (!is_null($id))
+                return $this->test->getFirstBy('id',$id, ['question','category','file']);
+            if (!is_null($slug))
+                return $this->test->getFirstBy('slug',$slug, ['question','category','file']);
         });
 
         if (is_null($t)) abort(404);
 
-        if ($t->slug != $slug)
-            return redirect()->to($t->test);
+        if (($t->slug != $slug) || ($id == null))
+            return redirect()->to($t->link());
         $haveHistory = false;
         if ($this->auth->check())
         {

@@ -6,7 +6,7 @@
 }
 .quiz-sidebar-section{
   padding-top: 2em;
-  padding-bottom: 3em;
+  padding-bottom: 2em;
   overflow: hidden;
 }
 
@@ -21,6 +21,10 @@
 }
 .answer-box{
   max-height: 300px;
+}
+
+.is_stuck{
+  z-index: 100;
 }
 
 

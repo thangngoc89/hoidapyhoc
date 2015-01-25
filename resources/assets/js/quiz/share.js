@@ -1,6 +1,6 @@
 function sticky()
 {
-    $("#quiz-sidebar, .threads-inner").stick_in_parent();
+    $("#quiz-sidebar, #mainRow").stick_in_parent();
 }
 function resize_do(){
     width=parseInt($(window).width());

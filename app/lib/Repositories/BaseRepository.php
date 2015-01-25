@@ -10,6 +10,8 @@ interface BaseRepository {
 
     public function where($key, $value);
 
+    public function orWhere($key, $value);
+
     public function getFirstBy($key, $value, array $with = array());
 
     public function getManyBy($key, $value, array $with = array());
@@ -21,4 +23,8 @@ interface BaseRepository {
     public function orderBy($column, $direction);
 
     public function with(array $with = array());
+
+    public function has($relation, array $with = array());
+
+    public function get();
 }

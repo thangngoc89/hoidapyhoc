@@ -18,7 +18,7 @@
 {{--Body Section--}}
 @section('body')
 <div class="container">
-    <div class="row">
+    <div class="row" id="mainRow">
     @include('quiz.createContent')
     </div>
 </div>
@@ -41,12 +41,44 @@
 @stop
 
 @section('script')
-<script src="/js/ckeditor/ckeditor.js"></script>
+<script src="/assets/vendor/medium-editor/js/medium-editor.min.js"></script>
+<script src="/assets/vendor/medium-editor/js/medium-editor-insert-plugin.all.min.js"></script>
+{{--<script src="/js/ckeditor/ckeditor.js"></script>--}}
 <script>
-var answerArray = [];
+var editorName = new MediumEditor('#name', {
+    buttons: ['bold', 'italic'],
+    disableReturn: true,
+    placeholder: 'Nhập tiêu đề của đề thi'
+});
+var editorDescription = new MediumEditor('#description', {
+    disableReturn: true,
+    placeholder: 'Mô tả ngắn cho đề thi'
+});
+var editorContent = new MediumEditor('#content', {
+    cleanPastedHTML: true,
+    placeholder: 'Nội dung đề thi (dành cho đề tự soạn và hình ảnh)',
+});
+$(function () {
+    $('#content').mediumInsert({
+        editor: editorContent,
+        addons: {
+          images: {
+            imagesUploadScript: '/api/v2/tests/upload',
+            imagesDeleteScript: '/api/v2/tests/delete'
+          }
+        }
+      });
+});
+var global = {};
 $(document).ready(function(){
     quizCreateInt();
 });
 </script>
+@stop
+
+@section('style')
+<link href="/assets/vendor/medium-editor/css/medium-editor.css" rel="stylesheet">
+<link href="/assets/vendor/medium-editor/css/themes/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/vendor/medium-editor/css/medium-editor-insert-plugin.min.css" rel="stylesheet">
 @stop
 

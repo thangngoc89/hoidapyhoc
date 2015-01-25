@@ -7094,7 +7094,7 @@ a.bird-btn:hover {
 
 .quiz-sidebar-section {
   padding-top: 2em;
-  padding-bottom: 3em;
+  padding-bottom: 2em;
   overflow: hidden; }
 
 .option_test {
@@ -7108,6 +7108,9 @@ a.bird-btn:hover {
 
 .answer-box {
   max-height: 300px; }
+
+.is_stuck {
+  z-index: 100; }
 
 .result-box {
   min-height: 80px;
@@ -11323,12 +11326,6 @@ li.profile__stats-join-date {
     max-height: 10em;
     padding-bottom: 3em; } }
 
-.form-group, .form-row {
-  margin-bottom: 0.5em; }
-
-#frmTest {
-  font-size: 18px; }
-
 .nav-pills > li > a {
   outline: 0;
   padding: 5px 15px;
@@ -11345,6 +11342,9 @@ li.profile__stats-join-date {
 #answerModalArea {
   width: 100%;
   height: 10%; }
+
+.hinted {
+  opacity: 1 !important; }
 
 @-webkit-keyframes showSweetAlert {
   0% {

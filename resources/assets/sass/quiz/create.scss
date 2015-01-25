@@ -1,9 +1,3 @@
-.form-group, .form-row{
-  margin-bottom: 0.5em;
-}
-#frmTest{
-  font-size: 18px;
-}
 .nav-pills > li > a {
   outline: 0;
   padding: 5px 15px;
@@ -22,4 +16,8 @@
 {
   width: 100%;
   height: 10%;
+}
+
+.hinted{
+  opacity: 1 !important;
 }

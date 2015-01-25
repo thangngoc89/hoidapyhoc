@@ -6,11 +6,17 @@ class Exam extends Model {
 
     protected $table = 'tests';
 
+    protected $fillable = array('name','cid','content','begin','thoigian','description');
+
     public static function boot()
     {
         Exam::saved(function()
         {
             \Cache::tags('tests')->flush();
+        });
+        Exam::saving(function($test)
+        {
+            $test->slug = \Slugify::slugify(trim($test->name));
         });
     }
     /*
@@ -46,18 +52,6 @@ class Exam extends Model {
         if(is_null($date)) {
             return $date = $this->created_at->diffForHumans();
         }
-    }
-    public function doneTest($user)
-    {
-        $tests = $this->select('tests.id')
-            ->join('history', 'history.test_id', '=', 'tests.id')
-            ->where('history.user_id', $user->id)
-            ->groupBy('id')
-            ->get();
-
-        $tests = $this->whereIn('id',$tests->modelKeys());
-
-        return $tests;
     }
 
     public function link()

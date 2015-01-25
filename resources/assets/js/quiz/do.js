@@ -139,7 +139,7 @@ function gatherAnswer(){
 //                'a' : givenAnswer
 //            };
         answers.push(givenAnswer);
-    })
+    });
     return answers;
 }
 function choiceDo(){

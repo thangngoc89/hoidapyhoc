@@ -2,9 +2,11 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Quiz\Http\Requests\SaveNewTest;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
 use Illuminate\Http\Response;
+use Quiz\Models\Question;
 use Quiz\Services\PullExternalImage;
 
 class TestV2Controller extends APIController {
@@ -25,28 +27,34 @@ class TestV2Controller extends APIController {
      * @var Guard
      */
     private $auth;
+    /**
+     * @var Question
+     */
+    private $question;
 
     /**
      * @param Exam $test
      * @param History $history
      * @param Request $request
      * @param Guard $auth
+     * @param Question $question
      */
-    public function __construct(Exam $test, History $history, Request $request, Guard $auth)
+    public function __construct(Exam $test, History $history, Request $request, Guard $auth, Question $question)
     {
         $this->test         = $test;
+        $this->question     = $question;
         $this->history      = $history;
         $this->request      = $request;
         $this->auth         = $auth;
         $this->middleware('auth', ['except' => 'index']);
     }
+
+
 	public function index()
 	{
 
         try{
             $statusCode = 200;
-//            $builder = ApiHandler::parseMultiple($this->test->with('question'), array('name'), $this->passParams('tests'));
-//            $tests = $builder->getResult();
             $tests = $this->test->paginate(10);
 
             $response = [];
@@ -68,9 +76,37 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(SaveNewTest $request)
 	{
-        return response()->json(\Input::all(), 200);
+        try{
+            $statusCode = 200;
+            $input = $request->all();
+
+            $test = $this->test->fill($input);
+            $test->user_id = $this->auth->user()->id;
+
+            #TODO: Hardwork on this
+            $test->is_approve = true;
+            $test->save();
+
+            $this->storeQuestion($test,$input);
+
+            return response()->json($test, $statusCode);
+        }catch (\Exception $e){
+            $statusCode = 500;
+            return response()->json($e->getMessage(), $statusCode);
+        }
+    }
+
+    public function storeQuestion($test, $input)
+    {
+        foreach ($input['questions'] as $index => $q)
+        {
+            $question = new $this->question;
+            $question->fill($q);
+            $question->test_id = $test->id;
+            $question->save();
+        }
     }
 
 
@@ -84,27 +120,13 @@ class TestV2Controller extends APIController {
 	{
         try{
             $statusCode = 200;
-            $test = $this->test->find($id);
+            $test = $this->test->findOrFail($id);
 
-            $response = $this->responseMap($test);
-
-            return response()->json($response, $statusCode);
-        }catch (Exception $e){
+            return response()->json($test, $statusCode);
+        }catch (\Exception $e){
             $statusCode = 500;
             return response()->json($e->getMessage(), $statusCode);
         }
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		dd(\Input::all());
 	}
 
 

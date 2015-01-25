@@ -69,6 +69,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function upload()
+    {
+        return $this->hasMany('Quiz\Models\Upload');
+    }
+    /**
      * @return mixed
      */
     public function joined()

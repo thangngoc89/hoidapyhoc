@@ -220,7 +220,7 @@ function gatherAnswer(){
 //                'a' : givenAnswer
 //            };
         answers.push(givenAnswer);
-    })
+    });
     return answers;
 }
 function choiceDo(){
@@ -279,19 +279,22 @@ function quizCreateInt()
 
 function post()
 {
-    if (filledAllAnswer())
+    data = validator();
+    if (data)
     {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: '/api/v2/tests',
-            data: {
-                'name': editorName.serialize().name.value,
-                'description': editorDescription.serialize().description.value,
-                'content': editorContent.serialize().content.value,
-            },
+            data: data,
             error: function(data){
-                console.log(data.responseText);
+                data = $.parseJSON(data.responseText);
+                if (data.name[0] == 'validation.unique')
+                {
+                    toastr.error('Tên đề thi đã được sử dụng. Vui lòng chọn một tên khác');
+                    return false;
+                }
+                console.log(data);
                 toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
             },
             success: function(data){
@@ -300,6 +303,56 @@ function post()
         });
     }
 }
+
+function validator()
+{
+    if (!filledAllAnswer()) return false;
+    name = editorName.serialize().name.value;
+    description =  editorDescription.serialize().description.value,
+    content =  editorContent.serialize().content.value,
+    begin = $('begin').val();
+    begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
+
+    category_id = $('#select-category').val();
+    time = $('#select-time').val();
+
+    if (!name || name.length < 6)
+    {
+        toastr['warning']('Tên đề thi tối thiểu 6 kí tự')
+        return false;
+    }
+    if (!content)
+    {
+        toastr['warning']('Bạn chưa nhập nội dung đề thi');
+        return false;
+    }
+
+    return {
+        name: name,
+        description: description,
+        content: content,
+        begin: begin,
+        cid: category_id,
+        thoigian: time,
+        questions : gatherQuestion()
+    }
+}
+
+function gatherQuestion(){
+    var questions= [];
+    $('.ansRow').each(function(index){
+        questionOrder = $(this).data('question-order');
+        givenAnswer = $('input[id^="answer_'+questionOrder+'_"][value=1]').attr('name');
+        givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
+            question = {
+                'right_answer' : givenAnswer.toUpperCase(),
+                'content' : (global.answerArray[index+1]) ? global.answerArray[index+1] : '',
+            };
+        questions.push(question);
+    });
+    return questions;
+}
+
 function iconListener()
 {
     // Init Test Icon
@@ -320,6 +373,10 @@ function buttonListener()
         event.preventDefault();
         removeQuestion($('#total_remove').val());
     });
+    $('#begin').on('keyup', function()
+    {
+        adjustBegin();
+    })
 
 }
 
@@ -332,6 +389,7 @@ function addQuestion(value)
     }
     iconListener();
     totalQuestion();
+    adjustBegin();
 }
 
 function removeQuestion(value)
@@ -370,6 +428,15 @@ function addNewRow(index)
     $('#answer>tbody').append(row);
 }
 
+function adjustBegin()
+{
+    val = $('#begin').val();
+    val = (parseInt(val) >= 1) ? parseInt(val) : 1;
+    $('.questionNumber').each(function(index)
+    {
+        $(this).html(parseInt(index)+val+'.');
+    });
+}
 function totalQuestion()
 {
     total = $('.ansRow').length;

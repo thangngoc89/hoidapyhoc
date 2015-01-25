@@ -36,7 +36,7 @@ class UserController extends Controller {
     {
         $user = $this->auth->user();
         if (!is_null($user->username))
-            #return redirect('/@'.$user->username)->with('info','Bạn đã hoàn thành đăng kí');
+            return redirect('/@'.$user->username)->with('info','Bạn đã hoàn thành đăng kí');
 
         return view('user.finishRegistra',compact('user'));
     }

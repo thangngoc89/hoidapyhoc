@@ -12,12 +12,17 @@ abstract class AbstractEloquentRepository {
         return $this->model->find($id);
     }
 
-    public function findOrFails($id)
+    public function findOrFail($id)
     {
         $entity = $this->find($id);
         if (is_null($entity))
             return abort(404);
         return $entity;
+    }
+
+    public function firstOrNew($array)
+    {
+        return $this->model->firstOrNew($array);
     }
 
     public function where($key, $value)
@@ -30,7 +35,10 @@ abstract class AbstractEloquentRepository {
         return $this->model->orWhere($key, $value);
     }
 
-
+    public function fill($input)
+    {
+        return $this->model->fill($input);
+    }
     /**
      * Create new entity with input
      * @param $input
@@ -102,11 +110,9 @@ abstract class AbstractEloquentRepository {
      *
      * @param string $relation
      */
-    public function has($relation, array $with = array())
+    public function has($relation)
     {
-        $entity = $this->with($with);
-
-        return $entity->has($relation)->get();
+        return $this->model->has($relation);
     }
 
     public function get()

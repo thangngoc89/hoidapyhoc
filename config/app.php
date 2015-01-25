@@ -137,8 +137,10 @@ return [
 		'Illuminate\View\ViewServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
-        'Jenssegers\Date\DateServiceProvider',
 
+
+        'Jenssegers\Date\DateServiceProvider',
+        "Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider",
 
         /*
          * Dev
@@ -201,7 +203,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
         'Date'      => 'Jenssegers\Date\Date',
-        'Form'      => 'Illuminate\Html\FormFacade'
+        'Form'      => 'Illuminate\Html\FormFacade',
+        'Slugify'   => "Cocur\Slugify\Bridge\Laravel\SlugifyFacade",
 	],
 
 ];

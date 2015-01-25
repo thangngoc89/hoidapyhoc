@@ -83,7 +83,7 @@ class QuizController extends Controller {
 
         $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
-            return $tests->orderBy('tests.created_at','DESC')
+            return $tests->has('question')->orderBy('tests.created_at','DESC')
                 ->with('question','category','user','history')
                 ->paginate(10);
         });
@@ -97,7 +97,8 @@ class QuizController extends Controller {
 	 */
 	public function create()
 	{
-		return view('quiz.create');
+        $categories = $this->categoryList();
+		return view('quiz.create',compact('categories'));
 	}
 
 

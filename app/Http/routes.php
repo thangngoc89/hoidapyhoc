@@ -52,8 +52,9 @@ Route::group(array('prefix' => 'api/v2'), function()
     get('tests/{id}/pull', 'API\TestV2Controller@pullPicture');
     post('tests/{id}/check', 'API\TestV2Controller@check');
     post('tests/{id}/start', 'API\TestV2Controller@start');
-    Route::any('tests/upload','API\TestV2Controller@upload');
+    post('tests/upload/', 'API\TestV2Controller@upload');
 
+    Route::resource('files','API\UploadV2Controller');
     Route::resource('tests', 'API\TestV2Controller');
 });
 

@@ -23,6 +23,7 @@
 
 <script src="{{ elixir('js/all.js') }}"></script>
 <script src="{{ elixir('js/script.js') }}"></script>
+<script>var global = {};</script>
 <script>
 @foreach (['success','error','warning','info'] as $notice)
     @if ($message = Session::get($notice))

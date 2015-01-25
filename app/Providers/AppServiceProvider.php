@@ -39,6 +39,11 @@ class AppServiceProvider extends ServiceProvider {
             'Quiz\lib\Repositories\User\UserRepository',
             'Quiz\lib\Repositories\User\EloquentUserRepository'
         );
+
+        $this->app->bind(
+            'Quiz\lib\Repositories\Upload\UploadRepository',
+            'Quiz\lib\Repositories\Upload\EloquentUploadRepository'
+        );
 	}
 
 }

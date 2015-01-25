@@ -63,13 +63,12 @@ $(function () {
         editor: editorContent,
         addons: {
           images: {
-            imagesUploadScript: '/api/v2/tests/upload',
-            imagesDeleteScript: '/api/v2/tests/delete'
+            imagesUploadScript: '/api/v2/files',
+            imagesDeleteScript: '/api/v2/files'
           }
         }
       });
 });
-var global = {};
 $(document).ready(function(){
     quizCreateInt();
 });

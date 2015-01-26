@@ -38,6 +38,7 @@ Route::controllers([
 Route::group(array('prefix' => 'quiz'), function()
 {
     Route::get('lam-bai/{slug?}/{id?}', 'QuizController@show');
+    Route::get('bang-diem/{slug?}/{id?}', 'QuizController@leaderboard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 
     get('create','QuizController@create');

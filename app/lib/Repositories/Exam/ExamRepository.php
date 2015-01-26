@@ -8,4 +8,6 @@ interface ExamRepository extends BaseRepository {
 
     public function doneTestId($user);
 
+    public function getByIdOrSlug($id,$slug);
+
 }

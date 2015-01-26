@@ -10062,8 +10062,8 @@ body.forum {
   line-height: 1;
   font-size: 10px;
   position: absolute;
-  bottom: 0;
-  right: 14px;
+  bottom: 3px;
+  right: 9px;
   background: #dadada;
   -webkit-box-shadow: 0 0 0 4px #dadada;
   box-shadow: 0 0 0 4px #dadada; }

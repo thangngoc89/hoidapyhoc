@@ -16,6 +16,8 @@ class DropUnusedProfileColumn extends Migration {
         {
             $table->dropColumn(array('webSiteURL', 'description', 'age','birthDay', 'birthMonth','birthYear','phone','address','country','region','city','zip','username','coverInfoUrl','emailVerified','firstName','lastName'));
         });
+
+        \DB::statement('RENAME TABLE profiles TO users_profile');
 	}
 
 	/**

@@ -15,6 +15,7 @@ class DropTestsSlugUniqueKey extends Migration {
 		\Schema::table('tests', function ($table)
         {
             $table->dropUnique('tests_slug_unique');
+            $table->dropColumn(['luotthi']);
         });
 	}
 

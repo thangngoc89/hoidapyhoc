@@ -35,9 +35,7 @@
 @section('body')
 <div class="container">
     <div class="row">
-
         @include('quiz.historyContent')
-
     </div>
 </div>
 @stop

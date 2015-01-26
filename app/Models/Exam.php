@@ -58,9 +58,19 @@ class Exam extends Model {
         }
     }
 
-    public function link()
+    /*
+     * Frontend Content
+     */
+    public function link($type = null)
     {
-        return '/quiz/lam-bai/'.$this->slug.'/'.$this->id;
+        switch($type)
+        {
+            case 'bangdiem':
+                return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
+            default:
+                return '/quiz/lam-bai/'.$this->slug.'/'.$this->id;
+        }
+
     }
 
     public function countHistory()

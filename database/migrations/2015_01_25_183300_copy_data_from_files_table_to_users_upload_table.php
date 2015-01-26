@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Quiz\Models\Exam;
+use Quiz\Models\Upload;
 
 class CopyDataFromFilesTableToUsersUploadTable extends Migration {
 
@@ -12,12 +14,12 @@ class CopyDataFromFilesTableToUsersUploadTable extends Migration {
 	 */
 	public function up()
 	{
-		$tests = \Quiz\Models\Exam::has('file')->get();
+        $tests = Exam::where('is_file',1)->get();
         foreach ($tests as $t)
         {
             // Copy file to users_upload table
-            $file = $t->file()->first();
-            $newUpload = new \Quiz\Models\Upload;
+            $file = \DB::table('files')->where('test_id',$t->id)->first();
+            $newUpload = new Upload;
             $newUpload->filename = $file->filename;
             $newUpload->orginal_filename = $file->orginal_filename;
             $newUpload->extension = 'pdf';
@@ -31,6 +33,8 @@ class CopyDataFromFilesTableToUsersUploadTable extends Migration {
             $t->file_id = $newUpload->id;
             $t->save();
         }
+
+        \Schema::drop('files');
 	}
 
 	/**

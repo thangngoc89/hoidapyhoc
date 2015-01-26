@@ -110,17 +110,8 @@ class QuizController extends Controller {
 	 */
 	public function show($slug = null, $id = null)
 	{
-        $t = \Cache::tags('test')->rememberForever('test'.$id, function() use ($id, &$slug) {
-            if (!is_null($id))
-                return $this->test->getFirstBy('id',$id, ['question','category','file']);
-            if (!is_null($slug))
-                return $this->test->getFirstBy('slug',$slug, ['question','category','file']);
-        });
+        $t = $this->processTest($slug, $id);
 
-        if (is_null($t)) abort(404);
-
-        if (($t->slug != $slug) || ($id == null))
-            return redirect()->to($t->link());
         $haveHistory = false;
         if ($this->auth->check())
         {
@@ -133,6 +124,21 @@ class QuizController extends Controller {
         $viewHistory = false;
         return view('quiz.do',compact('t','haveHistory','viewHistory'));
 	}
+
+    public function leaderboard($slug = null, $id = null)
+    {
+        $t = $this->processTest($slug, $id);
+
+        $top = $this->history->orderBy('score','DESC')
+            ->where('test_id',$t->id)
+            ->where('is_first',1)
+            ->where('isDone',1)
+            ->with('user')
+            ->paginate(20);
+
+        return view('quiz.leaderboard',compact('t','top'));
+
+    }
 
     public function showHistory($slug,$id)
     {
@@ -151,7 +157,22 @@ class QuizController extends Controller {
         return view('quiz.history',compact('t','history','viewHistory'));
     }
 
+    /**
+     * Process Test route: do, comment, leaderboard
+     * @param $slug
+     * @param $id
+     */
+    public function processTest($slug, $id)
+    {
+        $t = $this->test->getByIdOrSlug($id,$slug);
 
+        if (is_null($t)) abort(404);
+
+        if (($t->slug != $slug) || ($id == null))
+            return redirect()->to($t->link());
+
+        return $t;
+    }
 	/**
 	 * Show the form for editing the specified resource.
 	 *

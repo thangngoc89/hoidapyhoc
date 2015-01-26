@@ -16,7 +16,7 @@ class FileTable extends Migration {
             $table->increments('id');
             $table->unsignedInteger('test_id');
             $table->string('orginal_filename');
-            $table->string('filename');
+            $table->string('filename')->unique();
             $table->string('size');
             $table->unique('filename');
 

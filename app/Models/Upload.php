@@ -40,7 +40,6 @@ class Upload extends Model {
     {
         if ($this->extension != 'pdf')
             return false;
-
         return getenv('PDF_VIEWER').$this->url();
     }
 }

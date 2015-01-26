@@ -3,11 +3,11 @@
          <div class="container">
              <ul class="lessons-nav__primary">
                  <li class="active">
-                     <a href="#test">Đề thi</a>
-                 </li>
-                 <li>
-                    <a href="#comment">Bình luận</a>
-                 </li>
+                      <a href="{{ $t->link() }}">Đề thi</a>
+                  </li>
+                  <li>
+                     <a href="{{ $t->link('bangdiem') }}">Bảng điểm</a>
+                  </li>
              </ul>
          </div>
      </div>

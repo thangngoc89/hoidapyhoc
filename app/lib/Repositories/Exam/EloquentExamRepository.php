@@ -46,4 +46,14 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
         return $tests;
     }
 
+    public function getByIdOrSlug($id,$slug)
+    {
+        return \Cache::tags('test')->rememberForever('test'.$id, function() use ($id, &$slug) {
+            if (!is_null($id))
+                return $this->getFirstBy('id',$id, ['question','category','file']);
+            if (!is_null($slug))
+                return $this->getFirstBy('slug',$slug, ['question','category','file']);
+        });
+    }
+
 }

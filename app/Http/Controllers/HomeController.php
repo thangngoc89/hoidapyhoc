@@ -61,9 +61,7 @@ class HomeController extends Controller {
 
     public function cleanCache()
     {
-        dd(getenv('PDF_VIEWER'));
-        $test = \Quiz\Models\Exam::find(5);
-        dd($test->file);
+
     }
 
 }

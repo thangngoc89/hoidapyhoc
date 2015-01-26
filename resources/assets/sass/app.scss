@@ -17,7 +17,8 @@
 @import 'partials/buttons';
 @import 'partials/pace-loading';
 
-@import 'vendor/uploadfile';
+@import 'vendor/medium-editor/medium-editor-insert-plugin-frontend';
+
 /* Page */
 
 @import 'quiz/quiz';
@@ -28,7 +29,6 @@
 @import 'partials/home';
 @import 'components/unsort';
 @import 'components/avatar-banner-profile';
-
 
 @import 'quiz/quiz-sidebar';
 @import 'quiz/create';

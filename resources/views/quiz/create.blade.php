@@ -40,7 +40,12 @@
 </div>
 @stop
 
+@section('style')
+<link href="/css/editor.css" rel="stylesheet">
+@endsection
+
 @section('script')
+<script src="/assets/js/editor.js"></script>
 <script>
 var editorName = new MediumEditor('#name', {
     buttons: ['bold', 'italic'],
@@ -70,11 +75,5 @@ $(document).ready(function(){
     quizCreateInt();
 });
 </script>
-@stop
-
-@section('style')
-<link href="/assets/vendor/medium-editor/css/medium-editor.css" rel="stylesheet">
-<link href="/assets/vendor/medium-editor/css/themes/bootstrap.min.css" rel="stylesheet">
-<link href="/assets/vendor/medium-editor/css/medium-editor-insert-plugin.min.css" rel="stylesheet">
 @stop
 

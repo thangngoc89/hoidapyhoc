@@ -10,10 +10,10 @@ class Upload extends Model {
 
     public static function boot()
     {
-        Upload::saving(function($upload)
-        {
-            $upload->location = config('filesystems.default');
-        });
+//        Upload::saving(function($upload)
+//        {
+//
+//        });
     }
 
     /*
@@ -30,7 +30,17 @@ class Upload extends Model {
         {
             case 'local' :
                 return url('/uploads/'.$this->filename);
-                break;
+
+            case 's3' :
+                return url('http://media.hoidapyhoc.com/'.$this->filename);
         }
+    }
+
+    public function pdfViewer()
+    {
+        if ($this->extension != 'pdf')
+            return false;
+
+        return getenv('PDF_VIEWER').$this->url();
     }
 }

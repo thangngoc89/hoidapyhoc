@@ -26,7 +26,7 @@ class SaveNewTest extends Request {
 	{
 		return [
 			'name' => 'required|min:6|unique:tests',
-            'thoigian' => 'required|integer|digits_between:5,200',
+            'thoigian' => 'required|integer|between:5,200',
             'content' => 'required',
             'begin' => 'required|integer|min:1',
             'cid'   => 'exists:categories,id',

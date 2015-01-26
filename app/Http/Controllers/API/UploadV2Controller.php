@@ -55,15 +55,15 @@ class UploadV2Controller extends APIController {
             $upload = $this->upload->fill($info);
             $upload->user_id = $this->auth->user()->id;
             $upload->filename = $filename;
+            $upload->location = config('filesystems.default');
             $upload->save();
         }
         //echo url('/uploads/'. $upload->filename);
         $response = [
+            'id'    => $upload->id,
             'filename' => $upload->filenname,
             'url' => $upload->url()
         ];
         return response()->json($response,200);
-
-
     }
 } 

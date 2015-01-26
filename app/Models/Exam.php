@@ -6,7 +6,7 @@ class Exam extends Model {
 
     protected $table = 'tests';
 
-    protected $fillable = array('name','cid','content','begin','thoigian','description');
+    protected $fillable = array('name','cid','content','begin','thoigian','description','is_file','file_id');
 
     public static function boot()
     {
@@ -16,6 +16,8 @@ class Exam extends Model {
         });
         Exam::saving(function($test)
         {
+            if (empty($test->file_id))
+                $test->file_id = NULL;
             $test->slug = \Slugify::slugify(trim($test->name));
         });
     }
@@ -30,10 +32,7 @@ class Exam extends Model {
     {
         return $this->hasMany('Quiz\Models\History','test_id');
     }
-    public function file()
-    {
-        return $this->hasMany('Quiz\Models\uploadFile','test_id')->orderBy('id', 'desc');
-    }
+
 
     /*
      * Belongs to
@@ -45,6 +44,11 @@ class Exam extends Model {
     public function user()
     {
         return $this->belongsTo('Quiz\Models\User');
+    }
+
+    public function file()
+    {
+        return $this->belongsTo('Quiz\Models\Upload','file_id');
     }
 
     public function date($date=null)

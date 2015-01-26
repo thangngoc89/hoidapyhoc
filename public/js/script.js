@@ -1057,7 +1057,22 @@ function validator()
 
     category_id = $('#select-category').val();
     time = $('#select-time').val();
+    is_file = 0;
+    file_id = null;
 
+
+    // Detect upload tab to create a pdf-based exam
+    pdf_upload = $('a[role="tab"][aria-expanded="true"]').attr('href');
+    if(pdf_upload == '#upload')
+    {
+        if (!global.pdf_file_id)
+        {
+            toastr['warning']('Bạn chưa upload file pdf');
+            return false;
+        }
+        is_file = 1;
+        file_id = global.pdf_file_id;
+    }
     if (!name || name.length < 6)
     {
         toastr['warning']('Tên đề thi tối thiểu 6 kí tự')
@@ -1076,6 +1091,8 @@ function validator()
         begin: begin,
         cid: category_id,
         thoigian: time,
+        is_file: is_file,
+        file_id: file_id,
         questions : gatherQuestion()
     }
 }
@@ -1231,6 +1248,7 @@ function uploader()
         onSuccess:function(files,data,xhr)
         {
             $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
+            global.pdf_file_id = data.id;
         }
     });
 }

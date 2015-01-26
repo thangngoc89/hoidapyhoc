@@ -5,7 +5,7 @@ namespace spec\Quiz\Services;
 use Illuminate\Contracts\Auth\Guard;
 use Quiz\Models\User;
 use Quiz\Services\AuthenticateUserListener;
-use Quiz\lib\Repositories\UserRepository;
+use Quiz\lib\Repositories\User\UserRepository;
 use Laravel\Socialite\Contracts\Factory;
 use Laravel\Socialite\Two\ProviderInterface;
 use PhpSpec\ObjectBehavior;

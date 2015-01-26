@@ -61,8 +61,9 @@ class HomeController extends Controller {
 
     public function cleanCache()
     {
-        dd(\Cache::tags('history', 'user3')->get('profileUser3'));
-        \Cache::tags('history','user3')->flush();
+        dd(getenv('PDF_VIEWER'));
+        $test = \Quiz\Models\Exam::find(5);
+        dd($test->file);
     }
 
 }

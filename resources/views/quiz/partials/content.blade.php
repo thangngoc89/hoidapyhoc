@@ -11,7 +11,7 @@
 @if (\Auth::check())
 <div id="quiz-rule" class="@if (($viewHistory)) hide @endif">
 
-    @if (isset($haveHistory))
+    @if (isset($haveHistory) && (!is_null($haveHistory)))
         <h3 class="text-center">Bạn đã làm đề này {{ $haveHistory->count()  }} lần</h3>
         <ul>
         @foreach ($haveHistory  as $h)
@@ -33,7 +33,7 @@
     <h3 class="text-center">Chúc bạn <span class="color-red">MAY MẮN</span></h3>
 </div>
 <div id="quiz-content" class="@if (!$viewHistory) hide @endif">
-
+    <div id="quiz-content-detail">
     @if ($t->is_file)
         <span class="color-red"><b>Chú ý: &nbsp;</b></span>
         <a href="http://ask.hoidapyhoc.com/t/sua-loi-khong-tai-duoc-de-thi/1167">Nếu bị lỗi tải đề thi , nhấp vào đây để khắc phục</a>
@@ -41,12 +41,14 @@
             width="100%"
             height="750px"
             class="documentViewer"
-            src="{{ getenv('PDF_VIEWER').getenv('PDF_BASE_URL')}}{{ $t->file->first()->filename }}"
+            src="{{ $t->file->pdfViewer() }}"
          ></iframe>
     @else
         {!! $t->content !!}
     @endif
-    <br/><br/><br/>
-    <h1 style="text-align :center">-- Hết --</h1>
+    </div>
+    <div class="the-end">
+        <h1>-- Hết --</h1>
+    </div>
 </div>
 @endif

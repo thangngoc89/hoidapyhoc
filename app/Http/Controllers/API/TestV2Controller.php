@@ -78,7 +78,7 @@ class TestV2Controller extends APIController {
 	 */
 	public function store(SaveNewTest $request)
 	{
-        try{
+        #try{
             $statusCode = 200;
             $input = $request->all();
 
@@ -92,18 +92,17 @@ class TestV2Controller extends APIController {
             $this->storeQuestion($test,$input);
 
             return response()->json($test, $statusCode);
-        }catch (\Exception $e){
-            $statusCode = 500;
-            return response()->json($e->getMessage(), $statusCode);
-        }
+//        }catch (\Exception $e){
+//            $statusCode = 500;
+//            return response()->json($e->getMessage(), $statusCode);
+//        }
     }
 
     public function storeQuestion($test, $input)
     {
-        foreach ($input['questions'] as $index => $q)
+        foreach ($input['questions'] as $q)
         {
-            $question = new $this->question;
-            $question->fill($q);
+            $question = new $this->question($q);
             $question->test_id = $test->id;
             $question->save();
         }

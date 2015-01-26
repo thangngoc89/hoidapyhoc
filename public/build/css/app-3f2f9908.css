@@ -6101,11 +6101,11 @@ th.visible-print, td.visible-print {
   -moz-osx-font-smoothing: grayscale; }
 
 [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "streamline";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
+  font-family: "streamline" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
   speak: none;
   line-height: 1;
   -webkit-font-smoothing: antialiased;

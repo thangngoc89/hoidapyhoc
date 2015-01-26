@@ -76,9 +76,11 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store(SaveNewTest $request)
+	public function store()
 	{
         try{
+            return response()->json(\Input::all(), 200);
+
             $statusCode = 200;
             $input = $request->all();
 

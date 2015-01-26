@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "dependencies": {
     "bootstrap": "~3.3.0",
-    "jquery": "~1.9.1",
     "toastr": "~2.1.0",
     "animate.css": "master",
     "jScrollPane": "master",
@@ -12,6 +11,8 @@
     "sticky-kit": "~1.1.1",
     "bootstrap-sweetalert": "~0.4.3",
     "pace": "~1.0.2",
-    "medium-editor-insert-plugin": "~0.3.2"
+    "medium-editor-insert-plugin": "~0.3.2",
+    "dante": "~0.0.8",
+    "jquery": "*"
   }
 }

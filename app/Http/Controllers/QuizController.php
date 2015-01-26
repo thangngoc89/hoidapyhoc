@@ -84,7 +84,7 @@ class QuizController extends Controller {
         $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
             return $tests->has('question')->orderBy('tests.created_at','DESC')
-                ->with('question','category','user','history')
+                ->with('category','user','history')
                 ->paginate(10);
         });
         return view('quiz.index',compact('tests','categories','filter','c','name','doneTestId'));
@@ -134,7 +134,7 @@ class QuizController extends Controller {
             ->where('is_first',1)
             ->where('isDone',1)
             ->with('user')
-            ->paginate(20);
+            ->paginate(50);
 
         return view('quiz.leaderboard',compact('t','top'));
 

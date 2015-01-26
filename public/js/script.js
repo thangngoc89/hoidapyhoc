@@ -1022,25 +1022,40 @@ function quizCreateInt()
 function post()
 {
     data = validator();
-    if (data)
-    {
+    if (data) {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: '/api/v2/tests',
             data: data,
-            error: function(data){
+            error: function (data) {
                 data = $.parseJSON(data.responseText);
-                if (data.name[0] == 'validation.unique')
-                {
+                if (data.name[0] == 'validation.unique') {
                     toastr.error('Tên đề thi đã được sử dụng. Vui lòng chọn một tên khác');
                     return false;
                 }
                 console.log(data);
                 toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
             },
-            success: function(data){
-                console.log(data);
+            success: function (data) {
+                swal({
+                        title: "Đã gửi đề thi thành công",
+                        text: "Làm gì tiếp theo?",
+                        type: "success",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-info",
+                        confirmButtonText: "Xem đề thi",
+                        cancelButtonText: "Chỉnh sửa",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            location.href = data.url;
+                        } else {
+                            location.href = data.editUrl;
+                        }
+                    });
             }
         });
     }
@@ -1052,7 +1067,7 @@ function validator()
     name = editorName.serialize().name.value;
     description =  editorDescription.serialize().description.value,
     content =  editorContent.serialize().content.value,
-    begin = $('begin').val();
+    begin = $('#begin').val();
     begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
 
     category_id = $('#select-category').val();

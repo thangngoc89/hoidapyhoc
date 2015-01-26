@@ -49,7 +49,7 @@ class History extends Model {
      */
     public function date()
     {
-        return $this->updated_at->diffForHumans();
+        return $this->created_at->diffForHumans();
     }
 
     public function link()

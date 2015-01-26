@@ -35,7 +35,7 @@ Bảng điểm :: {{ trim($t->name) }}
 @section('body')
 <div class="container">
     <div class="col-md-8 threads-inner white">
-        <div class="wrap">
+        <div class="wrap" style="padding-top: 0">
             <div class="lessons-nav lessons-nav--forum inline-nav" style="margin-bottom: 3em;">
                  <div class="container">
                      <ul class="lessons-nav__primary">
@@ -58,7 +58,7 @@ Bảng điểm :: {{ trim($t->name) }}
                         <img class="media-object media--conversation__object" src="{{ $h->user->getAvatar() }}" alt="">
                     </a>
                     <span class="media--conversation__answered-icon media--conversation__answered-icon--alternate">
-                        {{ $index+1 }}
+                        {{ $index+1+(\Input::get('page')-1)*50 }}
                     </span>
                 </div>
                 <div class="media-body media--conversation__body">
@@ -80,6 +80,11 @@ Bảng điểm :: {{ trim($t->name) }}
             @endforeach
         @endif
         </div>
+        <div class="forum-pagination">
+             <ul class="pagination">
+                 {!! $top->render() !!}
+             </ul>
+         </div>
     </div>
     <div id="conversations-sidebar" class="white col-md-4">
         @include('quiz.indexSidebar')

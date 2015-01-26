@@ -46,7 +46,6 @@
                 <div id="pdf"></div>
             </div>
           </div>
-
         </div>
     </div>
 </div>
@@ -67,13 +66,16 @@
                 <div class="col-md-4">
                     <h4>Số câu: <span class="color-red" id="total"> 5 </span></h4>
                 </div>
-                <div class="input-group col-md-4">
+
+            </div>
+            <div class="form-group row">
+                <div class="input-group col-md-5">
                       <span class="input-group-btn">
                         <button class="btn btn-info" id="btn-add"><i class="fa fa-plus"></i></button>
                       </span>
                       {!! Form::input('number','total_add','1', ['class' => 'form-control', 'id' => 'total_add']) !!}
                 </div>
-                <div class="input-group col-md-4">
+                <div class="input-group col-md-5">
                       <span class="input-group-btn">
                         <button class="btn btn-primary" id="btn-remove"><i class="fa fa-times"></i></button>
                       </span>

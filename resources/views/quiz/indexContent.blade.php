@@ -45,14 +45,14 @@
 
              <div class="media-body media--conversation__body">
                  <h5 class="media-heading media--conversation__heading">
-                     <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ $t->name }}</a>
+                     <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ str_limit($t->name,50) }}</a>
                  </h5>
                  <a href="{{ $t->category->link() }}" class="btn btn-forum" style="color: #000;background-color:#{{ $t->category->color }}">
                      {{ $t->category->name }}
                  </a>
                  <span class="text-muted label-small last-updated">
                      đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     | <a href="{{ $t->link() }}">{{ $t->question->count() }}</a> câu hỏi
+                     | <a href="{{ $t->link() }}">{{ $t->totalQuestions() }}</a> câu hỏi
                      | <a href="{{ $t->link() }}">{{ $t->thoigian }}</a> phút
                  </span>
              </div>

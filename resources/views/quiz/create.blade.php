@@ -47,32 +47,21 @@
 @section('script')
 <script src="/assets/js/editor.js"></script>
 <script>
-var editorName = new MediumEditor('#name', {
-    buttons: ['bold', 'italic'],
-    disableReturn: true,
-    placeholder: 'Nhập tiêu đề của đề thi'
-});
-var editorDescription = new MediumEditor('#description', {
-    disableReturn: true,
-    placeholder: 'Mô tả ngắn cho đề thi'
-});
-var editorContent = new MediumEditor('#content', {
-    cleanPastedHTML: true,
-    placeholder: 'Nội dung đề thi (dành cho đề tự soạn và hình ảnh)',
-});
-$(function () {
-    $('#content').mediumInsert({
-        editor: editorContent,
-        addons: {
-          images: {
-            imagesUploadScript: '/api/v2/files',
-            imagesDeleteScript: '/api/v2/files'
-          }
-        }
-      });
-});
+
+
 $(document).ready(function(){
+
+editor = new Dante.Editor(
+      {
+        el: "#content",
+        upload_url: "/api/v2/files",
+//        debug: true,
+      }
+    );
+    editor.start();
+
     quizCreateInt();
+
 });
 </script>
 @stop

@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss')
-        //.sass('editor.scss')
+        .sass('editor.scss')
         .scripts([
             'bower_components/jquery/jquery.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
@@ -33,9 +33,9 @@ elixir(function(mix) {
             'assets/js/quiz/create.js'
         ], 'resources','public/js/script.js')
         .scripts([
-            'bower_components/medium-editor/dist/js/medium-editor.js',
-            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-plugin.js',
-            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js'
+            'bower_components/sanitize.js/lib/sanitize.js',
+            'bower_components/underscore/underscore.js',
+            'bower_components/dante/dist/0.0.8/js/dante-editor.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         .phpSpec()
         .version(['css/app.css','js/script.js']);

@@ -36,10 +36,11 @@ class UploadV2Controller extends APIController {
             'size' => $file->getClientSize(),
         ];
 
-        return $this->excute($file, $info);
+        $type = (\Input::get('type')== 'json') ? 'json' : 'plain';
+        return $this->excute($file, $info, $type);
     }
 
-    public function excute($file, $info)
+    public function excute($file, $info, $type)
     {
         $upload = $this->upload->getFileInfo($info);
 
@@ -58,7 +59,10 @@ class UploadV2Controller extends APIController {
             $upload->location = config('filesystems.default');
             $upload->save();
         }
-        //echo url('/uploads/'. $upload->filename);
+
+        if ($type != 'json')
+            return response(url('/uploads/'. $upload->filename));
+
         $response = [
             'id'    => $upload->id,
             'filename' => $upload->filenname,

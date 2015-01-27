@@ -31,12 +31,12 @@ elixir(function(mix) {
             'assets/js/quiz/history.js',
             'assets/js/quiz/do.js',
             'assets/js/quiz/create.js'
-        ], 'resources','public/js/script.js')
+        ], 'resources','public/assets/js/script.js')
         .scripts([
-            'bower_components/sanitize.js/lib/sanitize.js',
-            'bower_components/underscore/underscore.js',
-            'bower_components/dante/dist/0.0.8/js/dante-editor.js'
+            'bower_components/medium-editor/dist/js/medium-editor.js',
+            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-plugin.js',
+            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         .phpSpec()
-        .version(['css/app.css','js/script.js']);
+        .version(['css/app.css','assets/js/script.js']);
 });

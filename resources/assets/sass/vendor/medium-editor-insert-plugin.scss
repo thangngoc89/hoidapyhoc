@@ -141,6 +141,7 @@
     color: #ddd;
     font-size: 0.9em; }
     .mediumInsert .mediumInsert-buttons a {
+      color: $grey-darker;
       text-decoration: underline;
       cursor: pointer; }
       .mediumInsert .mediumInsert-buttons a.active {
@@ -241,7 +242,12 @@
     -webkit-transform: scale(1);
         -ms-transform: scale(1);
             transform: scale(1);
-    opacity: 1; }
+    opacity: 1;
+
+    a {
+      color: $grey-light;
+    }
+  }
   .mediumInsert .medium-editor-toolbar-form-anchor.mediumInsert-tableDemoBox {
     background-color: #fff;
     border: 2px solid #333;

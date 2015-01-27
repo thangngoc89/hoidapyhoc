@@ -47,21 +47,9 @@
 @section('script')
 <script src="/assets/js/editor.js"></script>
 <script>
-
-
+var editorContent;
 $(document).ready(function(){
-
-editor = new Dante.Editor(
-      {
-        el: "#content",
-        upload_url: "/api/v2/files",
-//        debug: true,
-      }
-    );
-    editor.start();
-
     quizCreateInt();
-
 });
 </script>
 @stop

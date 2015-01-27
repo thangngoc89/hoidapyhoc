@@ -76,11 +76,9 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(SaveNewTest $request)
 	{
         try{
-            return response()->json(\Input::all(), 200);
-
             $statusCode = 200;
             $input = $request->all();
 
@@ -147,28 +145,6 @@ class TestV2Controller extends APIController {
 	{
         return response()->json(\Input::all());
 	}
-
-    /**
-     * Upload image endpoint
-     */
-    public function upload()
-    {
-        $file = \Input::file('file');
-        $input = array('image' => $file);
-        $rules = array(
-            'image' => 'image'
-        );
-        $validator = \Validator::make($input, $rules);
-        if ( $validator->fails()) {
-            return Response::json(array('success' => false, 'errors' => $validator->getMessageBag()->toArray()));
-        }
-
-        $fileName = time() . '-' . $file->getClientOriginalName();
-        $destination = public_path() . '/uploads/';
-        $file->move($destination, $fileName);
-
-        echo url('/uploads/'. $fileName);
-    }
 
     public function pullPicture($id, PullExternalImage $puller)
     {
@@ -243,7 +219,6 @@ class TestV2Controller extends APIController {
                 'totalQuestion' => $test->question->count(),
                 'url'   => '/quiz/ket-qua/'.$test->slug.'/'.$history->id,
             ];
-//            dd($score);
             return response()->json($response, $statusCode);
         }catch (\Exception $e){
             $statusCode = 500;

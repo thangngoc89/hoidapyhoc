@@ -9,6 +9,7 @@ function quizCreateInt()
         post();
     });
     sticky();
+    editor();
     global.answerArray = [];
 }
 
@@ -58,9 +59,9 @@ function post()
 function validator()
 {
     if (!filledAllAnswer()) return false;
-    name = editorName.serialize().name.value;
-    description =  editorDescription.serialize().description.value,
-    content =  editorContent.serialize().content.value,
+    name = '...';
+    description =  '....';
+    content =  editorContent.serialize().content.value;
     begin = $('#begin').val();
     begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
 
@@ -68,7 +69,6 @@ function validator()
     time = $('#select-time').val();
     is_file = 0;
     file_id = null;
-
 
     // Detect upload tab to create a pdf-based exam
     pdf_upload = $('a[role="tab"][aria-expanded="true"]').attr('href');
@@ -176,7 +176,6 @@ function removeQuestion(value)
         $('tr[data-question-order="'+i+'"]').remove();
     }
     totalQuestion();
-
 }
 
 function addNewRow(index)
@@ -258,6 +257,27 @@ function uploader()
         {
             $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
             global.pdf_file_id = data.id;
+        }
+    });
+}
+
+function editor()
+{
+    editorContent = new MediumEditor('#content', {
+        anchorInputPlaceholder: 'Nhập một liên kết mới',
+        buttonLabels: 'fontawesome',
+        firstHeader: 'h1',
+        secondHeader: 'h2',
+        targetBlank: true,
+        cleanPastedHTML: true,
+    });
+    $('#content').mediumInsert({
+        editor: editorContent,
+        addons: {
+            images: {
+                imagesUploadScript: '/api/v2/files',
+                imagesDeleteScript: '/api/v2/files'
+            }
         }
     });
 }

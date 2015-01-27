@@ -58,7 +58,11 @@ Bảng điểm :: {{ trim($t->name) }}
                         <img class="media-object media--conversation__object" src="{{ $h->user->getAvatar() }}" alt="">
                     </a>
                     <span class="media--conversation__answered-icon media--conversation__answered-icon--alternate">
-                        {{ $index+1+(\Input::get('page')-1)*50 }}
+                    <?php
+                        $page = \Input::get('page');
+                        $offset = ($page) ? $page-1: 0;
+                    ?>
+                        {{ $index+1+ $offset*50 }}
                     </span>
                 </div>
                 <div class="media-body media--conversation__body">

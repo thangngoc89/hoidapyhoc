@@ -11,6 +11,8 @@ function quizCreateInt()
     sticky();
     editor();
     global.answerArray = [];
+    preventClosing();
+    global.preventClose = true;
 }
 
 
@@ -25,10 +27,7 @@ function post()
             data: data,
             error: function (data) {
                 data = $.parseJSON(data.responseText);
-                if (data.name[0] == 'validation.unique') {
-                    toastr.error('Tên đề thi đã được sử dụng. Vui lòng chọn một tên khác');
-                    return false;
-                }
+                validationError(data);
                 console.log(data);
                 toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
             },
@@ -45,6 +44,7 @@ function post()
                         closeOnCancel: true
                     },
                     function (isConfirm) {
+                        global.preventClose = false;
                         if (isConfirm) {
                             location.href = data.url;
                         } else {
@@ -59,8 +59,8 @@ function post()
 function validator()
 {
     if (!filledAllAnswer()) return false;
-    name = '...';
-    description =  '....';
+    name = $('#input-name').val();
+    description =  $('#input-description').val();
     content =  editorContent.serialize().content.value;
     begin = $('#begin').val();
     begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
@@ -85,6 +85,11 @@ function validator()
     if (!name || name.length < 6)
     {
         toastr['warning']('Tên đề thi tối thiểu 6 kí tự')
+        return false;
+    }
+    if (description && description.length < 6)
+    {
+        toastr['warning']('Mô tả đề thi tối thiểu 6 kí tự')
         return false;
     }
     if (!content)
@@ -249,6 +254,7 @@ function uploader()
         maxFileSize: 10*1024*1024,   //Bytes
         allowedTypes: 'pdf',
         showStatusAfterSuccess: false,
+        formData: { type: 'json' },
         dragDropStr: "<span><b>Kéo và thả file vào đây để upload</b></span>",
         sizeErrorStr: "quá lớn. Dung lượng file tối đa là ",
         uploadErrorStr: "Đã có lỗi xảy ra trong quá trình upload",

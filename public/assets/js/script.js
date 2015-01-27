@@ -821,6 +821,34 @@ function resize_do(){
         }
     }
 }
+
+function preventClosing()
+{
+    if (global.preventClose)
+    {
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+            if(!close_page){
+                // For IE and Firefox prior to version 4
+                if (e) {
+                    e.returnValue = 'Bạn có chắc chắn muốn thoát ? ';
+                }
+                // For Safari
+                return 'Bạn có chắc chắn muốn thoát ? ';
+            }
+        };
+    }
+}
+
+function validationError(response)
+{
+    $.each(response, function(key, object) {
+        object.forEach(function(message)
+        {
+            toastr['warning'](message);
+        });
+    });
+}
 function quizDoInt()
 {
     resize_do();
@@ -1015,7 +1043,10 @@ function quizCreateInt()
         post();
     });
     sticky();
+    editor();
     global.answerArray = [];
+    preventClosing();
+    global.preventClose = true;
 }
 
 
@@ -1030,10 +1061,7 @@ function post()
             data: data,
             error: function (data) {
                 data = $.parseJSON(data.responseText);
-                if (data.name[0] == 'validation.unique') {
-                    toastr.error('Tên đề thi đã được sử dụng. Vui lòng chọn một tên khác');
-                    return false;
-                }
+                validationError(data);
                 console.log(data);
                 toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
             },
@@ -1050,6 +1078,7 @@ function post()
                         closeOnCancel: true
                     },
                     function (isConfirm) {
+                        global.preventClose = false;
                         if (isConfirm) {
                             location.href = data.url;
                         } else {
@@ -1064,9 +1093,9 @@ function post()
 function validator()
 {
     if (!filledAllAnswer()) return false;
-    name = editorName.serialize().name.value;
-    description =  editorDescription.serialize().description.value,
-    content =  editorContent.serialize().content.value,
+    name = $('#input-name').val();
+    description =  $('#input-description').val();
+    content =  editorContent.serialize().content.value;
     begin = $('#begin').val();
     begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
 
@@ -1074,7 +1103,6 @@ function validator()
     time = $('#select-time').val();
     is_file = 0;
     file_id = null;
-
 
     // Detect upload tab to create a pdf-based exam
     pdf_upload = $('a[role="tab"][aria-expanded="true"]').attr('href');
@@ -1091,6 +1119,11 @@ function validator()
     if (!name || name.length < 6)
     {
         toastr['warning']('Tên đề thi tối thiểu 6 kí tự')
+        return false;
+    }
+    if (description && description.length < 6)
+    {
+        toastr['warning']('Mô tả đề thi tối thiểu 6 kí tự')
         return false;
     }
     if (!content)
@@ -1182,7 +1215,6 @@ function removeQuestion(value)
         $('tr[data-question-order="'+i+'"]').remove();
     }
     totalQuestion();
-
 }
 
 function addNewRow(index)
@@ -1256,6 +1288,7 @@ function uploader()
         maxFileSize: 10*1024*1024,   //Bytes
         allowedTypes: 'pdf',
         showStatusAfterSuccess: false,
+        formData: { type: 'json' },
         dragDropStr: "<span><b>Kéo và thả file vào đây để upload</b></span>",
         sizeErrorStr: "quá lớn. Dung lượng file tối đa là ",
         uploadErrorStr: "Đã có lỗi xảy ra trong quá trình upload",
@@ -1264,6 +1297,27 @@ function uploader()
         {
             $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
             global.pdf_file_id = data.id;
+        }
+    });
+}
+
+function editor()
+{
+    editorContent = new MediumEditor('#content', {
+        anchorInputPlaceholder: 'Nhập một liên kết mới',
+        buttonLabels: 'fontawesome',
+        firstHeader: 'h1',
+        secondHeader: 'h2',
+        targetBlank: true,
+        cleanPastedHTML: true,
+    });
+    $('#content').mediumInsert({
+        editor: editorContent,
+        addons: {
+            images: {
+                imagesUploadScript: '/api/v2/files',
+                imagesDeleteScript: '/api/v2/files'
+            }
         }
     });
 }

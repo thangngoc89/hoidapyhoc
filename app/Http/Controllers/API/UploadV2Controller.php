@@ -35,7 +35,6 @@ class UploadV2Controller extends APIController {
             'mimetype'  => $file->getClientMimeType(),
             'size' => $file->getClientSize(),
         ];
-
         $type = (\Input::get('type')== 'json') ? 'json' : 'plain';
         return $this->excute($file, $info, $type);
     }

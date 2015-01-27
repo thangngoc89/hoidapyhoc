@@ -2,13 +2,23 @@
 
 <div class="col-md-8 threads-inner white">
     <div class="wrap">
-        <div class="form-group">
+        <div class="form-row">
             {!! Form::label('name','Tên đề thi' ) !!}
-            <div id="name">Tên đề thi</div>
+            {!! Form::text('name','', ['class' => 'form-control input-md',
+                                            'id' => 'input-name',
+                                            'placeholder' => 'Nhập tên đề thi',
+                                            'required','pattern' => '.{6,}',
+                                            'title' => 'Tiêu đề có độ dài tối thiểu 6 kí tự'
+                                            ]) !!}
         </div>
-        <div class="form-group">
+        <div class="form-row">
             {!! Form::label('description','Mô tả' ) !!}
-            <div id="description">Mô tả đề thi</div>
+            {!! Form::text('description','', ['class' => 'form-control input-md',
+                                            'id' => 'input-description',
+                                            'placeholder' => 'Mô tả ngắn về đề thi',
+                                            'pattern' => '.{6,}',
+                                            'title' => 'Mô tả có đô dài tối thiểu 6 kí tự'
+                                            ]) !!}
         </div>
         <div class="form-group">
             {!! Form::label('content','Nội dung' ) !!}

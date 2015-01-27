@@ -52,8 +52,8 @@
                  </a>
                  <span class="text-muted label-small last-updated">
                      đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     | <a href="{{ $t->link() }}">{{ $t->totalQuestions() }}</a> câu hỏi
-                     | <a href="{{ $t->link() }}">{{ $t->thoigian }}</a> phút
+                     | <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-question"></i> {{ $t->totalQuestions() }}</a>
+                     | <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
                  </span>
              </div>
 

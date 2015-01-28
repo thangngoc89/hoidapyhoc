@@ -1096,7 +1096,7 @@ function validator()
     begin = $('#begin').val();
     begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
 
-    category_id = $('#select-category').val();
+    tags = $('#select-tags').val();
     time = $('#select-time').val();
     is_file = 0;
     file_id = null;
@@ -1129,12 +1129,18 @@ function validator()
         return false;
     }
 
+    if (!tags)
+    {
+        toastr['warning']('Hãy chọn ít nhất một tag liên quan đến đề thi');
+        return false;
+    }
+
     return {
         name: name,
         description: description,
         content: content,
         begin: begin,
-        cid: category_id,
+        tags: tags,
         thoigian: time,
         is_file: is_file,
         file_id: file_id,
@@ -1315,6 +1321,22 @@ function editor()
                 imagesUploadScript: '/api/v2/files',
                 imagesDeleteScript: '/api/v2/files'
             }
+        }
+    });
+
+    $("#select-tags").select2({
+        tags: true,
+        data: global.tags,
+        maximumSelectionLength: 3,
+        templateResult: function(result) {
+            if (result.count === undefined) {
+                return result.text;
+            }
+
+            return '<span class="post-tag">' + result.text + '</span>'
+            + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
+            '<span class="item-multiplier-count">' + result.count
+            '</span></span>';
         }
     });
 }

@@ -30,7 +30,7 @@
           <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active">
                 <a href="#editor" aria-controls="editor" role="tab" data-toggle="tab">
-                    <i class="fa fa-pencil"></i> Tự soạn nội dung
+                    <i class="fa fa-pencil"></i> Tự soạn
                  </a>
             </li>
             <li role="presentation">
@@ -145,13 +145,9 @@
         <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body">
             <label>Môn học</label>
-            <select class="form-control no-border full-width" name="category_id" id="select-category">
-                @foreach ($categories as $c)
-                <option value="{{ $c->id }}" >{{ $c->name }}</option>
-                @endforeach
-            </select>
+            <select class="form-control" name="tags" id="select-tags" multiple="multiple"></select>
             <label>Thời gian (phút)</label>
-            <select class="form-control no-border full-width" name="time" id="select-time">
+            <select class="form-control" name="time" id="select-time">
                     @for ($i=5; $i<=200; $i=$i+5)
                     <option value="{{ $i }}">{{ $i }}</option>
                     @endfor

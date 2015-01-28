@@ -26,6 +26,8 @@ interface BaseRepository {
 
     public function orderBy($column, $direction);
 
+    public function sortByDesc($callback);
+
     public function with(array $with = array());
 
     public function has($relation);

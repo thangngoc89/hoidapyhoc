@@ -8688,10 +8688,6 @@ input + span.error {
 .forum .jumbotron .jumbotron__sub-heading .btn {
   margin-right: 5px; }
 
-.forum .jumbotron .jumbotron__sub-heading a:not(.btn) {
-  color: #A7B3C2;
-  text-transform: lowercase; }
-
 @media (max-width: 767px) {
   .forum .jumbotron .participation__avatar {
     display: none; } }
@@ -9565,7 +9561,6 @@ body.forum {
   font-size: 0.6em; }
 
 .last-updated a {
-  font-weight: bold;
   color: #A7B3C2; }
 
 .reply__help-block {
@@ -9653,7 +9648,6 @@ body.forum {
   clear: both; }
 
 .updated h5 {
-  font-weight: bold !important;
   color: #4C4C4C; }
 
 #conversations-sidebar {
@@ -10869,6 +10863,14 @@ li.profile__stats-join-date {
   background-color: #cedae3;
   border: 1px solid #cedae3;
   text-decoration: none; }
+
+.item-multiplier {
+  margin-right: 4px;
+  color: #888; }
+
+.item-multiplier-count {
+  font-size: 10px;
+  color: #777; }
 
 #quiz-sidebar {
   border-left: 1px solid #dadada;

@@ -78,7 +78,11 @@ class Exam extends Model {
 
     public function countHistory()
     {
-       return $this->history->count();
+        $key = 'historyCountTest' . $this->id;
+
+        return \Cache::tags('tests', 'history')->rememberForever($key, function () {
+            return $this->history->count();
+        });
     }
 
     public function totalQuestions()

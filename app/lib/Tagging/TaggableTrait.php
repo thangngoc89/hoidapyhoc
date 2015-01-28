@@ -179,7 +179,10 @@ trait TaggableTrait {
 
         // If item reach maximum tags per item. Stop !!!
         $previousTotal = $this->tagged()->get()->count();
-        if ($previousTotal >= config('tagging.max')) { return; }
+
+        $maxTag = config('tagging.maxTag');
+        $maxTag = (empty($maxTag)) ? 3 : $maxTag;
+        if ($previousTotal >= $maxTag) { return; }
 
         $this->tagged()->attach($tag->id);
     }

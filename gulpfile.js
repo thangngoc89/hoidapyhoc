@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('main.scss')
-        //.sass('editor.scss')
+        .sass('editor.scss')
         .scripts([
             'bower_components/jquery/jquery.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
@@ -35,7 +35,9 @@ elixir(function(mix) {
         .scripts([
             'bower_components/medium-editor/dist/js/medium-editor.js',
             'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-plugin.js',
-            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js'
+            'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js',
+            'bower_components/select2/dist/js/select2.js',
+            'bower_components/select2/dist/js/i18n/vi.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         .phpSpec()
         .version(['css/main.css','assets/js/script.js']);

@@ -11,9 +11,9 @@
         </div>
         <h2 class="jumbotron__heading">{{ $t->name }}</h2>
         <h4 class="jumbotron__sub-heading">
-            <a href="{{ $t->category->link() }}" class="btn btn-forum" style="color: #000;background-color:#{{ $t->category->color }}">
-                {{ $t->category->name }}
-            </a>
+            @foreach ($t->tagged as $tag)
+                <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
+             @endforeach
             <span class="text-muted label-small last-updated">
                 đăng vào {{ $t->date() }}
                 | {{ $t->question->count() }} câu hỏi

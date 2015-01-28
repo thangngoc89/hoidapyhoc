@@ -70,6 +70,11 @@ abstract class AbstractEloquentRepository {
         return $this->model->orderBy($column, $direction);
     }
 
+    public function sortByDesc($callback)
+    {
+        return $this->model->sortByDesc($callback);
+    }
+
     /**
      * Eager Load of instance
      *

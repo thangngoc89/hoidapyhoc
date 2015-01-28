@@ -48,6 +48,7 @@
 <script src="/assets/js/editor.js"></script>
 <script>
 var editorContent;
+global.tags = {!! $tags !!};
 $(document).ready(function(){
     quizCreateInt();
 });

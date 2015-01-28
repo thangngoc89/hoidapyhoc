@@ -13,6 +13,7 @@
     "pace": "~1.0.2",
     "medium-editor-insert-plugin": "~0.3.2",
     "dante": "~0.0.8",
-    "jquery": "*"
+    "jquery": "*",
+    "select2": "select2-ng"
   }
 }

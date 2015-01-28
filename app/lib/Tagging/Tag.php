@@ -18,7 +18,7 @@ class Tag extends Eloquent {
 	}
 
     public function exams() {
-        return $this->morphedByMany('\Quiz\Model\Exam','taggable');
+        return $this->morphedByMany('\Quiz\Models\Exam','taggable');
     }
 	
 	public function save(array $options = array()) {

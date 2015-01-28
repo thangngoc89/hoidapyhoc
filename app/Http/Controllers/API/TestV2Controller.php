@@ -87,7 +87,8 @@ class TestV2Controller extends APIController {
 
             #TODO: Hardwork on this
             $test->is_approve = true;
-            $test->save();
+            if ($test->save())
+                $test->tag($input['tags']);
 
             $this->storeQuestion($test,$input);
 

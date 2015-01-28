@@ -1,6 +1,7 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
+use Quiz\lib\Tagging\Tag;
 use Quiz\Models\Category;
 use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
@@ -55,34 +56,30 @@ class QuizController extends Controller {
     public function index()
 	{
         $tab = \Input::get('tab');
-
         switch($tab)
         {
-            case 'hasHistory' :
+            case 'done' :
                 if ($this->auth->check())
                     $tests = $this->test->doneTest($this->auth->user());
                 $name = 'Các đề bạn đã làm';
                 break;
             case null :
-                $tests = $this->test;
+                $tests = $this->test->orderBy('tests.created_at','DESC');
                 $name = 'Quiz';
                 break;
             default :
                 return redirect('quiz');
         }
 
-        $doneTestId = $this->doneTestId();
+        $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
 
         $key = 'index'.$tab.\Input::get('page');
-
         $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
-            return $tests->has('question')->orderBy('tests.created_at','DESC')
-                ->with('tagged','user','history')
-                ->paginate(10);
+            return $tests->has('question')->with('tagged','user')->paginate(20);
         });
 
-        return view('quiz.index',compact('tests','filter','name','doneTestId'));
+        return view('quiz.index',compact('tests','name','doneTestId'));
 	}
 
 	/**
@@ -92,8 +89,25 @@ class QuizController extends Controller {
 	 */
 	public function create()
 	{
-        $categories = $this->categoryList();
-		return view('quiz.create',compact('categories'));
+
+        #TODO Cache this
+        $tagList = Tag::all()->sortByDesc(function($tag)
+        {
+            return $tag->exams->count();
+        });
+
+        $tags = array();
+        foreach($tagList as $tag)
+        {
+            $tags[] = [
+                'id' => $tag->name,
+                'text' => $tag->name,
+                'count' => $tag->exams->count()
+            ];
+        }
+        $tags = json_encode($tags);
+
+		return view('quiz.create',compact('tags'));
 	}
 
 
@@ -121,6 +135,13 @@ class QuizController extends Controller {
         return view('quiz.do',compact('t','haveHistory','viewHistory'));
 	}
 
+    /**
+     * Show leaderboard of test
+     *
+     * @param null $slug
+     * @param $t
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function leaderboard($slug = null, $t)
     {
         if ($t->slug != $slug)
@@ -137,6 +158,13 @@ class QuizController extends Controller {
 
     }
 
+    /**
+     * Show History after done test
+     *
+     * @param $slug
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function showHistory($slug,$id)
     {
         $history = \Cache::tags('history')->rememberForever('history'.$id, function() use ($id){
@@ -154,21 +182,6 @@ class QuizController extends Controller {
         return view('quiz.history',compact('t','history','viewHistory'));
     }
 
-    /**
-     * Process Test route: do, comment, leaderboard
-     * @param $slug
-     * @param $id
-     */
-    public function processTest($slug, $id)
-    {
-        $t = $this->test->getByIdOrSlug($id,$slug);
-
-        if (is_null($t)) abort(404);
-
-
-
-        return $t;
-    }
 	/**
 	 * Show the form for editing the specified resource.
 	 *
@@ -179,26 +192,5 @@ class QuizController extends Controller {
 	{
 		//
 	}
-
-
-    private function categoryList()
-    {
-        $key = 'categoryListDesc';
-        $categories = \Cache::tags('category')->remember($key,30, function()
-        {
-            $categories = $this->category->with('test')->has('test')->get()->sortByDesc(function($categories)
-            {
-                return $categories->test->count();
-            });
-            return $categories;
-        });
-        return $categories;
-    }
-
-    private function doneTestId()
-    {
-        $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
-        return $doneTestId;
-    }
 
 }

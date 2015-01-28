@@ -29,7 +29,7 @@ class SaveNewTest extends Request {
             'thoigian' => 'required|integer|between:5,200',
             'content' => 'required',
             'begin' => 'required|integer|min:1',
-            'cid'   => 'exists:categories,id',
+            'tags'   => 'required',
             'questions' => 'required|array'
 		];
 	}

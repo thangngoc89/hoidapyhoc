@@ -11,9 +11,9 @@
         <h2 class="jumbotron__heading">Kết quả thi của <a href="{{ $history->user->profileLink() }}"><strong>{{ $history->user->name}}</strong></a></h2>
         <h2 class="jumbotron_second-heading"><a href="{{ $t->link() }}">Đề thi {{ $t->name }}</a></h2>
         <h4 class="jumbotron__sub-heading">
-            <a href="{{ $t->category->link() }}" class="btn btn-forum" style="color: #000;background-color:#{{ $t->category->color }}">
-                {{ $t->category->name }}
-            </a>
+            @foreach ($t->tagged as $tag)
+                <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
+            @endforeach
             <span class="text-muted label-small last-updated">
                 vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
                 | <a href="{{ $t->link() }}">{{ $t->question->count() }}</a> câu hỏi

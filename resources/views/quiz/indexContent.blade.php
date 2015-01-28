@@ -1,12 +1,15 @@
 <div class="lessons-nav lessons-nav--forum inline-nav">
      <div class="container">
          <ul class="lessons-nav__primary">
-             <li class="{{ (Request::is('quiz')) ? 'active' : '' }}">
-                 <a href="/quiz">Tất cả</a> </li>
+             <li class="{{ (\Input::get('tab') == '') ? 'active' : '' }}">
+                 <a href="/quiz">Mới nhất</a> </li>
+
+             {{--<li class="{{ (\Input::get('tab') == 'feature') ? 'active' : '' }}">--}}
+                {{--<a href="/quiz?tab=feature">Nổi bật</a> </li>--}}
 
              @if (\Auth::check())
-             <li class="{{ (Request::is('quiz/hasHistory')) ? 'active' : '' }}">
-                 <a href="/quiz/hasHistory">Đề bạn đã thi</a> </li>
+             <li class="{{ (\Input::get('tab') == 'done') ? 'active' : '' }}">
+                 <a href="/quiz?tab=done">Đề bạn đã thi</a> </li>
              @endif
          </ul>
 
@@ -29,13 +32,13 @@
                  <h5 class="media-heading media--conversation__heading">
                      <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ str_limit($t->name,50) }}</a>
                  </h5>
-                 @foreach ($t->tagList() as $tag)
+                 @foreach ($t->tagged as $tag)
                     <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
                  @endforeach
                  <span class="text-muted label-small last-updated">
                      đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     - <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->totalQuestions() }}</a>
-                     - <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
+                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->totalQuestions() }}</a>
+                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
                  </span>
              </div>
 

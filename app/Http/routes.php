@@ -17,10 +17,20 @@
 
 Route::pattern('id', '[0-9]+');
 
+/** ------------------------------------------
+ *  Route model binding
+ *  ------------------------------------------
+ */
+Route::model('tests', '\Quiz\Models\Exam');
+
 get('/','HomeController@index');
 get('thongke','HomeController@stat');
 get('cleanCache','HomeController@cleanCache');
 
+/** ------------------------------------------
+ *  User Group
+ *  ------------------------------------------
+ */
 get('@{username}','UserController@profile');
 
 get('auth/external/{provider}','Auth\AuthController@external');
@@ -37,8 +47,8 @@ Route::controllers([
 
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('lam-bai/{slug?}/{id?}', 'QuizController@show');
-    Route::get('bang-diem/{slug?}/{id?}', 'QuizController@leaderboard');
+    Route::get('lam-bai/{slug?}/{tests}', 'QuizController@show');
+    Route::get('bang-diem/{slug?}/{tests}', 'QuizController@leaderboard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 
     get('create','QuizController@create');
@@ -53,7 +63,6 @@ Route::group(array('prefix' => 'api/v2'), function()
     get('tests/{id}/pull', 'API\TestV2Controller@pullPicture');
     post('tests/{id}/check', 'API\TestV2Controller@check');
     post('tests/{id}/start', 'API\TestV2Controller@start');
-    post('tests/upload/', 'API\TestV2Controller@upload');
 
     Route::resource('files','API\UploadV2Controller');
     Route::resource('tests', 'API\TestV2Controller');

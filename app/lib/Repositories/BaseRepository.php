@@ -32,6 +32,12 @@ interface BaseRepository {
 
     public function get();
 
+    public function paginate($number);
+
+    public function first();
+
+    public function count();
+
     public function tag($string);
 
     public function untag($string);
@@ -45,5 +51,4 @@ interface BaseRepository {
     public function withAnyTag($string);
 
     public function withAllTags($string);
-
 }

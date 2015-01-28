@@ -38,5 +38,5 @@ elixir(function(mix) {
             'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         .phpSpec()
-        .version(['css/app.css','assets/js/script.js']);
+        .version(['css/main.css','assets/js/script.js']);
 });

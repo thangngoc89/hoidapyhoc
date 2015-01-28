@@ -1,10 +1,9 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Quiz\lib\Repositories\Exam\ExamRepository;
-use Quiz\Models\Exam;
+use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
-use Quiz\Models\User;
 
 class HomeController extends Controller {
 
@@ -43,7 +42,16 @@ class HomeController extends Controller {
 
         return view('index',compact('testimonial'));
 	}
-    public function stat(User $user, Exam $test, History $history)
+
+    /**
+     * Show Website Status (Refresh every 30 minutes)
+     *
+     * @param UserRepository $user
+     * @param ExamRepository $test
+     * @param History $history
+     * @return \Illuminate\View\View
+     */
+    public function stat(UserRepository $user, ExamRepository $test, History $history)
     {
 
         $key = 'siteStat';
@@ -62,8 +70,9 @@ class HomeController extends Controller {
 
     public function cleanCache(ExamRepository $test)
     {
-        $t = $test->find(4)->tag(['Giải phẫu','Thi online']);
-        dd($t);
+        \Date::setLocale('en');
+        $date = \Date::now()->format('l j F Y H:i:s');
+        dd($date);
     }
 
 }

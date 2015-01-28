@@ -4,7 +4,7 @@ abstract class AbstractEloquentRepository {
 
     public function all()
     {
-        $this->model->all();
+        return $this->model->all();
     }
 
     public function find($id)
@@ -119,6 +119,27 @@ abstract class AbstractEloquentRepository {
     {
         return $this->get();
     }
+
+    public function paginate($number)
+    {
+        return $this->model->paginate($number);
+    }
+
+    public function first()
+    {
+        return $this->model->first();
+    }
+
+
+    public function count()
+    {
+        return $this->model->count();
+    }
+
+
+    /*
+     * Tagging Area
+     */
 
     public function tag($string)
     {

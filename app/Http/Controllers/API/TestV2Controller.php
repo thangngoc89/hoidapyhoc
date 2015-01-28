@@ -2,12 +2,16 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 use Quiz\Http\Requests\SaveNewTest;
+use Quiz\lib\API\Transformers\ExamTransformers;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
-use Illuminate\Http\Response;
 use Quiz\Models\Question;
+
 use Quiz\Services\PullExternalImage;
+use Sorskod\Larasponse\Larasponse;
 
 class TestV2Controller extends APIController {
 
@@ -17,6 +21,7 @@ class TestV2Controller extends APIController {
 	 * @return Response
 	 */
     protected $test;
+
 
     protected $history;
     /**
@@ -31,6 +36,10 @@ class TestV2Controller extends APIController {
      * @var Question
      */
     private $question;
+    /**
+     * @var Larasponse
+     */
+    private $fractal;
 
     /**
      * @param Exam $test
@@ -38,38 +47,29 @@ class TestV2Controller extends APIController {
      * @param Request $request
      * @param Guard $auth
      * @param Question $question
+     * @param Larasponse $fractal
      */
-    public function __construct(Exam $test, History $history, Request $request, Guard $auth, Question $question)
+    public function __construct(Exam $test, History $history, Request $request, Guard $auth, Question $question, Larasponse $fractal)
     {
         $this->test         = $test;
         $this->question     = $question;
         $this->history      = $history;
         $this->request      = $request;
         $this->auth         = $auth;
+        $this->fractal      = $fractal;
+
         $this->middleware('auth', ['except' => 'index']);
     }
 
 
 	public function index()
 	{
+        $limit = \Input::get('limit') ?: 3;
 
-        try{
-            $statusCode = 200;
-            $tests = $this->test->paginate(10);
+        $test = $this->test->paginate($limit);
 
-            $response = [];
-            foreach($tests as $test){
-                $response[] = $this->responseMap($test);
-            }
-//            return response()->json($response, $statusCode)->header('X-Total-Count', $builder->getHeaders()['Meta-Filter-Count']);
-            return response()->json($response, $statusCode);
-
-        }catch (\Exception $e){
-            $statusCode = 500;
-            $message = $e->getMessage();
-            return response()->json($message, $statusCode);
-        }
-	}
+        return $this->fractal->paginatedCollection($test, new ExamTransformers());
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -120,17 +120,9 @@ class TestV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($test)
 	{
-        try{
-            $statusCode = 200;
-            $test = $this->test->findOrFail($id);
-
-            return response()->json($test, $statusCode);
-        }catch (\Exception $e){
-            $statusCode = 500;
-            return response()->json($e->getMessage(), $statusCode);
-        }
+        return $this->fractal->item($test, new ExamTransformers());
 	}
 
 
@@ -164,7 +156,7 @@ class TestV2Controller extends APIController {
             $history = $this->history->firstOrCreate(
                 array(
                     'user_id' => $this->auth->user()->id,
-                    'test_id' => \Input::get('test_id'),
+                    'test_id' => $id,
                     'isDone'  => 0
                 ));
 
@@ -189,7 +181,7 @@ class TestV2Controller extends APIController {
             $statusCode = 200;
 
             $user = $this->auth->user();
-            $test = $this->test->getFirstBy('id',$id,['question']);
+            $test = $this->test->getFirstBy('id',$id);
             $history = $this->history->findOrFail(\Input::get('user_history_id'));
 
             if ($history->user_id != $user->id) throw new \Exception ('Don\'t cheat man');
@@ -243,28 +235,10 @@ class TestV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($test)
 	{
-        $test = $this->test->findOrFail($id);
         $test->delete();
         return 'Deleted';
 	}
 
-    private function responseMap($object)
-    {
-        return [
-            'id'            => $object->id,
-            'category_id'   => $object->cid,
-            'user_id'       => $object->user_id,
-            'name'          => $object->name,
-            'slug'          => $object->slug,
-            'questions'     => $object->question->count(),
-            'content'       => $object->content,
-            'is_file'       => $object->is_file,
-            'is_approve'    => $object->is_approve,
-            'count'         => $object->count,
-            'thoigian'      => $object->thoigian,
-            'description'   => $object->description,
-        ];
-    }
 }

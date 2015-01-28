@@ -41,9 +41,6 @@ function setCounter(){
         type: "POST",
         dataType: "json",
         url: '/api/v2/tests/'+testId+'/start',
-        data: {
-            'test_id': testId
-        },
         success: function(data){
             userHistoryId = data.user_history_id;
         }

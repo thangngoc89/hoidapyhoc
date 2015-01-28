@@ -136,11 +136,10 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
+
         'Laravel\Socialite\SocialiteServiceProvider',
-
-
-        'Jenssegers\Date\DateServiceProvider',
-        "Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider",
+        'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
+        'Sorskod\Larasponse\LarasponseServiceProvider',
 
         /*
          * Dev

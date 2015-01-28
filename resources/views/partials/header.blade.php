@@ -22,10 +22,10 @@
         <meta property="og:image" content="http://ask.hoidapyhoc.com/uploads/default/12/51cfb3b4bf8211c3.png"/>
         <meta property="og:title" content="@yield('title')| Trắc nghiệm - Hỏi Đáp Y Học"/>
         <meta property="og:description" content="@yield('meta_description','Trắc nghiệm online - Kho đề thi trắc nghiệm Y Học')"/>
-        <meta property="og:url" content="{{ Request::url() }}"/>
+        <meta property="og:url" content="{{ \Request::url() }}"/>
 
         <link rel="icon" href="http://ask.hoidapyhoc.com/uploads/default/11/7c97ab16287c739c.png" type="image/x-icon">
-        <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
+        <link href="{{ elixir('css/main.css') }}" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         @yield('style')

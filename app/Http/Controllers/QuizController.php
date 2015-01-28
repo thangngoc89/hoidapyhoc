@@ -87,6 +87,7 @@ class QuizController extends Controller {
                 ->with('category','user','history')
                 ->paginate(10);
         });
+
         return view('quiz.index',compact('tests','categories','filter','c','name','doneTestId'));
 	}
 

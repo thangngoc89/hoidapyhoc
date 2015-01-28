@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers;
 
+use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
@@ -59,9 +60,10 @@ class HomeController extends Controller {
         return view('site.stat', compact('stat'));
     }
 
-    public function cleanCache()
+    public function cleanCache(ExamRepository $test)
     {
-
+        $t = $test->find(4)->tag(['Giải phẫu','Thi online']);
+        dd($t);
     }
 
 }

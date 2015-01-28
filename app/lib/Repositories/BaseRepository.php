@@ -31,4 +31,19 @@ interface BaseRepository {
     public function has($relation);
 
     public function get();
+
+    public function tag($string);
+
+    public function untag($string);
+
+    public function retag($array);
+
+    public function tagged();
+
+    public function tagNames();
+
+    public function withAnyTag($string);
+
+    public function withAllTags($string);
+
 }

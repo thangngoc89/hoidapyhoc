@@ -1,0 +1,46 @@
+.taggingCloud:after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.taggingCloud .taggingCloudTag:hover {
+  background: #f9d9b0;
+  color: rgb(4, 85, 143);
+}
+
+.taggingCloud .taggingCloudTag {
+  background: rgb(23, 96, 147);
+  color: #f0f7fc;
+  display: inline;
+  float: left;
+  margin: 0.2em;
+  padding: 0;
+
+  a {
+    color: inherit;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0.5em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .taggingCloudLevel1 {
+    background-color: #d7edfc;
+    color: rgb(23, 96, 147);
+  }
+
+  .taggingCloudLevel2 {
+    background-color: #a5cae4;
+  }
+
+  .taggingCloudLevel3 {
+    background-color: #6cb2e4;
+  }
+}
+
+

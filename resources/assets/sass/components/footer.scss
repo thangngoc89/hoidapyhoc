@@ -1,0 +1,108 @@
+#footer {
+  border-top: 1px solid #eee;
+  min-height: 100px;
+  margin-bottom: 1em;
+  color: #8e8e8e;
+  background: #fff;
+  padding-top: 65px;
+  font-family: $font-family-base;
+  letter-spacing: -0.2px;
+}
+
+#footer ul {
+  list-style: none;
+}
+
+#footer ul li {
+  line-height: 1.9em;
+}
+
+#footer a {
+  color: #8e8e8e;
+}
+
+#footer a:hover {
+  color: inherit;
+}
+
+#footer h1,#footer h2,#footer h3,#footer h4,#footer h5 {
+  margin-top: 0;
+}
+
+#footer h5 {
+  color: #343434;
+  margin-bottom: 35px;
+  font-size: 1.4em;
+}
+
+@media (max-width: 767px) {
+  #footer h5 {
+    margin-top: 2em;
+  };
+}
+
+#footer .logo {
+  color: #464646;
+  display: inline-block;
+  margin-bottom: 8px;
+  position: relative;
+  top: -25px;
+}
+
+.footer__site-description {
+  padding-right: 50px;
+}
+
+.footer__connect {
+  margin-top: 40px;
+  padding: 0;
+}
+
+.footer__connect li {
+  display: inline-block;
+  font-size: 18px;
+  margin-right: 8px;
+  width: 40px;
+  text-align: center;
+}
+
+.footer__connect li a {
+  padding: 0.2em 0 0;
+  display: block;
+  border-radius: 4px;
+}
+
+.footer__connect li a:hover {
+  text-decoration: none;
+  background: $base-color;
+}
+
+.footer__connect li i {
+  color: #fff;
+  position: relative;
+  top: 2px;
+}
+
+.footer__connect a[href*="facebook"] {
+  background: #3B5A92;
+}
+
+.footer__connect a[href*="twitter"] {
+  background: #59ADEC;
+}
+
+.footer__connect a[href*="github"] {
+  background: #333;
+}
+
+.footer__bottom {
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
+  padding-top: 40px;
+  color: #ccc;
+  font-size: 1.1em;
+}
+
+.footer__bottom a {
+  font-weight: bold;
+}

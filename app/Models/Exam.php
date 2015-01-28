@@ -1,8 +1,11 @@
 <?php namespace Quiz\Models;
 
+use Quiz\lib\Tagging\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model {
+
+    use TaggableTrait;
 
     protected $table = 'tests';
 

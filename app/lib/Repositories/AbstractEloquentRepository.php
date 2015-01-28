@@ -119,4 +119,40 @@ abstract class AbstractEloquentRepository {
     {
         return $this->get();
     }
+
+    public function tag($string)
+    {
+        return $this->model->tag($string);
+    }
+
+    public function untag($string)
+    {
+        return $this->model->untag($string);
+    }
+
+    public function retag($array)
+    {
+        return $this->model->retag($array);
+
+    }
+
+    public function tagged()
+    {
+        return $this->model->tagged;
+    }
+
+    public function tagNames()
+    {
+        return $this->model->tagNames();
+    }
+
+    public function withAnyTag($string)
+    {
+        return $this->model->withAnyTag($string);
+    }
+
+    public function withAllTags($string)
+    {
+        return $this->model->withAllTags($string);
+    }
 } 

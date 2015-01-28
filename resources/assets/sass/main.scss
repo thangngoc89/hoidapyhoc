@@ -16,6 +16,8 @@
 @import 'partials/loginModal';
 @import 'partials/buttons';
 @import 'partials/pace-loading';
+@import 'partials/login';
+@import 'partials/home';
 
 @import 'vendor/medium-editor/medium-editor-insert-plugin-frontend';
 
@@ -24,19 +26,17 @@
 @import 'quiz/quiz';
 @import 'quiz/history';
 
-
-@import 'partials/login';
-@import 'partials/home';
 @import 'components/unsort';
+@import 'components/footer';
+@import 'components/testimonial';
+
 @import 'components/avatar-banner-profile';
+@import 'components/tags';
 
 @import 'quiz/quiz-sidebar';
 @import 'quiz/create';
 
 @import '../../../bower_components/bootstrap-sweetalert/lib/sweet-alert';
 @import '../../../bower_components/toastr/toastr';
-
-
-
 
 

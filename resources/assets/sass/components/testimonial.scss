@@ -1,0 +1,88 @@
+
+.testimonials .testimonial {
+  margin-bottom: 3em;
+  background: #fff;
+  padding: 2em;
+  border-right: 30px solid $background;
+  min-height: 169px;
+}
+
+@media (max-width: 991px) {
+  .testimonials .testimonial {
+    text-align: center;
+  };
+}
+
+.testimonials .testimonial:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -ms-transform: skew(-3deg, -2deg);
+  -webkit-transform: skew(-3deg, -2deg);
+  -o-transform: skew(-3deg, -2deg);
+  -moz-transform: skew(-3deg, -2deg);
+  bottom: 14px;
+  box-shadow: 0 16px 5px rgba(0,0,0,0.04);
+  max-width: 90%;
+  width: 90%;
+  height: 50px;
+  left: 1px;
+}
+
+@media (max-width: 991px) {
+  .testimonials .testimonial {
+    display: block;
+    clear: both;
+    margin-bottom: 5em;
+    overflow: hidden;
+  };
+}
+
+.testimonials h2 {
+  text-align: center;
+  letter-spacing: -1px;
+  margin-top: 0;
+}
+
+.testimonials h2 a:hover {
+  color: #000;
+}
+
+.testimonials h4 {
+  margin-bottom: 8px;
+}
+
+.testimonials h4,.testimonials h4 a {
+  font-weight: bold;
+}
+
+.testimonials h4:hover,.testimonials h4 a:hover {
+  color: #000;
+}
+
+.testimonials .testimony-body {
+  font-size: 0.9em;
+}
+
+.testimonials>.row {
+  margin-bottom: 4em;
+}
+
+@media (max-width: 991px) {
+  .testimonials>.row {
+    margin-bottom: 0;
+    border-bottom: none;
+  };
+}
+
+.p-testimonials .testimonial {
+  border-right: 30px solid $background;
+  background: #fff;
+  padding: 2em;
+}
+
+.p-testimonials .testimonial:before {
+  box-shadow: 0 16px 5px rgba(0,0,0,0.04);
+  max-width: 90%;
+  width: 90%;
+}

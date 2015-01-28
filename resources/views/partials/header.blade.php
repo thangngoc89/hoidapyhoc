@@ -16,7 +16,6 @@
         ?>
 
         <meta name="csrf" content="{{ $encrypted_token }}" />
-
         <meta property="og:site_name" content="Quiz - Hỏi Đáp Y Học"/>
         <meta property="og:type" content="article"/>
         <meta property="og:image" content="http://ask.hoidapyhoc.com/uploads/default/12/51cfb3b4bf8211c3.png"/>

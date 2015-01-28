@@ -2,6 +2,8 @@
 
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
+use Quiz\lib\Tagging\Tag;
+use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 
@@ -68,11 +70,13 @@ class HomeController extends Controller {
         return view('site.stat', compact('stat'));
     }
 
-    public function cleanCache(ExamRepository $test)
+    public function cleanCache(ExamRepository $test, Tag $tags)
     {
-        \Date::setLocale('en');
-        $date = \Date::now()->format('l j F Y H:i:s');
-        dd($date);
+        foreach ($test->all() as $t)
+        {
+            dd($t->untag('more tag53,more tag2,super cute tag'));
+            die();
+        }
     }
 
 }

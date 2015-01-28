@@ -52,43 +52,37 @@ class QuizController extends Controller {
      * @param bool $info
      * @return mixed
      */
-    public function index($filter = false, $info = false)
+    public function index()
 	{
-        $c = false;
-        switch($filter)
+        $tab = \Input::get('tab');
+
+        switch($tab)
         {
             case 'hasHistory' :
                 if ($this->auth->check())
                     $tests = $this->test->doneTest($this->auth->user());
                 $name = 'Các đề bạn đã làm';
                 break;
-            case 'c' :
-                $c = $this->category->findBySlugOrFail($info);
-                $tests = $this->test->where('cid', $c->id);
-                $name = $c->name;
-                break;
             case null :
                 $tests = $this->test;
                 $name = 'Quiz';
                 break;
             default :
-                abort(404);
-                break;
+                return redirect('quiz');
         }
 
-        $categories = $this->categoryList();
         $doneTestId = $this->doneTestId();
 
-        $key = 'index'.$filter.$info.\Input::get('page');
+        $key = 'index'.$tab.\Input::get('page');
 
         $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
             return $tests->has('question')->orderBy('tests.created_at','DESC')
-                ->with('category','user','history')
+                ->with('tagged','user','history')
                 ->paginate(10);
         });
 
-        return view('quiz.index',compact('tests','categories','filter','c','name','doneTestId'));
+        return view('quiz.index',compact('tests','filter','name','doneTestId'));
 	}
 
 	/**
@@ -109,15 +103,16 @@ class QuizController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($slug = null, $id = null)
+	public function show($slug = null, $t)
 	{
-        $t = $this->processTest($slug, $id);
+        if ($t->slug != $slug)
+            return redirect()->to($t->link());
 
         $haveHistory = false;
         if ($this->auth->check())
         {
             $haveHistory = $this->history
-                            ->where('test_id',$id)
+                            ->where('test_id',$t->id)
                             ->where('user_id',$this->auth->user()->id)
                             ->get();
         }
@@ -126,9 +121,10 @@ class QuizController extends Controller {
         return view('quiz.do',compact('t','haveHistory','viewHistory'));
 	}
 
-    public function leaderboard($slug = null, $id = null)
+    public function leaderboard($slug = null, $t)
     {
-        $t = $this->processTest($slug, $id);
+        if ($t->slug != $slug)
+            return redirect()->to($t->link());
 
         $top = $this->history->orderBy('score','DESC')
             ->where('test_id',$t->id)
@@ -169,8 +165,7 @@ class QuizController extends Controller {
 
         if (is_null($t)) abort(404);
 
-        if (($t->slug != $slug) || ($id == null))
-            return redirect()->to($t->link());
+
 
         return $t;
     }

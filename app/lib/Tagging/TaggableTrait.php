@@ -1,6 +1,7 @@
 <?php namespace Quiz\lib\Tagging;
 
 use Quiz\lib\Tagging\TaggingUtil;
+use Quiz\lib\Tagging\Tag;
 
 /**
  * Copyright (C) 2014 Robert Conner
@@ -13,7 +14,7 @@ trait TaggableTrait {
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function tagged() {
-		return $this->morphMany('Quiz\lib\Tagging\Tagged', 'taggable');
+		return $this->morphToMany('Quiz\lib\Tagging\Tag', 'taggable');
 	}
 	
 	/**
@@ -36,10 +37,10 @@ trait TaggableTrait {
 	 */
 	public function tagNames() {
 		$tagNames = array();
-		$tagged = $this->tagged()->get(array('tag_name'));
+		$tagged = $this->tagged()->get(array('name'));
 
-		foreach($tagged as $tagged) {
-			$tagNames[] = $tagged->tag_name;
+		foreach($tagged as $tag) {
+			$tagNames[] = $tag->tag_name;
 		}
 		
 		return $tagNames;
@@ -60,6 +61,11 @@ trait TaggableTrait {
 		
 		return $tagSlugs;
 	}
+
+    public function tagList() {
+        $tagged = $this->tagged()->get();
+        return $tagged;
+    }
 	
 	/**
 	 * Remove the tag from this model
@@ -90,7 +96,7 @@ trait TaggableTrait {
 	public function retag($tagNames) {
 		$tagNames = TaggingUtil::makeTagArray($tagNames);
 		$currentTagNames = $this->tagNames();
-		
+
 		$deletions = array_diff($currentTagNames, $tagNames);
 		$additions = array_diff($tagNames, $currentTagNames);
 		
@@ -149,25 +155,34 @@ trait TaggableTrait {
 		$tagName = trim($tagName);
 		
 		$normalizer = config('tagging.normalizer');
-		$normalizer = empty($normalizer) ? '\Conner\Tagging\TaggingUtil::slug' : $normalizer;
+		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
 
 		$tagSlug = call_user_func($normalizer, $tagName);
-		
-		$previousCount = $this->tagged()->where('tag_slug', '=', $tagSlug)->take(1)->count();
-		if($previousCount >= 1) { return; }
-		
-		$displayer = config('tagging.displayer');
-		$displayer = empty($displayer) ? '\Str::title' : $displayer;
-		
-		$tagged = new Tagged(array(
-			'tag_name'=>call_user_func($displayer, $tagName),
-			'tag_slug'=>$tagSlug,
-		));
-		
-		$this->tagged()->save($tagged);
 
-		TaggingUtil::incrementCount($tagName, $tagSlug, 1);
-	}
+        $displayer = config('tagging.displayer');
+        $displayer = empty($displayer) ? '\Str::title' : $displayer;
+
+        $tag = Tag::where('slug',$tagSlug)->first();
+
+        if (is_null($tag))
+        {
+            $tag = new Tag([
+                'name'=>call_user_func($displayer, $tagName),
+                'slug'=>$tagSlug,
+            ]);
+            $tag = $this->tagged()->save($tag);
+        }
+
+        // If item was tagged with this tag. Stop !!!
+		$previousCount = $this->tagged()->where('tag_id', $tag->id)->take(1)->count();
+		if($previousCount >= 1) { return; }
+
+        // If item reach maximum tags per item. Stop !!!
+        $previousTotal = $this->tagged()->get()->count();
+        if ($previousTotal >= config('tagging.max')) { return; }
+
+        $this->tagged()->attach($tag->id);
+    }
 	
 	/**
 	 * Removes a single tag
@@ -178,12 +193,15 @@ trait TaggableTrait {
 		$tagName = trim($tagName);
 		
 		$normalizer = config('tagging.normalizer');
-		$normalizer = empty($normalizer) ? '\Conner\Tagging\TaggingUtil::slug' : $normalizer;
+		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
 		
 		$tagSlug = call_user_func($normalizer, $tagName);
-		
-		if($count = $this->tagged()->where('tag_slug', '=', $tagSlug)->delete()) {
-			TaggingUtil::decrementCount($tagName, $tagSlug, $count);
-		}
+
+        $tag = $this->tagged()->where('slug', '=', $tagSlug)->first();
+
+        if (!is_null($tag))
+        {
+            $this->tagged()->detach($tag->id);
+        }
 	}
 }

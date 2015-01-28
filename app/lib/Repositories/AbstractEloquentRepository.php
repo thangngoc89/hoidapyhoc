@@ -159,7 +159,7 @@ abstract class AbstractEloquentRepository {
 
     public function tagged()
     {
-        return $this->model->tagged;
+        return $this->model->tagged->get();
     }
 
     public function tagNames()

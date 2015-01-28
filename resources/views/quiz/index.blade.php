@@ -1,9 +1,7 @@
 @extends('layouts.main')
 
 @section('jumbotron')
-<?php
-    $category = $c;
-?>
+
 <div class="jumbotron">
     <div class="container">
         <h2 class="jumbotron__heading">{{ $name }}</h2>

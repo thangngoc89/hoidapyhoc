@@ -11,19 +11,19 @@ class Tag extends Eloquent {
 	protected $table = 'tagging_tags';
 	public $timestamps = false;
 	protected $softDelete = false;
-	public $fillable = ['name'];
+	public $fillable = ['name','description'];
 	
 	public function __construct(array $attributes = array()) {
 		parent::__construct($attributes);
-		
-		if($connection = \Config::get('tagging.connection')) {
-			$this->connection = $connection;
-		}
 	}
+
+    public function exams() {
+        return $this->morphedByMany('\Quiz\Model\Exam','taggable');
+    }
 	
 	public function save(array $options = array()) {
 		$validator = \Validator::make(
-			array('name' => $this->name),
+			array('name' => $this->name, 'description' => $this->description),
 			array('name' => 'required|min:1')
 		);
 		

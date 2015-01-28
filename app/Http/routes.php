@@ -47,12 +47,12 @@ Route::controllers([
 
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('lam-bai/{slug?}/{tests}', 'QuizController@show');
-    Route::get('bang-diem/{slug?}/{tests}', 'QuizController@leaderboard');
+    Route::get('lam-bai/{slug}/{tests}', 'QuizController@show');
+    Route::get('bang-diem/{slug}/{tests}', 'QuizController@leaderboard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 
     get('create','QuizController@create');
-    Route::get('/{filter?}/{info?}', 'QuizController@index');
+    Route::get('/', 'QuizController@index');
 
 });
 

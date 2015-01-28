@@ -44,6 +44,11 @@ class AppServiceProvider extends ServiceProvider {
             'Quiz\lib\Repositories\Upload\UploadRepository',
             'Quiz\lib\Repositories\Upload\EloquentUploadRepository'
         );
+
+        $this->app->bind(
+            'League\Fractal\Serializer\SerializerAbstract',
+            'League\Fractal\Serializer\DataArraySerializer'
+    );
 	}
 
 }

@@ -2,31 +2,12 @@
      <div class="container">
          <ul class="lessons-nav__primary">
              <li class="{{ (Request::is('quiz')) ? 'active' : '' }}">
-                 <a href="{{ URL::to('quiz') }}">Tất cả</a> </li>
+                 <a href="/quiz">Tất cả</a> </li>
 
              @if (\Auth::check())
              <li class="{{ (Request::is('quiz/hasHistory')) ? 'active' : '' }}">
-                 <a href="{{ URL::to('quiz/hasHistory') }}">Đề bạn đã thi</a> </li>
+                 <a href="/quiz/hasHistory">Đề bạn đã thi</a> </li>
              @endif
-             @if ($filter == 'c')
-             <li class="active">
-                 <a href="{{ $category->link() }}">{{ $category->name }}</a> </li>
-             @endif
-              <li class="pull-right">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      Môn học
-                      <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                      @foreach ($categories as $c)
-                          {{--Don't show category that already shown above--}}
-                          @if (! (($filter == 'c') && ($category->id == $c->id)) )
-                          <li class="">
-                              <a href="{{ $c->link() }}">{{ $c->name }}</a> </li>
-                          @endif
-                      @endforeach
-                  </ul>
-              </li>
          </ul>
 
      </div>
@@ -34,6 +15,7 @@
  <div class="wrap">
      @foreach ($tests as $t)
          <article class="media media--conversation
+            {{--If user done this test then make it grey--}}
             @if (!($doneTestId) || !in_array($t->id, $doneTestId))
             updated
             @endif">
@@ -47,13 +29,13 @@
                  <h5 class="media-heading media--conversation__heading">
                      <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ str_limit($t->name,50) }}</a>
                  </h5>
-                 <a href="{{ $t->category->link() }}" class="btn btn-forum" style="color: #000;background-color:#{{ $t->category->color }}">
-                     {{ $t->category->name }}
-                 </a>
+                 @foreach ($t->tagList() as $tag)
+                    <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
+                 @endforeach
                  <span class="text-muted label-small last-updated">
                      đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     | <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-question"></i> {{ $t->totalQuestions() }}</a>
-                     | <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
+                     - <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->totalQuestions() }}</a>
+                     - <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
                  </span>
              </div>
 

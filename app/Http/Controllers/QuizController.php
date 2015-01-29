@@ -1,7 +1,7 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
-use Quiz\lib\API\Transformers\ExamTransformers;
+use Quiz\lib\API\Exam\ExamTransformers;
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;

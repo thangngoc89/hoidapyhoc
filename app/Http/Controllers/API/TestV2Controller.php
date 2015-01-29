@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
+use Quiz\Http\Requests\Exam\TestCheckRequest;
 use Quiz\Http\Requests\Exam\TestSaveRequest;
 use Quiz\Http\Requests\Exam\TestEditRequest;
 use Quiz\lib\API\Exam\TestCheckSaver;
@@ -71,19 +72,16 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store(TestSaveRequest $request, ExamTransformers $transformers)
+	public function store(TestSaveRequest $request, ExamTransformers $transformer)
 	{
-        try{
-            $statusCode = 200;
+        return $this->tryCatch(function() use ($transformer,$request)
+        {
             $test = new TestStoreSaver($request->all());
             $test = $test->save();
-            $response = $transformers->createResponse($test);
+            $response = $transformer->createResponse($test);
 
             return response()->json($response, $statusCode);
-        }catch (\Exception $e){
-            $statusCode = 500;
-            return response()->json($e->getMessage(), $statusCode);
-        }
+        });
     }
 
 
@@ -106,7 +104,7 @@ class TestV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function update($tests, TestEditRequest $request, ExamTransformers $transformers)
+    public function update($tests, TestEditRequest $request, ExamTransformers $transformer)
     {
         try{
             $statusCode = 200;
@@ -117,7 +115,7 @@ class TestV2Controller extends APIController {
 
             $this->storeQuestion($test,$request->all());
 
-            $response = $transformers->createResponse($test);
+            $response = $transformer->createResponse($test);
 
             return response()->json($response, $statusCode);
         }catch (\Exception $e){
@@ -138,8 +136,7 @@ class TestV2Controller extends APIController {
      */
     public function start($test)
     {
-        try{
-            $statusCode = 200;
+        return $this->tryCatch(function() use ($test) {
 
             $history = $this->history->firstOrCreate([
                 'user_id' => $this->auth->user()->id,
@@ -148,37 +145,27 @@ class TestV2Controller extends APIController {
             ]);
             $history->is_first = $this->history->firstTime($history->user_id, $history->test_id);
 
-            $response= [
+            $response = [
                 'user_history_id' => $history->id
             ];
 
-            return response()->json($response, $statusCode);
-        }catch (\Exception $e){
-            $statusCode = 500;
-            $error = $e->getMessage();
-            return response()->json($error, $statusCode);
-        }
+            return $response;
+        });
     }
     /**
      * Check post and return right answer
      * @param $id
      */
-    public function check ($test, ExamTransformers $transformer)
+    public function check ($test, ExamTransformers $transformer, TestCheckRequest $request)
     {
-        try{
-            $statusCode = 200;
-
-            $history = new TestCheckSaver($this->request->all(),$test);
+        return $this->tryCatch(function() use ($test,$transformer, $request)
+        {
+            $history = new TestCheckSaver($request->all(),$test);
             $history = $history->save();
-
             $response = $transformer->checkResponse($history);
 
-            return response()->json($response, $statusCode);
-        }catch (\Exception $e){
-            $statusCode = 500;
-            $error = $e->getMessage();
-            return response()->json($error, $statusCode);
-        }
+            return $response;
+        });
     }
 
 	/**

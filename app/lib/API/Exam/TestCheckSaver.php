@@ -1,9 +1,10 @@
-<?php namespace Quiz\lib\Saver;
+<?php namespace Quiz\lib\API\Exam;
 
 use Quiz\Models\Exam;
 use Quiz\Models\History;
 
-class TestCheckSaver {
+class TestCheckSaver
+{
     /**
      * @var Exam
      */

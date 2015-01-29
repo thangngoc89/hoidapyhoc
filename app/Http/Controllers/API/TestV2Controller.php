@@ -2,15 +2,14 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-use Illuminate\Support\Collection;
 use Quiz\Http\Requests\Exam\TestSaveRequest;
 use Quiz\Http\Requests\Exam\TestEditRequest;
+use Quiz\lib\API\Exam\TestCheckSaver;
+use Quiz\lib\API\Exam\ExamTransformers;
 
-use Quiz\lib\API\Transformers\ExamTransformers;
+use Quiz\lib\API\Exam\TestStoreSaver;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
-use Quiz\lib\Saver\TestCheckSaver;
 use Quiz\Models\History;
 use Quiz\Models\Question;
 
@@ -18,16 +17,14 @@ use Quiz\Services\PullExternalImage;
 use Sorskod\Larasponse\Larasponse;
 
 class TestV2Controller extends APIController {
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-    protected $test;
-
-
-    protected $history;
+    /**
+     * @var Exam
+     */
+    private $test;
+    /**
+     * @var History
+     */
+    private $history;
     /**
      * @var Request
      */
@@ -37,13 +34,10 @@ class TestV2Controller extends APIController {
      */
     private $auth;
     /**
-     * @var Question
-     */
-    private $question;
-    /**
      * @var Larasponse
      */
     private $fractal;
+
 
     /**
      * @param Exam $test
@@ -53,15 +47,13 @@ class TestV2Controller extends APIController {
      * @param Question $question
      * @param Larasponse $fractal
      */
-    public function __construct(Exam $test, History $history, Request $request, Guard $auth, Question $question, Larasponse $fractal)
+    public function __construct(Exam $test, History $history, Request $request, Guard $auth, Larasponse $fractal)
     {
-        $this->test         = $test;
-        $this->question     = $question;
-        $this->history      = $history;
-        $this->request      = $request;
-        $this->auth         = $auth;
-        $this->fractal      = $fractal;
-
+        $this->test = $test;
+        $this->history = $history;
+        $this->request = $request;
+        $this->auth = $auth;
+        $this->fractal = $fractal;
         $this->middleware('auth', ['except' => 'index']);
     }
 
@@ -83,14 +75,8 @@ class TestV2Controller extends APIController {
 	{
         try{
             $statusCode = 200;
-
-            $test = $this->test->fill($request->all());
-
-            if ($test->save())
-                $test->tag($request->tags);
-
-            $this->storeQuestion($test,$request->all());
-
+            $test = new TestStoreSaver($request->all());
+            $test = $test->save();
             $response = $transformers->createResponse($test);
 
             return response()->json($response, $statusCode);
@@ -100,15 +86,6 @@ class TestV2Controller extends APIController {
         }
     }
 
-    public function storeQuestion($test, $input)
-    {
-         foreach ($input['questions'] as $q)
-        {
-            $question = new $this->question($q);
-            $question->test_id = $test->id;
-            $question->save();
-        }
-    }
 
 
 	/**
@@ -149,11 +126,11 @@ class TestV2Controller extends APIController {
         }
     }
 
-    public function pullPicture($id, PullExternalImage $puller)
-    {
-        $test = $this->test->find($id);
-        return $puller->excute($test->content);
-    }
+//    public function pullPicture($id, PullExternalImage $puller)
+//    {
+//        $test = $this->test->find($id);
+//        return $puller->excute($test->content);
+//    }
     /**
      * Create a new history for test
      * @param $id

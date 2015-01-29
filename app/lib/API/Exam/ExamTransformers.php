@@ -1,4 +1,4 @@
-<?php namespace Quiz\lib\API\Transformers;
+<?php namespace Quiz\lib\API\Exam;
 
 use League\Fractal\TransformerAbstract;
 use Quiz\Models\Exam;

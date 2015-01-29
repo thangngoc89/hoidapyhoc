@@ -4,15 +4,15 @@
 @section('jumbotron')
 <div class="jumbotron">
     <div class="container">
-        <h2 class="jumbotron__heading">Tạo đề thi mới</h2>
-        <h4 class="jumbotron__sub-heading">Đường đến với tri thức</h4>
+        <h2 class="jumbotron__heading">{{ $name }}</h2>
+        <h4 class="jumbotron__sub-heading">Cùng nhau xây dựng kho đề thi Y học</h4>
     </div>
 </div>
 @endsection
 
 
 @section('title')
-    Tạo đề thi mới
+    {{ $name }}
 @stop
 
 {{--Body Section--}}
@@ -48,9 +48,9 @@
 <script src="/assets/js/editor.js"></script>
 <script>
 var editorContent;
-global.tags = {!! $tags !!};
+global.data = {!! $data !!};
 $(document).ready(function(){
-    quizCreateInt();
+    $(window).quiz();
 });
 </script>
 @stop

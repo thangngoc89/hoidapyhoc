@@ -1028,23 +1028,17 @@ function updateAnswerCount(){
         begin : $('#begin'),
         tag : $('#select-tags'),
         tabContent : $('#tab-content a'),
-        adjustTotal : $('#adjustTotal'),
-        answerTable : $("#answer"),
-        btnCreateSubmit : $('#btnCreateSubmit'),
     };
 
     var quiz= {
-        postUrl : '/api/v2/tests',
-        postAjaxMethod : 'POST',
-        answerArray : {},
-        preventClose: true
+        'postUrl' : '/api/v2/tests'
     };
 
     function initCreate()
     {
-        setupQuestion();
         buttonListener();
         iconListener();
+        uploader();
 
         $('#frmTest').on('submit', function(event)
         {
@@ -1053,8 +1047,8 @@ function updateAnswerCount(){
         });
         sticky();
         editor();
-        uploader();
-        
+        global.answerArray = [];
+        quiz.preventClose = true;
 
         preventClosing();
 
@@ -1076,34 +1070,28 @@ function updateAnswerCount(){
         }
 
         if (test.tags)
+        {
             $ele.tag.val(test.tags.join());
-        $ele.adjustTotal.hide();
+        }
 
-        quiz.postAjaxMethod = 'PUT';
-        quiz.postUrl = '/api/v2/tests/'+test.id;
 
         initCreate();
     }
-
 
     function post()
     {
         data = validator();
         if (data) {
             $.ajax({
-                type: quiz.postAjaxMethod,
+                type: "POST",
                 dataType: "json",
-                url: quiz.postUrl,
+                url: '/api/v2/tests',
                 data: data,
-                beforesend: function(){
-                    $ele.btnCreateSubmit.button('loading');
-                },
                 error: function (data) {
-                    toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
                     data = $.parseJSON(data.responseText);
                     validationError(data);
-                    debug(data);
-                    $ele.btnCreateSubmit.button('reset');
+                    console.log(data);
+                    toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
                 },
                 success: function (data) {
                     swal({
@@ -1195,7 +1183,7 @@ function updateAnswerCount(){
             givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
             question = {
                 'right_answer' : givenAnswer.toUpperCase(),
-                'content' : (quiz.answerArray[index+1]) ? quiz.answerArray[index+1] : '',
+                'content' : (global.answerArray[index+1]) ? global.answerArray[index+1] : '',
             };
             questions.push(question);
         });
@@ -1227,23 +1215,12 @@ function updateAnswerCount(){
 
     }
 
-    function setupQuestion()
-    {
-        if (global.data.test)
-            addQuestion(global.data.test.questionsCount,global.data.test.questions);
-        else
-            addQuestion(5,false);
-    }
-
-    function addQuestion(value,data)
+    function addQuestion(value)
     {
         for(i=1; i<=value; i++)
         {
             qIndex = $('.ansRow:last').data('question-order');
-            qIndex = (qIndex) ? qIndex : 0;
-
-            dataNode = (data) ? data[i-1] : false;
-            addNewRow(parseInt(qIndex)+1,dataNode);
+            addNewRow(qIndex+1);
         }
         iconListener();
         totalQuestion();
@@ -1267,35 +1244,19 @@ function updateAnswerCount(){
         totalQuestion();
     }
 
-    function addNewRow(index, data)
+    function addNewRow(index)
     {
-        selectedAnswer = false;
-        content = false;
-        answerd = ''
-        if (data)
-        {
-            selectedAnswer = data.answer.toLowerCase();
-            content = data.content;
-            answerd = ' answered';
-            if(content)
-                quiz.answerArray[index] = content;
-        }
-        row = '<tr class="ansRow'+answerd+'" data-question-order="'+index+'">' +
+        row = '<tr class="ansRow" data-question-order="'+index+'">' +
         '<td align="center" class="questionNumber">'+index+'.</td>';
 
         ['a','b','c','d','e'].forEach(function(option)
             {
-                opchoice = (selectedAnswer == option) ? ' op-choice' : '';
-                value = (selectedAnswer == option) ? 1 : 0;
-                hinted = (content) ? ' hinted' : '';
-                row  += '<td><a id="a_'+index+'_'+option+'" rel="1" ' +
-                'class="icontest-option op-'+option+opchoice+'"' +
-                'href="#"">' +option+ '</a>'+
-                '<input type="hidden" id="answer_'+index+'_'+option+'" name="answer_'+index+'_'+option+'" value="'+value+'">'+
+                row  += '<td><a id="a_'+index+'_'+option+'" rel="1" class="icontest-option op-'+option+'" href="#"">'+option+'</a>'+
+                '<input type="hidden" id="answer_'+index+'_'+option+'" name="answer_'+index+'_'+option+'" value="0">'+
                 '</td>';
             }
         );
-        row += '<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint'+hinted+'"></i></a></td></tr>';
+        row += '<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint"></i></a></td></tr>';
 
         $('#answer>tbody').append(row);
     }
@@ -1331,22 +1292,17 @@ function updateAnswerCount(){
             .on('click', function()
             {
                 qIndex = $(this).closest('tr').data('question-order');
-
                 hint = $('#answerModalArea');
                 icon = $(this);
-                currentValue = (quiz.answerArray[qIndex]) ? quiz.answerArray[qIndex] : '';
+                currentValue = (global.answerArray[qIndex]) ? global.answerArray[qIndex] : '';
                 hint.val(currentValue);
 
-                questionNumber = parseInt(qIndex) + parseInt($ele.begin.val()) -1;
-                $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+ questionNumber);
-
-                quiz.preventClose = false;
+                $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+qIndex);
 
                 $('#answerModal').modal()
                     .on('hide.bs.modal', function()
                     {
-                        quiz.preventClose = true;
-                        quiz.answerArray[qIndex] = hint.val();
+                        global.answerArray[qIndex] = hint.val();
                         icon.removeClass('hinted');
                         if (hint.val())
                             icon.addClass('hinted');

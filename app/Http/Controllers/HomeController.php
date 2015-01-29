@@ -3,7 +3,6 @@
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\lib\Tagging\Tag;
-use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 

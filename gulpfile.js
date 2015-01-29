@@ -38,7 +38,7 @@ elixir(function(mix) {
             'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js',
             'bower_components/select2/dist/js/select2.js',
             'bower_components/select2/dist/js/i18n/vi.js',
-            'bower_components/bootstrap-validator/dist/validator.js'
+            //'bower_components/bootstrap-validator/dist/validator.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         .phpSpec()
         .version(['css/main.css','assets/js/script.js']);

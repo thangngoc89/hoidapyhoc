@@ -15,13 +15,41 @@ class ExamTransformers extends TransformerAbstract {
             'description'   => $test->description,
             'content'       => $test->content,
             'thoigian'      => (int) $test->thoigian,
-            'questions'     => $test->totalQuestions(),
-            'is_file'       => (boolean) $test->is_file,
-            'file'          => $test->file->url(),
+            'questionCount' => $test->questionsCount(),
+            'question'      => $test->questionsList(),
+            'file'          => $this->file($test),
+            'tags'          => $test->tagNames(),
             'approved'      => (boolean) $test->is_approve,
             'created_at'    => $test->created_at,
             'updated_at'    => $test->updated_at
         ];
+    }
+
+    private function file($test)
+    {
+        if ($test->is_file)
+            return [
+                $test->file->id,
+                $test->file->url(),
+            ];
+        return '';
+    }
+
+    private function tag($test)
+    {
+        $tagged = $test->tagged()->get();
+        $tags = array();
+        if ($tagged->count() == 0)
+            return '';
+        foreach ($tagged as $tag)
+        {
+            $tags []= [
+                'id' => $tag->id,
+                'name' => $tag->name
+            ];
+        }
+
+        return '';
     }
 
 } 

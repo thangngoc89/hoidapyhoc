@@ -37,7 +37,7 @@
                  @endforeach
                  <span class="text-muted label-small last-updated">
                      đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->totalQuestions() }}</a>
+                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->questionsCount() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->questionsCount() }}</a>
                      &nbsp; <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
                  </span>
              </div>
@@ -45,6 +45,11 @@
              <div class="media--conversation__meta">
                  <span class="media--conversation__replies">
                      <a href="{{ $t->link() }}">{{ $t->countHistory() }}</a>lượt thi
+                 </span>
+             </div>
+             <div class="media--conversation__meta">
+                 <span class="media--conversation__replies">
+                     <a href="{{ $t->link() }}">{{ $t->countHistory() }}</a>lượt xem
                  </span>
              </div>
          </article>

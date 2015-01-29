@@ -15,24 +15,6 @@ function resize_do(){
     }
 }
 
-function preventClosing()
-{
-    if (global.preventClose)
-    {
-        window.onbeforeunload = function (e) {
-            e = e || window.event;
-            if(!close_page){
-                // For IE and Firefox prior to version 4
-                if (e) {
-                    e.returnValue = 'Bạn có chắc chắn muốn thoát ? ';
-                }
-                // For Safari
-                return 'Bạn có chắc chắn muốn thoát ? ';
-            }
-        };
-    }
-}
-
 function validationError(response)
 {
     $.each(response, function(key, object) {

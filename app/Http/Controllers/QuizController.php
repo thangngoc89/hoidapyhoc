@@ -171,6 +171,7 @@ class QuizController extends Controller {
             'type' => 'create',
             'tags' => $this->tag->tagListForSelect2(),
         ];
+        
         $data = json_encode($data);
 
         return view('quiz.create',compact('data'));

@@ -27,8 +27,7 @@
             {!! Form::label('content','Nội dung' ) !!}
         </div>
 
-        <div role="tabpanel">
-
+        <div id="tab-content" role="tabpanel">
           <!-- Nav tabs -->
           <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active">
@@ -77,7 +76,7 @@
           <div class="panel-body">
             <div class="form-group row">
                 <div class="col-md-4">
-                    <h4>Số câu: <span class="color-red" id="total">6</span></h4>
+                    <h4>Số câu: <span class="color-red" id="total">5</span></h4>
                 </div>
             </div>
             <div class="form-group row">

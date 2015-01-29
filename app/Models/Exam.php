@@ -85,12 +85,33 @@ class Exam extends Model {
         });
     }
 
-    public function totalQuestions()
+    public function questionsCount()
     {
         $key = 'totalQuestionTest'.$this->id;
         return \Cache::tags('tests','questions')->rememberForever($key, function()
         {
             return $this->question->count();
+        });
+    }
+
+    /**
+     * Return an array of question info
+     */
+    public function questionsList()
+    {
+        $key = 'questionsList'.$this->id;
+
+        return \Cache::tags('tests')->rememberForever($key, function() {
+            $questions = array();
+            foreach ($this->question as $q)
+            {
+                $questions[] = [
+                    'answer' => $q->right_answer,
+                    'content' => $q->content
+                ];
+            }
+
+            return $questions;
         });
     }
 }

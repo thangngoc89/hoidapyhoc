@@ -37,10 +37,10 @@ trait TaggableTrait {
 	 */
 	public function tagNames() {
 		$tagNames = array();
-		$tagged = $this->tagged()->get(array('name'));
+		$tagged = $this->tagged()->get();
 
 		foreach($tagged as $tag) {
-			$tagNames[] = $tag->tag_name;
+			$tagNames[] = $tag->name;
 		}
 		
 		return $tagNames;

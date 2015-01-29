@@ -56,5 +56,4 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
         });
     }
 
-
 }

@@ -1,19 +1,33 @@
 (function ( $ ) {
+    $.fn.quiz = function() {
+        data = global.data;
 
-    $.fn.quiz = function( options ) {
+        switch(data.type)
+        {
+            case 'edit': initEdit(); break;
+            case 'create': initCreate(); break;
+        }
+    };
 
-        var op = $.extend({
-            // These are the defaults.
-            color: "#556b2f",
-            backgroundColor: "white"
-        }, options );
-        var data;
+    var $ele = {
+        name: $('#input-name'),
+        content: $('#content'),
+        description : $('#input-description'),
+        begin : $('#begin'),
+        tag : $('#select-tags'),
+        tabContent : $('#tab-content a'),
+    };
 
+    var quiz= {
+        'postUrl' : '/api/v2/tests'
+    };
+
+    function initCreate()
+    {
         buttonListener();
         iconListener();
         uploader();
 
-        $('#frmTest').validator('validate');
         $('#frmTest').on('submit', function(event)
         {
             event.preventDefault();
@@ -22,9 +36,37 @@
         sticky();
         editor();
         global.answerArray = [];
+        quiz.preventClose = true;
+
         preventClosing();
-        global.preventClose = true;
-    };
+
+    }
+
+    function initEdit()
+    {
+        test = global.data.test;
+
+        $ele.name.val(test.name);
+        $ele.description.val(test.description);
+        $ele.content.html(test.content);
+        $ele.begin.html(test.begin);
+
+
+        if(test.file)
+        {
+            $ele.tabContent.last().tab('show');
+            embedPdf(test.file);
+        }
+
+        if (test.tags)
+            $.each(test.tags, function (index, value) {
+                optionHTML = '<option value="'+value+'">'+value+'</option>';
+
+                $ele.tag.html($(this).html()+optionHTML);
+            });
+
+        initCreate();
+    }
 
     function post()
     {
@@ -54,7 +96,7 @@
                             closeOnCancel: true
                         },
                         function (isConfirm) {
-                            global.preventClose = false;
+                            quiz.preventClose = false;
                             if (isConfirm) {
                                 location.href = data.url;
                             } else {
@@ -80,6 +122,17 @@
         is_file = 0;
         file_id = null;
 
+        if (!name || name.length <6)
+        {
+            toastr['warning']('Tên đề thi có độ dài tối thiểu là 6');
+            return false;
+        }
+
+        if (description && description.length <6)
+        {
+            toastr['warning']('Mô tả có độ dài tối thiểu là 6');
+            return false;
+        }
         // Detect upload tab to create a pdf-based exam
         pdf_upload = $('a[role="tab"][aria-expanded="true"]').attr('href');
         if(pdf_upload == '#upload')
@@ -262,10 +315,15 @@
             uploadButtonClass:"btn btn-info",
             onSuccess:function(files,data,xhr)
             {
-                $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
-                global.pdf_file_id = data.id;
+                embedPdf(data);
             }
         });
+    }
+
+    function embedPdf(data)
+    {
+        $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
+        global.pdf_file_id = data.id;
     }
 
     function editor()
@@ -303,6 +361,26 @@
                 '</span></span>';
             }
         });
+    }
+
+    function preventClosing()
+    {
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+            if(quiz.preventClose){
+                // For IE and Firefox prior to version 4
+                if (e) {
+                    e.returnValue = 'Bạn có chắc chắn muốn thoát ? ';
+                }
+                // For Safari
+                return 'Bạn có chắc chắn muốn thoát ? ';
+            }
+        };
+    }
+
+    function debug(data)
+    {
+        window.console.log(data);
     }
 
 }( jQuery ));

@@ -147,7 +147,6 @@ function choiceDo(){
 //            Add class answered to row (for counting)
         questionRow.alterClass('unanswered','answered');
         questionOrder = questionRow.data('question-order');
-//                console.log(questionId+'___'+questionOrder+'____'+$(this).html());
 
 //                Alter all answer in the same question to default value
         var questionLink = $('a[id^="a_'+questionOrder+'_"]');

@@ -17,6 +17,7 @@ class ExamTransformers extends TransformerAbstract {
             'thoigian'      => (int) $test->thoigian,
             'questions'     => $test->totalQuestions(),
             'is_file'       => (boolean) $test->is_file,
+            'file'          => $test->file->url(),
             'approved'      => (boolean) $test->is_approve,
             'created_at'    => $test->created_at,
             'updated_at'    => $test->updated_at

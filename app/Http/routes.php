@@ -22,6 +22,7 @@ Route::pattern('id', '[0-9]+');
  *  ------------------------------------------
  */
 Route::model('tests', '\Quiz\Models\Exam');
+Route::model('quiz', '\Quiz\Models\Exam');
 
 get('/','HomeController@index');
 get('thongke','HomeController@stat');
@@ -44,16 +45,13 @@ Route::controllers([
     'user' => 'UserController',
 ]);
 
+Route::resource('quiz','QuizController');
 
 Route::group(array('prefix' => 'quiz'), function()
 {
     Route::get('lam-bai/{slug}/{tests}', 'QuizController@show');
     Route::get('bang-diem/{slug}/{tests}', 'QuizController@leaderboard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
-
-    get('create','QuizController@create');
-    Route::get('/', 'QuizController@index');
-
 });
 
 

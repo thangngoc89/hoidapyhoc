@@ -1,4 +1,4 @@
-{!! Form::open(['url' => 'api/v2/tests', 'id' => 'frmTest' ]) !!}
+{!! Form::open(['url' => 'api/v2/tests', 'id' => 'frmTest', 'data-toggle' => 'validator' ]) !!}
 
 <div class="col-md-8 threads-inner white">
     <div class="wrap">
@@ -8,8 +8,10 @@
                                             'id' => 'input-name',
                                             'placeholder' => 'Nhập tên đề thi',
                                             'required','pattern' => '.{6,}',
-                                            'title' => 'Tiêu đề có độ dài tối thiểu 6 kí tự'
+                                            'title' => 'Tên đề thi có độ dài tối thiểu 6 kí tự'
                                             ]) !!}
+
+            <div class="help-block with-errors">Tên đề thi có độ dài tối thiểu 6 kí tự</div>
         </div>
         <div class="form-row">
             {!! Form::label('description','Mô tả' ) !!}
@@ -19,6 +21,7 @@
                                             'pattern' => '.{6,}',
                                             'title' => 'Mô tả có đô dài tối thiểu 6 kí tự'
                                             ]) !!}
+            <div class="help-block with-errors">Mô tả có đô dài tối thiểu 6 kí tự</div>
         </div>
         <div class="form-group">
             {!! Form::label('content','Nội dung' ) !!}
@@ -74,9 +77,8 @@
           <div class="panel-body">
             <div class="form-group row">
                 <div class="col-md-4">
-                    <h4>Số câu: <span class="color-red" id="total"> 5 </span></h4>
+                    <h4>Số câu: <span class="color-red" id="total">6</span></h4>
                 </div>
-
             </div>
             <div class="form-group row">
                 <div class="input-group col-md-5">
@@ -144,10 +146,12 @@
         </div>
         <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body">
-            <label>Môn học</label>
-            <select class="form-control" name="tags" id="select-tags" multiple="multiple"></select>
-            <label>Thời gian (phút)</label>
-            <select class="form-control" name="time" id="select-time">
+            <label for="select-tags">Tag</label>
+            <select class="form-control" name="tags" id="select-tags" multiple="multiple" data-placeholder="Chọn hoặc tạo mới môn học liên quan" required></select>
+            <div class="help-block with-errors">Hãy chọn ít nhất một tag liên quan đến đề thi</div>
+
+            <label for="select-time">Thời gian (phút)</label>
+            <select class="form-control" name="time" id="select-time" required>
                     @for ($i=5; $i<=200; $i=$i+5)
                     <option value="{{ $i }}">{{ $i }}</option>
                     @endfor

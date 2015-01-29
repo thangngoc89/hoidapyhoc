@@ -48,9 +48,9 @@
 <script src="/assets/js/editor.js"></script>
 <script>
 var editorContent;
-global.tags = {!! $tags !!};
+global.data = {!! $data !!};
 $(document).ready(function(){
-    quizCreateInt();
+    $(window).quiz();
 });
 </script>
 @stop

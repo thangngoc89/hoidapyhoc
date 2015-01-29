@@ -79,7 +79,7 @@
                     <h4>Số câu: <span class="color-red" id="total">5</span></h4>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" id="adjustTotal">
                 <div class="input-group col-md-5">
                       <span class="input-group-btn">
                         <button class="btn btn-info" id="btn-add"><i class="fa fa-plus"></i></button>
@@ -104,31 +104,31 @@
             <div class="answer-box option_test" id="option_test">
                 <table width="100%" border="0" id="answer">
                 <tbody>
-                @for($i=1; $i<=5; $i++)
-                    <tr class="ansRow" data-question-order="{{$i}}">
-                        <td align="center" class="questionNumber">{{$i}}.</td>
-                        <td><a id="a_{{$i}}_a" rel="1" class="icontest-option op-a " href="#"">a</a>
-                            <input type="hidden" id="answer_{{$i}}_a" name="answer_{{$i}}_a" value="0">
-                        </td>
-                        <td><a id="a_{{$i}}_b" rel="1" class="icontest-option op-b " href="#"">b</a>
-                            <input type="hidden" id="answer_{{$i}}_b" name="answer_{{$i}}_b" value="0">
-                        </td>
-                        <td><a id="a_{{$i}}_c" rel="1" class="icontest-option op-c " href="#"">c</a>
-                            <input type="hidden" id="answer_{{$i}}_c" name="answer_{{$i}}_c" value="0">
-                        </td>
-                        <td><a id="a_{{$i}}_d" rel="1" class="icontest-option op-d " href="#"">d</a>
-                            <input type="hidden" id="answer_{{$i}}_d" name="answer_{{$i}}_d" value="0">
-                        </td>
-                        <td><a id="a_{{$i}}_e" rel="1" class="icontest-option op-e " href="#"">e</a>
-                            <input type="hidden" id="answer_{{$i}}_d" name="answer_{{$i}}_e" value="0">
-                        </td>
-                        <td>
-                            <a href="javscript::void(0)" class="iconHint">
-                                <i class="zn-icon icon-hint"></i>
-                            </a>
-                        </td>
-                    </tr>
-                 @endfor
+                {{--@for($i=1; $i<=5; $i++)--}}
+                    {{--<tr class="ansRow" data-question-order="{{$i}}">--}}
+                        {{--<td align="center" class="questionNumber">{{$i}}.</td>--}}
+                        {{--<td><a id="a_{{$i}}_a" rel="1" class="icontest-option op-a " href="#"">a</a>--}}
+                            {{--<input type="hidden" id="answer_{{$i}}_a" name="answer_{{$i}}_a" value="0">--}}
+                        {{--</td>--}}
+                        {{--<td><a id="a_{{$i}}_b" rel="1" class="icontest-option op-b " href="#"">b</a>--}}
+                            {{--<input type="hidden" id="answer_{{$i}}_b" name="answer_{{$i}}_b" value="0">--}}
+                        {{--</td>--}}
+                        {{--<td><a id="a_{{$i}}_c" rel="1" class="icontest-option op-c " href="#"">c</a>--}}
+                            {{--<input type="hidden" id="answer_{{$i}}_c" name="answer_{{$i}}_c" value="0">--}}
+                        {{--</td>--}}
+                        {{--<td><a id="a_{{$i}}_d" rel="1" class="icontest-option op-d " href="#"">d</a>--}}
+                            {{--<input type="hidden" id="answer_{{$i}}_d" name="answer_{{$i}}_d" value="0">--}}
+                        {{--</td>--}}
+                        {{--<td><a id="a_{{$i}}_e" rel="1" class="icontest-option op-e " href="#"">e</a>--}}
+                            {{--<input type="hidden" id="answer_{{$i}}_d" name="answer_{{$i}}_e" value="0">--}}
+                        {{--</td>--}}
+                        {{--<td>--}}
+                            {{--<a href="javscript::void(0)" class="iconHint">--}}
+                                {{--<i class="zn-icon icon-hint"></i>--}}
+                            {{--</a>--}}
+                        {{--</td>--}}
+                    {{--</tr>--}}
+                 {{--@endfor--}}
                 </tbody>
                 </table>
             </div>

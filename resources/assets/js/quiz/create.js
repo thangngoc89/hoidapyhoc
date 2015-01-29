@@ -16,17 +16,20 @@
         begin : $('#begin'),
         tag : $('#select-tags'),
         tabContent : $('#tab-content a'),
+        adjustTotal : $('#adjustTotal'),
+        answerTable : $("#answer"),
     };
 
     var quiz= {
-        'postUrl' : '/api/v2/tests'
+        postUrl : '/api/v2/tests',
+        postAjaxMethod : 'POST'
     };
 
     function initCreate()
     {
+        setupQuestion();
         buttonListener();
         iconListener();
-        uploader();
 
         $('#frmTest').on('submit', function(event)
         {
@@ -35,7 +38,9 @@
         });
         sticky();
         editor();
-        global.answerArray = [];
+        uploader();
+        
+        quiz.answerArray = [];
         quiz.preventClose = true;
 
         preventClosing();
@@ -58,27 +63,30 @@
         }
 
         if (test.tags)
-        {
             $ele.tag.val(test.tags.join());
-        }
 
+        $ele.adjustTotal.hide();
+
+        quiz.postAjaxMethod = 'PUT';
+        quiz.postUrl = '/api/v2/tests/'+test.id;
 
         initCreate();
     }
+
 
     function post()
     {
         data = validator();
         if (data) {
             $.ajax({
-                type: "POST",
+                type: quiz.postAjaxMethod,
                 dataType: "json",
-                url: '/api/v2/tests',
+                url: quiz.postUrl,
                 data: data,
                 error: function (data) {
                     data = $.parseJSON(data.responseText);
                     validationError(data);
-                    console.log(data);
+                    debug(data);
                     toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
                 },
                 success: function (data) {
@@ -171,7 +179,7 @@
             givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
             question = {
                 'right_answer' : givenAnswer.toUpperCase(),
-                'content' : (global.answerArray[index+1]) ? global.answerArray[index+1] : '',
+                'content' : (quiz.answerArray[index+1]) ? quiz.answerArray[index+1] : '',
             };
             questions.push(question);
         });
@@ -203,12 +211,22 @@
 
     }
 
+    function setupQuestion()
+    {
+        questions = global.data.test.questions;
+
+        if (questions)
+            addQuestion(global.data.test.questionsCount);
+        else
+            addQuestion(5);
+    }
+
     function addQuestion(value)
     {
         for(i=1; i<=value; i++)
         {
             qIndex = $('.ansRow:last').data('question-order');
-            addNewRow(qIndex+1);
+            addNewRow(parseInt(qIndex)+1);
         }
         iconListener();
         totalQuestion();
@@ -282,7 +300,7 @@
                 qIndex = $(this).closest('tr').data('question-order');
                 hint = $('#answerModalArea');
                 icon = $(this);
-                currentValue = (global.answerArray[qIndex]) ? global.answerArray[qIndex] : '';
+                currentValue = (quiz.answerArray[qIndex]) ? quiz.answerArray[qIndex] : '';
                 hint.val(currentValue);
 
                 $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+qIndex);
@@ -290,7 +308,7 @@
                 $('#answerModal').modal()
                     .on('hide.bs.modal', function()
                     {
-                        global.answerArray[qIndex] = hint.val();
+                        quiz.answerArray[qIndex] = hint.val();
                         icon.removeClass('hinted');
                         if (hint.val())
                             icon.addClass('hinted');

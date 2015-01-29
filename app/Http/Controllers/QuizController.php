@@ -3,23 +3,13 @@
 use Illuminate\Auth\Guard;
 use Quiz\lib\API\Transformers\ExamTransformers;
 use Quiz\lib\Tagging\Tag;
-use Quiz\Models\Category;
 use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
-use Quiz\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Pagination;
 
 class QuizController extends Controller {
 
-    /**
-     * @var Category
-     */
-    private $category;
-    /**
-     * @var Question
-     */
-    private $question;
     /**
      * @var Exam
      */
@@ -39,20 +29,17 @@ class QuizController extends Controller {
 
     /**
      * @param Tag $tag
-     * @param Question $question
      * @param Exam $test
      * @param History $history
      * @param Guard $auth
      */
-    public function __construct(Tag $tag, Question $question, Exam $test, History $history, Guard $auth)
+    public function __construct(Tag $tag, Exam $test, History $history, Guard $auth)
     {
-        $this->question = $question;
         $this->test     = $test;
         $this->history  = $history;
         $this->auth     = $auth;
         $this->tag      = $tag;
         $this->middleware('auth', ['except' => ['index','show','showHistory','leaderboard']]);
-
     }
 
     /**
@@ -185,7 +172,6 @@ class QuizController extends Controller {
 	 */
 	public function edit($tests, ExamTransformers $transformer)
 	{
-
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($tests),

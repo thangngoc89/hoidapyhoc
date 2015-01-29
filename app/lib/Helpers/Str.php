@@ -4,7 +4,7 @@ use Cocur\Slugify\Slugify;
 
 class Str extends \Illuminate\Support\Str {
 
-    public static function slug($string)
+    public static function slug($string, $separator = '-')
     {
         $slugify = new Slugify();
 

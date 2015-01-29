@@ -11,10 +11,6 @@ class History extends Model {
     {
         parent::boot();
 
-        History::saving(function($history)
-        {
-            $history->is_first = $this->firstTime($history->user_id, $history->test_id);
-        })
         History::saved(function($history){
             \Cache::tags('history','user'.$history->user_id)->flush();
         });

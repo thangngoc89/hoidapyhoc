@@ -2,6 +2,7 @@
 
 use League\Fractal\TransformerAbstract;
 use Quiz\Models\Exam;
+use Quiz\Models\History;
 
 class ExamTransformers extends TransformerAbstract {
 
@@ -31,6 +32,15 @@ class ExamTransformers extends TransformerAbstract {
             'id'        => $test->id,
             'url'       => $test->link(),
             'editUrl'   => $test->link('edit'),
+        ];
+    }
+
+    public function checkResponse(History $history)
+    {
+        return [
+            'score' => $history->score,
+            'totalQuestion' => $history->test->questionsCount(),
+            'url'   => '/quiz/ket-qua/'.$history->test->slug.'/'.$history->id,
         ];
     }
 

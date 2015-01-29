@@ -10,6 +10,7 @@ use Quiz\Http\Requests\Exam\TestEditRequest;
 
 use Quiz\lib\API\Transformers\ExamTransformers;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
+use Quiz\lib\Saver\TestCheckSaver;
 use Quiz\Models\History;
 use Quiz\Models\Question;
 
@@ -128,7 +129,7 @@ class TestV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function update($tests, TestSaveRequest $request, ExamTransformers $transformers)
+    public function update($tests, TestEditRequest $request, ExamTransformers $transformers)
     {
         try{
             $statusCode = 200;
@@ -158,17 +159,17 @@ class TestV2Controller extends APIController {
      * @param $id
      * @return mixed
      */
-    public function start($id)
+    public function start($test)
     {
         try{
             $statusCode = 200;
 
-            $history = $this->history->firstOrCreate(
-                array(
-                    'user_id' => $this->auth->user()->id,
-                    'test_id' => $id,
-                    'isDone'  => 0
-                ));
+            $history = $this->history->firstOrCreate([
+                'user_id' => $this->auth->user()->id,
+                'test_id' => $test->id,
+                'isDone'  => 0
+            ]);
+            $history->is_first = $this->history->firstTime($history->user_id, $history->test_id);
 
             $response= [
                 'user_history_id' => $history->id
@@ -185,52 +186,22 @@ class TestV2Controller extends APIController {
      * Check post and return right answer
      * @param $id
      */
-    public function check ($id)
+    public function check ($test, ExamTransformers $transformer)
     {
         try{
             $statusCode = 200;
 
-            $user = $this->auth->user();
-            $test = $this->test->getFirstBy('id',$id);
-            $history = $this->history->find($this->request->user_history_id);
+            $history = new TestCheckSaver($this->request->all(),$test);
+            $history = $history->save();
 
-            if (is_null($history)) abort(404);
+            $response = $transformer->checkResponse($history);
 
-            if ($history->user_id != $user->id) throw new \Exception ('Don\'t cheat man');
-
-            $input = $this->request->answers;
-            $score = 0;
-            $answerString = '';
-
-            foreach ($test->question as $index => $q)
-            {
-                $answer = $this->numberToChar($input[$index]);
-                $answerString .= $answer;
-                if ($q->right_answer == $answer)
-                    $score++;
-            }
-
-            $history->score = $score;
-            $history->answer = $answerString;
-            $history->isDone = true;
-            $history->save();
-
-            $response= [
-                'score' => $score,
-                'totalQuestion' => $test->question->count(),
-                'url'   => '/quiz/ket-qua/'.$test->slug.'/'.$history->id,
-            ];
             return response()->json($response, $statusCode);
         }catch (\Exception $e){
             $statusCode = 500;
             $error = $e->getMessage();
             return response()->json($error, $statusCode);
         }
-    }
-
-    public function numberToChar($num){
-        $map = ['_','A','B','C','D','E'];
-        return $map[$num];
     }
 
 	/**
@@ -241,7 +212,7 @@ class TestV2Controller extends APIController {
 	 */
 	public function destroy($test)
 	{
-        $test->delete();
+//        $test->delete();
         return 'Deleted';
 	}
 

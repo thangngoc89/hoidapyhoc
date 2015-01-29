@@ -18,11 +18,14 @@
         tabContent : $('#tab-content a'),
         adjustTotal : $('#adjustTotal'),
         answerTable : $("#answer"),
+        btnCreateSubmit : $('#btnCreateSubmit'),
     };
 
     var quiz= {
         postUrl : '/api/v2/tests',
-        postAjaxMethod : 'POST'
+        postAjaxMethod : 'POST',
+        answerArray : {},
+        preventClose: true
     };
 
     function initCreate()
@@ -40,8 +43,6 @@
         editor();
         uploader();
         
-        quiz.answerArray = [];
-        quiz.preventClose = true;
 
         preventClosing();
 
@@ -64,7 +65,6 @@
 
         if (test.tags)
             $ele.tag.val(test.tags.join());
-
         $ele.adjustTotal.hide();
 
         quiz.postAjaxMethod = 'PUT';
@@ -83,11 +83,15 @@
                 dataType: "json",
                 url: quiz.postUrl,
                 data: data,
+                beforesend: function(){
+                    $ele.btnCreateSubmit.button('loading');
+                },
                 error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
                     data = $.parseJSON(data.responseText);
                     validationError(data);
                     debug(data);
-                    toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+                    $ele.btnCreateSubmit.button('reset');
                 },
                 success: function (data) {
                     swal({
@@ -213,20 +217,21 @@
 
     function setupQuestion()
     {
-        questions = global.data.test.questions;
-
-        if (questions)
-            addQuestion(global.data.test.questionsCount);
+        if (global.data.test)
+            addQuestion(global.data.test.questionsCount,global.data.test.questions);
         else
-            addQuestion(5);
+            addQuestion(5,false);
     }
 
-    function addQuestion(value)
+    function addQuestion(value,data)
     {
         for(i=1; i<=value; i++)
         {
             qIndex = $('.ansRow:last').data('question-order');
-            addNewRow(parseInt(qIndex)+1);
+            qIndex = (qIndex) ? qIndex : 0;
+
+            dataNode = (data) ? data[i-1] : false;
+            addNewRow(parseInt(qIndex)+1,dataNode);
         }
         iconListener();
         totalQuestion();
@@ -250,19 +255,35 @@
         totalQuestion();
     }
 
-    function addNewRow(index)
+    function addNewRow(index, data)
     {
-        row = '<tr class="ansRow" data-question-order="'+index+'">' +
+        selectedAnswer = false;
+        content = false;
+        answerd = ''
+        if (data)
+        {
+            selectedAnswer = data.answer.toLowerCase();
+            content = data.content;
+            answerd = ' answered';
+            if(content)
+                quiz.answerArray[index] = content;
+        }
+        row = '<tr class="ansRow'+answerd+'" data-question-order="'+index+'">' +
         '<td align="center" class="questionNumber">'+index+'.</td>';
 
         ['a','b','c','d','e'].forEach(function(option)
             {
-                row  += '<td><a id="a_'+index+'_'+option+'" rel="1" class="icontest-option op-'+option+'" href="#"">'+option+'</a>'+
-                '<input type="hidden" id="answer_'+index+'_'+option+'" name="answer_'+index+'_'+option+'" value="0">'+
+                opchoice = (selectedAnswer == option) ? ' op-choice' : '';
+                value = (selectedAnswer == option) ? 1 : 0;
+                hinted = (content) ? ' hinted' : '';
+                row  += '<td><a id="a_'+index+'_'+option+'" rel="1" ' +
+                'class="icontest-option op-'+option+opchoice+'"' +
+                'href="#"">' +option+ '</a>'+
+                '<input type="hidden" id="answer_'+index+'_'+option+'" name="answer_'+index+'_'+option+'" value="'+value+'">'+
                 '</td>';
             }
         );
-        row += '<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint"></i></a></td></tr>';
+        row += '<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint'+hinted+'"></i></a></td></tr>';
 
         $('#answer>tbody').append(row);
     }
@@ -298,16 +319,21 @@
             .on('click', function()
             {
                 qIndex = $(this).closest('tr').data('question-order');
+
                 hint = $('#answerModalArea');
                 icon = $(this);
                 currentValue = (quiz.answerArray[qIndex]) ? quiz.answerArray[qIndex] : '';
                 hint.val(currentValue);
 
-                $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+qIndex);
+                questionNumber = parseInt(qIndex) + parseInt($ele.begin.val()) -1;
+                $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+ questionNumber);
+
+                quiz.preventClose = false;
 
                 $('#answerModal').modal()
                     .on('hide.bs.modal', function()
                     {
+                        quiz.preventClose = true;
                         quiz.answerArray[qIndex] = hint.val();
                         icon.removeClass('hinted');
                         if (hint.val())

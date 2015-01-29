@@ -154,6 +154,7 @@ class QuizController extends Controller {
      */
     public function create()
     {
+        $name = "Tạo đề thi mới";
         $data = [
             'type' => 'create',
             'tags' => $this->tag->tagListForSelect2(),
@@ -161,7 +162,7 @@ class QuizController extends Controller {
 
         $data = json_encode($data);
 
-        return view('quiz.create',compact('data'));
+        return view('quiz.create',compact('data','name'));
     }
 
 	/**
@@ -172,6 +173,7 @@ class QuizController extends Controller {
 	 */
 	public function edit($tests, ExamTransformers $transformer)
 	{
+        $name = 'Sửa đề thi';
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($tests),
@@ -180,7 +182,7 @@ class QuizController extends Controller {
 
         $data = json_encode($data);
 
-        return view('quiz.create',compact('data'));
+        return view('quiz.create',compact('data','name'));
 	}
 
 }

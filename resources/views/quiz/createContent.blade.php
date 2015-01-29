@@ -146,7 +146,7 @@
         <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body">
             <label for="select-tags">Tag</label>
-            <input class="form-control" name="tags" id="select-tags" multiple="multiple" data-placeholder="Chọn hoặc tạo mới môn học liên quan" required />
+            <select class="form-control" name="tags" id="select-tags" multiple="multiple" data-placeholder="Chọn hoặc tạo mới môn học liên quan" required></select>
             <div class="help-block with-errors">Hãy chọn ít nhất một tag liên quan đến đề thi</div>
 
             <label for="select-time">Thời gian (phút)</label>
@@ -160,7 +160,7 @@
       </div>
     </div>
     <div class="form-group pull-right">
-        {!! Form::submit('Lưu', ['class' => 'btn btn-primary', 'id' => 'btnCreateSubmit']) !!}
+        {!! Form::submit('Lưu', ['class' => 'btn btn-primary', 'id' => 'btnCreateSubmit', 'data-loading-text' => 'Đang gửi...']) !!}
     </div>
     </div>
 </div>

@@ -3,6 +3,7 @@
 use Quiz\lib\Tagging\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Quiz\lib\Tagging\Tag;
+use Quiz\lib\Helpers\Str;
 
 class Exam extends Model {
 
@@ -14,15 +15,30 @@ class Exam extends Model {
 
     public static function boot()
     {
+        Exam::saving(function($test)
+        {
+            if (!\Auth::check()) return false;
+
+            if (empty($test->file_id))
+            {
+                // If this is test based on pdf file but have no file
+                if($test->is_file) return false;
+                $test->file_id = NULL;
+            }
+            $test->is_approve = true;
+            $test->slug = Str::slug(trim($test->name));
+        });
         Exam::saved(function()
         {
             \Cache::tags('tests')->flush();
         });
-        Exam::saving(function($test)
+        Exam::creating(function ($test)
         {
-            if (empty($test->file_id))
-                $test->file_id = NULL;
-            $test->slug = \Slugify::slugify(trim($test->name));
+            $test->user_id = \Auth::user()->id;
+        });
+        Exam::updating(function ($test)
+        {
+            $test->user_id_edited = \Auth::user()->id;
         });
     }
     /*

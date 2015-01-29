@@ -1,9 +1,8 @@
 <?php namespace Quiz\lib\Helpers;
 
-
 use Cocur\Slugify\Slugify;
 
-class Str {
+class Str extends \Illuminate\Support\Str {
 
     public static function slug($string)
     {

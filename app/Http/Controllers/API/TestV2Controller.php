@@ -4,8 +4,10 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-use Quiz\Http\Requests\EditTestRequest;
-use Quiz\Http\Requests\SaveNewTest;
+use Illuminate\Support\Collection;
+use Quiz\Http\Requests\Exam\TestSaveRequest;
+use Quiz\Http\Requests\Exam\TestEditRequest;
+
 use Quiz\lib\API\Transformers\ExamTransformers;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
@@ -65,8 +67,7 @@ class TestV2Controller extends APIController {
 
 	public function index()
 	{
-        $limit = \Input::get('limit') ?: 3;
-
+        $limit = $this->request->limit ?: 3;
         $test = $this->test->paginate($limit);
 
         return $this->fractal->paginatedCollection($test, new ExamTransformers());
@@ -77,27 +78,20 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store(SaveNewTest $request)
+	public function store(TestSaveRequest $request, ExamTransformers $transformers)
 	{
         try{
             $statusCode = 200;
-            $input = $request->all();
 
-            $test = $this->test->fill($input);
-            $test->user_id = $this->auth->user()->id;
+            $test = $this->test->fill($request->all());
 
-            #TODO: Hardwork on this
-            $test->is_approve = true;
             if ($test->save())
-                $test->tag($input['tags']);
+                $test->tag($request->tags);
 
-            $this->storeQuestion($test,$input);
+            $this->storeQuestion($test,$request->all());
 
-            $response = [
-                'id'        => $test->id,
-                'url'       => $test->link(),
-                'editUrl'   => $test->link('edit'),
-            ];
+            $response = $transformers->createResponse($test);
+
             return response()->json($response, $statusCode);
         }catch (\Exception $e){
             $statusCode = 500;
@@ -107,7 +101,7 @@ class TestV2Controller extends APIController {
 
     public function storeQuestion($test, $input)
     {
-        foreach ($input['questions'] as $q)
+         foreach ($input['questions'] as $q)
         {
             $question = new $this->question($q);
             $question->test_id = $test->id;
@@ -134,35 +128,25 @@ class TestV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($tests, EditTestRequest $request)
-	{
+    public function update($tests, TestSaveRequest $request, ExamTransformers $transformers)
+    {
         try{
             $statusCode = 200;
-            $input = $request->all();
+            $test = $tests->fill($request->all());
 
-            $test = $this->test->fill($input);
-            $test->user_id = $this->auth->user()->id;
-
-            #TODO: Hardwork on this
-            $test->is_approve = true;
             if ($test->save())
-                $test->tag($input['tags']);
+                $test->tag($request->tags);
 
-            $this->storeQuestion($test,$input);
+            $this->storeQuestion($test,$request->all());
 
-            $response = [
-                'id'        => $test->id,
-                'url'       => $test->link(),
-                'editUrl'   => $test->link('edit'),
-            ];
+            $response = $transformers->createResponse($test);
+
             return response()->json($response, $statusCode);
         }catch (\Exception $e){
             $statusCode = 500;
             return response()->json($e->getMessage(), $statusCode);
         }
-
-        return response()->json(\Input::all());
-	}
+    }
 
     public function pullPicture($id, PullExternalImage $puller)
     {
@@ -208,7 +192,9 @@ class TestV2Controller extends APIController {
 
             $user = $this->auth->user();
             $test = $this->test->getFirstBy('id',$id);
-            $history = $this->history->findOrFail(\Input::get('user_history_id'));
+            $history = $this->history->find($this->request->user_history_id);
+
+            if (is_null($history)) abort(404);
 
             if ($history->user_id != $user->id) throw new \Exception ('Don\'t cheat man');
 
@@ -221,14 +207,11 @@ class TestV2Controller extends APIController {
                 $answer = $this->numberToChar($input[$index]);
                 $answerString .= $answer;
                 if ($q->right_answer == $answer)
-                {
                     $score++;
-                }
             }
 
             $history->score = $score;
             $history->answer = $answerString;
-            $history->is_first = ( $this->history->firsttime($user->id, $id) ) ? true : false;
             $history->isDone = true;
             $history->save();
 
@@ -244,15 +227,10 @@ class TestV2Controller extends APIController {
             return response()->json($error, $statusCode);
         }
     }
+
     public function numberToChar($num){
-        switch ($num){
-            case 0: return '_'; break;
-            case 1: return 'A'; break;
-            case 2: return 'B'; break;
-            case 3: return 'C'; break;
-            case 4: return 'D'; break;
-            case 5: return 'E'; break;
-        }
+        $map = ['_','A','B','C','D','E'];
+        return $map[$num];
     }
 
 	/**

@@ -1,9 +1,9 @@
-<?php namespace Quiz\Http\Requests;
+<?php namespace Quiz\Http\Requests\Exam;
 
 use Illuminate\Contracts\Auth\Guard;
 use Quiz\Http\Requests\Request;
 
-class SaveNewTest extends Request {
+class TestSaveRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

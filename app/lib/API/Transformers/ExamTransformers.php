@@ -25,6 +25,15 @@ class ExamTransformers extends TransformerAbstract {
         ];
     }
 
+    public function createResponse(Exam $test)
+    {
+        return [
+            'id'        => $test->id,
+            'url'       => $test->link(),
+            'editUrl'   => $test->link('edit'),
+        ];
+    }
+
     private function file($test)
     {
         if ($test->is_file)

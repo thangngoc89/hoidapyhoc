@@ -1,8 +1,8 @@
-<?php namespace Quiz\Http\Requests;
+<?php namespace Quiz\Http\Requests\Exam;
 
 use Quiz\Http\Requests\Request;
 
-class EditTestRequest extends Request {
+class TestEditRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

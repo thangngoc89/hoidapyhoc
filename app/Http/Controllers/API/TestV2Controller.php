@@ -136,6 +136,7 @@ class TestV2Controller extends APIController {
 	 */
 	public function update($id)
 	{
+
         return response()->json(\Input::all());
 	}
 

@@ -61,11 +61,19 @@ class AuthController extends Controller implements AuthenticateUserListener{
      */
     public function getLogout()
     {
-
         $this->auth->logout();
 
         return redirect()->intended(\Input::get('return'))
                 ->with('success','Hẹn gặp lại bạn lần sau');
+    }
+
+    /**
+     * Get User Login Form
+     * @return \Illuminate\View\View
+     */
+    public function getLogin()
+    {
+        return view('user.login');
     }
 
 

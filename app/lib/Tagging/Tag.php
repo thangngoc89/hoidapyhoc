@@ -17,6 +17,14 @@ class Tag extends Eloquent {
 		parent::__construct($attributes);
 	}
 
+    public static function boot()
+    {
+        Tag::saving(function()
+        {
+            \Cache::tags('tags')->flush();
+        });
+    }
+
     public function exams() {
         return $this->morphedByMany('\Quiz\Models\Exam','taggable');
     }
@@ -49,10 +57,35 @@ class Tag extends Eloquent {
 	 * Name auto-mutator
 	 */
 	public function setNameAttribute($value) {
-		$displayer = \Config::get('tagging.displayer');
+		$displayer = config('tagging.displayer');
 		$displayer = empty($displayer) ? '\Illuminate\Support\Str::title' : $displayer;
 		
 		$this->attributes['name'] = call_user_func($displayer, $value);
 	}
-	
+
+    /**
+     * Return an array of tag list and count for Select2
+     * @return array
+     */
+    public function tagListForSelect2()
+    {
+        return \Cache::tags('tests','tags')->rememberForever('tagListForSelect2', function() {
+            $tagList = $this->all()->sortByDesc(function($tag)
+            {
+                return $tag->exams->count();
+            });
+
+            $tags = array();
+            foreach($tagList as $tag)
+            {
+                $tags[] = [
+                    'id' => $tag->name,
+                    'text' => $tag->name,
+                    'count' => $tag->exams->count()
+                ];
+            }
+
+            return $tags;
+        });
+    }
 }

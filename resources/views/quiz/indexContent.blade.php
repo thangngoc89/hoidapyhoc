@@ -30,14 +30,14 @@
 
              <div class="media-body media--conversation__body">
                  <h5 class="media-heading media--conversation__heading">
-                     <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ str_limit($t->name,50) }}</a>
+                     <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ str_limit($t->name,45) }}</a>
                  </h5>
                  @foreach ($t->tagged as $tag)
                     <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
                  @endforeach
                  <span class="text-muted label-small last-updated">
                      đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->totalQuestions() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->totalQuestions() }}</a>
+                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->questionsCount() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->questionsCount() }}</a>
                      &nbsp; <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
                  </span>
              </div>
@@ -47,6 +47,12 @@
                      <a href="{{ $t->link() }}">{{ $t->countHistory() }}</a>lượt thi
                  </span>
              </div>
+             <div class="media--conversation__meta hide-mobile">
+                  <span class="media--conversation__replies">
+                      <a href="{{ $t->link() }}">{{ $t->countHistory() }}</a>lượt xem
+                  </span>
+              </div>
+
          </article>
      @endforeach
      <div class="forum-pagination">

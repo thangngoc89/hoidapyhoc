@@ -787,6 +787,8 @@ $(function() {
             'X-XSRF-Token': $('meta[name="csrf"]').attr('content')
         }
     });
+    $("img").unveil(200);
+
 });
 
 toastr.options = {

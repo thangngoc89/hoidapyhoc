@@ -21,7 +21,8 @@ elixir(function(mix) {
             'bower_components/sticky-kit/jquery.sticky-kit.js',
             'bower_components/toastr/toastr.js',
             'bower_components/bootstrap-sweetalert/lib/sweet-alert.js',
-            'bower_components/pace/pace.js'
+            'bower_components/pace/pace.js',
+            'bower_components/jquery-unveil/jquery.unveil.js'
         ], "bower_components",'public/assets/js/vendor.js')
         .scripts([
             'assets/js/jquery.alterclass.js',
@@ -38,8 +39,8 @@ elixir(function(mix) {
             'bower_components/medium-editor-insert-plugin/dist/js/addons/medium-editor-insert-images.js',
             'bower_components/select2/dist/js/select2.js',
             'bower_components/select2/dist/js/i18n/vi.js',
-            //'bower_components/bootstrap-validator/dist/validator.js'
         ], 'bower_components', 'public/assets/js/editor.js')
-        .phpSpec()
+        //.phpSpec()
+        .phpUnit()
         .version(['css/main.css','assets/js/script.js']);
 });

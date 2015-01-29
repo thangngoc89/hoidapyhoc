@@ -4,6 +4,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Quiz\Http\Requests\EditTestRequest;
 use Quiz\Http\Requests\SaveNewTest;
 use Quiz\lib\API\Transformers\ExamTransformers;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
@@ -130,12 +131,35 @@ class TestV2Controller extends APIController {
 	/**
 	 * Update the specified resource in storage.
 	 *
-     * @method PUT
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($tests, EditTestRequest $request)
 	{
+        try{
+            $statusCode = 200;
+            $input = $request->all();
+
+            $test = $this->test->fill($input);
+            $test->user_id = $this->auth->user()->id;
+
+            #TODO: Hardwork on this
+            $test->is_approve = true;
+            if ($test->save())
+                $test->tag($input['tags']);
+
+            $this->storeQuestion($test,$input);
+
+            $response = [
+                'id'        => $test->id,
+                'url'       => $test->link(),
+                'editUrl'   => $test->link('edit'),
+            ];
+            return response()->json($response, $statusCode);
+        }catch (\Exception $e){
+            $statusCode = 500;
+            return response()->json($e->getMessage(), $statusCode);
+        }
 
         return response()->json(\Input::all());
 	}

@@ -47,9 +47,10 @@ class QuizController extends Controller {
      * @param bool $info
      * @return mixed
      */
-    public function index()
+    public function index(Request  $request)
 	{
-        $tab = \Input::get('tab');
+        $tab = $request->tab;
+
         switch($tab)
         {
             case 'done' :
@@ -67,7 +68,7 @@ class QuizController extends Controller {
 
         $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
 
-        $key = 'index'.$tab.\Input::get('page');
+        $key = 'index'.$tab.$request->page;
         $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
             return $tests->has('question')->with('tagged','user')->paginate(20);
@@ -76,13 +77,14 @@ class QuizController extends Controller {
         return view('quiz.index',compact('tests','name','doneTestId'));
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($slug = null, $t)
+
+    /**
+     * Display a quiz test page
+     * @param null $slug
+     * @param $t
+     * @return \Illuminate\View\View
+     */
+    public function show($slug = null, $t)
 	{
         if ($t->slug != $slug)
             return redirect()->to($t->link());
@@ -110,7 +112,7 @@ class QuizController extends Controller {
     public function leaderboard($slug = null, $t)
     {
         if ($t->slug != $slug)
-            return redirect()->to($t->link());
+            return redirect()->to($t->link('bangdiem'));
 
         $top = $this->history->orderBy('score','DESC')
             ->where('test_id',$t->id)

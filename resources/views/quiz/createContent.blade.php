@@ -75,7 +75,7 @@
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
             <div class="form-group row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <h4>Số câu: <span class="color-red" id="total">5</span></h4>
                 </div>
             </div>

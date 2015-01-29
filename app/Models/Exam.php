@@ -71,6 +71,8 @@ class Exam extends Model {
         {
             case 'bangdiem':
                 return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
+            case 'edit':
+                return '/quiz/'.$this->id.'/edit';
             default:
                 return '/quiz/lam-bai/'.$this->slug.'/'.$this->id;
         }

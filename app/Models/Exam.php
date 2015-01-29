@@ -143,7 +143,7 @@ class Exam extends Model {
         $key = 'selectedTags'.$this->id;
 
         return \Cache::tags('tests','tags')->rememberForever($key, function() {
-            $tagList = Tag::all()->sortByDesc(function($tag)
+            $tagList = Tag::with('exams')->get()->sortByDesc(function($tag)
             {
                 return $tag->exams->count();
             });

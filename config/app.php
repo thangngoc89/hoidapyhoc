@@ -150,11 +150,11 @@ return [
 		 * Application Service Providers...
 		 */
         'Quiz\Providers\AppServiceProvider',
-		'Quiz\Providers\BusServiceProvider',
+        'Quiz\Providers\ComposerServiceProvider',
+        'Quiz\Providers\BusServiceProvider',
 		'Quiz\Providers\ConfigServiceProvider',
 		'Quiz\Providers\EventServiceProvider',
 		'Quiz\Providers\RouteServiceProvider',
-
 	],
 
 	/*

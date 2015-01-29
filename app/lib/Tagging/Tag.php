@@ -45,6 +45,10 @@ class Tag extends Eloquent {
 			throw new \Exception('Tag Name is required');
 		}
 	}
+
+    public function count() {
+        return $this->exams->count();
+    }
 	
 	/**
 	 * Get suggested tags
@@ -70,7 +74,7 @@ class Tag extends Eloquent {
     public function tagListForSelect2()
     {
         return \Cache::tags('tests','tags')->rememberForever('tagListForSelect2', function() {
-            $tagList = $this->all()->sortByDesc(function($tag)
+            $tagList = $this->with('exams')->get()->sortByDesc(function($tag)
             {
                 return $tag->exams->count();
             });

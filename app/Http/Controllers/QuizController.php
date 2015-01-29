@@ -93,6 +93,7 @@ class QuizController extends Controller {
         if ($this->auth->check())
         {
             $haveHistory = $this->history
+                            ->with('test')
                             ->where('test_id',$t->id)
                             ->where('user_id',$this->auth->user()->id)
                             ->get();

@@ -9660,7 +9660,7 @@ body.forum {
 
 .forum-sidebar-section {
   border-bottom: 1px solid #ddd;
-  padding-top: 3em;
+  padding-top: 1em;
   padding-bottom: 1em;
   overflow: hidden; }
 
@@ -10868,8 +10868,8 @@ li.profile__stats-join-date {
   margin-right: 4px;
   color: #888; }
 
-.item-multiplier-count {
-  font-size: 10px;
+.item-multiplier-count, .item-multiplier-x {
+  font-size: 12px;
   color: #777; }
 
 #quiz-sidebar {

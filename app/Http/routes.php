@@ -54,8 +54,6 @@ Route::group(array('prefix' => 'quiz'), function()
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 });
 
-
-
 Route::group(array('prefix' => 'api/v2'), function()
 {
     post('tests/{tests}/check', 'API\TestV2Controller@check');
@@ -64,4 +62,5 @@ Route::group(array('prefix' => 'api/v2'), function()
     Route::resource('files','API\UploadV2Controller');
     Route::resource('tests', 'API\TestV2Controller');
 });
+
 

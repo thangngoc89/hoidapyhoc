@@ -8,11 +8,10 @@ use Quiz\Http\Requests\Exam\TestSaveRequest;
 use Quiz\Http\Requests\Exam\TestEditRequest;
 use Quiz\lib\API\Exam\TestCheckSaver;
 use Quiz\lib\API\Exam\ExamTransformers;
-
 use Quiz\lib\API\Exam\TestStoreSaver;
+
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
-use Quiz\Models\Question;
 
 use Quiz\Services\PullExternalImage;
 use Sorskod\Larasponse\Larasponse;

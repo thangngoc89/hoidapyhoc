@@ -37,7 +37,7 @@ trait TaggableTrait {
 	 */
 	public function tagNames() {
 		$tagNames = array();
-		$tagged = $this->tagged()->get();
+		$tagged = $this->tagged()->get(array('name'));
 
 		foreach($tagged as $tag) {
 			$tagNames[] = $tag->name;
@@ -53,10 +53,10 @@ trait TaggableTrait {
 	 */
 	public function tagSlugs() {
 		$tagSlugs = array();
-		$tagged = $this->tagged()->get(array('tag_slug'));
+		$tagged = $this->tagged()->get(array('slug'));
 
-		foreach($tagged as $tagged) {
-			$tagSlugs[] = $tagged->tag_slug;
+		foreach($tagged as $tag) {
+			$tagSlugs[] = $tag->slug;
 		}
 		
 		return $tagSlugs;
@@ -117,7 +117,7 @@ trait TaggableTrait {
 		$tagNames = TaggingUtil::makeTagArray($tagNames);
 		
 		$normalizer = config('tagging.normalizer');
-		$normalizer = empty($normalizer) ? '\Conner\Tagging\TaggingUtil::slug' : $normalizer;
+		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
 
 		foreach($tagNames as $tagSlug) {
 			$query->whereHas('tagged', function($q) use($tagSlug) {
@@ -137,7 +137,7 @@ trait TaggableTrait {
 		$tagNames = TaggingUtil::makeTagArray($tagNames);
 
 		$normalizer = config('tagging.normalizer');
-		$normalizer = empty($normalizer) ? '\Conner\Tagging\TaggingUtil::slug' : $normalizer;
+		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
 		
 		$tagNames = array_map($normalizer, $tagNames);
 

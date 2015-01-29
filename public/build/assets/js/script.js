@@ -1063,7 +1063,6 @@ function updateAnswerCount(){
         $ele.content.html(test.content);
         $ele.begin.html(test.begin);
 
-
         if(test.file)
         {
             $ele.tabContent.last().tab('show');
@@ -1071,11 +1070,10 @@ function updateAnswerCount(){
         }
 
         if (test.tags)
-            $.each(test.tags, function (index, value) {
-                optionHTML = '<option value="'+value+'">'+value+'</option>';
+        {
+            $ele.tag.val(test.tags.join());
+        }
 
-                $ele.tag.html($(this).html()+optionHTML);
-            });
 
         initCreate();
     }
@@ -1241,7 +1239,6 @@ function updateAnswerCount(){
 
         for(i=qIndex; i>toIndex; i--)
         {
-            console.log('delete '+i);
             $('tr[data-question-order="'+i+'"]').remove();
         }
         totalQuestion();
@@ -1366,7 +1363,6 @@ function updateAnswerCount(){
                 if (result.count === undefined) {
                     return result.text;
                 }
-
                 return '<span class="post-tag">' + result.text + '</span>'
                 + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
                 '<span class="item-multiplier-count">' + result.count

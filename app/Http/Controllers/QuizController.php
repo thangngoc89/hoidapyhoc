@@ -171,7 +171,7 @@ class QuizController extends Controller {
             'type' => 'create',
             'tags' => $this->tag->tagListForSelect2(),
         ];
-        
+
         $data = json_encode($data);
 
         return view('quiz.create',compact('data'));
@@ -185,10 +185,11 @@ class QuizController extends Controller {
 	 */
 	public function edit($tests, ExamTransformers $transformer)
 	{
+
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($tests),
-            'tags' => $this->tag->tagListForSelect2(),
+            'tags' => $tests->selectedTags(),
         ];
 
         $data = json_encode($data);

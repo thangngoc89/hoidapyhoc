@@ -69,7 +69,6 @@ class Tag extends Eloquent {
      */
     public function tagListForSelect2()
     {
-
         return \Cache::tags('tests','tags')->rememberForever('tagListForSelect2', function() {
             $tagList = $this->all()->sortByDesc(function($tag)
             {

@@ -2,6 +2,7 @@
 
 use Quiz\lib\Tagging\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Quiz\lib\Tagging\Tag;
 
 class Exam extends Model {
 
@@ -112,6 +113,37 @@ class Exam extends Model {
             }
 
             return $questions;
+        });
+    }
+
+    /**
+     * Return an array of selected tags and all tag for Select2
+     * @return mixed
+     */
+    public function selectedTags()
+    {
+        $key = 'selectedTags'.$this->id;
+
+        return \Cache::tags('tests','tags')->rememberForever($key, function() {
+            $tagList = Tag::all()->sortByDesc(function($tag)
+            {
+                return $tag->exams->count();
+            });
+
+            $selectedTags = $this->tagNames();
+            $tags = array();
+
+            foreach($tagList as $tag)
+            {
+                $tags[] = [
+                    'id' => $tag->name,
+                    'text' => $tag->name,
+                    'selected' => (boolean)(in_array($tag->name,$selectedTags)),
+                    'count' => (int) $tag->exams->count()
+                ];
+            }
+
+            return $tags;
         });
     }
 }

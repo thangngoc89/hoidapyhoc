@@ -47,9 +47,9 @@
     <div class="row">
         <article class="col-md-4 lesson-block lesson-block-episode lesson-207 col-md-12">
             <div class="full-center lesson-block-inner"
-                    style="background: -webkit-linear-gradient(top, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(//media.hoidapyhoc.com/images/thumb_ask.jpg);
-                            background: -moz-linear-gradient(top, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(//media.hoidapyhoc.com/images/thumb_ask.jpg);
-                            background: linear-gradient(top, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(//media.hoidapyhoc.com/images/thumb_ask.jpg);
+                    style="background: -webkit-linear-gradient(top, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/img/thumb_ask.jpg);
+                            background: -moz-linear-gradient(top, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/img/thumb_ask.jpg);
+                            background: linear-gradient(top, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/img/thumb_ask.jpg);
                             background-size: cover;">
                 <div class="lesson-block-thumbnail">
                     <i class="lesson-thumbnail icon-bookmark-1"></i>

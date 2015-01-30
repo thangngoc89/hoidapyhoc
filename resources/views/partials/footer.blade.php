@@ -54,6 +54,8 @@
                         </li>
                         <li><a href="/testimonials">Testimonials</a>
                         </li>
+                        <li><a href="/tag">Tag</a>
+                        </li>
                     </ul>
                 </div>
 

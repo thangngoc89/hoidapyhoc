@@ -24,9 +24,14 @@ Route::pattern('id', '[0-9]+');
 Route::model('tests', '\Quiz\Models\Exam');
 Route::model('quiz', '\Quiz\Models\Exam');
 
+/** ------------------------------------------
+ *  HomePage Group
+ *  ------------------------------------------
+ */
 get('/','HomeController@index');
 get('thongke','HomeController@stat');
 get('cleanCache','HomeController@cleanCache');
+get('testimonials','HomeController@testimonials');
 
 /** ------------------------------------------
  *  User Group
@@ -38,9 +43,6 @@ get('auth/external/{provider}','Auth\AuthController@external');
 
 get('auth/edit','UserController@getFinish');
 post('auth/edit','UserController@postFinish');
-
-get('tag', 'TagController@index');
-get('tag/{slug}', 'TagController@show');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -66,4 +68,9 @@ Route::group(array('prefix' => 'api/v2'), function()
     Route::resource('tests', 'API\TestV2Controller');
 });
 
-
+/** ------------------------------------------
+ *  Tag Group
+ *  ------------------------------------------
+ */
+get('tag', 'TagController@index');
+get('tag/{slug}', 'TagController@show');

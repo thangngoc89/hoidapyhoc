@@ -1,3 +1,4 @@
+@if (!\Auth::check())
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="z-index: 10000;">
         <div class="modal-content">
@@ -20,8 +21,10 @@
          </div>
     </div>
 </div>
+@endif
 <script src="/assets/js/vendor.js"></script>
 <script src="{{ elixir('assets/js/script.js') }}"></script>
+<script>new WOW().init();</script>
 <script>var global = {};</script>
 <script>
 @foreach (['success','error','warning','info'] as $notice)

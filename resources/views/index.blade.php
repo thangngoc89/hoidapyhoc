@@ -100,6 +100,5 @@ Trang chủ
         <!-- close page div -->
 
         @include('partials.script')
-        <script>new WOW().init();</script>
     </body>
 </html>

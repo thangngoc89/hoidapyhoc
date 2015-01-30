@@ -45,6 +45,22 @@ class HomeController extends Controller {
 	}
 
     /**
+     * Show Website's Testimonials Page
+     *
+     * @param Testimonial $testimonial
+     * @return \Illuminate\View\View
+     */
+    public function testimonials(Testimonial $testimonial)
+    {
+        $testimonial = \Cache::tags('testimonial')->rememberForever('testimonialPage', function() use ($testimonial)
+        {
+            return $testimonial->where('isHome','1')->get();
+        });
+
+        return view('site.testimonials', compact('testimonial'));
+    }
+
+    /**
      * Show Website Status (Refresh every 30 minutes)
      *
      * @param UserRepository $user

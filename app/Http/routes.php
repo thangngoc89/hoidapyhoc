@@ -39,6 +39,9 @@ get('auth/external/{provider}','Auth\AuthController@external');
 get('auth/edit','UserController@getFinish');
 post('auth/edit','UserController@postFinish');
 
+get('tag', 'TagController@index');
+get('tag/{slug}', 'TagController@show');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

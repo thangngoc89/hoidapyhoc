@@ -39,5 +39,14 @@
     text-align: center;
   }
 }
+.pagination > li > a, .pagination > li > span {
+  border: 0;
+}
+.pagination > li > a[rel], .pagination > li.disabled {
+  display:none;
+}
+.row {
+  margin-right: 0;
+}
 
 

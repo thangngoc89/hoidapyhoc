@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 <li class="{{ (Request::is('quiz*') ? 'active' : '') }}">
-                    <a href="{{ URL::to('quiz') }}" class="navbar-link">
+                    <a href="/quiz" class="navbar-link">
                         <i class="fa fa-graduation-cap"></i> Quiz
                     </a>
                 </li>
@@ -70,14 +70,12 @@
 
             <!-- Browse -->
             <li class="dropdown ">
-                <a href="/index" class="navbar-link dropdown-toggle" data-toggle="dropdown">
+                <a href="/quiz" class="navbar-link dropdown-toggle" data-toggle="dropdown">
             Khám phá <b class="caret"></b>
         </a>
 
                 <ul class="dropdown-menu">
-                    <li class=""><a href="/index">Tags</a>
-                    </li>
-                    <li class=""><a href="/latest">Môn học</a>
+                    <li class=""><a href="/tag">Tags</a>
                     </li>
                 </ul>
             </li>
@@ -89,24 +87,24 @@
 
             <!-- Work -->
             <li id="navbar-link--work">
-                <a class="navbar-link" href="https://larajobs.com?partner=36" target="_blank">Thành viên</a>
+                <a class="navbar-link" href="/users" target="_blank">Thành viên</a>
             </li>
         </ul>
-        <!-- Search -->
-        <ul class="zeroed secondary-nav--right">
-            <li>
-                <div id="navbar-search-form">
-                    <form role="search" action="/search" method="GET">
-                        <i class="icon-magnifying-glass"></i>
-                        <input type="text" id="q" name="q" placeholder="Search Forum">
+        {{--<!-- Search -->--}}
+        {{--<ul class="zeroed secondary-nav--right">--}}
+            {{--<li>--}}
+                {{--<div id="navbar-search-form">--}}
+                    {{--<form role="search" action="/search" method="GET">--}}
+                        {{--<i class="icon-magnifying-glass"></i>--}}
+                        {{--<input type="text" id="q" name="q" placeholder="Search Forum">--}}
 
-                        <select name="q-where" id="q-where" class="hide">
-                            <option value="lessons">Lessons</option>
-                            <option value="forum" selected=selected>Forum</option>
-                        </select>
-                    </form>
-                </div>
-            </li>
-        </ul>
+                        {{--<select name="q-where" id="q-where" class="hide">--}}
+                            {{--<option value="lessons">Lessons</option>--}}
+                            {{--<option value="forum" selected=selected>Forum</option>--}}
+                        {{--</select>--}}
+                    {{--</form>--}}
+                {{--</div>--}}
+            {{--</li>--}}
+        {{--</ul>--}}
     </div>
 </nav>

@@ -117,11 +117,11 @@ trait TaggableTrait {
 		$tagNames = TaggingUtil::makeTagArray($tagNames);
 		
 		$normalizer = config('tagging.normalizer');
-		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
+		$normalizer = !empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
 
 		foreach($tagNames as $tagSlug) {
 			$query->whereHas('tagged', function($q) use($tagSlug) {
-				$q->where('tag_slug', '=', $tagSlug);
+				$q->where('tagging_tags.slug', '=', $tagSlug);
 			});
 		}
 		
@@ -142,7 +142,7 @@ trait TaggableTrait {
 		$tagNames = array_map($normalizer, $tagNames);
 
 		return $query->whereHas('tagged', function($q) use($tagNames) {
-			$q->whereIn('tag_slug', $tagNames);
+			$q->whereIn('slug', $tagNames);
 		});
 	}
 	

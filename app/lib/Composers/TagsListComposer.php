@@ -17,7 +17,7 @@ class TagsListComposer {
     public function compose(View $view)
     {
         $tags = \Cache::tags('tests','tags')->rememberForever('tagsListComposer', function() {
-            $tagList = $this->tag->with('exams')->take(10)->get()->sortByDesc(function($tag)
+            $tagList = $this->tag->has('exams')->with('exams')->take(10)->get()->sortByDesc(function($tag)
             {
                 return $tag->exams->count();
             });

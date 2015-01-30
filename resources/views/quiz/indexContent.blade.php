@@ -1,16 +1,15 @@
 <div class="lessons-nav lessons-nav--forum inline-nav">
      <div class="container">
          <ul class="lessons-nav__primary">
-             <li class="{{ (\Input::get('tab') == '') ? 'active' : '' }}">
+             <li class="{{ (\Input::get('tab') == '' && \Request::is('quiz')) ? 'active' : '' }}">
                  <a href="/quiz">Mới nhất</a> </li>
-
-             {{--<li class="{{ (\Input::get('tab') == 'feature') ? 'active' : '' }}">--}}
-                {{--<a href="/quiz?tab=feature">Nổi bật</a> </li>--}}
 
              @if (\Auth::check())
              <li class="{{ (\Input::get('tab') == 'done') ? 'active' : '' }}">
                  <a href="/quiz?tab=done">Đề bạn đã thi</a> </li>
              @endif
+             <li class="{{ (\Request::is('tag*')) ? 'active' : '' }}">
+                  <a href="/tag">Tag</a></li>
          </ul>
 
      </div>

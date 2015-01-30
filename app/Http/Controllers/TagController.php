@@ -39,25 +39,25 @@ class TagController extends Controller {
 
         #TODO Cache this page ?????
         $perPage = 50;
-        switch($request->tab)
+        switch($this->request->tab)
         {
             case 'list':
-                $tags = $this->tag->paginate($perPage);
+                $tags = $this->tag->has('exams')->paginate($perPage);
                 $name = 'Danh sách Tag';
                 break;
             case 'new':
-                $tags = $this->tag->orderBy('id','DESC')->take($perPage)->get();
+                $tags = $this->tag->has('exams')->orderBy('id','DESC')->take($perPage)->get();
                 $name = 'Tag mới nhất';
                 break;
             default :
-                $tags = $this->tag->with('exams')->take(50)->get()->sortByDesc(function($query) {
+                $tags = $this->tag->has('exams')->with('exams')->take(50)->get()->sortByDesc(function($query) {
                     return $query->exams->count();
                 });
                 $name = 'Tag nổi bật';
                 break;
         }
         if ($tags instanceof LengthAwarePaginator)
-            $tags->appends($request->except('page'));
+            $tags->appends($this->request->except('page'));
 
         return view('site.tag', compact('tags','name'));
 	}
@@ -68,7 +68,7 @@ class TagController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($slug, Exam $tests, Guard $auth)
+	public function show($slug, ExamRepository $tests, Guard $auth)
 	{
         $tag = $this->tag->where('slug',$slug)->first();
 
@@ -76,19 +76,16 @@ class TagController extends Controller {
             abort(404);
 
         #TODO: Expand function when have new taggable object
-//        $doneTestId = ($auth->check()) ? $tests->doneTestId($auth->user()) : false;
+        $doneTestId = ($auth->check()) ? $tests->doneTestId($auth->user()) : false;
         $name = "Tag {$tag->name}";
 
-        $key = $this->request->url();
+        $key = $this->request->url().$this->request->page;
 
-//        $tests = \Cache::tags('tags','index')->remember($key, 10, function() use ($tag, $tests)
-//        {
-//            return $tests->has('question')->with('tagged','user')->withAllTags($tag->name)->paginate(20);
-//        });
+        $tests = \Cache::tags('tags','index')->remember($key, 10, function() use ($tag, $tests)
+        {
+            return $tests->withAllTags($tag->name)->has('question')->with('tagged','user')->paginate(20);
+        });
 
-        $tests = $tests->withAnyTag($tag->name);
-
-        dd($tests->toSql());
         $tests->appends($this->request->except('page'));
 
         return view('quiz.index',compact('tests','name','doneTestId'));

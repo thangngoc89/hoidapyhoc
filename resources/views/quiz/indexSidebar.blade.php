@@ -39,7 +39,7 @@
 {{--</div>--}}
 
 <div class="forum-sidebar-section">
-    @include('partials.tags');
+    @include('partials.tags')
 </div>
 
 <div class="forum-sidebar-section">

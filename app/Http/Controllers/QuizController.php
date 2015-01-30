@@ -6,7 +6,8 @@ use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Pagination;
+
+use Quiz\Services\QuizHomePage;
 
 class QuizController extends Controller {
 
@@ -47,34 +48,9 @@ class QuizController extends Controller {
      * @param bool $info
      * @return mixed
      */
-    public function index(Request  $request)
+    public function index(Request $request, QuizHomePage $view)
 	{
-        $tab = $request->tab;
-
-        switch($tab)
-        {
-            case 'done' :
-                if ($this->auth->check())
-                    $tests = $this->test->doneTest($this->auth->user());
-                $name = 'Các đề bạn đã làm';
-                break;
-            case null :
-                $tests = $this->test->orderBy('tests.created_at','DESC');
-                $name = 'Quiz';
-                break;
-            default :
-                return redirect('quiz');
-        }
-
-        $doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
-
-        $key = 'index'.$tab.$request->page;
-        $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
-        {
-            return $tests->has('question')->with('tagged','user')->paginate(20);
-        });
-
-        return view('quiz.index',compact('tests','name','doneTestId'));
+        return $view->execute($request);
 	}
 
 

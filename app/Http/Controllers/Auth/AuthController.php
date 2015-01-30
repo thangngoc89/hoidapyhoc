@@ -38,6 +38,7 @@ class AuthController extends Controller implements AuthenticateUserListener{
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
+
     public function external($provider, AuthenticateUser $authenticateUser, Request $request)
     {
         if ($request->has('return'))

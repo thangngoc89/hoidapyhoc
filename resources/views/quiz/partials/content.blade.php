@@ -37,10 +37,7 @@
     @if ($t->is_file)
         <span class="color-red"><b>Chú ý: &nbsp;</b></span>
         <a href="http://ask.hoidapyhoc.com/t/sua-loi-khong-tai-duoc-de-thi/1167">Nếu bị lỗi tải đề thi , nhấp vào đây để khắc phục</a>
-        <iframe
-            width="100%"
-            height="750px"
-            class="documentViewer"
+        <iframe width="100%" height="750px" class="documentViewer"
             src="{{ $t->file->pdfViewer() }}"
          ></iframe>
     @else

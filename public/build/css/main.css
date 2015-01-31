@@ -7192,74 +7192,196 @@ a.bird-btn:hover {
   #meet-jeffrey .avatar {
     display: none; } }
 
-/*! 
- * medium-editor-insert-plugin v0.3.2 - jQuery insert plugin for MediumEditor
- *
- * https://github.com/orthes/medium-editor-insert-plugin
- * 
- * Copyright (c) 2014 Pavel Linkesch (http://linkesch.sk)
- * Released under the MIT license
+/*!
+ * froala_editor v1.2.5 (http://editor.froala.com)
+ * License http://editor.froala.com/license
+ * Copyright 2014-2015 Froala Labs
  */
-.mediumInsert {
-  margin: -1em 0; }
+img.fr-fil {
+  z-index: 1;
+  position: relative;
+  margin: auto;
+  overflow: auto;
+  padding: 10px 10px 10px 3px;
+  float: left !important; }
 
-.mediumInsert figure {
-  margin: 0;
-  display: inline-block; }
+img.fr-fil.fr-dib {
+  float: none !important;
+  margin-left: 0 !important; }
 
-.mediumInsert img {
-  max-width: 100%; }
+img.fr-fir {
+  z-index: 1;
+  position: relative;
+  margin: auto;
+  overflow: auto;
+  padding: 10px 3px 10px 10px;
+  float: right !important; }
 
-.mediumInsert .mediumInsert-embeds {
-  text-align: center;
-  padding: 15px 0; }
+img.fr-fir.fr-dib {
+  float: none !important;
+  margin-right: 0 !important; }
 
-.mediumInsert .mediumInsert-embeds iframe {
-  margin: 0px auto !important; }
+img.fr-fin {
+  z-index: 1;
+  position: relative;
+  margin: auto;
+  overflow: auto;
+  float: none; }
 
-.mediumInsert .mediumInsert-embeds div {
-  margin: 0px auto !important; }
+img.fr-fin.fr-dib {
+  padding: 10px 0; }
 
-.mediumInsert .mediumInsert-images {
-  margin-right: 10px;
-  width: 20%; }
+img.fr-dib {
+  vertical-align: top;
+  display: block; }
 
-.mediumInsert .mediumInsert-images img {
-  margin-top: 1em;
+a.fr-file {
+  position: relative; }
+
+a.fr-file:before {
+  position: relative;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f0c6";
+  top: 0;
+  padding-right: 3px; }
+
+.froala-view table, table.fr-tag {
+  border-collapse: collapse;
+  empty-cells: show;
+  width: 100%;
   margin-bottom: 10px;
-  vertical-align: top; }
+  margin-top: 10px;
+  box-sizing: border-box; }
 
-.mediumInsert .mediumInsert-images:first-child {
-  margin-right: 0;
-  width: 100%; }
+.froala-view table td, table.fr-tag td {
+  border: solid 1px #cccccc;
+  padding: 5px; }
 
-.mediumInsert .mediumInsert-images:first-child:after {
-  content: "\a";
-  white-space: pre; }
+.froala-view table th, table.fr-tag th {
+  background: #e6e6e6;
+  border: solid 1px #cccccc;
+  padding: 5px; }
 
-.mediumInsert .mediumInsert-maps {
+.froala-view pre, pre.fr-tag {
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, post millennium */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  border: solid 1px #cccccc;
+  background: #fcfcfc;
   padding: 10px;
-  background: #ccc; }
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background-clip: padding-box; }
 
-.mediumInsert table.mediumInsert-table {
-  border-top: 2px solid #333;
-  border-left: 2px solid #333;
-  width: 90%;
-  margin: 30px auto; }
+.froala-view blockquote, blockquote.fr-tag {
+  margin-left: 20px;
+  margin-right: 0;
+  margin-top: 0;
+  padding-left: 20px;
+  position: relative;
+  font-style: italic;
+  border-left: solid 5px #cccccc; }
 
-.mediumInsert table.mediumInsert-table td {
-  border-right: 2px solid #333;
-  border-bottom: 2px solid #333;
-  padding: 12px; }
+.froala-view hr, hr.fr-tag {
+  height: 0px;
+  border: 0;
+  border-top: solid 1px #cccccc;
+  clear: both; }
 
-.mediumInsert.small {
-  max-width: 33.33%;
+.fr-fvn {
+  float: none;
+  display: block !important;
+  text-align: center !important; }
+
+.fr-fvl {
   float: left;
-  margin-right: 30px;
-  margin-bottom: 20px; }
+  margin: 10px 10px 10px 1px; }
 
-.mediumInsert.mediumInsert-first {
-  margin-top: 0; }
+.fr-fvr {
+  float: right;
+  margin: 10px 1px 10px 10px; }
+
+.fr-tnv {
+  float: none !important;
+  margin: auto;
+  text-align: center;
+  display: block !important; }
+
+.fr-tnv.fr-fvl {
+  text-align: left; }
+
+.fr-tnv.fr-fvr {
+  text-align: right; }
+
+/*!
+ * froala_editor v1.2.5 (http://editor.froala.com)
+ * License http://editor.froala.com/license
+ * Copyright 2014-2015 Froala Labs
+ */
+.froala-view {
+  line-height: 140%; }
+
+.froala-view ul, .froala-view ol, ul.fr-tag, ol.fr-tag {
+  padding-left: 25px; }
+
+.froala-view p, p.fr-tag {
+  margin: 0 0 10px; }
+
+.froala-view h1, h1.fr-tag {
+  font-size: 36px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-top: 20px;
+  margin-bottom: 10px; }
+
+.froala-view h2, h2.fr-tag {
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-top: 20px;
+  margin-bottom: 10px; }
+
+.froala-view h3, h3.fr-tag {
+  font-size: 24px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-top: 20px;
+  margin-bottom: 10px; }
+
+.froala-view h4, h4.fr-tag {
+  font-size: 18px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+.froala-view h5, h5.fr-tag {
+  font-size: 14px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+.froala-view h6, h6.fr-tag {
+  font-size: 12px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 10px; }
 
 /* Page */
 .result-box {

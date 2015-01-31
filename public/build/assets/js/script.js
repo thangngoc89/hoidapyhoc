@@ -1074,7 +1074,7 @@ function updateAnswerCount(){
         tabContent : $('#tab-content a'),
         adjustTotal : $('#adjustTotal'),
         answerTable : $("#answer"),
-        btnCreateSubmit : $('#btnCreateSubmit'),
+        btnCreateSubmit : $('#btnCreateSubmit')
     };
 
     var quiz= {
@@ -1099,7 +1099,6 @@ function updateAnswerCount(){
         editor();
         uploader();
         
-
         preventClosing();
 
     }
@@ -1133,45 +1132,49 @@ function updateAnswerCount(){
     function post()
     {
         data = validator();
-        if (data) {
-            $.ajax({
-                type: quiz.postAjaxMethod,
-                dataType: "json",
-                url: quiz.postUrl,
-                data: data,
-                beforesend: function(){
-                    $ele.btnCreateSubmit.button('loading');
-                },
-                error: function (data) {
-                    toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
-                    data = $.parseJSON(data.responseText);
-                    validationError(data);
-                    debug(data);
-                    $ele.btnCreateSubmit.button('reset');
-                },
-                success: function (data) {
-                    swal({
-                            title: "Đã gửi đề thi thành công",
-                            text: "Làm gì tiếp theo?",
-                            type: "success",
-                            showCancelButton: true,
-                            confirmButtonClass: "btn-info",
-                            confirmButtonText: "Xem đề thi",
-                            cancelButtonText: "Chỉnh sửa",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        },
-                        function (isConfirm) {
-                            quiz.preventClose = false;
-                            if (isConfirm) {
-                                location.href = data.url;
-                            } else {
-                                location.href = data.editUrl;
-                            }
-                        });
+        if (!data) return;
+
+        $.ajax({
+            type: quiz.postAjaxMethod,
+            dataType: "json",
+            url: quiz.postUrl,
+            data: data,
+            beforesend: function(){
+                $ele.btnCreateSubmit.button('loading');
+            },
+            error: function (data) {
+                toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+                data = $.parseJSON(data.responseText);
+                validationError(data);
+                debug(data);
+                $ele.btnCreateSubmit.button('reset');
+            },
+            success: function (data) {
+                successPostMessage(data);
+            }
+        });
+    }
+    function successPostMessage(data)
+    {
+        swal({
+                title: "Đã gửi đề thi thành công",
+                text: "Làm gì tiếp theo?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonClass: "btn-info",
+                confirmButtonText: "Xem đề thi",
+                cancelButtonText: "Chỉnh sửa",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                quiz.preventClose = false;
+                if (isConfirm) {
+                    location.href = data.url;
+                } else {
+                    location.href = data.editUrl;
                 }
             });
-        }
     }
 
     function validator()
@@ -1179,7 +1182,7 @@ function updateAnswerCount(){
         if (!filledAllAnswer()) return false;
         name = $('#input-name').val();
         description =  $('#input-description').val();
-        content =  editorContent.serialize().content.value;
+        content =  $("#content").editable("getHTML");
         begin = $('#begin').val();
         begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
 
@@ -1425,24 +1428,11 @@ function updateAnswerCount(){
 
     function editor()
     {
-        editorContent = new MediumEditor('#content', {
-            anchorInputPlaceholder: 'Nhập một liên kết mới',
-            buttonLabels: 'fontawesome',
-            firstHeader: 'h1',
-            secondHeader: 'h2',
-            targetBlank: true,
-            cleanPastedHTML: true,
+        var editorContent = $('#content').editable({
+            inlineMode: true,
+            alwaysVisible: true
         });
-        $('#content').mediumInsert({
-            editor: editorContent,
-            addons: {
-                images: {
-                    imagesUploadScript: '/api/v2/files',
-                    imagesDeleteScript: '/api/v2/files'
-                }
-            }
-        });
-
+        $('a[href*="froala.com"]').closest('div').hide();
         $("#select-tags").selectize({
             plugins: ['remove_button'],
             options: global.data.tags,
@@ -1467,22 +1457,6 @@ function updateAnswerCount(){
                 }
             }
         });
-/*
-        $("#select-tags").select2({
-            tags: true,
-            data: global.data.tags,
-            maximumSelectionLength: 3,
-            templateResult: function(result) {
-                if (result.count === undefined) {
-                    return result.text;
-                }
-                return '<span class="post-tag">' + result.text + '</span>'
-                + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
-                '<span class="item-multiplier-count">' + result.count
-                '</span></span>';
-            }
-        });
-        */
     }
 
     function preventClosing()

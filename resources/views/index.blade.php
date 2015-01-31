@@ -15,12 +15,12 @@ Trang chủ
         </h2>
 
         <h1 id="home-learn-next-choices">
-            <a href=" {{ URL::to('quiz') }}">
+            <a href="/quiz">
                 Kho đề thi Y Khoa cực lớn
             </a>
         </h1>
 
-        <a href="{{ URL::to('quiz') }}" class="btn btn-join">
+        <a href="/quiz" class="btn btn-join">
             Tìm hiểu ngay
         </a>
 </div>
@@ -76,7 +76,7 @@ Trang chủ
                     hay tốn quá nhiều sức khi đánh đề trắc nghiệm (học thuộc ý mà).
                     Mình mong các bạn sẽ cùng với mình xây dựng một cộng dồng sinh viên Y Khoa vững mạnh.
                     Để bắt đầu, hãy tham gia <a href="//ask.hoidapyhoc.com">cộng đồng Hỏi Đáp</a>
-                    hoặc ứng dụng <a href="{{{ URL::to('quiz') }}}">Quiz</a> nhé.
+                    hoặc ứng dụng <a href="/quiz">Quiz</a> nhé.
                 </p>
             </div>
         </div>

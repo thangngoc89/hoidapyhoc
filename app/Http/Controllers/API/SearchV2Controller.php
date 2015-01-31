@@ -36,36 +36,55 @@ class SearchV2Controller extends Controller {
         $query = e($this->request->get('q',''));
 
         if(!$query && $query == '')
-            return response()->json(array(), 400);
+            return response()->json(['error' => 'No query'], 400);
 
+        $tests = $this->getTestsResponse($query);
+        $tags = $this->getTagsResponse($query);
+
+        $data = array_merge($tests, $tags);
+        $response = [
+            'data' => $data
+        ];
+
+        return response()->json($response,200);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function getTestsResponse($query)
+    {
         $tests = $this->test
             ->where('name','like','%'.$query.'%')
             ->orderBy('name','asc')
             ->take(5)
             ->get(array('id','slug','name'))->toArray();
 
+        $tests  = $this->appendURL($tests, 'quiz/lam-bai');
+        $tests = $this->appendValue($tests, 'exam', 'group');
+
+        return $tests;
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function getTagsResponse($query)
+    {
         $tags = $this->tag
-            ->where('name','like','%'.$query.'%')
+            ->where('name', 'like', '%' . $query . '%')
             ->has('exams')
             ->take(5)
             ->get(array('slug', 'name'))
             ->toArray();
 
-        $tags 	= $this->appendURL($tags, 'tag');
-        $tests  = $this->appendURL($tests, 'quiz/lam-bai');
-
-        // Add type of data to each item of each set of results
+        $tags = $this->appendURL($tags, 'tag');
         $tags = $this->appendValue($tags, 'tag', 'group');
-        $tests = $this->appendValue($tests, 'exam', 'group');
 
-        // Merge all data into one array
-        $data = array_merge($tests, $tags);
-
-        return response()->json(array(
-            'data' => $data
-        ));
+        return $tags;
     }
-
     public function appendValue($data, $type, $element)
     {
         // operate on the item passed by reference, adding the element and type
@@ -83,4 +102,5 @@ class SearchV2Controller extends Controller {
         }
         return $data;
     }
+
 }

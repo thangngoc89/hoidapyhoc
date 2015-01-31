@@ -7022,7 +7022,7 @@ a.bird-btn:hover {
   padding: 0.6em 0 1em; }
 
 .home-banner {
-  background: url(http://media.hoidapyhoc.com/images/intro-bg.jpg) no-repeat;
+  background: url(/img/intro-bg.jpg) no-repeat;
   background-size: cover;
   text-align: center;
   margin-top: -81px;
@@ -7077,7 +7077,7 @@ a.bird-btn:hover {
   top: 13px; }
 
 .home-banner {
-  background: url(http://media.hoidapyhoc.com/images/intro-bg.jpg) no-repeat;
+  background: url(/img/intro-bg.jpg) no-repeat;
   background-size: cover;
   text-align: center;
   margin-top: -81px;
@@ -7262,50 +7262,6 @@ a.bird-btn:hover {
   margin-top: 0; }
 
 /* Page */
-.statistic-box {
-  margin-bottom: 10px;
-  border-bottom: 1px solid #dadada;
-  font-weight: bold;
-  text-transform: uppercase; }
-
-.quiz-sidebar-section {
-  padding-top: 1em;
-  padding-bottom: 2em;
-  overflow: hidden; }
-
-.option_test {
-  overflow-y: auto;
-  overflow-x: hidden; }
-
-.option_test td {
-  border: none;
-  padding: 5px 2px 5px 5px;
-  width: 17%; }
-
-.answer-box {
-  max-height: 300px; }
-
-.is_stuck {
-  z-index: 100; }
-
-#quiz-content-detail {
-  display: block; }
-
-.the-end {
-  display: block;
-  padding-top: 3em; }
-  .the-end h1 {
-    text-align: center; }
-
-.pagination > li > a, .pagination > li > span {
-  border: 0; }
-
-.pagination > li > a[rel], .pagination > li.disabled {
-  display: none; }
-
-.row {
-  margin-right: 0; }
-
 .result-box {
   min-height: 80px;
   overflow: hidden; }
@@ -10838,7 +10794,6 @@ h1.lesson-title > a:hover {
     font-size: 3em; } }
 
 .banner__series .body p {
-  font-size: 1.9em;
   line-height: 1.5em;
   font-size: 1.5em; }
 
@@ -10915,13 +10870,6 @@ h1.lesson-title > a:hover {
     box-shadow: none; }
   #search-form > .selectize-control .selectize-input:after {
     content: none; }
-  #search-form > .selectize-control span.select2-selection.select2-selection--single {
-    background: none;
-    border: none; }
-
-@media (max-width: 767px) {
-  #navbar-search-form > .selectize-control {
-    width: 91%; } }
 
 .avatar .img-circle {
   background: #fff;
@@ -11291,6 +11239,61 @@ li.profile__stats-join-date {
   text-align: left;
   margin: 1em 2em;
   padding: 10px; }
+
+/* TODO: Test for responsive broken */
+.statistic-box {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #dadada;
+  font-weight: bold;
+  text-transform: uppercase; }
+
+.quiz-sidebar-section {
+  padding-top: 1em;
+  padding-bottom: 2em;
+  overflow: hidden; }
+
+span.timecou {
+  font-size: 1em; }
+
+.option_test {
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.option_test td {
+  border: none;
+  padding: 5px 2px 5px 5px;
+  width: 17%; }
+
+.answer-box {
+  max-height: 300px; }
+
+.is_stuck {
+  z-index: 100; }
+
+#quiz-content-detail {
+  display: block; }
+
+.the-end {
+  display: block;
+  padding-top: 3em; }
+  .the-end h1 {
+    text-align: center; }
+
+.pagination > li > a, .pagination > li > span {
+  border: 0; }
+
+.pagination > li > a[rel], .pagination > li.disabled {
+  display: none; }
+
+/* Bootstrap layout edit */
+.row {
+  margin-right: 0; }
+
+@media (max-width: 767px) {
+  .container {
+    padding-right: 0; }
+  .forum .jumbotron {
+    margin-bottom: 1.8em; } }
 
 /**
  * selectize.bootstrap3.css (v0.12.0) - Bootstrap 3 Theme

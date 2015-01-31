@@ -1,6 +1,7 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
+use Quiz\Events\ViewTestEvent;
 use Quiz\lib\API\Exam\ExamTransformers;
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
@@ -74,6 +75,8 @@ class QuizController extends Controller {
                             ->where('user_id',$this->auth->user()->id)
                             ->get();
         }
+
+        event(new ViewTestEvent($t));
         // Define for blade template
         $viewHistory = false;
         return view('quiz.do',compact('t','haveHistory','viewHistory'));

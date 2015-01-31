@@ -12,7 +12,11 @@ class AddFulltextSearchAndViewCountOnTestsTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::table('tests', function($table)
+        {
+            $table->integer('views')->index()->nullable()->default(0);
+        });
+        DB::Statement('ALTER TABLE tests ADD FULLTEXT INDEX `FullText` (`name` ASC, `description` ASC);');
 	}
 
 	/**

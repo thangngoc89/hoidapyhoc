@@ -30,6 +30,11 @@ abstract class AbstractEloquentRepository {
         return $this->model->where($key, $method, $value);
     }
 
+    public function whereRaw($query, $variables = null)
+    {
+        return $this->model->whereRaw($query, $variables);
+    }
+
     public function orWhere($key, $value)
     {
         return $this->model->orWhere($key, $value);

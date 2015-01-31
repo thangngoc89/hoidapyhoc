@@ -13,6 +13,9 @@ class EventServiceProvider extends ServiceProvider {
 		'event.name' => [
 			'EventListener',
 		],
+        'Quiz\Events\ViewTestEvent' => [
+            'Quiz\Handlers\Events\IncreaseViewCount@handle',
+        ],
 	];
 
 }

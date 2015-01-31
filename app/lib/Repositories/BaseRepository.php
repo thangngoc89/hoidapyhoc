@@ -10,6 +10,8 @@ interface BaseRepository {
 
     public function firstOrNew($array);
 
+    public function whereRaw($query, $variables = null);
+
     public function where($key, $method, $value = null);
 
     public function orWhere($key, $value);

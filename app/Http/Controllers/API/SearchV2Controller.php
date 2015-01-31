@@ -61,6 +61,9 @@ class SearchV2Controller extends Controller {
             ->take(5)
             ->get(array('id','slug','name'));
 
+//        $tests = $this->test->whereRaw('MATCH(name) AGAINST(\'?\' IN BOOLEAN MODE)',[$query])
+//            ->get(['id','slug','name']);
+
         $mapper = $tests->map(function($test){
                 return [
                     'name' => $test->name,

@@ -14,7 +14,7 @@
     "medium-editor-insert-plugin": "~0.3.2",
     "dante": "~0.0.8",
     "jquery": "*",
-    "select2": "select2-ng",
-    "jquery-unveil": "~1.3.0"
+    "jquery-unveil": "~1.3.0",
+    "selectize": "~0.12.0"
   }
 }

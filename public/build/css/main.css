@@ -6890,7 +6890,7 @@ a.bird-btn:hover {
 
 .bird-btn {
   border-radius: 3px;
-  background-color: #F1F1F1;
+  background-color: #E3E3E3;
   height: 30px;
   line-height: 30px;
   padding: 0px 14px;
@@ -10899,19 +10899,23 @@ h1.lesson-title > a:hover {
   outline: 0; }
 
 .search-content {
-  border-top: 0.5px solid #F1F1F1; }
+  border-top: 0.5px solid #E3E3E3; }
 
-#navbar-search-form > .select2-container {
-  background: transparent;
+#search-form > .selectize-control {
+  background: #E3E3E3;
   border: none;
-  padding: 17px 0;
-  font-size: 17px;
+  padding: 10px 0;
+  width: 300px;
   text-shadow: 0 0.1px 0.1px #A7B3C2;
-  color: #A7B3C2;
-  max-width: 100% !important; }
-  #navbar-search-form > .select2-container .select2-selection__arrow {
-    display: none; }
-  #navbar-search-form > .select2-container span.select2-selection.select2-selection--single {
+  color: #A7B3C2; }
+  #search-form > .selectize-control .selectize-input {
+    border: none;
+    background: transparent; }
+  #search-form > .selectize-control .selectize-input.focus {
+    box-shadow: none; }
+  #search-form > .selectize-control .selectize-input:after {
+    content: none; }
+  #search-form > .selectize-control span.select2-selection.select2-selection--single {
     background: none;
     border: none; }
 
@@ -11234,12 +11238,12 @@ li.profile__stats-join-date {
   position: fixed;
   width: 100%;
   top: 0px;
-  background-color: #F1F1F1;
+  background-color: #E3E3E3;
   padding-bottom: 1em;
   z-index: 10000; }
 
 .quiz-side-fixed.quiz-nav {
-  background-color: #F1F1F1; }
+  background-color: #E3E3E3; }
 
 #btnSheet {
   display: none; }
@@ -11250,7 +11254,7 @@ li.profile__stats-join-date {
     max-height: 14em; }
   .quiz-nav {
     padding-top: 0.5em;
-    background-color: #F1F1F1; }
+    background-color: #E3E3E3; }
   #btnSheet {
     display: inline; }
   .answer-box {

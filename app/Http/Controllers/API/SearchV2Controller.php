@@ -59,10 +59,10 @@ class SearchV2Controller extends Controller {
         $tests = $this->appendValue($tests, 'exam', 'group');
 
         // Merge all data into one array
-        $data = array_merge($tags, $tests);
+        $data = array_merge($tests, $tags);
 
         return response()->json(array(
-            'data'=>$data
+            'data' => $data
         ));
     }
 

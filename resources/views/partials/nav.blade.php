@@ -93,7 +93,7 @@
         <!-- Search -->
         <ul class="zeroed secondary-nav--right">
             <li>
-                <div id="navbar-search-form">
+                <div id="search-form">
                     <select id="q" name="q" placeholder="Nhập để tìm kiếm..." class="form-control"></select>
                 </div>
             </li>

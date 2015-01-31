@@ -1,7 +1,9 @@
 <?php namespace Quiz\Http\Controllers\API;
 
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 use Quiz\Http\Requests\uploadFileRequest;
+use Quiz\lib\Helpers\Str;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
 
 class UploadV2Controller extends APIController {
@@ -35,38 +37,84 @@ class UploadV2Controller extends APIController {
             'mimetype'  => $file->getClientMimeType(),
             'size' => $file->getClientSize(),
         ];
-        $type = (\Input::get('type')== 'json') ? 'json' : 'plain';
-        return $this->excute($file, $info, $type);
+
+        return $this->excute($file, $info);
     }
 
-    public function excute($file, $info, $type)
+    public function excute($file, $info)
     {
         $upload = $this->upload->getFileInfo($info);
 
         // If file was not existed then upload it
         if (!$upload)
         {
-            $filename =  md5($info['orginal_filename'].time()).'.'.$info['extension'];
-
             #TODO: Config S3 and test it
             $destination = public_path().'/uploads/';
             $file->move($destination, $filename);
 
-            $upload = $this->upload->fill($info);
-            $upload->user_id = $this->auth->user()->id;
-            $upload->filename = $filename;
-            $upload->location = config('filesystems.default');
-            $upload->save();
+            $upload = $this->saveFileData($info);
         }
 
-        if ($type != 'json')
-            return response(url('/uploads/'. $upload->filename));
+        return $this->createResponse($upload);
+    }
 
-        $response = [
-            'id'    => $upload->id,
-            'filename' => $upload->filenname,
-            'url' => $upload->url()
+    public function paste(Request $request)
+    {
+        $img = \Image::make($request->image);
+
+        $info = [
+            'orginal_filename' => 'pastedImage'.time(),
+            'extension' => Str::extensionFromMimeType($img->mime()),
+            'mimetype'  => $img->mime(),
+            'size'      => $img->filesize()
         ];
-        return response()->json($response,200);
+        $filename = $this->createFileNameFromInfo($info);
+
+        $img->save("uploads/{$filename}");
+
+        $upload = $this->saveFileData($info);
+
+        return $this->createResponse($upload);
+    }
+
+    /**
+     * @param $info
+     * @param $filename
+     * @return mixed
+     */
+    private function saveFileData($info)
+    {
+        $upload = $this->upload->fill($info);
+        $upload->user_id = $this->auth->user()->id;
+        $upload->filename = $this->createFileNameFromInfo($info);
+        $upload->location = config('filesystems.default');
+        if (!$upload->save())
+            throw new \Exception('Cannot save file info');
+
+        return $upload;
+    }
+
+    /**
+     * @param $info
+     * @return string
+     */
+    private function createFileNameFromInfo($info)
+    {
+        $filename = md5($info['orginal_filename'] . time()) . '.' . $info['extension'];
+        return $filename;
+    }
+
+    /**
+     * @param $upload
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createResponse($upload)
+    {
+        $response = [
+            'id' => $upload->id,
+            'filename' => $upload->filename,
+            'link' => $upload->url()
+        ];
+        return response()->json($response, 200);
     }
 } 

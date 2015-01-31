@@ -137,6 +137,7 @@ return [
 		'Illuminate\View\ViewServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
 
+        'Intervention\Image\ImageServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
         'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
         'Sorskod\Larasponse\LarasponseServiceProvider',
@@ -201,9 +202,10 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
-        'Date'      => 'Jenssegers\Date\Date',
+
         'Form'      => 'Illuminate\Html\FormFacade',
         'Slugify'   => "Cocur\Slugify\Bridge\Laravel\SlugifyFacade",
+        'Image'     => 'Intervention\Image\Facades\Image',
 	],
 
 ];

@@ -38,14 +38,15 @@ class Handler extends ExceptionHandler {
 	{
 		if ($this->isHttpException($e))
 		{
-            return $this->renderExceptionWithWhoops($e);
 //            return $this->renderHttpException($e);
+
+            return $this->renderExceptionWithWhoops($e);
 		}
 		else
 		{
-            return $this->renderExceptionWithWhoops($e);
-
 //            return parent::render($request, $e);
+
+            return $this->renderExceptionWithWhoops($e);
         }
 
     }

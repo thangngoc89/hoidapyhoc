@@ -63,6 +63,7 @@ Route::group(array('prefix' => 'api/v2'), function()
 {
     post('tests/{tests}/check', 'API\TestV2Controller@check');
     post('tests/{tests}/start', 'API\TestV2Controller@start');
+    post('files/paste', 'API\UploadV2Controller@paste');
 
     Route::resource('files','API\UploadV2Controller');
     Route::resource('tests', 'API\TestV2Controller');

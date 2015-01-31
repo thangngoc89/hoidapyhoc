@@ -366,17 +366,29 @@
 
     function embedPdf(data)
     {
-        $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
+        $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.link+'"></iframe>');
         global.pdf_file_id = data.id;
     }
 
     function editor()
     {
-        var editorContent = $('#content').editable({
+        $('#content').editable({
             inlineMode: true,
-            alwaysVisible: true
+            alwaysVisible: true,
+            pasteImage: true,
+            pastedImagesUploadURL: "/api/v2/files/paste",
+            maxImageSize: 1024 * 1024 * 3,
+            noFollow: true,
+            imageUploadURL: '/api/v2/files',
+            imageUploadParams: {
+                type: "json"
+            },
+            headers: {
+                'X-XSRF-Token' : $('meta[name="csrf"]').attr('content')
+            }
+
         });
-        $('a[href*="froala.com"]').closest('div').hide();
+        //$('a[href*="froala.com"]').closest('div').hide();
         $("#select-tags").selectize({
             plugins: ['remove_button'],
             options: global.data.tags,

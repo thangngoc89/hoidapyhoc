@@ -1,1 +1,1494 @@
-function sticky(){$("#quiz-sidebar, #mainRow").stick_in_parent()}function resize_do(){width=parseInt($(window).width()),scrollTop=parseInt($(window).scrollTop()),width<=767&&(scrollTop>=100?$("#quiz-sidebar").addClass("quiz-side-fixed"):$("#quiz-sidebar").removeClass("quiz-side-fixed"))}function validationError(e){$.each(e,function(e,t){t.forEach(function(e){toastr.warning(e)})})}function quizDoInt(){resize_do(),$(window).on("resize",function(){resize_do()}).on("scroll",function(){resize_do()}),$("#btnSheet").on("click",function(){$(".quiz-sidebar-section").slideToggle()}),$(".icontest-option").on("click",function(e){e.preventDefault(),toastr.info("Hãy nhấn bắt đầu để làm bài")}),$("#btnSubmit").on("click",function(){submitTest()}),$("#btnStart").on("click",function(){$(".icontest-option").off("click"),$("#quiz-content").removeClass("hide"),$("#quiz-rule").hide(),$("#btnSubmit").show(),$("#btnStart").hide(),sticky(),toastr.info("Bắt đầu làm bài thôi nào ^_^"),choiceDo(),setCounter()})}function setCounter(){counter=setInterval(timer,1e3),$.ajax({type:"POST",dataType:"json",url:"/api/v2/tests/"+testId+"/start",success:function(e){userHistoryId=e.user_history_id}})}function timer(){if(count-=1,-1==count)return clearInterval(counter),void sendSubmitTest();var e=count%60,t=Math.floor(count/60),n=Math.floor(t/60);t%=60,n%=60,$(".timecou").html(n+":"+t+":"+e)}function submitTest(){swal({title:"Bạn có muốn nộp bài chứ?",type:"warning",showCancelButton:!0,confirmButtonClass:"btn-danger",confirmButtonText:"Có!",closeOnConfirm:!1},function(){sendSubmitTest()})}function sendSubmitTest(){$.ajax({type:"POST",dataType:"json",beforeSend:function(){$("#btnSubmit").button("loading")},url:$("#frmTest").attr("action"),data:{user_history_id:userHistoryId,test_id:testId,answers:gatherAnswer()},error:function(e){console.log(e.responseText),toastr.error("Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại")},success:function(e){swal({title:"Bạn làm đúng "+e.score+"/"+e.totalQuestion+" câu hỏi",text:"Bạn có muốn xem lại kết quả chi tiết chứ?",type:"success",showCancelButton:!0,confirmButtonClass:"btn-info",confirmButtonText:"Có chứ!",cancelButtonText:"Không, để làm lại!",closeOnConfirm:!0,closeOnCancel:!0},function(t){location.href=t?e.url:location.href})}})}function gatherAnswer(){var e=[];return $(".questionRow").each(function(){questionId=$(this).data("question-id"),questionOrder=$(this).data("question-order"),givenAnswer=$('input[id^="answer_'+questionOrder+'_"][value=1]').attr("name"),givenAnswer=givenAnswer?givenAnswer.substring(givenAnswer.length-1,givenAnswer.length):0,e.push(givenAnswer)}),e}function choiceDo(){$(".icontest-option").on("click",function(e){e.preventDefault(),questionId=$(this).data("question-id"),questionRow=$(this).parent().parent(),questionRow.alterClass("unanswered","answered"),questionOrder=questionRow.data("question-order");var t=$('a[id^="a_'+questionOrder+'_"]'),n=$('input[id^="answer_'+questionOrder+'_"]');t.each(function(){$(this).alterClass("op-*","op-"+$(this).html())}),n.each(function(){$(this).val(0)}),$(this).alterClass("op-*","op-choice"),$(this).siblings().val(1),updateAnswerCount()})}function updateAnswerCount(){answered=$("tr.answered").length,$("#answeredCount").html(answered),$(".userAnswerCount").attr("value",answered),totalAnswer=parseInt($("#totalAnswer").html()),answered>=totalAnswer/2&&$("#btnSubmit").attr("disabled",null)}!function(e){e.fn.alterClass=function(t,n){var a=this;if(-1===t.indexOf("*"))return a.removeClass(t),n?a.addClass(n):a;var o=new RegExp("\\s"+t.replace(/\*/g,"[A-Za-z0-9-_]+").split(" ").join("\\s|\\s")+"\\s","g");return a.each(function(t,n){for(var a=" "+n.className+" ";o.test(a);)a=a.replace(o," ");n.className=e.trim(a)}),n?a.addClass(n):a}}(jQuery),function(e){void 0==e.fn.ajaxForm&&e.getScript(("https:"==document.location.protocol?"https://":"http://")+"malsup.github.io/jquery.form.js");var t={};t.fileapi=void 0!==e("<input type='file'/>").get(0).files,t.formdata=void 0!==window.FormData,e.fn.uploadFile=function(n){function a(){v.afterUploadAll&&!C&&(C=!0,function e(){0!=g.sCounter&&g.sCounter+g.fCounter==g.tCounter?(v.afterUploadAll(g),C=!1):window.setTimeout(e,100)}())}function o(t,n,a){a.on("dragenter",function(t){t.stopPropagation(),t.preventDefault(),e(this).addClass(n.dragDropHoverClass)}),a.on("dragover",function(t){t.stopPropagation(),t.preventDefault();var a=e(this);a.hasClass(n.dragDropContainerClass)&&!a.hasClass(n.dragDropHoverClass)&&a.addClass(n.dragDropHoverClass)}),a.on("drop",function(a){a.preventDefault(),e(this).removeClass(n.dragDropHoverClass),t.errorLog.html("");var o=a.originalEvent.dataTransfer.files;return!n.multiple&&o.length>1?void(n.showError&&e("<div class='"+n.errorClass+"'>"+n.multiDragErrorStr+"</div>").appendTo(t.errorLog)):void(0!=n.onSelect(o)&&s(n,t,o))}),a.on("dragleave",function(){e(this).removeClass(n.dragDropHoverClass)}),e(document).on("dragenter",function(e){e.stopPropagation(),e.preventDefault()}),e(document).on("dragover",function(t){t.stopPropagation(),t.preventDefault();var a=e(this);a.hasClass(n.dragDropContainerClass)||a.removeClass(n.dragDropHoverClass)}),e(document).on("drop",function(t){t.stopPropagation(),t.preventDefault(),e(this).removeClass(n.dragDropHoverClass)})}function r(e){var t="",n=e/1024;if(parseInt(n)>1024){var a=n/1024;t=a.toFixed(2)+" MB"}else t=n.toFixed(2)+" KB";return t}function i(t){var n=[];n="string"==jQuery.type(t)?t.split("&"):e.param(t).split("&");var a,o,r=n.length,i=[];for(a=0;r>a;a++)n[a]=n[a].replace(/\+/g," "),o=n[a].split("="),i.push([decodeURIComponent(o[0]),decodeURIComponent(o[1])]);return i}function s(t,n,a){for(var o=0;o<a.length;o++)if(l(n,t,a[o].name))if(t.allowDuplicates||!d(n,a[o].name))if(-1!=t.maxFileSize&&a[o].size>t.maxFileSize)t.showError&&e("<div class='"+t.errorClass+"'><b>"+a[o].name+"</b> "+t.sizeErrorStr+r(t.maxFileSize)+"</div>").appendTo(n.errorLog);else if(-1!=t.maxFileCount&&n.selectedFiles>=t.maxFileCount)t.showError&&e("<div class='"+t.errorClass+"'><b>"+a[o].name+"</b> "+t.maxFileCountErrorStr+t.maxFileCount+"</div>").appendTo(n.errorLog);else{n.selectedFiles++,n.existingFileNames.push(a[o].name);var s=t,u=new FormData,c=t.fileName.replace("[]","");u.append(c,a[o]);var p=t.formData;if(p)for(var h=i(p),v=0;v<h.length;v++)h[v]&&u.append(h[v][0],h[v][1]);s.fileData=u;var w=new f(n,t),g="";g=t.showFileCounter?n.fileCounter+t.fileCounterStyle+a[o].name:a[o].name,w.filename.html(g);var b=e("<form style='display:block; position:absolute;left: 150px;' class='"+n.formGroup+"' method='"+t.method+"' action='"+t.url+"' enctype='"+t.enctype+"'></form>");b.appendTo("body");var C=[];C.push(a[o].name),m(b,s,w,C,n,a[o]),n.fileCounter++}else t.showError&&e("<div class='"+t.errorClass+"'><b>"+a[o].name+"</b> "+t.duplicateErrorStr+"</div>").appendTo(n.errorLog);else t.showError&&e("<div class='"+t.errorClass+"'><b>"+a[o].name+"</b> "+t.extErrorStr+t.allowedTypes+"</div>").appendTo(n.errorLog)}function l(e,t,n){var a=t.allowedTypes.toLowerCase().split(","),o=n.split(".").pop().toLowerCase();return"*"!=t.allowedTypes&&jQuery.inArray(o,a)<0?!1:!0}function d(e,t){var n=!1;if(e.existingFileNames.length)for(var a=0;a<e.existingFileNames.length;a++)(e.existingFileNames[a]==t||v.duplicateStrict&&e.existingFileNames[a].toLowerCase()==t.toLowerCase())&&(n=!0);return n}function u(e,t){if(e.existingFileNames.length)for(var n=0;n<t.length;n++){var a=e.existingFileNames.indexOf(t[n]);-1!=a&&e.existingFileNames.splice(a,1)}}function c(e,t){if(e){t.show();var n=new FileReader;n.onload=function(e){t.attr("src",e.target.result)},n.readAsDataURL(e)}}function p(t,n){if(t.showFileCounter){var a=e(".ajax-file-upload-filename").length;n.fileCounter=a+1,e(".ajax-file-upload-filename").each(function(){var n=e(this).html().split(t.fileCounterStyle),o=(parseInt(n[0])-1,a+t.fileCounterStyle+n[1]);e(this).html(o),a--})}}function h(n,a,o,r){var i="ajax-upload-id-"+(new Date).getTime(),d=e("<form method='"+o.method+"' action='"+o.url+"' enctype='"+o.enctype+"'></form>"),u="<input type='file' id='"+i+"' name='"+o.fileName+"' accept='"+o.acceptFiles+"'/>";o.multiple&&(o.fileName.indexOf("[]")!=o.fileName.length-2&&(o.fileName+="[]"),u="<input type='file' id='"+i+"' name='"+o.fileName+"' accept='"+o.acceptFiles+"' multiple/>");var c=e(u).appendTo(d);c.change(function(){n.errorLog.html("");var i=(o.allowedTypes.toLowerCase().split(","),[]);if(this.files){for(g=0;g<this.files.length;g++)i.push(this.files[g].name);if(0==o.onSelect(this.files))return}else{var u=e(this).val(),c=[];if(i.push(u),!l(n,o,u))return void(o.showError&&e("<div class='"+o.errorClass+"'><b>"+u+"</b> "+o.extErrorStr+o.allowedTypes+"</div>").appendTo(n.errorLog));if(c.push({name:u,size:"NA"}),0==o.onSelect(c))return}if(p(o,n),r.unbind("click"),d.hide(),h(n,a,o,r),d.addClass(a),t.fileapi&&t.formdata){d.removeClass(a);var v=this.files;s(o,n,v)}else{for(var w="",g=0;g<i.length;g++)w+=o.showFileCounter?n.fileCounter+o.fileCounterStyle+i[g]+"<br>":i[g]+"<br>",n.fileCounter++;if(-1!=o.maxFileCount&&n.selectedFiles+i.length>o.maxFileCount)return void(o.showError&&e("<div class='"+o.errorClass+"'><b>"+w+"</b> "+o.maxFileCountErrorStr+o.maxFileCount+"</div>").appendTo(n.errorLog));n.selectedFiles+=i.length;var b=new f(n,o);b.filename.html(w),m(d,o,b,i,n,null)}}),o.nestedForms?(d.css({margin:0,padding:0}),r.css({position:"relative",overflow:"hidden",cursor:"default"}),c.css({position:"absolute",cursor:"pointer",top:"0px",width:"100%",height:"100%",left:"0px","z-index":"100",opacity:"0.0",filter:"alpha(opacity=0)","-ms-filter":"alpha(opacity=0)","-khtml-opacity":"0.0","-moz-opacity":"0.0"}),d.appendTo(r)):(d.appendTo(e("body")),d.css({margin:0,padding:0,display:"block",position:"absolute",left:"-250px"}),-1!=navigator.appVersion.indexOf("MSIE ")?r.attr("for",i):r.click(function(){c.click()}))}function f(t,n){return this.statusbar=e("<div class='ajax-file-upload-statusbar'></div>").width(n.statusBarWidth),this.preview=e("<img class='ajax-file-upload-preview' />").width(n.previewWidth).height(n.previewHeight).appendTo(this.statusbar).hide(),this.filename=e("<div class='ajax-file-upload-filename'></div>").appendTo(this.statusbar),this.progressDiv=e("<div class='ajax-file-upload-progress'>").appendTo(this.statusbar).hide(),this.progressbar=e("<div class='ajax-file-upload-bar "+t.formGroup+"'></div>").appendTo(this.progressDiv),this.abort=e("<div class='ajax-file-upload-red "+n.abortButtonClass+" "+t.formGroup+"'>"+n.abortStr+"</div>").appendTo(this.statusbar).hide(),this.cancel=e("<div class='ajax-file-upload-red "+n.cancelButtonClass+" "+t.formGroup+"'>"+n.cancelStr+"</div>").appendTo(this.statusbar).hide(),this.done=e("<div class='ajax-file-upload-green'>"+n.doneStr+"</div>").appendTo(this.statusbar).hide(),this.download=e("<div class='ajax-file-upload-green'>"+n.downloadStr+"</div>").appendTo(this.statusbar).hide(),this.del=e("<div class='ajax-file-upload-red'>"+n.deletelStr+"</div>").appendTo(this.statusbar).hide(),n.showQueueDiv?e("#"+n.showQueueDiv).append(this.statusbar):t.errorLog.after(this.statusbar),this}function m(n,o,r,s,l,d){var h={cache:!1,contentType:!1,processData:!1,forceSync:!1,type:o.method,data:o.formData,formData:o.fileData,dataType:o.returnType,beforeSubmit:function(e,t,d){if(0!=o.onSubmit.call(this,s)){var c=o.dynamicFormData();if(c){var h=i(c);if(h)for(var f=0;f<h.length;f++)h[f]&&(void 0!=o.fileData?d.formData.append(h[f][0],h[f][1]):d.data[h[f][0]]=h[f][1])}return l.tCounter+=s.length,a(),!0}return r.statusbar.append("<div class='"+o.errorClass+"'>"+o.uploadErrorStr+"</div>"),r.cancel.show(),n.remove(),r.cancel.click(function(){u(l,s),r.statusbar.remove(),o.onCancel.call(l,s,r),l.selectedFiles-=s.length,p(o,l)}),!1},beforeSend:function(e){r.progressDiv.show(),r.cancel.hide(),r.done.hide(),o.showAbort&&(r.abort.show(),r.abort.click(function(){u(l,s),e.abort(),l.selectedFiles-=s.length})),r.progressbar.width(t.formdata?"1%":"5%")},uploadProgress:function(e,t,n,a){a>98&&(a=98);var i=a+"%";a>1&&r.progressbar.width(i),o.showProgress&&(r.progressbar.html(i),r.progressbar.css("text-align","center"))},success:function(t,a,i){if("json"==o.returnType&&"object"==e.type(t)&&t.hasOwnProperty(o.customErrorKeyStr)){r.abort.hide();var d=t[o.customErrorKeyStr];return o.onError.call(this,s,200,d,r),o.showStatusAfterError?(r.progressDiv.hide(),r.statusbar.append("<span class='"+o.errorClass+"'>ERROR: "+d+"</span>")):(r.statusbar.hide(),r.statusbar.remove()),l.selectedFiles-=s.length,n.remove(),void(l.fCounter+=s.length)}l.responses.push(t),r.progressbar.width("100%"),o.showProgress&&(r.progressbar.html("100%"),r.progressbar.css("text-align","center")),r.abort.hide(),o.onSuccess.call(this,s,t,i,r),o.showStatusAfterSuccess?(o.showDone?(r.done.show(),r.done.click(function(){r.statusbar.hide("slow"),r.statusbar.remove()})):r.done.hide(),o.showDelete?(r.del.show(),r.del.click(function(){r.statusbar.hide().remove(),o.deleteCallback&&o.deleteCallback.call(this,t,r),l.selectedFiles-=s.length,p(o,l)})):r.del.hide()):(r.statusbar.hide("slow"),r.statusbar.remove()),o.showDownload&&(r.download.show(),r.download.click(function(){o.downloadCallback&&o.downloadCallback(t)})),n.remove(),l.sCounter+=s.length},error:function(e,t,a){r.abort.hide(),"abort"==e.statusText?(r.statusbar.hide("slow").remove(),p(o,l)):(o.onError.call(this,s,t,a,r),o.showStatusAfterError?(r.progressDiv.hide(),r.statusbar.append("<span class='"+o.errorClass+"'>ERROR: "+a+"</span>")):(r.statusbar.hide(),r.statusbar.remove()),l.selectedFiles-=s.length),n.remove(),l.fCounter+=s.length}};o.showPreview&&null!=d&&"image"==d.type.toLowerCase().split("/").shift()&&c(d,r.preview),o.autoSubmit?n.ajaxSubmit(h):(o.showCancel&&(r.cancel.show(),r.cancel.click(function(){u(l,s),n.remove(),r.statusbar.remove(),o.onCancel.call(l,s,r),l.selectedFiles-=s.length,p(o,l)})),n.ajaxForm(h))}var v=e.extend({url:"",method:"POST",enctype:"multipart/form-data",returnType:null,allowDuplicates:!0,duplicateStrict:!1,allowedTypes:"*",acceptFiles:"*",fileName:"file",formData:{},dynamicFormData:function(){return{}},maxFileSize:-1,maxFileCount:-1,multiple:!0,dragDrop:!0,autoSubmit:!0,showCancel:!0,showAbort:!0,showDone:!0,showDelete:!1,showError:!0,showStatusAfterSuccess:!0,showStatusAfterError:!0,showFileCounter:!0,fileCounterStyle:"). ",showProgress:!1,nestedForms:!0,showDownload:!1,onLoad:function(){},onSelect:function(){return!0},onSubmit:function(){},onSuccess:function(){},onError:function(){},onCancel:function(){},downloadCallback:!1,deleteCallback:!1,afterUploadAll:!1,abortButtonClass:"ajax-file-upload-abort",cancelButtonClass:"ajax-file-upload-cancel",dragDropContainerClass:"ajax-upload-dragdrop",dragDropHoverClass:"state-hover",errorClass:"ajax-file-upload-error",uploadButtonClass:"ajax-file-upload",dragDropStr:"<span><b>Drag &amp; Drop Files</b></span>",abortStr:"Abort",cancelStr:"Cancel",deletelStr:"Delete",doneStr:"Done",multiDragErrorStr:"Multiple File Drag &amp; Drop is not allowed.",extErrorStr:"is not allowed. Allowed extensions: ",duplicateErrorStr:"is not allowed. File already exists.",sizeErrorStr:"is not allowed. Allowed Max size: ",uploadErrorStr:"Upload is not allowed",maxFileCountErrorStr:" is not allowed. Maximum allowed files are:",downloadStr:"Download",customErrorKeyStr:"jquery-upload-file-error",showQueueDiv:!1,statusBarWidth:500,dragdropWidth:500,showPreview:!1,previewHeight:"auto",previewWidth:"100%",uploadFolder:"uploads/"},n);this.fileCounter=1,this.selectedFiles=0,this.fCounter=0,this.sCounter=0,this.tCounter=0;var w="ajax-file-upload-"+(new Date).getTime();this.formGroup=w,this.hide(),this.errorLog=e("<div></div>"),this.after(this.errorLog),this.responses=[],this.existingFileNames=[],t.formdata||(v.dragDrop=!1),t.formdata||(v.multiple=!1);var g=this,b=e("<div>"+e(this).html()+"</div>");e(b).addClass(v.uploadButtonClass),function x(){if(e.fn.ajaxForm){if(v.dragDrop){var t=e('<div class="'+v.dragDropContainerClass+'" style="vertical-align:top;"></div>').width(v.dragdropWidth);e(g).before(t),e(t).append(b),e(t).append(e(v.dragDropStr)),o(g,v,t)}else e(g).before(b);v.onLoad.call(this,g),h(g,w,v,b)}else window.setTimeout(x,10)}(),this.startUpload=function(){e("."+this.formGroup).each(function(){e(this).is("form")&&e(this).submit()})},this.getFileCount=function(){return g.selectedFiles},this.stopUpload=function(){e("."+v.abortButtonClass).each(function(){e(this).hasClass(g.formGroup)&&e(this).click()})},this.cancelAll=function(){e("."+v.cancelButtonClass).each(function(){e(this).hasClass(g.formGroup)&&e(this).click()})},this.update=function(t){v=e.extend(v,t)},this.createProgress=function(e){var t=new f(this,v);t.progressDiv.show(),t.progressbar.width("100%");var n="";n=v.showFileCounter?g.fileCounter+v.fileCounterStyle+e:e,t.filename.html(n),g.fileCounter++,g.selectedFiles++,v.showPreview&&(t.preview.attr("src",v.uploadFolder+e),t.preview.show()),v.showDownload&&(t.download.show(),t.download.click(function(){v.downloadCallback&&v.downloadCallback.call(g,[e])})),t.del.show(),t.del.click(function(){t.statusbar.hide().remove();var n=[e];v.deleteCallback&&v.deleteCallback.call(this,n,t),g.selectedFiles-=1,p(v,g)})},this.getResponses=function(){return this.responses};var C=!1;return this}}(jQuery),$(function(){$.ajaxSetup({headers:{"X-XSRF-Token":$('meta[name="csrf"]').attr("content")}}),$("img").unveil(200),$("#q").selectize({valueField:"url",labelField:"name",searchField:["name"],maxOptions:10,options:[],create:!1,render:{option:function(e,t){return"<div>"+t(e.name)+"</div>"}},optgroups:[{value:"tag",label:"Tag"},{value:"exam",label:"Đề thi"}],optgroupField:"group",optgroupOrder:["exam","tag"],load:function(e,t){return e.length?void $.ajax({url:"/api/v2/search",type:"GET",dataType:"json",data:{q:e},error:function(){t()},success:function(e){t(e.data)}}):t()},onChange:function(){window.location=this.items[0]}})}),toastr.options={closeButton:!1,debug:!1,progressBar:!1,positionClass:"toast-bottom-right",onclick:null,showDuration:"300",hideDuration:"1000",timeOut:"5000",extendedTimeOut:"1000",showEasing:"swing",hideEasing:"linear",showMethod:"fadeIn",hideMethod:"fadeOut"},function(e){function t(){u(),d(),l(),e("#frmTest").on("submit",function(e){e.preventDefault(),a()}),sticky(),C(),g(),x()}function n(){test=global.data.test,S.name.val(test.name),S.description.val(test.description),S.content.html(test.content),S.begin.html(test.begin),test.file&&(S.tabContent.last().tab("show"),b(test.file)),test.tags&&S.tag.val(test.tags.join()),S.adjustTotal.hide(),D.postAjaxMethod="PUT",D.postUrl="/api/v2/tests/"+test.id,t()}function a(){data=r(),data&&e.ajax({type:D.postAjaxMethod,dataType:"json",url:D.postUrl,data:data,beforesend:function(){S.btnCreateSubmit.button("loading")},error:function(t){toastr.error("Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại"),t=e.parseJSON(t.responseText),validationError(t),y(t),S.btnCreateSubmit.button("reset")},success:function(e){o(e)}})}function o(e){swal({title:"Đã gửi đề thi thành công",text:"Làm gì tiếp theo?",type:"success",showCancelButton:!0,confirmButtonClass:"btn-info",confirmButtonText:"Xem đề thi",cancelButtonText:"Chỉnh sửa",closeOnConfirm:!0,closeOnCancel:!0},function(t){D.preventClose=!1,location.href=t?e.url:e.editUrl})}function r(){if(!v())return!1;if(name=e("#input-name").val(),description=e("#input-description").val(),content=e("#content").editable("getHTML"),begin=e("#begin").val(),begin=parseInt(begin)>=1?parseInt(begin):1,tags=e("#select-tags").val(),time=e("#select-time").val(),is_file=0,file_id=null,!name||name.length<6)return toastr.warning("Tên đề thi có độ dài tối thiểu là 6"),!1;if(description&&description.length<6)return toastr.warning("Mô tả có độ dài tối thiểu là 6"),!1;if(pdf_upload=e('a[role="tab"][aria-expanded="true"]').attr("href"),"#upload"==pdf_upload){if(!global.pdf_file_id)return toastr.warning("Bạn chưa upload file pdf"),!1;is_file=1,file_id=global.pdf_file_id}return content?{name:name,description:description,content:content,begin:begin,tags:tags,thoigian:time,is_file:is_file,file_id:file_id,questions:s()}:(toastr.warning("Bạn chưa nhập nội dung đề thi"),!1)}function s(){var t=[];return e(".ansRow").each(function(n){questionOrder=e(this).data("question-order"),givenAnswer=e('input[id^="answer_'+questionOrder+'_"][value=1]').attr("name"),givenAnswer=givenAnswer.substring(givenAnswer.length-1,givenAnswer.length),question={right_answer:givenAnswer.toUpperCase(),content:D.answerArray[n+1]?D.answerArray[n+1]:""},t.push(question)}),t}function l(){choiceDo(),w(),sticky()}function d(){e("#btn-add").on("click",function(t){t.preventDefault(),c(e("#total_add").val())}),e("#btn-remove").on("click",function(t){t.preventDefault(),p(e("#total_remove").val())}),e("#begin").on("keyup",function(){f()})}function u(){global.data.test?c(global.data.test.questionsCount,global.data.test.questions):c(5,!1)}function c(t,n){for(i=1;i<=t;i++)qIndex=e(".ansRow:last").data("question-order"),qIndex=qIndex?qIndex:0,dataNode=n?n[i-1]:!1,h(parseInt(qIndex)+1,dataNode);l(),m(),f()}function p(t){if(m()-parseInt(t)<1)return toastr.warning("Tổng số câu hỏi không được nhỏ hơn 1"),!1;for(qIndex=e(".ansRow:last").data("question-order"),toIndex=parseInt(qIndex)-parseInt(t),i=qIndex;i>toIndex;i--)e('tr[data-question-order="'+i+'"]').remove();m()}function h(t,n){selectedAnswer=!1,content=!1,answerd="",n&&(selectedAnswer=n.answer.toLowerCase(),content=n.content,answerd=" answered",content&&(D.answerArray[t]=content)),row='<tr class="ansRow'+answerd+'" data-question-order="'+t+'"><td align="center" class="questionNumber">'+t+".</td>",["a","b","c","d","e"].forEach(function(e){opchoice=selectedAnswer==e?" op-choice":"",value=selectedAnswer==e?1:0,hinted=content?" hinted":"",row+='<td><a id="a_'+t+"_"+e+'" rel="1" class="icontest-option op-'+e+opchoice+'"href="#"">'+e+'</a><input type="hidden" id="answer_'+t+"_"+e+'" name="answer_'+t+"_"+e+'" value="'+value+'"></td>'}),row+='<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint'+hinted+'"></i></a></td></tr>',e("#answer>tbody").append(row)}function f(){val=e("#begin").val(),val=parseInt(val)>=1?parseInt(val):1,e(".questionNumber").each(function(t){e(this).html(parseInt(t)+val+".")})}function m(){return total=e(".ansRow").length,e("#total").html(total),total}function v(){return unanswered=e('.ansRow:not(".answered")').length,0!=unanswered&&toastr.warning("Bạn chưa điền đầy đủ đáp án cho các câu hỏi"),0==unanswered}function w(){e(".icon-hint").unbind("click"),e(".icon-hint").on("click",function(){qIndex=e(this).closest("tr").data("question-order"),hint=e("#answerModalArea"),icon=e(this),currentValue=D.answerArray[qIndex]?D.answerArray[qIndex]:"",hint.val(currentValue),questionNumber=parseInt(qIndex)+parseInt(S.begin.val())-1,e("#answerModal .modal-title").html("Gợi ý trả lời cho câu "+questionNumber),D.preventClose=!1,e("#answerModal").modal().on("hide.bs.modal",function(){D.preventClose=!0,D.answerArray[qIndex]=hint.val(),icon.removeClass("hinted"),hint.val()&&icon.addClass("hinted")})})}function g(){e("#uploadarea").uploadFile({url:"/api/v2/files",maxFileSize:10485760,allowedTypes:"pdf",showStatusAfterSuccess:!1,formData:{type:"json"},dragDropStr:"<span><b>Kéo và thả file vào đây để upload</b></span>",sizeErrorStr:"quá lớn. Dung lượng file tối đa là ",uploadErrorStr:"Đã có lỗi xảy ra trong quá trình upload",uploadButtonClass:"btn btn-info",onSuccess:function(e,t){b(t)}})}function b(t){e("#pdf").html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+t.url+'"></iframe>'),global.pdf_file_id=t.id}function C(){e("#content").editable({inlineMode:!0,alwaysVisible:!0});e('a[href*="froala.com"]').closest("div").hide(),e("#select-tags").selectize({plugins:["remove_button"],options:global.data.tags,valueField:"text",labelField:"text",create:function(e){return{value:e,text:e}},maxItems:3,render:{option:function(e){var t=e.text,n=e.count;return'<div><span class="post-tag">'+t+'</span><span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;<span class="item-multiplier-count">'+n+"</span></span></div>"}}})}function x(){window.onbeforeunload=function(e){return e=e||window.event,D.preventClose?(e&&(e.returnValue="Bạn có chắc chắn muốn thoát ? "),"Bạn có chắc chắn muốn thoát ? "):void 0}}function y(e){window.console.log(e)}e.fn.quiz=function(){switch(data=global.data,data.type){case"edit":n();break;case"create":t()}};var S={name:e("#input-name"),content:e("#content"),description:e("#input-description"),begin:e("#begin"),tag:e("#select-tags"),tabContent:e("#tab-content a"),adjustTotal:e("#adjustTotal"),answerTable:e("#answer"),btnCreateSubmit:e("#btnCreateSubmit")},D={postUrl:"/api/v2/tests",postAjaxMethod:"POST",answerArray:{},preventClose:!0}}(jQuery);
+/**
+ * jQuery alterClass plugin
+ *
+ * Remove element classes with wildcard matching. Optionally add classes:
+ *   $( '#foo' ).alterClass( 'foo-* bar-*', 'foobar' )
+ *
+ * Copyright (c) 2011 Pete Boere (the-echoplex.net)
+ * Free under terms of the MIT license: http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+(function ( $ ) {
+
+    $.fn.alterClass = function ( removals, additions ) {
+
+        var self = this;
+
+        if ( removals.indexOf( '*' ) === -1 ) {
+            // Use native jQuery methods if there is no wildcard matching
+            self.removeClass( removals );
+            return !additions ? self : self.addClass( additions );
+        }
+
+        var patt = new RegExp( '\\s' +
+        removals.
+            replace( /\*/g, '[A-Za-z0-9-_]+' ).
+            split( ' ' ).
+            join( '\\s|\\s' ) +
+        '\\s', 'g' );
+
+        self.each( function ( i, it ) {
+            var cn = ' ' + it.className + ' ';
+            while ( patt.test( cn ) ) {
+                cn = cn.replace( patt, ' ' );
+            }
+            it.className = $.trim( cn );
+        });
+
+        return !additions ? self : self.addClass( additions );
+    };
+
+})( jQuery );
+/*!
+ * jQuery Upload File Plugin
+ * version: 3.1.10
+ * @requires jQuery v1.5 or later & form plugin
+ * Copyright (c) 2013 Ravishanker Kusuma
+ * http://hayageek.com/
+ */
+(function ($) {
+    if($.fn.ajaxForm == undefined) {
+        $.getScript(("https:" == document.location.protocol ? "https://" : "http://") + "malsup.github.io/jquery.form.js");
+    }
+    var feature = {};
+    feature.fileapi = $("<input type='file'/>").get(0).files !== undefined;
+    feature.formdata = window.FormData !== undefined;
+    $.fn.uploadFile = function (options) {
+        // This is the easiest way to have default options.
+        var s = $.extend({
+            // These are the defaults.
+            url: "",
+            method: "POST",
+            enctype: "multipart/form-data",
+            returnType: null,
+            allowDuplicates: true,
+            duplicateStrict: false,
+            allowedTypes: "*",
+            //For list of acceptFiles
+            // http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
+            acceptFiles: "*",
+            fileName: "file",
+            formData: {},
+            dynamicFormData: function () {
+                return {};
+            },
+            maxFileSize: -1,
+            maxFileCount: -1,
+            multiple: true,
+            dragDrop: true,
+            autoSubmit: true,
+            showCancel: true,
+            showAbort: true,
+            showDone: true,
+            showDelete: false,
+            showError: true,
+            showStatusAfterSuccess: true,
+            showStatusAfterError: true,
+            showFileCounter: true,
+            fileCounterStyle: "). ",
+            showProgress: false,
+            nestedForms: true,
+            showDownload: false,
+            onLoad: function (obj) {},
+            onSelect: function (files) {
+                return true;
+            },
+            onSubmit: function (files, xhr) {},
+            onSuccess: function (files, response, xhr, pd) {},
+            onError: function (files, status, message, pd) {},
+            onCancel: function (files, pd) {},
+            downloadCallback: false,
+            deleteCallback: false,
+            afterUploadAll: false,
+            abortButtonClass: "ajax-file-upload-abort",
+            cancelButtonClass: "ajax-file-upload-cancel",
+            dragDropContainerClass: "ajax-upload-dragdrop",
+            dragDropHoverClass: "state-hover",
+            errorClass: "ajax-file-upload-error",
+            uploadButtonClass: "ajax-file-upload",
+            dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
+            abortStr: "Abort",
+            cancelStr: "Cancel",
+            deletelStr: "Delete",
+            doneStr: "Done",
+            multiDragErrorStr: "Multiple File Drag &amp; Drop is not allowed.",
+            extErrorStr: "is not allowed. Allowed extensions: ",
+            duplicateErrorStr: "is not allowed. File already exists.",
+            sizeErrorStr: "is not allowed. Allowed Max size: ",
+            uploadErrorStr: "Upload is not allowed",
+            maxFileCountErrorStr: " is not allowed. Maximum allowed files are:",
+            downloadStr: "Download",
+            customErrorKeyStr: "jquery-upload-file-error",
+            showQueueDiv: false,
+            statusBarWidth: 500,
+            dragdropWidth: 500,
+            showPreview: false,
+            previewHeight: "auto",
+            previewWidth: "100%",
+            uploadFolder:"uploads/"
+        }, options);
+
+        this.fileCounter = 1;
+        this.selectedFiles = 0;
+        this.fCounter = 0; //failed uploads
+        this.sCounter = 0; //success uploads
+        this.tCounter = 0; //total uploads
+        var formGroup = "ajax-file-upload-" + (new Date().getTime());
+        this.formGroup = formGroup;
+        this.hide();
+        this.errorLog = $("<div></div>"); //Writing errors
+        this.after(this.errorLog);
+        this.responses = [];
+        this.existingFileNames = [];
+        if(!feature.formdata) //check drag drop enabled.
+        {
+            s.dragDrop = false;
+        }
+        if(!feature.formdata) {
+            s.multiple = false;
+        }
+
+        var obj = this;
+        var uploadLabel = $('<div>' + $(this).html() + '</div>');
+        $(uploadLabel).addClass(s.uploadButtonClass);
+
+        // wait form ajax Form plugin and initialize
+        (function checkAjaxFormLoaded() {
+            if($.fn.ajaxForm) {
+
+                if(s.dragDrop) {
+                    var dragDrop = $('<div class="' + s.dragDropContainerClass + '" style="vertical-align:top;"></div>').width(s.dragdropWidth);
+                    $(obj).before(dragDrop);
+                    $(dragDrop).append(uploadLabel);
+                    $(dragDrop).append($(s.dragDropStr));
+                    setDragDropHandlers(obj, s, dragDrop);
+
+                } else {
+                    $(obj).before(uploadLabel);
+                }
+                s.onLoad.call(this, obj);
+                createCutomInputFile(obj, formGroup, s, uploadLabel);
+
+            } else window.setTimeout(checkAjaxFormLoaded, 10);
+        })();
+
+        this.startUpload = function () {
+            $("." + this.formGroup).each(function (i, items) {
+                if($(this).is('form')) $(this).submit();
+            });
+        }
+
+        this.getFileCount = function () {
+            return obj.selectedFiles;
+
+        }
+        this.stopUpload = function () {
+            $("." + s.abortButtonClass).each(function (i, items) {
+                if($(this).hasClass(obj.formGroup)) $(this).click();
+            });
+        }
+        this.cancelAll = function () {
+            $("." + s.cancelButtonClass).each(function (i, items) {
+                if($(this).hasClass(obj.formGroup)) $(this).click();
+            });
+        }
+        this.update = function (settings) {
+            //update new settings
+            s = $.extend(s, settings);
+        }
+
+        //This is for showing Old files to user.
+        this.createProgress = function (filename) {
+            var pd = new createProgressDiv(this, s);
+            pd.progressDiv.show();
+            pd.progressbar.width('100%');
+
+            var fileNameStr = "";
+            if(s.showFileCounter) fileNameStr = obj.fileCounter + s.fileCounterStyle + filename;
+            else fileNameStr = filename;
+
+            pd.filename.html(fileNameStr);
+            obj.fileCounter++;
+            obj.selectedFiles++;
+            if(s.showPreview)
+            {
+                pd.preview.attr('src',s.uploadFolder+filename);
+                pd.preview.show();
+            }
+            
+            if(s.showDownload) {
+                pd.download.show();
+                pd.download.click(function () {
+                    if(s.downloadCallback) s.downloadCallback.call(obj, [filename]);
+                });
+            }
+            pd.del.show();
+
+            pd.del.click(function () {
+                pd.statusbar.hide().remove();
+                var arr = [filename];
+                if(s.deleteCallback) s.deleteCallback.call(this, arr, pd);
+                obj.selectedFiles -= 1;
+                updateFileCounter(s, obj);
+            });
+
+        }
+
+        this.getResponses = function () {
+            return this.responses;
+        }
+        var checking = false;
+
+        function checkPendingUploads() {
+            if(s.afterUploadAll && !checking) {
+                checking = true;
+                (function checkPending() {
+                    if(obj.sCounter != 0 && (obj.sCounter + obj.fCounter == obj.tCounter)) {
+                        s.afterUploadAll(obj);
+                        checking = false;
+                    } else window.setTimeout(checkPending, 100);
+                })();
+            }
+
+        }
+
+        function setDragDropHandlers(obj, s, ddObj) {
+            ddObj.on('dragenter', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                $(this).addClass(s.dragDropHoverClass);
+            });
+            ddObj.on('dragover', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                var that = $(this);
+                if (that.hasClass(s.dragDropContainerClass) && !that.hasClass(s.dragDropHoverClass)) {
+                    that.addClass(s.dragDropHoverClass);
+                }
+            });
+            ddObj.on('drop', function (e) {
+                e.preventDefault();
+                $(this).removeClass(s.dragDropHoverClass);
+                obj.errorLog.html("");
+                var files = e.originalEvent.dataTransfer.files;
+                if(!s.multiple && files.length > 1) {
+                    if(s.showError) $("<div class='" + s.errorClass + "'>" + s.multiDragErrorStr + "</div>").appendTo(obj.errorLog);
+                    return;
+                }
+                if(s.onSelect(files) == false) return;
+                serializeAndUploadFiles(s, obj, files);
+            });
+            ddObj.on('dragleave', function (e) {
+                $(this).removeClass(s.dragDropHoverClass);
+            });
+
+            $(document).on('dragenter', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            });
+            $(document).on('dragover', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                var that = $(this);
+                if (!that.hasClass(s.dragDropContainerClass)) {
+                    that.removeClass(s.dragDropHoverClass);
+                }
+            });
+            $(document).on('drop', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                $(this).removeClass(s.dragDropHoverClass);
+            });
+
+        }
+
+        function getSizeStr(size) {
+            var sizeStr = "";
+            var sizeKB = size / 1024;
+            if(parseInt(sizeKB) > 1024) {
+                var sizeMB = sizeKB / 1024;
+                sizeStr = sizeMB.toFixed(2) + " MB";
+            } else {
+                sizeStr = sizeKB.toFixed(2) + " KB";
+            }
+            return sizeStr;
+        }
+
+        function serializeData(extraData) {
+            var serialized = [];
+            if(jQuery.type(extraData) == "string") {
+                serialized = extraData.split('&');
+            } else {
+                serialized = $.param(extraData).split('&');
+            }
+            var len = serialized.length;
+            var result = [];
+            var i, part;
+            for(i = 0; i < len; i++) {
+                serialized[i] = serialized[i].replace(/\+/g, ' ');
+                part = serialized[i].split('=');
+                result.push([decodeURIComponent(part[0]), decodeURIComponent(part[1])]);
+            }
+            return result;
+        }
+
+        function serializeAndUploadFiles(s, obj, files) {
+            for(var i = 0; i < files.length; i++) {
+                if(!isFileTypeAllowed(obj, s, files[i].name)) {
+                    if(s.showError) $("<div class='" + s.errorClass + "'><b>" + files[i].name + "</b> " + s.extErrorStr + s.allowedTypes + "</div>").appendTo(obj.errorLog);
+                    continue;
+                }
+                if(!s.allowDuplicates && isFileDuplicate(obj, files[i].name)) {
+                    if(s.showError) $("<div class='" + s.errorClass + "'><b>" + files[i].name + "</b> " + s.duplicateErrorStr + "</div>").appendTo(obj.errorLog);
+                    continue;
+                }
+                if(s.maxFileSize != -1 && files[i].size > s.maxFileSize) {
+                    if(s.showError) $("<div class='" + s.errorClass + "'><b>" + files[i].name + "</b> " + s.sizeErrorStr + getSizeStr(s.maxFileSize) + "</div>").appendTo(
+                        obj.errorLog);
+                    continue;
+                }
+                if(s.maxFileCount != -1 && obj.selectedFiles >= s.maxFileCount) {
+                    if(s.showError) $("<div class='" + s.errorClass + "'><b>" + files[i].name + "</b> " + s.maxFileCountErrorStr + s.maxFileCount + "</div>").appendTo(
+                        obj.errorLog);
+                    continue;
+                }
+                obj.selectedFiles++;
+                obj.existingFileNames.push(files[i].name);
+                var ts = s;
+                var fd = new FormData();
+                var fileName = s.fileName.replace("[]", "");
+                fd.append(fileName, files[i]);
+                var extraData = s.formData;
+                if(extraData) {
+                    var sData = serializeData(extraData);
+                    for(var j = 0; j < sData.length; j++) {
+                        if(sData[j]) {
+                            fd.append(sData[j][0], sData[j][1]);
+                        }
+                    }
+                }
+                ts.fileData = fd;
+
+                var pd = new createProgressDiv(obj, s);
+                var fileNameStr = "";
+                if(s.showFileCounter) fileNameStr = obj.fileCounter + s.fileCounterStyle + files[i].name
+                else fileNameStr = files[i].name;
+
+                pd.filename.html(fileNameStr);
+                var form = $("<form style='display:block; position:absolute;left: 150px;' class='" + obj.formGroup + "' method='" + s.method + "' action='" +
+                    s.url + "' enctype='" + s.enctype + "'></form>");
+                form.appendTo('body');
+                var fileArray = [];
+                fileArray.push(files[i].name);
+                ajaxFormSubmit(form, ts, pd, fileArray, obj, files[i]);
+                obj.fileCounter++;
+            }
+        }
+
+        function isFileTypeAllowed(obj, s, fileName) {
+            var fileExtensions = s.allowedTypes.toLowerCase().split(",");
+            var ext = fileName.split('.').pop().toLowerCase();
+            if(s.allowedTypes != "*" && jQuery.inArray(ext, fileExtensions) < 0) {
+                return false;
+            }
+            return true;
+        }
+
+        function isFileDuplicate(obj, filename) {
+            var duplicate = false;
+            if (obj.existingFileNames.length) {
+                for (var x=0; x<obj.existingFileNames.length; x++) {
+                    if (obj.existingFileNames[x] == filename
+                        || s.duplicateStrict && obj.existingFileNames[x].toLowerCase() == filename.toLowerCase()
+                    ) {
+                        duplicate = true;
+                    }
+                }
+            }
+            return duplicate;
+        }
+
+        function removeExistingFileName(obj, fileArr) {
+            if (obj.existingFileNames.length) {
+                for (var x=0; x<fileArr.length; x++) {
+                    var pos = obj.existingFileNames.indexOf(fileArr[x]);
+                    if (pos != -1) {
+                        obj.existingFileNames.splice(pos, 1);
+                    }
+                }
+            }
+        }
+
+        function getSrcToPreview(file, obj) {
+            if(file) {
+                obj.show();
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    obj.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateFileCounter(s, obj) {
+            if(s.showFileCounter) {
+                var count = $(".ajax-file-upload-filename").length;
+                obj.fileCounter = count + 1;
+                $(".ajax-file-upload-filename").each(function (i, items) {
+                    var arr = $(this).html().split(s.fileCounterStyle);
+                    var fileNum = parseInt(arr[0]) - 1; //decrement;
+                    var name = count + s.fileCounterStyle + arr[1];
+                    $(this).html(name);
+                    count--;
+                });
+            }
+        }
+
+        function createCutomInputFile(obj, group, s, uploadLabel) {
+
+            var fileUploadId = "ajax-upload-id-" + (new Date().getTime());
+
+            var form = $("<form method='" + s.method + "' action='" + s.url + "' enctype='" + s.enctype + "'></form>");
+            var fileInputStr = "<input type='file' id='" + fileUploadId + "' name='" + s.fileName + "' accept='" + s.acceptFiles + "'/>";
+            if(s.multiple) {
+                if(s.fileName.indexOf("[]") != s.fileName.length - 2) // if it does not endwith
+                {
+                    s.fileName += "[]";
+                }
+                fileInputStr = "<input type='file' id='" + fileUploadId + "' name='" + s.fileName + "' accept='" + s.acceptFiles + "' multiple/>";
+            }
+            var fileInput = $(fileInputStr).appendTo(form);
+
+            fileInput.change(function () {
+
+                obj.errorLog.html("");
+                var fileExtensions = s.allowedTypes.toLowerCase().split(",");
+                var fileArray = [];
+                if(this.files) //support reading files
+                {
+                    for(i = 0; i < this.files.length; i++) {
+                        fileArray.push(this.files[i].name);
+                    }
+
+                    if(s.onSelect(this.files) == false) return;
+                } else {
+                    var filenameStr = $(this).val();
+                    var flist = [];
+                    fileArray.push(filenameStr);
+                    if(!isFileTypeAllowed(obj, s, filenameStr)) {
+                        if(s.showError) $("<div class='" + s.errorClass + "'><b>" + filenameStr + "</b> " + s.extErrorStr + s.allowedTypes + "</div>").appendTo(
+                            obj.errorLog);
+                        return;
+                    }
+                    //fallback for browser without FileAPI
+                    flist.push({
+                        name: filenameStr,
+                        size: 'NA'
+                    });
+                    if(s.onSelect(flist) == false) return;
+
+                }
+                updateFileCounter(s, obj);
+
+                uploadLabel.unbind("click");
+                form.hide();
+                createCutomInputFile(obj, group, s, uploadLabel);
+
+                form.addClass(group);
+                if(feature.fileapi && feature.formdata) //use HTML5 support and split file submission
+                {
+                    form.removeClass(group); //Stop Submitting when.
+                    var files = this.files;
+                    serializeAndUploadFiles(s, obj, files);
+                } else {
+                    var fileList = "";
+                    for(var i = 0; i < fileArray.length; i++) {
+                        if(s.showFileCounter) fileList += obj.fileCounter + s.fileCounterStyle + fileArray[i] + "<br>";
+                        else fileList += fileArray[i] + "<br>";;
+                        obj.fileCounter++;
+
+                    }
+                    if(s.maxFileCount != -1 && (obj.selectedFiles + fileArray.length) > s.maxFileCount) {
+                        if(s.showError) $("<div class='" + s.errorClass + "'><b>" + fileList + "</b> " + s.maxFileCountErrorStr + s.maxFileCount + "</div>").appendTo(
+                            obj.errorLog);
+                        return;
+                    }
+                    obj.selectedFiles += fileArray.length;
+
+                    var pd = new createProgressDiv(obj, s);
+                    pd.filename.html(fileList);
+                    ajaxFormSubmit(form, s, pd, fileArray, obj, null);
+                }
+
+
+
+            });
+
+            if(s.nestedForms) {
+                form.css({
+                    'margin': 0,
+                    'padding': 0
+                });
+                uploadLabel.css({
+                    position: 'relative',
+                    overflow: 'hidden',
+                    cursor: 'default'
+                });
+                fileInput.css({
+                    position: 'absolute',
+                    'cursor': 'pointer',
+                    'top': '0px',
+                    'width': '100%',
+                    'height': '100%',
+                    'left': '0px',
+                    'z-index': '100',
+                    'opacity': '0.0',
+                    'filter': 'alpha(opacity=0)',
+                    '-ms-filter': "alpha(opacity=0)",
+                    '-khtml-opacity': '0.0',
+                    '-moz-opacity': '0.0'
+                });
+                form.appendTo(uploadLabel);
+
+            } else {
+                form.appendTo($('body'));
+                form.css({
+                    margin: 0,
+                    padding: 0,
+                    display: 'block',
+                    position: 'absolute',
+                    left: '-250px'
+                });
+                if(navigator.appVersion.indexOf("MSIE ") != -1) //IE Browser
+                {
+                    uploadLabel.attr('for', fileUploadId);
+                } else {
+                    uploadLabel.click(function () {
+                        fileInput.click();
+                    });
+                }
+            }
+        }
+
+
+        function createProgressDiv(obj, s) {
+            this.statusbar = $("<div class='ajax-file-upload-statusbar'></div>").width(s.statusBarWidth);
+            this.preview = $("<img class='ajax-file-upload-preview' />").width(s.previewWidth).height(s.previewHeight).appendTo(this.statusbar).hide();
+            this.filename = $("<div class='ajax-file-upload-filename'></div>").appendTo(this.statusbar);
+            this.progressDiv = $("<div class='ajax-file-upload-progress'>").appendTo(this.statusbar).hide();
+            this.progressbar = $("<div class='ajax-file-upload-bar " + obj.formGroup + "'></div>").appendTo(this.progressDiv);
+            this.abort = $("<div class='ajax-file-upload-red " + s.abortButtonClass + " " + obj.formGroup + "'>" + s.abortStr + "</div>").appendTo(this.statusbar)
+                .hide();
+            this.cancel = $("<div class='ajax-file-upload-red " + s.cancelButtonClass + " " + obj.formGroup + "'>" + s.cancelStr + "</div>").appendTo(this.statusbar)
+                .hide();
+            this.done = $("<div class='ajax-file-upload-green'>" + s.doneStr + "</div>").appendTo(this.statusbar).hide();
+            this.download = $("<div class='ajax-file-upload-green'>" + s.downloadStr + "</div>").appendTo(this.statusbar).hide();
+            this.del = $("<div class='ajax-file-upload-red'>" + s.deletelStr + "</div>").appendTo(this.statusbar).hide();
+            if(s.showQueueDiv)
+                $("#" + s.showQueueDiv).append(this.statusbar);
+            else
+                obj.errorLog.after(this.statusbar);
+            return this;
+        }
+
+
+        function ajaxFormSubmit(form, s, pd, fileArray, obj, file) {
+            var currentXHR = null;
+            var options = {
+                cache: false,
+                contentType: false,
+                processData: false,
+                forceSync: false,
+                type: s.method,
+                data: s.formData,
+                formData: s.fileData,
+                dataType: s.returnType,
+                beforeSubmit: function (formData, $form, options) {
+                    if(s.onSubmit.call(this, fileArray) != false) {
+                        var dynData = s.dynamicFormData();
+                        if(dynData) {
+                            var sData = serializeData(dynData);
+                            if(sData) {
+                                for(var j = 0; j < sData.length; j++) {
+                                    if(sData[j]) {
+                                        if(s.fileData != undefined) options.formData.append(sData[j][0], sData[j][1]);
+                                        else options.data[sData[j][0]] = sData[j][1];
+                                    }
+                                }
+                            }
+                        }
+                        obj.tCounter += fileArray.length;
+                        //window.setTimeout(checkPendingUploads, 1000); //not so critical
+                        checkPendingUploads();
+                        return true;
+                    }
+                    pd.statusbar.append("<div class='" + s.errorClass + "'>" + s.uploadErrorStr + "</div>");
+                    pd.cancel.show()
+                    form.remove();
+                    pd.cancel.click(function () {
+                        removeExistingFileName(obj, fileArray);
+                        pd.statusbar.remove();
+                        s.onCancel.call(obj, fileArray, pd);
+                        obj.selectedFiles -= fileArray.length; //reduce selected File count
+                        updateFileCounter(s, obj);
+                    });
+                    return false;
+                },
+                beforeSend: function (xhr, o) {
+
+                    pd.progressDiv.show();
+                    pd.cancel.hide();
+                    pd.done.hide();
+                    if(s.showAbort) {
+                        pd.abort.show();
+                        pd.abort.click(function () {
+                            removeExistingFileName(obj, fileArray);
+                            xhr.abort();
+                            obj.selectedFiles -= fileArray.length; //reduce selected File count
+                        });
+                    }
+                    if(!feature.formdata) //For iframe based push
+                    {
+                        pd.progressbar.width('5%');
+                    } else pd.progressbar.width('1%'); //Fix for small files
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    //Fix for smaller file uploads in MAC
+                    if(percentComplete > 98) percentComplete = 98;
+
+                    var percentVal = percentComplete + '%';
+                    if(percentComplete > 1) pd.progressbar.width(percentVal)
+                    if(s.showProgress) {
+                        pd.progressbar.html(percentVal);
+                        pd.progressbar.css('text-align', 'center');
+                    }
+
+                },
+                success: function (data, message, xhr) {
+
+                    //For custom errors.
+                    if(s.returnType == "json" && $.type(data) == "object" && data.hasOwnProperty(s.customErrorKeyStr)) {
+                        pd.abort.hide();
+                        var msg = data[s.customErrorKeyStr];
+                        s.onError.call(this, fileArray, 200, msg, pd);
+                        if(s.showStatusAfterError) {
+                            pd.progressDiv.hide();
+                            pd.statusbar.append("<span class='" + s.errorClass + "'>ERROR: " + msg + "</span>");
+                        } else {
+                            pd.statusbar.hide();
+                            pd.statusbar.remove();
+                        }
+                        obj.selectedFiles -= fileArray.length; //reduce selected File count
+                        form.remove();
+                        obj.fCounter += fileArray.length;
+                        return;
+                    }
+                    obj.responses.push(data);
+                    pd.progressbar.width('100%')
+                    if(s.showProgress) {
+                        pd.progressbar.html('100%');
+                        pd.progressbar.css('text-align', 'center');
+                    }
+
+                    pd.abort.hide();
+                    s.onSuccess.call(this, fileArray, data, xhr, pd);
+                    if(s.showStatusAfterSuccess) {
+                        if(s.showDone) {
+                            pd.done.show();
+                            pd.done.click(function () {
+                                pd.statusbar.hide("slow");
+                                pd.statusbar.remove();
+                            });
+                        } else {
+                            pd.done.hide();
+                        }
+                        if(s.showDelete) {
+                            pd.del.show();
+                            pd.del.click(function () {
+                                pd.statusbar.hide().remove();
+                                if(s.deleteCallback) s.deleteCallback.call(this, data, pd);
+                                obj.selectedFiles -= fileArray.length; //reduce selected File count
+                                updateFileCounter(s, obj);
+
+                            });
+                        } else {
+                            pd.del.hide();
+                        }
+                    } else {
+                        pd.statusbar.hide("slow");
+                        pd.statusbar.remove();
+
+                    }
+                    if(s.showDownload) {
+                        pd.download.show();
+                        pd.download.click(function () {
+                            if(s.downloadCallback) s.downloadCallback(data);
+                        });
+                    }
+                    form.remove();
+                    obj.sCounter += fileArray.length;
+                },
+                error: function (xhr, status, errMsg) {
+                    pd.abort.hide();
+                    if(xhr.statusText == "abort") //we aborted it
+                    {
+                        pd.statusbar.hide("slow").remove();
+                        updateFileCounter(s, obj);
+
+                    } else {
+                        s.onError.call(this, fileArray, status, errMsg, pd);
+                        if(s.showStatusAfterError) {
+                            pd.progressDiv.hide();
+                            pd.statusbar.append("<span class='" + s.errorClass + "'>ERROR: " + errMsg + "</span>");
+                        } else {
+                            pd.statusbar.hide();
+                            pd.statusbar.remove();
+                        }
+                        obj.selectedFiles -= fileArray.length; //reduce selected File count
+                    }
+
+                    form.remove();
+                    obj.fCounter += fileArray.length;
+
+                }
+            };
+
+            if(s.showPreview && file != null) {
+                if(file.type.toLowerCase().split("/").shift() == "image") getSrcToPreview(file, pd.preview);
+            }
+
+            if(s.autoSubmit) {
+                form.ajaxSubmit(options);
+            } else {
+                if(s.showCancel) {
+                    pd.cancel.show();
+                    pd.cancel.click(function () {
+                        removeExistingFileName(obj, fileArray);
+                        form.remove();
+                        pd.statusbar.remove();
+                        s.onCancel.call(obj, fileArray, pd);
+                        obj.selectedFiles -= fileArray.length; //reduce selected File count
+                        updateFileCounter(s, obj);
+                    });
+                }
+                form.ajaxForm(options);
+
+            }
+
+        }
+        return this;
+
+    }
+}(jQuery));
+
+$(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-XSRF-Token': $('meta[name="csrf"]').attr('content')
+        }
+    });
+    $("img").unveil(200);
+
+    $("#q").selectize({
+        valueField: 'url',
+        labelField: 'name',
+        searchField: ['name'],
+        maxOptions: 10,
+        options: [],
+        create: false,
+        render: {
+            option: function(item, escape) {
+                return '<div>' +escape(item.name)+'</div>';
+            }
+        },
+        optgroups: [
+            {value: 'tag', label: 'Tag'},
+            {value: 'exam', label: 'Đề thi'}
+        ],
+        optgroupField: 'group',
+        optgroupOrder: ['exam','tag'],
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '/api/v2/search',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    q: query
+                },
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res.data);
+                }
+            });
+        },
+        onChange: function(){
+            window.location = this.items[0];
+        }
+    });
+});
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "progressBar": false,
+    "positionClass": "toast-bottom-right",
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+};
+
+
+
+
+function sticky()
+{
+    $("#quiz-sidebar, #mainRow").stick_in_parent();
+}
+function resize_do(){
+    width=parseInt($(window).width());
+    scrollTop=parseInt($(window).scrollTop());
+    if(width<=767){
+        if(scrollTop>=100){
+            $('#quiz-sidebar').addClass('quiz-side-fixed');
+        }
+        else{
+            $('#quiz-sidebar').removeClass('quiz-side-fixed');
+        }
+    }
+}
+
+function validationError(response)
+{
+    $.each(response, function(key, object) {
+        object.forEach(function(message)
+        {
+            toastr['warning'](message);
+        });
+    });
+}
+function quizDoInt()
+{
+    resize_do();
+    $(window).on('resize', (function(){
+        resize_do();
+    }))
+    .on('scroll', (function(){
+        resize_do();
+    }));
+    $('#btnSheet').on('click', function(){
+        $('.quiz-sidebar-section').slideToggle();
+    });
+    $('.icontest-option').on('click', function(event){
+        event.preventDefault();
+        toastr.info('Hãy nhấn bắt đầu để làm bài');
+    });
+
+    $('#btnSubmit').on('click',function(){
+        submitTest();
+    });
+
+    $('#btnStart').on('click',function(){
+
+        $('.icontest-option').off('click');
+        $('#quiz-content').removeClass('hide');
+        $('#quiz-rule').hide();
+
+        $('#btnSubmit').show();
+        $('#btnStart').hide();
+
+        sticky();
+
+        toastr.info('Bắt đầu làm bài thôi nào ^_^');
+        choiceDo();
+        setCounter();
+    })
+}
+function setCounter(){
+    counter = setInterval(timer, 1000);
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: '/api/v2/tests/'+testId+'/start',
+        success: function(data){
+            userHistoryId = data.user_history_id;
+        }
+
+    });
+
+}
+function timer() {
+    count = count - 1;
+    if (count == -1) {
+        clearInterval(counter);
+        sendSubmitTest();
+        return;
+    }
+
+    var seconds = count % 60;
+    var minutes = Math.floor(count / 60);
+    var hours = Math.floor(minutes / 60);
+    minutes %= 60;
+    hours %= 60;
+
+    $('.timecou').html(hours + ":" + minutes + ":" + seconds);
+}
+
+function submitTest(){
+    swal({
+            title: "Bạn có muốn nộp bài chứ?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Có!",
+            closeOnConfirm: false
+        },
+        function(){
+            sendSubmitTest();
+        });
+}
+function sendSubmitTest(){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        beforeSend: function(){
+            $("#btnSubmit").button('loading');
+        },
+        url: $('#frmTest').attr('action'),
+        data: {
+            'user_history_id': userHistoryId,
+            'test_id': testId,
+            'answers': gatherAnswer()
+        },
+        error: function(data){
+            console.log(data.responseText);
+            toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+        },
+        success: function(data){
+
+            swal({
+                    title: "Bạn làm đúng "+data.score+'/'+data.totalQuestion+' câu hỏi',
+                    text: "Bạn có muốn xem lại kết quả chi tiết chứ?",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-info",
+                    confirmButtonText: "Có chứ!",
+                    cancelButtonText: "Không, để làm lại!",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        location.href = data.url;
+                    } else {
+                        location.href = location.href;
+                    }
+                });
+        }
+    });
+}
+function gatherAnswer(){
+    var answers= [];
+    $('.questionRow').each(function(){
+        questionId = $(this).data('question-id');
+        questionOrder = $(this).data('question-order');
+        givenAnswer = $('input[id^="answer_'+questionOrder+'_"][value=1]').attr('name');
+        if (!givenAnswer)
+        {
+            givenAnswer = 0;
+        } else {
+            // Cut the final char (givenAnswer)
+            givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
+        }
+//            answer = {
+//                'qID' : questionId,
+//                'a' : givenAnswer
+//            };
+        answers.push(givenAnswer);
+    });
+    return answers;
+}
+function choiceDo(){
+    $('.icontest-option').on('click', function(event){
+        event.preventDefault();
+        questionId = $(this).data('question-id');
+        questionRow = $(this).parent().parent();
+//            Add class answered to row (for counting)
+        questionRow.alterClass('unanswered','answered');
+        questionOrder = questionRow.data('question-order');
+
+//                Alter all answer in the same question to default value
+        var questionLink = $('a[id^="a_'+questionOrder+'_"]');
+        var questionInput = $('input[id^="answer_'+questionOrder+'_"]');
+//            Remove active class for answers in the same row
+        questionLink.each(function(){
+            $(this).alterClass('op-*','op-'+$(this).html());
+        });
+//            Reset input for answers in the same row
+        questionInput.each(function(){
+            $(this).val(0);
+        });
+//                Add class and value to current click element
+        $(this).alterClass('op-*', 'op-choice');
+        $(this).siblings().val(1);
+
+        updateAnswerCount();
+    });
+}
+function updateAnswerCount(){
+    answered = $('tr.answered').length;
+
+    $('#answeredCount').html(answered);
+    $('.userAnswerCount').attr('value',answered);
+
+    totalAnswer = parseInt($('#totalAnswer').html());
+//        Only submit when answered half of questions
+    if (answered >= (totalAnswer/2))
+        $('#btnSubmit').attr('disabled',null);
+}
+(function ( $ ) {
+    $.fn.quiz = function() {
+        data = global.data;
+
+        switch(data.type)
+        {
+            case 'edit': initEdit(); break;
+            case 'create': initCreate(); break;
+        }
+    };
+
+    var $ele = {
+        name: $('#input-name'),
+        content: $('#content'),
+        description : $('#input-description'),
+        begin : $('#begin'),
+        tag : $('#select-tags'),
+        tabContent : $('#tab-content a'),
+        adjustTotal : $('#adjustTotal'),
+        answerTable : $("#answer"),
+        btnCreateSubmit : $('#btnCreateSubmit')
+    };
+
+    var quiz= {
+        postUrl : '/api/v2/tests',
+        postAjaxMethod : 'POST',
+        answerArray : {},
+        preventClose: true
+    };
+
+    function initCreate()
+    {
+        setupQuestion();
+        buttonListener();
+        iconListener();
+
+        $('#frmTest').on('submit', function(event)
+        {
+            event.preventDefault();
+            post();
+        });
+        sticky();
+        editor();
+        uploader();
+        
+        preventClosing();
+
+    }
+
+    function initEdit()
+    {
+        test = global.data.test;
+
+        $ele.name.val(test.name);
+        $ele.description.val(test.description);
+        $ele.content.html(test.content);
+        $ele.begin.html(test.begin);
+
+        if(test.file)
+        {
+            $ele.tabContent.last().tab('show');
+            embedPdf(test.file);
+        }
+
+        if (test.tags)
+            $ele.tag.val(test.tags.join());
+        $ele.adjustTotal.hide();
+
+        quiz.postAjaxMethod = 'PUT';
+        quiz.postUrl = '/api/v2/tests/'+test.id;
+
+        initCreate();
+    }
+
+
+    function post()
+    {
+        data = validator();
+        if (!data) return;
+
+        $.ajax({
+            type: quiz.postAjaxMethod,
+            dataType: "json",
+            url: quiz.postUrl,
+            data: data,
+            beforesend: function(){
+                $ele.btnCreateSubmit.button('loading');
+            },
+            error: function (data) {
+                toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+                data = $.parseJSON(data.responseText);
+                validationError(data);
+                debug(data);
+                $ele.btnCreateSubmit.button('reset');
+            },
+            success: function (data) {
+                successPostMessage(data);
+            }
+        });
+    }
+    function successPostMessage(data)
+    {
+        swal({
+                title: "Đã gửi đề thi thành công",
+                text: "Làm gì tiếp theo?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonClass: "btn-info",
+                confirmButtonText: "Xem đề thi",
+                cancelButtonText: "Chỉnh sửa",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                quiz.preventClose = false;
+                if (isConfirm) {
+                    location.href = data.url;
+                } else {
+                    location.href = data.editUrl;
+                }
+            });
+    }
+
+    function validator()
+    {
+        if (!filledAllAnswer()) return false;
+        name = $('#input-name').val();
+        description =  $('#input-description').val();
+        content =  $("#content").editable("getHTML");
+        begin = $('#begin').val();
+        begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
+
+        tags = $('#select-tags').val();
+        time = $('#select-time').val();
+        is_file = 0;
+        file_id = null;
+
+        if (!name || name.length <6)
+        {
+            toastr['warning']('Tên đề thi có độ dài tối thiểu là 6');
+            return false;
+        }
+
+        if (description && description.length <6)
+        {
+            toastr['warning']('Mô tả có độ dài tối thiểu là 6');
+            return false;
+        }
+        // Detect upload tab to create a pdf-based exam
+        pdf_upload = $('a[role="tab"][aria-expanded="true"]').attr('href');
+        if(pdf_upload == '#upload')
+        {
+            if (!global.pdf_file_id)
+            {
+                toastr['warning']('Bạn chưa upload file pdf');
+                return false;
+            }
+            is_file = 1;
+            file_id = global.pdf_file_id;
+        }
+
+        if (!content)
+        {
+            toastr['warning']('Bạn chưa nhập nội dung đề thi');
+            return false;
+        }
+
+        return {
+            name: name,
+            description: description,
+            content: content,
+            begin: begin,
+            tags: tags,
+            thoigian: time,
+            is_file: is_file,
+            file_id: file_id,
+            questions : gatherQuestion()
+        }
+    }
+
+    function gatherQuestion(){
+        var questions= [];
+        $('.ansRow').each(function(index){
+            questionOrder = $(this).data('question-order');
+            givenAnswer = $('input[id^="answer_'+questionOrder+'_"][value=1]').attr('name');
+            givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
+            question = {
+                'right_answer' : givenAnswer.toUpperCase(),
+                'content' : (quiz.answerArray[index+1]) ? quiz.answerArray[index+1] : '',
+            };
+            questions.push(question);
+        });
+        return questions;
+    }
+
+    function iconListener()
+    {
+        choiceDo();
+        answerModal();
+        sticky();
+    }
+    function buttonListener()
+    {
+        $('#btn-add').on('click', function(event)
+        {
+            event.preventDefault();
+            addQuestion($('#total_add').val());
+        });
+        $('#btn-remove').on('click', function(event)
+        {
+            event.preventDefault();
+            removeQuestion($('#total_remove').val());
+        });
+        $('#begin').on('keyup', function()
+        {
+            adjustBegin();
+        })
+
+    }
+
+    function setupQuestion()
+    {
+        if (global.data.test)
+            addQuestion(global.data.test.questionsCount,global.data.test.questions);
+        else
+            addQuestion(5,false);
+    }
+
+    function addQuestion(value,data)
+    {
+        for(i=1; i<=value; i++)
+        {
+            qIndex = $('.ansRow:last').data('question-order');
+            qIndex = (qIndex) ? qIndex : 0;
+
+            dataNode = (data) ? data[i-1] : false;
+            addNewRow(parseInt(qIndex)+1,dataNode);
+        }
+        iconListener();
+        totalQuestion();
+        adjustBegin();
+    }
+
+    function removeQuestion(value)
+    {
+        if (totalQuestion() - parseInt(value) <1)
+        {
+            toastr['warning']('Tổng số câu hỏi không được nhỏ hơn 1');
+            return false;
+        }
+        qIndex = $('.ansRow:last').data('question-order');
+        toIndex = parseInt(qIndex)-parseInt(value);
+
+        for(i=qIndex; i>toIndex; i--)
+        {
+            $('tr[data-question-order="'+i+'"]').remove();
+        }
+        totalQuestion();
+    }
+
+    function addNewRow(index, data)
+    {
+        selectedAnswer = false;
+        content = false;
+        answerd = ''
+        if (data)
+        {
+            selectedAnswer = data.answer.toLowerCase();
+            content = data.content;
+            answerd = ' answered';
+            if(content)
+                quiz.answerArray[index] = content;
+        }
+        row = '<tr class="ansRow'+answerd+'" data-question-order="'+index+'">' +
+        '<td align="center" class="questionNumber">'+index+'.</td>';
+
+        ['a','b','c','d','e'].forEach(function(option)
+            {
+                opchoice = (selectedAnswer == option) ? ' op-choice' : '';
+                value = (selectedAnswer == option) ? 1 : 0;
+                hinted = (content) ? ' hinted' : '';
+                row  += '<td><a id="a_'+index+'_'+option+'" rel="1" ' +
+                'class="icontest-option op-'+option+opchoice+'"' +
+                'href="#"">' +option+ '</a>'+
+                '<input type="hidden" id="answer_'+index+'_'+option+'" name="answer_'+index+'_'+option+'" value="'+value+'">'+
+                '</td>';
+            }
+        );
+        row += '<td><a href="javscript::void(0)" class="iconHint"><i class="zn-icon icon-hint'+hinted+'"></i></a></td></tr>';
+
+        $('#answer>tbody').append(row);
+    }
+
+    function adjustBegin()
+    {
+        val = $('#begin').val();
+        val = (parseInt(val) >= 1) ? parseInt(val) : 1;
+        $('.questionNumber').each(function(index)
+        {
+            $(this).html(parseInt(index)+val+'.');
+        });
+    }
+    function totalQuestion()
+    {
+        total = $('.ansRow').length;
+        $('#total').html(total);
+
+        return total;
+    }
+    function filledAllAnswer()
+    {
+        unanswered = $('.ansRow:not(".answered")').length;
+        if (unanswered != 0)
+            toastr['warning']('Bạn chưa điền đầy đủ đáp án cho các câu hỏi');
+        return unanswered == 0;
+    }
+
+    function answerModal()
+    {
+        $('.icon-hint').unbind('click');
+        $('.icon-hint')
+            .on('click', function()
+            {
+                qIndex = $(this).closest('tr').data('question-order');
+
+                hint = $('#answerModalArea');
+                icon = $(this);
+                currentValue = (quiz.answerArray[qIndex]) ? quiz.answerArray[qIndex] : '';
+                hint.val(currentValue);
+
+                questionNumber = parseInt(qIndex) + parseInt($ele.begin.val()) -1;
+                $('#answerModal .modal-title').html('Gợi ý trả lời cho câu '+ questionNumber);
+
+                quiz.preventClose = false;
+
+                $('#answerModal').modal()
+                    .on('hide.bs.modal', function()
+                    {
+                        quiz.preventClose = true;
+                        quiz.answerArray[qIndex] = hint.val();
+                        icon.removeClass('hinted');
+                        if (hint.val())
+                            icon.addClass('hinted');
+                    });
+            });
+    }
+
+    function uploader()
+    {
+        $("#uploadarea").uploadFile({
+            url:"/api/v2/files",
+            maxFileSize: 10*1024*1024,   //Bytes
+            allowedTypes: 'pdf',
+            showStatusAfterSuccess: false,
+            formData: { type: 'json' },
+            dragDropStr: "<span><b>Kéo và thả file vào đây để upload</b></span>",
+            sizeErrorStr: "quá lớn. Dung lượng file tối đa là ",
+            uploadErrorStr: "Đã có lỗi xảy ra trong quá trình upload",
+            uploadButtonClass:"btn btn-info",
+            onSuccess:function(files,data,xhr)
+            {
+                embedPdf(data);
+            }
+        });
+    }
+
+    function embedPdf(data)
+    {
+        $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.link+'"></iframe>');
+        global.pdf_file_id = data.id;
+    }
+
+    function editor()
+    {
+        $('#content').editable({
+            inlineMode: true,
+            alwaysVisible: true,
+            pasteImage: true,
+            pastedImagesUploadURL: "/api/v2/files/paste",
+            maxImageSize: 1024 * 1024 * 3,
+            noFollow: true,
+            imageUploadURL: '/api/v2/files',
+            imageUploadParams: {
+                type: "json"
+            },
+            headers: {
+                'X-XSRF-Token' : $('meta[name="csrf"]').attr('content')
+            }
+
+        });
+        //$('a[href*="froala.com"]').closest('div').hide();
+        $("#select-tags").selectize({
+            plugins: ['remove_button'],
+            options: global.data.tags,
+            valueField: 'text',
+            labelField: 'text',
+            create: function(input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            },
+            maxItems: 3,
+            render: {
+                option: function(item, escape) {
+                    var name = item.text;
+                    var count = item.count;
+
+                    return '<div><span class="post-tag">' + name + '</span>'
+                    + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
+                    '<span class="item-multiplier-count">' + count +
+                    '</span></span></div>';
+                }
+            }
+        });
+    }
+
+    function preventClosing()
+    {
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+            if(quiz.preventClose){
+                // For IE and Firefox prior to version 4
+                if (e) {
+                    e.returnValue = 'Bạn có chắc chắn muốn thoát ? ';
+                }
+                // For Safari
+                return 'Bạn có chắc chắn muốn thoát ? ';
+            }
+        };
+    }
+
+    function debug(data)
+    {
+        window.console.log(data);
+    }
+
+}( jQuery ));

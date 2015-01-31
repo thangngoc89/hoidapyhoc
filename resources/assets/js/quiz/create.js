@@ -18,7 +18,7 @@
         tabContent : $('#tab-content a'),
         adjustTotal : $('#adjustTotal'),
         answerTable : $("#answer"),
-        btnCreateSubmit : $('#btnCreateSubmit'),
+        btnCreateSubmit : $('#btnCreateSubmit')
     };
 
     var quiz= {
@@ -43,7 +43,6 @@
         editor();
         uploader();
         
-
         preventClosing();
 
     }
@@ -77,45 +76,49 @@
     function post()
     {
         data = validator();
-        if (data) {
-            $.ajax({
-                type: quiz.postAjaxMethod,
-                dataType: "json",
-                url: quiz.postUrl,
-                data: data,
-                beforesend: function(){
-                    $ele.btnCreateSubmit.button('loading');
-                },
-                error: function (data) {
-                    toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
-                    data = $.parseJSON(data.responseText);
-                    validationError(data);
-                    debug(data);
-                    $ele.btnCreateSubmit.button('reset');
-                },
-                success: function (data) {
-                    swal({
-                            title: "Đã gửi đề thi thành công",
-                            text: "Làm gì tiếp theo?",
-                            type: "success",
-                            showCancelButton: true,
-                            confirmButtonClass: "btn-info",
-                            confirmButtonText: "Xem đề thi",
-                            cancelButtonText: "Chỉnh sửa",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        },
-                        function (isConfirm) {
-                            quiz.preventClose = false;
-                            if (isConfirm) {
-                                location.href = data.url;
-                            } else {
-                                location.href = data.editUrl;
-                            }
-                        });
+        if (!data) return;
+
+        $.ajax({
+            type: quiz.postAjaxMethod,
+            dataType: "json",
+            url: quiz.postUrl,
+            data: data,
+            beforesend: function(){
+                $ele.btnCreateSubmit.button('loading');
+            },
+            error: function (data) {
+                toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+                data = $.parseJSON(data.responseText);
+                validationError(data);
+                debug(data);
+                $ele.btnCreateSubmit.button('reset');
+            },
+            success: function (data) {
+                successPostMessage(data);
+            }
+        });
+    }
+    function successPostMessage(data)
+    {
+        swal({
+                title: "Đã gửi đề thi thành công",
+                text: "Làm gì tiếp theo?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonClass: "btn-info",
+                confirmButtonText: "Xem đề thi",
+                cancelButtonText: "Chỉnh sửa",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                quiz.preventClose = false;
+                if (isConfirm) {
+                    location.href = data.url;
+                } else {
+                    location.href = data.editUrl;
                 }
             });
-        }
     }
 
     function validator()
@@ -123,7 +126,7 @@
         if (!filledAllAnswer()) return false;
         name = $('#input-name').val();
         description =  $('#input-description').val();
-        content =  editorContent.serialize().content.value;
+        content =  $("#content").editable("getHTML");
         begin = $('#begin').val();
         begin = (parseInt(begin) >= 1) ? parseInt(begin) : 1;
 
@@ -363,29 +366,29 @@
 
     function embedPdf(data)
     {
-        $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.url+'"></iframe>');
+        $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.link+'"></iframe>');
         global.pdf_file_id = data.id;
     }
 
     function editor()
     {
-        editorContent = new MediumEditor('#content', {
-            anchorInputPlaceholder: 'Nhập một liên kết mới',
-            buttonLabels: 'fontawesome',
-            firstHeader: 'h1',
-            secondHeader: 'h2',
-            targetBlank: true,
-            cleanPastedHTML: true,
-        });
-        $('#content').mediumInsert({
-            editor: editorContent,
-            addons: {
-                images: {
-                    imagesUploadScript: '/api/v2/files',
-                    imagesDeleteScript: '/api/v2/files'
-                }
+        $('#content').editable({
+            inlineMode: true,
+            alwaysVisible: true,
+            pasteImage: true,
+            pastedImagesUploadURL: "/api/v2/files/paste",
+            maxImageSize: 1024 * 1024 * 3,
+            noFollow: true,
+            defaultImageWidth: '100%',
+            imageUploadURL: '/api/v2/files',
+            imageUploadParams: {
+                type: "json"
+            },
+            headers: {
+                'X-XSRF-Token' : $('meta[name="csrf"]').attr('content')
             }
         });
+        $('a[href*="froala.com"]').closest('div').hide();
 
         $("#select-tags").selectize({
             plugins: ['remove_button'],
@@ -401,32 +404,14 @@
             maxItems: 3,
             render: {
                 option: function(item, escape) {
-                    var name = item.text;
-                    var count = item.count;
 
-                    return '<div><span class="post-tag">' + name + '</span>'
+                    return '<div><span class="post-tag">' + escape(item.text) + '</span>'
                     + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
-                    '<span class="item-multiplier-count">' + count +
+                    '<span class="item-multiplier-count">' + item.count +
                     '</span></span></div>';
                 }
             }
         });
-/*
-        $("#select-tags").select2({
-            tags: true,
-            data: global.data.tags,
-            maximumSelectionLength: 3,
-            templateResult: function(result) {
-                if (result.count === undefined) {
-                    return result.text;
-                }
-                return '<span class="post-tag">' + result.text + '</span>'
-                + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
-                '<span class="item-multiplier-count">' + result.count
-                '</span></span>';
-            }
-        });
-        */
     }
 
     function preventClosing()

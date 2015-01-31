@@ -10,10 +10,10 @@ class Upload extends Model {
 
     public static function boot()
     {
-//        Upload::saving(function($upload)
-//        {
-//
-//        });
+        Upload::saved(function($upload)
+        {
+            // Backup file to Amazon S3
+        });
     }
 
     /*
@@ -26,14 +26,13 @@ class Upload extends Model {
 
     public function url()
     {
-        switch($this->location)
-        {
-            case 'local' :
-                return url('/uploads/'.$this->filename);
+        if($this->location == 's3')
+            return '//media.hoidapyhoc.com/'.$this->filename;
 
-            case 's3' :
-                return url('http://media.hoidapyhoc.com/'.$this->filename);
-        }
+        if(in_array($this->extension, ['png','jpeg','jpg','gif']))
+            return url("/files/image/{$this->filename}");
+
+        return url('/uploads/'.$this->filename);
     }
 
     public function pdfViewer()

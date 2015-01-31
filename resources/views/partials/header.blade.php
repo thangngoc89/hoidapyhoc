@@ -10,12 +10,7 @@
         <meta name="author" content="@yield('meta_author','Hỏi Đáp Y Học')" />
         <meta name="description" content="@yield('meta_description','Trắc nghiệm online - Kho đề thi trắc nghiệm Y Học')" />
 
-        <?php
-            $encrypter = app('Illuminate\Encryption\Encrypter');
-            $encrypted_token = $encrypter->encrypt(csrf_token());
-        ?>
-
-        <meta name="csrf" content="{{ $encrypted_token }}" />
+        <meta name="csrf" content="{{ $encrypted_token['encrypted_token'] }}" />
         <meta property="og:site_name" content="Quiz - Hỏi Đáp Y Học"/>
         <meta property="og:type" content="article"/>
         <meta property="og:image" content="http://ask.hoidapyhoc.com/uploads/default/12/51cfb3b4bf8211c3.png"/>

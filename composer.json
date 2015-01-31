@@ -12,7 +12,8 @@
 		"sunra/php-simple-html-dom-parser": "dev-master",
         "sorskod/larasponse": "dev-L5",
 		"cocur/slugify": "dev-master",
-		"predis/predis": "~1.1@dev"
+		"predis/predis": "~1.1@dev",
+		"barryvdh/laravel-ide-helper": "2.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

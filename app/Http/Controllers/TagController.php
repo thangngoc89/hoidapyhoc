@@ -35,8 +35,7 @@ class TagController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-
+    {
         #TODO Cache this page ?????
         $perPage = 50;
         switch($this->request->tab)
@@ -50,7 +49,7 @@ class TagController extends Controller {
                 $name = 'Tag mới nhất';
                 break;
             default :
-                $tags = $this->tag->has('exams')->with('exams')->take(50)->get()->sortByDesc(function($query) {
+                $tags = $this->tag->has('exams')->with('exams')->take($perPage)->get()->sortByDesc(function($query) {
                     return $query->exams->count();
                 });
                 $name = 'Tag nổi bật';

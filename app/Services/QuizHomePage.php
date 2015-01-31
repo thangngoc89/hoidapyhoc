@@ -46,7 +46,7 @@ class QuizHomePage {
 
         $tests = \Cache::tags('tests','index')->remember($key, 10, function() use ($tests)
         {
-            return $tests->has('question')->with('tagged','user')->paginate(20);
+            return $tests->has('question')->with('tagged','user')->paginate(10);
         });
         $tests->appends($request->only('tab'));
 

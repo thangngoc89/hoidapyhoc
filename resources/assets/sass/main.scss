@@ -23,7 +23,6 @@
 
 /* Page */
 
-@import 'quiz/quiz';
 @import 'quiz/history';
 
 @import 'components/unsort';
@@ -38,9 +37,13 @@
 @import 'quiz/quiz-sidebar';
 @import 'quiz/create';
 
+/* TODO: Test for responsive broken */
+@import 'quiz/quiz';
+
+@import 'vendor/selectize.bootstrap3';
+
 @import '../../../bower_components/bootstrap-sweetalert/lib/sweet-alert';
 @import '../../../bower_components/toastr/toastr';
-@import 'vendor/select2';
 
 
 

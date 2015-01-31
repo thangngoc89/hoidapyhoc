@@ -79,7 +79,7 @@ class TestV2Controller extends APIController {
             $test = $test->save();
             $response = $transformer->createResponse($test);
 
-            return response()->json($response, $statusCode);
+            return $response;
         });
     }
 

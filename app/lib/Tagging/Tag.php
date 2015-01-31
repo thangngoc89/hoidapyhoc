@@ -85,7 +85,6 @@ class Tag extends Eloquent {
             foreach($tagList as $tag)
             {
                 $tags[] = [
-                    'id' => $tag->name,
                     'text' => $tag->name,
                     'count' => $tag->exams->count()
                 ];

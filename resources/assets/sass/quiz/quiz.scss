@@ -10,6 +10,9 @@
   overflow: hidden;
 }
 
+span.timecou{
+  font-size: 1em;
+}
 .option_test {
   overflow-y: auto;
   overflow-x: hidden;
@@ -45,8 +48,18 @@
 .pagination > li > a[rel], .pagination > li.disabled {
   display:none;
 }
+/* Bootstrap layout edit */
 .row {
   margin-right: 0;
 }
+@media (max-width: 767px) {
+  .container{
+    padding-right: 0;
+  }
+  .forum .jumbotron{
+    margin-bottom: 1.8em;
+  }
+}
+
 
 

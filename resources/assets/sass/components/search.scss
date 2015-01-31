@@ -21,20 +21,23 @@
   border-top: 0.5px solid $grey-light ;
 }
 
-#navbar-search-form > .select2-container{
-  background: transparent;
+#search-form > .selectize-control{
+  background: $grey-light;
   border: none;
-  padding: 17px 0;
-  font-size: 17px;
+  padding: 10px 0;
+  min-width: 300px;
   text-shadow: 0 0.1px 0.1px #A7B3C2;
   color: #A7B3C2;
-  max-width: 100% !important;
 
-  .select2-selection__arrow{
-    display:none;
+  .selectize-input{
+      border: none;
+      background: transparent;
   }
-  span.select2-selection.select2-selection--single{
-    background: none;
-    border: none;
+  .selectize-input.focus
+  {
+      box-shadow: none;
+  }
+  .selectize-input:after{
+     content: none;
   }
 }

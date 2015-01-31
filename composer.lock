@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01da99cda5e1d4add060439421f6fc8b",
+    "hash": "88f819aaf581c60c3e879d3655cdc7e4",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2766,23 +2766,23 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v1.8.6",
+            "version": "2.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "1d39c5130fb7ebc9135d5a31467bcc870789acf9"
+                "reference": "8bc0265b6235a461a9fd2a3d377104c4ccb09c53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/1d39c5130fb7ebc9135d5a31467bcc870789acf9",
-                "reference": "1d39c5130fb7ebc9135d5a31467bcc870789acf9",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/8bc0265b6235a461a9fd2a3d377104c4ccb09c53",
+                "reference": "8bc0265b6235a461a9fd2a3d377104c4ccb09c53",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "4.*|5.0.*",
+                "illuminate/support": "5.0.*",
                 "maximebf/debugbar": "~1.10.2",
-                "php": ">=5.3.0",
-                "symfony/finder": "~2.3"
+                "php": ">=5.4.0",
+                "symfony/finder": "~2.6"
             },
             "type": "library",
             "extra": {
@@ -2816,7 +2816,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2015-01-30 08:40:23"
+            "time": "2015-01-30 08:40:58"
         },
         {
             "name": "doctrine/instantiator",

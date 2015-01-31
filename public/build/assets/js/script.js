@@ -788,20 +788,45 @@ $(function() {
         }
     });
     $("img").unveil(200);
-    $("#q").select2({
-        ajax: {
-            url: "/api/v2/search",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    q: params.term, // search term
-                    page: params.page
-                };
-            },
-            cache: true
+
+    $("#q").selectize({
+        valueField: 'url',
+        labelField: 'name',
+        searchField: ['name'],
+        maxOptions: 10,
+        options: [],
+        create: false,
+        render: {
+            option: function(item, escape) {
+                return '<div>' +escape(item.name)+'</div>';
+            }
         },
-        minimumInputLength: 1
+        optgroups: [
+            {value: 'tag', label: 'Tag'},
+            {value: 'exam', label: 'Đề thi'}
+        ],
+        optgroupField: 'group',
+        optgroupOrder: ['exam','tag'],
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '/api/v2/search',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    q: query
+                },
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res.data);
+                }
+            });
+        },
+        onChange: function(){
+            window.location = this.items[0];
+        }
     });
 });
 
@@ -820,6 +845,7 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 };
+
 
 
 
@@ -1417,6 +1443,31 @@ function updateAnswerCount(){
             }
         });
 
+        $("#select-tags").selectize({
+            plugins: ['remove_button'],
+            options: global.data.tags,
+            valueField: 'text',
+            labelField: 'text',
+            create: function(input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            },
+            maxItems: 3,
+            render: {
+                option: function(item, escape) {
+                    var name = item.text;
+                    var count = item.count;
+
+                    return '<div><span class="post-tag">' + name + '</span>'
+                    + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
+                    '<span class="item-multiplier-count">' + count +
+                    '</span></span></div>';
+                }
+            }
+        });
+/*
         $("#select-tags").select2({
             tags: true,
             data: global.data.tags,
@@ -1431,6 +1482,7 @@ function updateAnswerCount(){
                 '</span></span>';
             }
         });
+        */
     }
 
     function preventClosing()

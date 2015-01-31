@@ -37,7 +37,6 @@ elixir(function(mix) {
         ], 'resources','public/assets/js/script.js')
         .scripts([
             'bower_components/FroalaWysiwygEditor/js/froala_editor.min.js',
-            'bower_components/FroalaWysiwygEditor/js/plugins/file_upload.min.js',
             'bower_components/FroalaWysiwygEditor/js/langs/vi.js',
             'bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js'
         ], 'bower_components', 'public/assets/js/editor.js')

@@ -372,6 +372,7 @@
 
     function editor()
     {
+<<<<<<< HEAD
         $('#content').editable({
             inlineMode: true,
             alwaysVisible: true,
@@ -389,6 +390,13 @@
 
         });
         //$('a[href*="froala.com"]').closest('div').hide();
+=======
+        var editorContent = $('#content').editable({
+            inlineMode: true,
+            alwaysVisible: true
+        });
+        $('a[href*="froala.com"]').closest('div').hide();
+>>>>>>> f13392376d5b4aaa4f0f69e2d2b041af79bceb8b
         $("#select-tags").selectize({
             plugins: ['remove_button'],
             options: global.data.tags,

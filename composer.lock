@@ -4,71 +4,8 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "98c037d8962901bbc73e17fe42ffc324",
+    "hash": "01da99cda5e1d4add060439421f6fc8b",
     "packages": [
-        {
-            "name": "barryvdh/laravel-ide-helper",
-            "version": "2.0.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "73003c0beaee525104fc0dd71c64af9035100b25"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/73003c0beaee525104fc0dd71c64af9035100b25",
-                "reference": "73003c0beaee525104fc0dd71c64af9035100b25",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "5.0.x",
-                "illuminate/filesystem": "5.0.x",
-                "illuminate/support": "5.0.x",
-                "php": ">=5.4.0",
-                "phpdocumentor/reflection-docblock": "2.0.x",
-                "symfony/class-loader": "~2.3"
-            },
-            "require-dev": {
-                "doctrine/dbal": "~2.3"
-            },
-            "suggest": {
-                "doctrine/dbal": "Load information from the database about models for phpdocs (~2.3)"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.11-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Barryvdh\\LaravelIdeHelper\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Laravel IDE Helper, generates correct PHPDocs for all Facade classes, to improve auto-completion.",
-            "keywords": [
-                "autocomplete",
-                "codeintel",
-                "helper",
-                "ide",
-                "laravel",
-                "netbeans",
-                "phpdoc",
-                "phpstorm",
-                "sublime"
-            ],
-            "time": "2015-01-29 07:13:38"
-        },
         {
             "name": "classpreloader/classpreloader",
             "version": "1.2.0",
@@ -568,12 +505,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "e6a50d8f94dbef71d35c026fa2b0635af24360e8"
+                "reference": "f64c97d7c954967d7e1730eed0b7c2d5dba8cac4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e6a50d8f94dbef71d35c026fa2b0635af24360e8",
-                "reference": "e6a50d8f94dbef71d35c026fa2b0635af24360e8",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/f64c97d7c954967d7e1730eed0b7c2d5dba8cac4",
+                "reference": "f64c97d7c954967d7e1730eed0b7c2d5dba8cac4",
                 "shasum": ""
             },
             "require": {
@@ -632,7 +569,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2015-01-26 20:08:02"
+            "time": "2015-01-30 10:57:32"
         },
         {
             "name": "doctrine/inflector",
@@ -1199,16 +1136,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "dev-master",
+            "version": "5.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f219ab878c4781ffcd1915b2e276a302f8ec935b"
+                "reference": "8a19d18ff80338f64bf01a32d0297b9bd97344a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f219ab878c4781ffcd1915b2e276a302f8ec935b",
-                "reference": "f219ab878c4781ffcd1915b2e276a302f8ec935b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/8a19d18ff80338f64bf01a32d0297b9bd97344a8",
+                "reference": "8a19d18ff80338f64bf01a32d0297b9bd97344a8",
                 "shasum": ""
             },
             "require": {
@@ -1320,7 +1257,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-01-28 03:59:05"
+            "time": "2015-01-30 19:09:23"
         },
         {
             "name": "laravel/socialite",
@@ -1793,55 +1730,6 @@
             "time": "2015-01-18 11:29:59"
         },
         {
-            "name": "phpdocumentor/reflection-docblock",
-            "version": "2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "38743b677965c48a637097b2746a281264ae2347"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/38743b677965c48a637097b2746a281264ae2347",
-                "reference": "38743b677965c48a637097b2746a281264ae2347",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*@stable"
-            },
-            "suggest": {
-                "dflydev/markdown": "1.0.*",
-                "erusev/parsedown": "~0.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "phpDocumentor": [
-                        "src/"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mike van Riel",
-                    "email": "mike.vanriel@naenius.com"
-                }
-            ],
-            "time": "2014-08-09 10:27:07"
-        },
-        {
             "name": "predis/predis",
             "version": "dev-master",
             "source": {
@@ -2137,56 +2025,6 @@
                 "mailer"
             ],
             "time": "2014-12-05 14:17:14"
-        },
-        {
-            "name": "symfony/class-loader",
-            "version": "v2.6.3",
-            "target-dir": "Symfony/Component/ClassLoader",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/ClassLoader.git",
-                "reference": "deac802f76910708ab50d039806cfd1866895b52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/deac802f76910708ab50d039806cfd1866895b52",
-                "reference": "deac802f76910708ab50d039806cfd1866895b52",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "symfony/finder": "~2.0,>=2.0.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\ClassLoader\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Symfony ClassLoader Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-01-05 14:28:40"
         },
         {
             "name": "symfony/console",
@@ -2928,20 +2766,20 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v1.8.5",
+            "version": "v1.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "548e12d45760ee66192029f4b642d2f4e3d64118"
+                "reference": "1d39c5130fb7ebc9135d5a31467bcc870789acf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/548e12d45760ee66192029f4b642d2f4e3d64118",
-                "reference": "548e12d45760ee66192029f4b642d2f4e3d64118",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/1d39c5130fb7ebc9135d5a31467bcc870789acf9",
+                "reference": "1d39c5130fb7ebc9135d5a31467bcc870789acf9",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "4.*|5.0.*",
+                "illuminate/support": "4.*|5.0.*",
                 "maximebf/debugbar": "~1.10.2",
                 "php": ">=5.3.0",
                 "symfony/finder": "~2.3"
@@ -2978,7 +2816,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2014-12-24 08:00:07"
+            "time": "2015-01-30 08:40:23"
         },
         {
             "name": "doctrine/instantiator",
@@ -3094,16 +2932,16 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.10.2",
+            "version": "v1.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "4971283c1fa8da051e97d1fa62e053d49259f7ef"
+                "reference": "060fbaf6a4e2d328dcdb31cc606d2f2ed145104b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/4971283c1fa8da051e97d1fa62e053d49259f7ef",
-                "reference": "4971283c1fa8da051e97d1fa62e053d49259f7ef",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/060fbaf6a4e2d328dcdb31cc606d2f2ed145104b",
+                "reference": "060fbaf6a4e2d328dcdb31cc606d2f2ed145104b",
                 "shasum": ""
             },
             "require": {
@@ -3146,7 +2984,56 @@
             "keywords": [
                 "debug"
             ],
-            "time": "2014-12-17 08:39:39"
+            "time": "2015-01-30 08:24:55"
+        },
+        {
+            "name": "phpdocumentor/reflection-docblock",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
+                "reference": "38743b677965c48a637097b2746a281264ae2347"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/38743b677965c48a637097b2746a281264ae2347",
+                "reference": "38743b677965c48a637097b2746a281264ae2347",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*@stable"
+            },
+            "suggest": {
+                "dflydev/markdown": "1.0.*",
+                "erusev/parsedown": "~0.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "phpDocumentor": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike van Riel",
+                    "email": "mike.vanriel@naenius.com"
+                }
+            ],
+            "time": "2014-08-09 10:27:07"
         },
         {
             "name": "phpspec/php-diff",
@@ -3690,25 +3577,25 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "c484a80f97573ab934e37826dba0135a3301b26a"
+                "reference": "1dd8869519a225f7f2b9eb663e225298fade819e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/c484a80f97573ab934e37826dba0135a3301b26a",
-                "reference": "c484a80f97573ab934e37826dba0135a3301b26a",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/1dd8869519a225f7f2b9eb663e225298fade819e",
+                "reference": "1dd8869519a225f7f2b9eb663e225298fade819e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "sebastian/diff": "~1.1",
-                "sebastian/exporter": "~1.0"
+                "sebastian/diff": "~1.2",
+                "sebastian/exporter": "~1.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.1"
+                "phpunit/phpunit": "~4.4"
             },
             "type": "library",
             "extra": {
@@ -3750,7 +3637,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2014-11-16 21:32:38"
+            "time": "2015-01-29 16:28:08"
         },
         {
             "name": "sebastian/diff",
@@ -3856,16 +3743,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "35ab8d385eef068186c83e23ae83c96b0288b3ee"
+                "reference": "84839970d05254c73cde183a721c7af13aede943"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/35ab8d385eef068186c83e23ae83c96b0288b3ee",
-                "reference": "35ab8d385eef068186c83e23ae83c96b0288b3ee",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/84839970d05254c73cde183a721c7af13aede943",
+                "reference": "84839970d05254c73cde183a721c7af13aede943",
                 "shasum": ""
             },
             "require": {
@@ -3878,7 +3765,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -3918,7 +3805,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2015-01-24 09:57:24"
+            "time": "2015-01-27 07:23:06"
         },
         {
             "name": "sebastian/global-state",
@@ -4110,6 +3997,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "illuminate/html": 20,
         "laravel/socialite": 20,
         "doctrine/dbal": 20,
         "sunra/php-simple-html-dom-parser": 20,

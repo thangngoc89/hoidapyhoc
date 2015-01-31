@@ -90,21 +90,14 @@
                 <a class="navbar-link" href="/users" target="_blank">Thành viên</a>
             </li>
         </ul>
-        {{--<!-- Search -->--}}
-        {{--<ul class="zeroed secondary-nav--right">--}}
-            {{--<li>--}}
-                {{--<div id="navbar-search-form">--}}
-                    {{--<form role="search" action="/search" method="GET">--}}
-                        {{--<i class="icon-magnifying-glass"></i>--}}
-                        {{--<input type="text" id="q" name="q" placeholder="Search Forum">--}}
-
-                        {{--<select name="q-where" id="q-where" class="hide">--}}
-                            {{--<option value="lessons">Lessons</option>--}}
-                            {{--<option value="forum" selected=selected>Forum</option>--}}
-                        {{--</select>--}}
-                    {{--</form>--}}
-                {{--</div>--}}
-            {{--</li>--}}
-        {{--</ul>--}}
+        <!-- Search -->
+        <ul class="zeroed secondary-nav--right">
+            <li>
+                <div id="navbar-search-form">
+                        <i class="icon-magnifying-glass"></i>
+                        <input type="text" id="q" name="q" data-placeholder="Nhập để tìm kiếm...">
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>

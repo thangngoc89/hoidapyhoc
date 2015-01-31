@@ -5,7 +5,21 @@ $(function() {
         }
     });
     $("img").unveil(200);
-
+    $("#q").select2({
+        ajax: {
+            url: "/api/v2/search",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term, // search term
+                    page: params.page
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1
+    });
 });
 
 toastr.options = {
@@ -23,3 +37,5 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 };
+
+

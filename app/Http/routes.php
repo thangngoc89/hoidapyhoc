@@ -66,6 +66,7 @@ Route::group(array('prefix' => 'api/v2'), function()
 
     Route::resource('files','API\UploadV2Controller');
     Route::resource('tests', 'API\TestV2Controller');
+    Route::resource('search','API\SearchV2Controller');
 });
 
 /** ------------------------------------------
@@ -74,3 +75,4 @@ Route::group(array('prefix' => 'api/v2'), function()
  */
 get('tag', 'TagController@index');
 get('tag/{slug}', 'TagController@show');
+

@@ -15,6 +15,7 @@ class CopyDataFromFilesTableToUsersUploadTable extends Migration {
 	public function up()
 	{
         $tests = Exam::where('is_file',1)->get();
+
         foreach ($tests as $t)
         {
             // Copy file to users_upload table
@@ -27,11 +28,18 @@ class CopyDataFromFilesTableToUsersUploadTable extends Migration {
             $newUpload->size = $file->size;
             $newUpload->user_id = $t->user_id;
             $newUpload->location = 's3';
-            $newUpload->save();
+            if (!$newUpload->save())
+                throw new \Exception ("Can't save file info");
 
             //Update file_id to tests table
-            $t->file_id = $newUpload->id;
-            $t->save();
+            $save = \DB::table('tests')->where('id', '=', $t->id)
+                        ->update(array(
+                            'file_id' => $newUpload->id,
+                            'is_file' => true,
+                        ));
+
+            if (!$save)
+                throw new \Exception ("Can't update test's file. Pleas check model event");
         }
 
         \Schema::drop('files');

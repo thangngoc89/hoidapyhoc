@@ -85,13 +85,8 @@ class HomeController extends Controller {
         return view('site.stat', compact('stat'));
     }
 
-    public function cleanCache(ExamRepository $test, Tag $tags)
+    public function cleanCache()
     {
-        foreach ($test->all() as $t)
-        {
-            dd($t->untag('more tag53,more tag2,super cute tag'));
-            die();
-        }
+        //
     }
-
 }

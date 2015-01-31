@@ -5,6 +5,7 @@ $(function() {
         }
     });
     $("img").unveil(200);
+
     $("#q").selectize({
         valueField: 'url',
         labelField: 'name',
@@ -61,5 +62,6 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 };
+
 
 

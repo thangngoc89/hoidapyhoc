@@ -11022,8 +11022,8 @@ li.profile__stats-join-date {
 
 .post-tag {
   text-align: center;
-  color: #3e6d8e;
-  background-color: #d7f0ee;
+  color: #333333;
+  background-color: #efefef;
   padding: .25em .5em;
   margin: 2px 0 10px 0;
   text-decoration: none;
@@ -11031,8 +11031,8 @@ li.profile__stats-join-date {
   line-height: 1.4;
   white-space: nowrap;
   display: inline-block;
-  border: 1px solid #d7f0ee;
-  border-radius: .1em; }
+  border: 1px solid #EFEFEF;
+  border-radius: 4px; }
   .post-tag a {
     text-decoration: none; }
 
@@ -11046,7 +11046,6 @@ li.profile__stats-join-date {
   text-decoration: none; }
 
 .item-multiplier {
-  margin-left: -0.3em;
   margin-right: 1em;
   color: #888; }
 

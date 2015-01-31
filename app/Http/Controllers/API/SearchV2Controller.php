@@ -38,8 +38,8 @@ class SearchV2Controller extends Controller {
         if(!$query && $query == '')
             return response()->json(['error' => 'No query'], 400);
 
-        $tests = $this->getTestsResponse($query);
-        $tags = $this->getTagsResponse($query);
+        $tests = $this->getTestsResponse($query)->toArray();
+        $tags = $this->getTagsResponse($query)->toArray();
 
         $data = array_merge($tests, $tags);
         $response = [
@@ -59,12 +59,17 @@ class SearchV2Controller extends Controller {
             ->where('name','like','%'.$query.'%')
             ->orderBy('name','asc')
             ->take(5)
-            ->get(array('id','slug','name'))->toArray();
+            ->get(array('id','slug','name'));
 
-        $tests  = $this->appendURL($tests, 'quiz/lam-bai');
-        $tests = $this->appendValue($tests, 'exam', 'group');
+        $mapper = $tests->map(function($test){
+                return [
+                    'name' => $test->name,
+                    'url'  => url("quiz/lam-bai/{$test->slug}/{$test->id}"),
+                    'group' => 'exam'
+                ];
+            });
 
-        return $tests;
+        return $mapper;
     }
 
     /**
@@ -77,13 +82,17 @@ class SearchV2Controller extends Controller {
             ->where('name', 'like', '%' . $query . '%')
             ->has('exams')
             ->take(5)
-            ->get(array('slug', 'name'))
-            ->toArray();
+            ->get(array('slug', 'name'));
 
-        $tags = $this->appendURL($tags, 'tag');
-        $tags = $this->appendValue($tags, 'tag', 'group');
+        $mapper = $tags->map(function($tag){
+            return [
+                'name' => $tag->name,
+                'url'  => url("tag/{$tag->slug}"),
+                'group' => 'tag'
+            ];
+        });
 
-        return $tags;
+        return $mapper;
     }
     public function appendValue($data, $type, $element)
     {

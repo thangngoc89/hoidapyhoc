@@ -5,8 +5,8 @@
 }
 .post-tag {
   text-align: center;
-  color: $color-blue-lightest;
-  background-color: $color-blue-light;
+  color: #333333;
+  background-color: #efefef;
   padding: .25em .5em;
   margin: 2px 0 10px 0;
   text-decoration: none;
@@ -14,9 +14,8 @@
   line-height: 1.4;
   white-space: nowrap;
   display: inline-block;
-  border: 1px solid $color-blue-light;
-  border-radius: .1em;
-
+  border: 1px solid #EFEFEF;
+  border-radius: 4px;
 
   a {
     text-decoration: none;
@@ -34,7 +33,6 @@
 }
 
 .item-multiplier {
-  margin-left: -0.3em;
   margin-right: 1em;
   color: #888;
 }

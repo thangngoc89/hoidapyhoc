@@ -42,7 +42,7 @@ class SearchV2Controller extends Controller {
             ->where('name','like','%'.$query.'%')
             ->orderBy('name','asc')
             ->take(5)
-            ->get(array('slug','name'))->toArray();
+            ->get(array('id','slug','name'))->toArray();
 
         $tags = $this->tag
             ->where('name','like','%'.$query.'%')

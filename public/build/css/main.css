@@ -10905,7 +10905,7 @@ h1.lesson-title > a:hover {
   background: #E3E3E3;
   border: none;
   padding: 10px 0;
-  width: 300px;
+  min-width: 300px;
   text-shadow: 0 0.1px 0.1px #A7B3C2;
   color: #A7B3C2; }
   #search-form > .selectize-control .selectize-input {
@@ -10918,6 +10918,10 @@ h1.lesson-title > a:hover {
   #search-form > .selectize-control span.select2-selection.select2-selection--single {
     background: none;
     border: none; }
+
+@media (max-width: 767px) {
+  #navbar-search-form > .selectize-control {
+    width: 91%; } }
 
 .avatar .img-circle {
   background: #fff;

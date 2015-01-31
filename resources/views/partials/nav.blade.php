@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a href="{{ URL::to('/') }}" class="navbar-brand logo">Hỏi Đáp Y Học</a>
+            <a href="/" class="navbar-brand logo">Hỏi Đáp Y Học</a>
         </div>
         <!-- navbar-header -->
 
@@ -46,12 +46,12 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ Url::to('user') }}">
+                            <a href="">
                                 <i class="icon-link-2"></i> Thiết lập tài khoản
                             </a>
                         </li>
                         <li>
-                            <a href="/auth/logout?return={{ Request::url() }}">
+                            <a href="/auth/logout?return={{ url() }}">
                                 <i class="icon-log-out-1"></i> Thoát
                             </a>
                         </li>
@@ -73,19 +73,18 @@
                 <a href="/quiz" class="navbar-link dropdown-toggle" data-toggle="dropdown">
             Khám phá <b class="caret"></b>
         </a>
-
                 <ul class="dropdown-menu">
                     <li class=""><a href="/tag">Tags</a>
                     </li>
                 </ul>
             </li>
 
-            <!-- Deploy -->
+            <!-- Forum -->
             <li id="navbar-link--deploy">
                 <a href="https://ask.hoidapyhoc.com" class="navbar-link" target="_blank">Diễn đàn</a>
             </li>
 
-            <!-- Work -->
+            <!-- Member -->
             <li id="navbar-link--work">
                 <a class="navbar-link" href="/users" target="_blank">Thành viên</a>
             </li>

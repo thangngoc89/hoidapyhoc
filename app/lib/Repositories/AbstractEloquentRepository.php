@@ -25,9 +25,9 @@ abstract class AbstractEloquentRepository {
         return $this->model->firstOrNew($array);
     }
 
-    public function where($key, $value)
+    public function where($key, $method, $value = null)
     {
-        return $this->model->where($key, $value);
+        return $this->model->where($key, $method, $value);
     }
 
     public function orWhere($key, $value)

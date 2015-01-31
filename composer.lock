@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fbb741ca4a67cd1c3c74bd4916ae700c",
+    "hash": "0834d5740d33bcd04b5e480769296016",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1003,6 +1003,59 @@
                 "watermark"
             ],
             "time": "2015-01-29 08:44:26"
+        },
+        {
+            "name": "intervention/imagecache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/imagecache.git",
+                "reference": "72611e41da15d3766e7325fb0dfa9d7290ffc19b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/imagecache/zipball/72611e41da15d3766e7325fb0dfa9d7290ffc19b",
+                "reference": "72611e41da15d3766e7325fb0dfa9d7290ffc19b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "~4|~5",
+                "illuminate/filesystem": "~4|~5",
+                "intervention/image": "dev-master|~2,>=2.0.7",
+                "jeremeamia/superclosure": "~1|~2",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.net",
+                    "homepage": "http://olivervogel.net/"
+                }
+            ],
+            "description": "Caching extension for the Intervention Image Class",
+            "homepage": "http://image.intervention.io",
+            "keywords": [
+                "cache",
+                "gd",
+                "image",
+                "imagick",
+                "laravel"
+            ],
+            "time": "2015-01-29 15:58:56"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -4061,6 +4114,7 @@
         "cocur/slugify": 20,
         "predis/predis": 20,
         "intervention/image": 20,
+        "intervention/imagecache": 20,
         "barryvdh/laravel-debugbar": 20,
         "filp/whoops": 20
     },

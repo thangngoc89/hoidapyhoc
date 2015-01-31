@@ -13,7 +13,8 @@
         "sorskod/larasponse": "dev-L5",
 		"cocur/slugify": "dev-master",
 		"predis/predis": "~1.1@dev",
-		"intervention/image": "dev-master"
+		"intervention/image": "dev-master",
+		"intervention/imagecache": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

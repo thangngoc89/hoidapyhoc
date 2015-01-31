@@ -10,5 +10,6 @@ bower_components/*
 public/uploads
 public/build
 public/assets
+public/css
 
 .idea

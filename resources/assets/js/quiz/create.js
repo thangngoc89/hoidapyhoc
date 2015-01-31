@@ -372,7 +372,6 @@
 
     function editor()
     {
-<<<<<<< HEAD
         $('#content').editable({
             inlineMode: true,
             alwaysVisible: true,
@@ -380,6 +379,7 @@
             pastedImagesUploadURL: "/api/v2/files/paste",
             maxImageSize: 1024 * 1024 * 3,
             noFollow: true,
+            defaultImageWidth: '100%',
             imageUploadURL: '/api/v2/files',
             imageUploadParams: {
                 type: "json"
@@ -387,16 +387,9 @@
             headers: {
                 'X-XSRF-Token' : $('meta[name="csrf"]').attr('content')
             }
-
-        });
-        //$('a[href*="froala.com"]').closest('div').hide();
-=======
-        var editorContent = $('#content').editable({
-            inlineMode: true,
-            alwaysVisible: true
         });
         $('a[href*="froala.com"]').closest('div').hide();
->>>>>>> f13392376d5b4aaa4f0f69e2d2b041af79bceb8b
+
         $("#select-tags").selectize({
             plugins: ['remove_button'],
             options: global.data.tags,
@@ -411,12 +404,10 @@
             maxItems: 3,
             render: {
                 option: function(item, escape) {
-                    var name = item.text;
-                    var count = item.count;
 
-                    return '<div><span class="post-tag">' + name + '</span>'
+                    return '<div><span class="post-tag">' + escape(item.text) + '</span>'
                     + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
-                    '<span class="item-multiplier-count">' + count +
+                    '<span class="item-multiplier-count">' + item.count +
                     '</span></span></div>';
                 }
             }

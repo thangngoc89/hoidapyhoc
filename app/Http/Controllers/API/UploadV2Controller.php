@@ -50,7 +50,7 @@ class UploadV2Controller extends APIController {
         {
             #TODO: Config S3 and test it
             $destination = public_path().'/uploads/';
-            $file->move($destination, $filename);
+            $file->move($destination, $this->createFileNameFromInfo($info));
 
             $upload = $this->saveFileData($info);
         }
@@ -58,8 +58,17 @@ class UploadV2Controller extends APIController {
         return $this->createResponse($upload);
     }
 
+    /**
+     * Process a
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
     public function paste(Request $request)
     {
+        // array('image' => base64 string)
+
         $img = \Image::make($request->image);
 
         $info = [

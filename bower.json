@@ -5,17 +5,18 @@
     "bootstrap": "~3.3.0",
     "toastr": "~2.1.0",
     "animate.css": "master",
-    "jScrollPane": "master",
     "jquery-form": "~3.46.0",
     "wow": "~1.0.2",
     "sticky-kit": "~1.1.1",
     "bootstrap-sweetalert": "~0.4.3",
     "pace": "~1.0.2",
-    "medium-editor-insert-plugin": "~0.3.2",
-    "dante": "~0.0.8",
     "jquery": "*",
     "jquery-unveil": "~1.3.0",
     "selectize": "~0.12.0",
-    "FroalaWysiwygEditor": "~1.2.5"
+    "FroalaWysiwygEditor": "~1.2.5",
+    "ng-admin": "~0.4.0"
+  },
+  "resolutions": {
+    "angular": "1.3.11"
   }
 }

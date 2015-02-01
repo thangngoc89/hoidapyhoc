@@ -9,7 +9,9 @@ bower_components/*
 
 public/uploads
 public/build
-public/assets
+public/assets/editor.js
+public/assets/script.js
+public/assets/vendor.js
 public/css
 
 .idea

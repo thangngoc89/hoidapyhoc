@@ -54,7 +54,7 @@
         }
 
 
-        var app = new Application('Hỏi Đáp Y Học') // application main title
+        var app = new Application('Hỏi Đáp Y Học')
             // remember to change the following to your api link
             .baseApiUrl('http://newquiz.dev/api/v2');
 
@@ -97,7 +97,6 @@
         role.dashboardView().disable();
         role.listView()
             .title('All roles')
-            .addField(new Field('id'))
             .addField(new Field('name').isDetailLink(true))
             .addField(new Field('count').label('# of Users'))
             .addField(new Field().type('template').label('Created Date')
@@ -147,7 +146,7 @@
             .addField(new ReferenceMany('roles')
                 .targetEntity(role)
                 .targetField(new Field('name'))
-        )
+        );
 
         user.editionView()
             .title('Edit user "{{ entry.values.username }}"')

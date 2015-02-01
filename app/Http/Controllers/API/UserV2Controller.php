@@ -11,11 +11,6 @@ use Quiz\lib\API\User\UserTransformers;
 
 class UserV2Controller extends APIController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
     protected $user;
     /**
      * @var Request
@@ -42,6 +37,8 @@ class UserV2Controller extends APIController {
         $this->request = $request;
         $this->auth = $auth;
         $this->fractal = $fractal;
+
+        $this->middleware('admin');
     }
 	public function index()
 	{
@@ -70,21 +67,11 @@ class UserV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($user)
 	{
-        try{
-            $statusCode = 200;
-            $user = User::find($id);
+        return $this->fractal->item($user, new UserTransformers());
 
-            $response = $this->responseMap($user);
-
-            return Response::json($response,$statusCode);
-
-        }catch (Exception $e){
-            $statusCode = 500;
-            return Response::json($e->getMessage(), $statusCode);
-        }
-	}
+    }
 
 
 	/**

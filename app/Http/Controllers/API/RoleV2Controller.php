@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Sorskod\Larasponse\Larasponse;
-use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\Models\Enstrust\Role;
 use Quiz\Models\Enstrust\Permission;
 use Quiz\lib\API\Role\RoleTransformers;
@@ -10,6 +9,8 @@ use Quiz\lib\API\Role\RoleTransformers;
 class RoleV2Controller extends APIController {
 
     protected $user;
+
+
     protected $role;
     /**
      * @var Larasponse
@@ -22,40 +23,31 @@ class RoleV2Controller extends APIController {
 
 
     /**
-     * @param UserRepository $user
      * @param Role $role
      * @param Request $request
      * @param Larasponse $fractal
      */
-    public function __construct(UserRepository $user, Role $role, Request $request,Larasponse $fractal)
+    public function __construct(Role $role, Request $request,Larasponse $fractal)
     {
-        parent::__construct();
-        $this->user = $user;
         $this->role = $role;
         $this->fractal = $fractal;
         $this->request = $request;
+
+        $this->middleware('admin');
     }
 
     public function index()
     {
-        $test = $this->builder($this->request,$this->role);
+        $roles = $this->builder($this->request,$this->role);
 
-        $result = $this->fractal->paginatedCollection($test, new RoleTransformers());
+        $result = $this->fractal->paginatedCollection($roles, new RoleTransformers());
 
-        return $result;
+        return $this->makeResponse($result);
     }
 
-    public function show($id)
+    public function show($role)
     {
-        try{
-            $statusCode = 200;
-            $role = $this->role->find($id);
-            $response = $this->responseMap($role, true);
-            return Response::json($response, $statusCode);
-        }catch (Exception $e){
-            $statusCode = 500;
-            return Response::json($e->getMessage(), $statusCode);
-        }
+        return $this->fractal->item($role, new RoleTransformers());
     }
 
     /**
@@ -92,6 +84,8 @@ class RoleV2Controller extends APIController {
         }
         return Response::json($messages, $statusCode);
     }
+
+
     public function update($id)
     {
         $role = $this->role->findOrFail($id);

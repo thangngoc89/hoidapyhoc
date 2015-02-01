@@ -9,19 +9,14 @@ class APIController extends \Quiz\Http\Controllers\Controller {
 
     protected $input;
 
-    public function __construct()
-    {
-
-    }
-
+    protected $columnList;
     public function makeResponse($result){
         return response()->json($result)->header('X-Total-Count',$result['meta']['pagination']['total']);
     }
 
     public function builder($input, $model, $search = array())
     {
-        $columnList = \Schema::getColumnListing($model->getTable());
-
+        $this->setColumnList($model);
         // Set some share data in class
         $this->search = $search;
 
@@ -30,7 +25,7 @@ class APIController extends \Quiz\Http\Controllers\Controller {
         $this->input = $input;
 
         // Apply where clause
-        $this->whereClause($columnList);
+        $this->whereClause();
 
         // Apply API keywords
         $this->parseKeywords();
@@ -38,14 +33,15 @@ class APIController extends \Quiz\Http\Controllers\Controller {
         return $this->query;
     }
 
-    private function whereClause($columnList)
+    private function whereClause()
     {
         foreach ($this->input->all() as $col)
         {
-            if (!in_array($col,$columnList)) continue;
-
-            if (!empty($col) and $col != 0)
-                $this->query = $this->query->where($col,'like','%'.$col.'%');
+            if (in_array($col, $this->columnList))
+            {
+                if (!empty($col) and $col != 0)
+                    $this->query = $this->query->where($col,'like','%'.$col.'%');
+            }
         }
     }
 
@@ -54,6 +50,14 @@ class APIController extends \Quiz\Http\Controllers\Controller {
         $keywords = ['page','q','_sort','_sortDir','per_page'];
         foreach ($keywords as $keyword)
             $this->{$keyword}();
+    }
+
+    /**
+     * @param mixed $columnList
+     */
+    public function setColumnList($model)
+    {
+        $this->columnList = \Schema::getColumnListing($model->getTable());
     }
 
     private function page()
@@ -74,8 +78,10 @@ class APIController extends \Quiz\Http\Controllers\Controller {
     }
     private function _sort()
     {
-        if (is_null($this->input->_sort))
+        // Prevent sort by un exists column cause query error
+        if (!in_array($this->input->_sort, $this->columnList))
             return false;
+
         $this->query = $this->query->orderBy($this->input->_sort,$this->input->_sortDir);
     }
 

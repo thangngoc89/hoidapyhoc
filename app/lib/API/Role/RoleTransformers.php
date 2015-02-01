@@ -15,4 +15,4 @@ class RoleTransformers extends TransformerAbstract {
             'permissions'   => $role->perms()->get()->modelKeys(),
         ];
     }
-} 
+}

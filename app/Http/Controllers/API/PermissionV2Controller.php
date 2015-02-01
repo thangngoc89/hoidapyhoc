@@ -1,5 +1,12 @@
-<?php
-use \ApiHandler;
+<?php namespace Quiz\Http\Controllers\API;
+
+use Illuminate\Http\Request;
+use Quiz\lib\API\Permission\PermissionTransformers;
+use Quiz\Models\Enstrust\Permission;
+
+use Sorskod\Larasponse\Larasponse;
+
+
 class PermissionV2Controller extends APIController {
 
 	/**
@@ -8,30 +15,35 @@ class PermissionV2Controller extends APIController {
 	 * @return Response
 	 */
     protected $permission;
-    public function __construct(Permission $permission)
+    /**
+     * @var Larasponse
+     */
+    private $fractal;
+    /**
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * @param Permission $permission
+     * @param Request $request
+     * @param Larasponse $fractal
+     */
+    public function __construct(Permission $permission, Request $request, Larasponse $fractal)
     {
-        parent::__construct();
-        $this->permission        = $permission;
+        $this->permission = $permission;
+        $this->fractal = $fractal;
+        $this->request = $request;
+
+        $this->middleware('admin');
     }
 	public function index()
 	{
+        $permissions = $this->builder($this->request,$this->permission);
 
-        try{
-            $statusCode = 200;
-           // dd($this->passParams('tests'));
-            $builder = ApiHandler::parseMultiple($this->permission, array(''), $this->passParams('permissions'));
-            $objects = $builder->getResult();
+        $result = $this->fractal->paginatedCollection($permissions, new PermissionTransformers());
 
-            $response = [];
-            foreach($objects as $object){
-                $response[] = $this->responseMap($object);
-            }
-            return $this->makeResponse($response,$statusCode, $builder);
-        }catch (Exception $e){
-            $statusCode = 500;
-            $message = $e->getMessage();
-            return Response::json($message, $statusCode);
-        }
+        return $this->makeResponse($result);
 	}
 
 	/**
@@ -50,19 +62,9 @@ class PermissionV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($permission)
 	{
-        try{
-            $statusCode = 200;
-            $test = $this->permission->find($id);
-
-            $response = $this->responseMap($test);
-
-            return Response::json($response, $statusCode);
-        }catch (Exception $e){
-            $statusCode = 500;
-            return Response::json($e->getMessage(), $statusCode);
-        }
+        return $this->fractal->item($permission, new PermissionTransformers());
 	}
 
 
@@ -101,13 +103,4 @@ class PermissionV2Controller extends APIController {
         $test->delete();
         return 'Deleted';
 	}
-
-    private function responseMap($object)
-    {
-        return [
-            'id'            => $object->id,
-            'name'          => $object->name,
-            'display_name'  => $object->display_name,
-        ];
-    }
 }

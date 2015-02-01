@@ -24,6 +24,10 @@ Route::pattern('id', '[0-9]+');
 Route::model('tests', '\Quiz\Models\Exam');
 Route::model('quiz', '\Quiz\Models\Exam');
 Route::model('user', '\Quiz\Models\User');
+// API Part
+Route::model('users', '\Quiz\Models\User');
+Route::model('roles', '\Quiz\Models\Enstrust\Role');
+Route::model('permissions', '\Quiz\Models\Enstrust\Permission');
 
 /** ------------------------------------------
  *  HomePage Group

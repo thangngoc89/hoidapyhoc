@@ -50,7 +50,6 @@ class UserV2Controller extends APIController {
         $test = $this->user->paginate($limit);
 
         $result = $this->fractal->paginatedCollection($test, new UserTransformers());
-//        return array_merge($result['data']);
 
         return $result;
 	}

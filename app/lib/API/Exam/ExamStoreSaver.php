@@ -3,7 +3,7 @@
 use Quiz\Models\Exam;
 use Quiz\Models\Question;
 
-class TestStoreSaver
+class ExamStoreSaver
 {
     /**
      * Helper function to save a new test on TestV2Controller@store method

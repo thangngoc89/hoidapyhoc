@@ -26,16 +26,11 @@
     }]);
 
     app.config(function(RestangularProvider) {
-        RestangularProvider.addElementTransformer('users', function(element) {
-            console.log(element.data);
-            console.log(element.values);
-            console.log(element.meta);
-
-            for (var key in element.data) {
-                element[key] = element.data[key];
-                console.log(element[key]);
+        RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
+            if (operation == "getList") {
+                data = data.data;
             }
-            return element;
+            return data;
         });
         RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
             if (operation == 'getList' && what == 'entityName') {

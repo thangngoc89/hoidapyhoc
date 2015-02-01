@@ -15,7 +15,7 @@ elixir(function(mix) {
     mix.sass('main.scss')
         //.sass('editor.scss')
         .scripts([
-            'bower_components/jquery/jquery.js',
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'bower_components/wow/dist/wow.min.js',
             'bower_components/sticky-kit/jquery.sticky-kit.js',

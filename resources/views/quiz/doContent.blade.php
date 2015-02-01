@@ -8,6 +8,9 @@
                   <li>
                      <a href="{{ $t->link('bangdiem') }}">Bảng điểm</a>
                   </li>
+                  <li class="pull-right">
+                     <a href="{{ $t->link('edit') }}">Sửa</a>
+                  </li>
              </ul>
          </div>
      </div>

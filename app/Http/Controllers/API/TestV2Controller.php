@@ -4,11 +4,13 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use Quiz\Http\Requests\Exam\TestCheckRequest;
-use Quiz\Http\Requests\Exam\TestSaveRequest;
-use Quiz\Http\Requests\Exam\TestEditRequest;
-use Quiz\lib\API\Exam\TestCheckSaver;
+use Quiz\Http\Requests\Exam\ExamSaveRequest;
+use Quiz\Http\Requests\Exam\ExamEditRequest;
+
+use Quiz\lib\API\Exam\ExamEditSaver;
+use Quiz\lib\API\Exam\ExamCheckSaver;
 use Quiz\lib\API\Exam\ExamTransformers;
-use Quiz\lib\API\Exam\TestStoreSaver;
+use Quiz\lib\API\Exam\ExamStoreSaver;
 
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
@@ -61,7 +63,9 @@ class TestV2Controller extends APIController {
         $limit = $this->request->limit ?: 3;
         $test = $this->test->paginate($limit);
 
-        return $this->fractal->paginatedCollection($test, new ExamTransformers());
+        $result = $this->fractal->paginatedCollection($test, new ExamTransformers());
+
+        return $result;
     }
 
 	/**
@@ -69,7 +73,7 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store(TestSaveRequest $request, ExamTransformers $transformer)
+	public function store(ExamSaveRequest $request, ExamTransformers $transformer)
 	{
         return $this->tryCatch(function() use ($transformer,$request)
         {
@@ -80,8 +84,6 @@ class TestV2Controller extends APIController {
             return $response;
         });
     }
-
-
 
 	/**
 	 * Display the specified resource.
@@ -94,31 +96,25 @@ class TestV2Controller extends APIController {
         return $this->fractal->item($test, new ExamTransformers());
 	}
 
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-    public function update($tests, TestEditRequest $request, ExamTransformers $transformer)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $test
+     * @param ExamEditRequest $request
+     * @param ExamTransformers $transformer
+     * @internal param int $id
+     * @return Response
+     */
+    public function update($test, ExamEditRequest $request, ExamTransformers $transformer)
     {
-        try{
-            $statusCode = 200;
-            $test = $tests->fill($request->all());
-
-            if ($test->save())
-                $test->tag($request->tags);
-
-            $this->storeQuestion($test,$request->all());
-
+//        return $this->tryCatch(function() use ($transformer,$request, $test)
+//        {
+            $test = new ExamEditSaver($request->all(),$test);
+            $test = $test->save();
             $response = $transformer->createResponse($test);
 
-            return response()->json($response, $statusCode);
-        }catch (\Exception $e){
-            $statusCode = 500;
-            return response()->json($e->getMessage(), $statusCode);
-        }
+            return $response;
+//        });
     }
 
 //    public function pullPicture($id, PullExternalImage $puller)
@@ -149,15 +145,19 @@ class TestV2Controller extends APIController {
             return $response;
         });
     }
+
     /**
      * Check post and return right answer
-     * @param $id
+     * @param $test
+     * @param ExamTransformers $transformer
+     * @param TestCheckRequest $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function check ($test, ExamTransformers $transformer, TestCheckRequest $request)
     {
         return $this->tryCatch(function() use ($test,$transformer, $request)
         {
-            $history = new TestCheckSaver($request->all(),$test);
+            $history = new ExamCheckSaver($request->all(),$test);
             $history = $history->save();
             $response = $transformer->checkResponse($history);
 

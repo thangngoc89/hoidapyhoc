@@ -95,6 +95,7 @@ class HomeController extends Controller {
 
     public function cleanCache()
     {
-        //
+        $user = \Auth::user();
+        dd($user->can('manage_exams'));
     }
 }

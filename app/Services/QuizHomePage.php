@@ -14,8 +14,6 @@ class QuizHomePage {
      */
     private $test;
 
-    private $doneTestId;
-
     private $request;
 
     private $result;
@@ -52,8 +50,6 @@ class QuizHomePage {
 
         $this->{$tab}();
 
-        $this->setDoneTestId();
-
         $view = $this->makeView();
 
         $cache->put($key,$view,20);
@@ -75,13 +71,7 @@ class QuizHomePage {
         $this->result = $this->test->orderBy('tests.created_at','DESC');
         $this->name = 'Quiz';
     }
-    /**
-     * @param mixed $doneTestId
-     */
-    public function setDoneTestId()
-    {
-        $this->doneTestId = ($this->auth->check()) ? $this->test->doneTestId($this->auth->user()) : false;
-    }
+
 
     private function switchMethod()
     {
@@ -104,7 +94,11 @@ class QuizHomePage {
         $tests->appends($this->request->only('tab'));
 
         $name  = $this->name;
-        $doneTestId = $this->doneTestId;
+
+        $doneTestId = false;
+
+        if ($this->auth->check())
+            $doneTestId = $this->test->doneTestId($this->auth->user());
 
         return view('quiz.index',compact('tests','name','doneTestId'))->render();
     }

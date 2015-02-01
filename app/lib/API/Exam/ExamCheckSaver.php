@@ -3,7 +3,7 @@
 use Quiz\Models\Exam;
 use Quiz\Models\History;
 
-class TestCheckSaver
+class ExamCheckSaver
 {
     /**
      * @var Exam

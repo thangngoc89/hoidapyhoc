@@ -23,6 +23,7 @@ Route::pattern('id', '[0-9]+');
  */
 Route::model('tests', '\Quiz\Models\Exam');
 Route::model('quiz', '\Quiz\Models\Exam');
+Route::model('user', '\Quiz\Models\User');
 
 /** ------------------------------------------
  *  HomePage Group
@@ -82,3 +83,8 @@ Route::group(array('prefix' => 'api/v2'), function()
 get('tag', 'TagController@index');
 get('tag/{slug}', 'TagController@show');
 
+/** ------------------------------------------
+ *  Rescources Group
+ *  ------------------------------------------
+ */
+get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');

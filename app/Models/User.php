@@ -88,36 +88,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getAvatar()
     {
-//        return '';
-        if ($this->avatar != null)
-        {
-            return $this->avatar;
-        } else {
-            return $this->getGravatar();
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getGravatar()
-    {
-        $email = $this->email;
-        $s = 200;
-        $d = 'monsterid'; # [ 404 | mm | identicon | monsterid | wavatar ]
-        $r = 'g';
-        $img = false;
-        $atts = array() ;
-        $url = 'http://www.gravatar.com/avatar/';
-        $url .= md5( strtolower( trim( $email ) ) );
-        $url .= "?s=$s&d=$d&r=$r";
-        if ( $img ) {
-            $url = '<img src="' . $url . '"';
-            foreach ( $atts as $key => $val )
-                $url .= ' ' . $key . '="' . $val . '"';
-            $url .= ' />';
-        }
-        return $url;
+        return ("/files/user/{$this->id}/avatar.jpg");
+//
+//        if ($this->avatar != null)
+//        {
+//            return $this->avatar;
+//        } else {
+//            return $this->getGravatar();
+//        }
     }
 
     /**
@@ -127,8 +105,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         if ($this->username != null)
             return $this->username;
-        else
-            return $this->name;
+        return $this->name;
     }
 
     /**

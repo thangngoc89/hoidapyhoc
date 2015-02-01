@@ -1,11 +1,11 @@
 <?php namespace Quiz\Http\Controllers;
 
-use Illuminate\Session\Store;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
+use Quiz\Services\LeechUserAvatar;
 
 class HomeController extends Controller {
 
@@ -86,8 +86,8 @@ class HomeController extends Controller {
         return view('site.stat', compact('stat'));
     }
 
-    public function cleanCache(Store $session)
+    public function cleanCache()
     {
-        dd($session->get('viewed_tests', null));
+
     }
 }

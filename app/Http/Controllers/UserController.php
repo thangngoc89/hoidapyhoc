@@ -37,7 +37,7 @@ class UserController extends Controller {
         $page = \Input::get('page');
 
         $users = \Cache::remember('usersIndex'.$page, 1440, function () {
-            return $this->user->orderBy('created_at')->paginate(51);
+            return $this->user->orderBy('created_at')->paginate(21);
         });
 
         return view('user.usersIndex', compact('users'));

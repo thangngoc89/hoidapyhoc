@@ -103,11 +103,10 @@ class QuizController extends Controller {
      */
     public function leaderboard($slug = null, $id)
     {
-        $t = \Cache::tags('tests')->rememberForever("testLeaderboard$slug$id", function () use ($id) {
-            return $this->test->getFirstBy('id',$id,['tagged','question']);
-        });
-        if (is_null($t))
-            abort(404);
+        $t = $this->test->getFirstBy('id',$id,['tagged','question']);
+
+        if (is_null($t)) abort(404);
+
         if ($t->slug != $slug)
             return redirect()->to($t->link('bangdiem'));
 

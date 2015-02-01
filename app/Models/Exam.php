@@ -18,8 +18,6 @@ class Exam extends Model {
     {
         Exam::saving(function($test)
         {
-            if (!\Auth::check()) return false;
-
             if (empty($test->file_id))
             {
                 // If this is test based on pdf file but have no file

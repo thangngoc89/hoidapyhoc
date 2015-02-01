@@ -8,5 +8,5 @@ return [
     /*
      * Maximum tags per item
      */
-    'maxTag'        => 3,
+    'maxTag'        => 5,
 ];

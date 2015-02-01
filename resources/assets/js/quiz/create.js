@@ -401,7 +401,7 @@
                     text: input
                 }
             },
-            maxItems: 3,
+            maxItems: 5,
             render: {
                 option: function(item, escape) {
 

@@ -43,7 +43,7 @@ class QuizHomePage {
 
         $cache = $this->cache->tags('index','tests');
 
-        if ($cache->has($key))
+        if ($cache->has($key) && getenv('APP_ENV') != 'local')
             return $cache->get($key);
 
         $this->request = $request;

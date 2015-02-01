@@ -2,10 +2,13 @@
 
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
-use Quiz\lib\Tagging\Tag;
+
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
-use Quiz\Services\LeechUserAvatar;
+use Quiz\Models\Enstrust\Role;
+use Quiz\Models\Enstrust\Permission;
+
+use Quiz\Models\User;
 
 class HomeController extends Controller {
 
@@ -71,7 +74,6 @@ class HomeController extends Controller {
      */
     public function stat(UserRepository $user, ExamRepository $test, History $history)
     {
-
         $key = 'siteStat';
         if (\Cache::has($key)) {
             $stat = \Cache::get($key);
@@ -88,6 +90,6 @@ class HomeController extends Controller {
 
     public function cleanCache()
     {
-
+        //
     }
 }

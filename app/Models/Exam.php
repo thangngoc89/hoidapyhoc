@@ -1,10 +1,8 @@
 <?php namespace Quiz\Models;
 
-use Quiz\lib\Tagging\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Quiz\lib\Tagging\Tag;
+use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
-use Quiz\lib\Repositories\Tag\TagRepository;
 
 class Exam extends Model {
 

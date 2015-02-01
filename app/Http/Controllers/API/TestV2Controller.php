@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
+use Quiz\Events\Test\ExamUpdateEvent;
 use Quiz\Http\Requests\Exam\TestCheckRequest;
 use Quiz\Http\Requests\Exam\ExamSaveRequest;
 use Quiz\Http\Requests\Exam\ExamEditRequest;
@@ -37,7 +38,7 @@ class TestV2Controller extends APIController {
     /**
      * @var Larasponse
      */
-//    private $fractal;
+    private $fractal;
 
 
     /**
@@ -60,7 +61,8 @@ class TestV2Controller extends APIController {
 
 	public function index()
 	{
-        $limit = $this->request->limit ?: 3;
+        $limit = $this->request->limit ?: 10;
+
         $test = $this->test->paginate($limit);
 
         $result = $this->fractal->paginatedCollection($test, new ExamTransformers());
@@ -77,7 +79,7 @@ class TestV2Controller extends APIController {
 	{
         return $this->tryCatch(function() use ($transformer,$request)
         {
-            $test = new TestStoreSaver($request->all());
+            $test = new ExamStoreSaver($request->all());
             $test = $test->save();
             $response = $transformer->createResponse($test);
 
@@ -107,14 +109,16 @@ class TestV2Controller extends APIController {
      */
     public function update($test, ExamEditRequest $request, ExamTransformers $transformer)
     {
-//        return $this->tryCatch(function() use ($transformer,$request, $test)
-//        {
+        return $this->tryCatch(function() use ($transformer,$request, $test)
+        {
             $test = new ExamEditSaver($request->all(),$test);
             $test = $test->save();
             $response = $transformer->createResponse($test);
 
+            event( new ExamUpdateEvent($test));
+
             return $response;
-//        });
+        });
     }
 
     /**

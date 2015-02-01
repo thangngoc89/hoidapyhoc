@@ -4,7 +4,7 @@ use Quiz\Events\Event;
 
 use Illuminate\Queue\SerializesModels;
 
-class TestUpdateEvent extends Event {
+class ExamUpdateEvent extends Event {
 
 	use SerializesModels;
 

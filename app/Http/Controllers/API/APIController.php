@@ -40,14 +40,14 @@ class APIController extends \Quiz\Http\Controllers\Controller {
             if (in_array($col, $this->columnList))
             {
                 if (!empty($col) and $col != 0)
-                    $this->query = $this->query->where($col,'like','%'.$col.'%');
+                    $this->query = $this->query->where($col,$this->input->get($col));
             }
         }
     }
 
     private function parseKeywords()
     {
-        $keywords = ['page','q','_sort','_sortDir','per_page'];
+        $keywords = ['page','q','_sortField','_sortDir','_perPage'];
         foreach ($keywords as $keyword)
             $this->{$keyword}();
     }
@@ -76,13 +76,13 @@ class APIController extends \Quiz\Http\Controllers\Controller {
             $this->query = $this->query->orWhere($col,'like','%'.$this->input->q.'%');
         }
     }
-    private function _sort()
+    private function _sortField()
     {
         // Prevent sort by un exists column cause query error
-        if (!in_array($this->input->_sort, $this->columnList))
+        if (!in_array($this->input->_sortField, $this->columnList))
             return false;
 
-        $this->query = $this->query->orderBy($this->input->_sort,$this->input->_sortDir);
+        $this->query = $this->query->orderBy($this->input->_sortField,$this->input->_sortDir);
     }
 
     private function _sortDir()
@@ -90,8 +90,8 @@ class APIController extends \Quiz\Http\Controllers\Controller {
         // do nothing
     }
 
-    private function per_page()
+    private function _perPage()
     {
-        $this->query = $this->query->paginate($this->input->per_page);
+        $this->query = $this->query->paginate($this->input->_perPage);
     }
 }

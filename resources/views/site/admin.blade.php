@@ -9,7 +9,7 @@
     <csrf name="csrf" content="{{ $encrypted_token['encrypted_token'] }}" />
 </head>
 
-<body ng-app="myApp" ng-controller="main">
+<body ng-app="myApp">
 <div ui-view></div>
 <script src="/assets/js/angular.js" type="text/javascript"></script>
 <script src="/assets/js/ng-admin.min.js" type="text/javascript"></script>

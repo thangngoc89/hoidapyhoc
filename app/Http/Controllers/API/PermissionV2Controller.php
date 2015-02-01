@@ -43,7 +43,7 @@ class PermissionV2Controller extends APIController {
 
         $result = $this->fractal->paginatedCollection($permissions, new PermissionTransformers());
 
-        return $this->makeResponse($result);
+        return $result;
 	}
 
 	/**

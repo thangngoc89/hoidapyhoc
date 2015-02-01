@@ -7,12 +7,6 @@
 
     var app = angular.module('myApp', ['ng-admin']);
 
-    app.controller('main', function ($scope, $rootScope, $location) {
-        $rootScope.$on('$stateChangeSuccess', function () {
-            $scope.displayBanner = $location.$$path === '/dashboard';
-        });
-    });
-
     app.directive('createdAt', function () {
         return {
             restrict: 'E',
@@ -31,15 +25,14 @@
                 response.totalCount = data.meta.pagination.total;
                 data = data.data;
             }
-            console.log(response);
+            //console.log(response);
             return data;
         });
         RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
-            if (operation == 'getList' && what == 'entityName') {
+            if (operation == 'getList') {
+
                 params.page = params._page;
-                params.limit = params._perPage;
                 delete params._page;
-                delete params._perPage;
             }
             return { params: params };
         });
@@ -56,7 +49,7 @@
 
         var app = new Application('Hỏi Đáp Y Học')
             // remember to change the following to your api link
-            .baseApiUrl('http://newquiz.dev/api/v2');
+            .baseApiUrl('http://newquiz.dev/api/v2/');
 
         var user = new Entity('users');
         var role = new Entity('roles');
@@ -108,7 +101,7 @@
             .addField(new ReferenceMany('permissions')
                 .targetEntity(permission)
                 .targetField(new Field('display_name'))
-        )
+        );
         role.editionView()
             .addField(new Field('name').validation({required: true, minlength: 3}) )
             .addField(new ReferenceMany('permissions')
@@ -123,7 +116,9 @@
 
 
         user.dashboardView()
-            .title('New User')
+            .title('Newest User')
+            .sortField('username')
+            .sortDir('DESC')
             .order(3)
             .limit(10)
             .addField(new Field('id').label('ID'))

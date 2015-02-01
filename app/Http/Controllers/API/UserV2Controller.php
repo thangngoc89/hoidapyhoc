@@ -46,8 +46,7 @@ class UserV2Controller extends APIController {
 
         $result = $this->fractal->paginatedCollection($user, new UserTransformers());
 
-//        return $result;
-        return $this->makeResponse($result);
+        return $result;
 	}
 
 	/**
@@ -70,7 +69,6 @@ class UserV2Controller extends APIController {
 	public function show($user)
 	{
         return $this->fractal->item($user, new UserTransformers());
-
     }
 
 

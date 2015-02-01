@@ -32,7 +32,8 @@
 			"database"
 		],
 		"psr-4": {
-			"Quiz\\": "app/"
+			"Quiz\\": "app/",
+            "Zizaco\\Entrust\\": "app/lib/entrust/src/Entrust/"
 		}
 	},
 	"autoload-dev": {

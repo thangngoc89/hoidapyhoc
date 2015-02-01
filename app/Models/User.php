@@ -117,17 +117,4 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $url;
     }
 
-    /**
-     * @param $username
-     * @return mixed
-     */
-    public function findByUsernameOrFail($username)
-    {
-        if ($user = $this->where('username',$username)->first())
-        {
-            return $user;
-        } else {
-            abort(404);
-        }
-    }
 }

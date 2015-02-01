@@ -41,8 +41,8 @@ class Profile extends Model {
     {
         switch($provider)
         {
-            case 'facebook' : return 'Facebook'; break;
-            case 'google' : return 'Google'; break;
+            case 'facebook' : return 'Facebook';
+            case 'google' : return 'Google';
         }
     }
 

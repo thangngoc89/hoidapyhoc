@@ -1,7 +1,6 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Quiz\Http\Requests;
 use Quiz\Http\Controllers\Controller;
 
@@ -9,6 +8,7 @@ use Illuminate\Http\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\Exam;
+use Quiz\Services\TagHomePage;
 
 class TagController extends Controller {
     /**
@@ -34,32 +34,10 @@ class TagController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(TagHomePage $view)
     {
-        #TODO Cache this page ?????
-        $perPage = 50;
-        switch($this->request->tab)
-        {
-            case 'list':
-                $tags = $this->tag->has('exams')->paginate($perPage);
-                $name = 'Danh sách Tag';
-                break;
-            case 'new':
-                $tags = $this->tag->has('exams')->orderBy('id','DESC')->take($perPage)->get();
-                $name = 'Tag mới nhất';
-                break;
-            default :
-                $tags = $this->tag->has('exams')->with('exams')->take($perPage)->get()->sortByDesc(function($query) {
-                    return $query->exams->count();
-                });
-                $name = 'Tag nổi bật';
-                break;
-        }
-        if ($tags instanceof LengthAwarePaginator)
-            $tags->appends($this->request->except('page'));
-
-        return view('site.tag', compact('tags','name'));
-	}
+        return $view->execute($this->request);
+    }
 
 	/**
 	 * Display the specified resource.

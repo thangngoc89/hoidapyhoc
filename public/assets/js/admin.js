@@ -22,14 +22,16 @@
 
     /* Pass csrf token to X-CSRF-TOKEN header on every request */
     app.config(['$httpProvider',function($httpProvider){
-        $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = document.getElementsByTagName('csrf')[0].getAttribute("content")
+        $httpProvider.defaults.headers.common['X-XSRF-TOKEN'] = document.getElementsByTagName('csrf')[0].getAttribute("content")
     }]);
 
     app.config(function(RestangularProvider) {
         RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
             if (operation == "getList") {
+                response.totalCount = data.meta.pagination.total;
                 data = data.data;
             }
+            console.log(response);
             return data;
         });
         RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {

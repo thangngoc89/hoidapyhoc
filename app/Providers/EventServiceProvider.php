@@ -14,7 +14,10 @@ class EventServiceProvider extends ServiceProvider {
 			'EventListener',
 		],
         \Quiz\Events\ViewTestEvent::class => [
-            \Quiz\Handlers\Events\IncreaseViewCount::class,
+            \Quiz\Handlers\Events\Exam\IncreaseViewCount::class,
+        ],
+        \Quiz\Events\Exam\ExamUpdateEvent::class => [
+            \Quiz\Handlers\Events\Exam\RebakeHistoryScore::class,
         ],
 	];
 

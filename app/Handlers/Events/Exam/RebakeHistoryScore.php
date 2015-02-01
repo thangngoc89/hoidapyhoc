@@ -27,7 +27,7 @@ class RebakeHistoryScore implements ShouldBeQueued {
 	 */
 	public function handle(ExamUpdateEvent $event)
 	{
-		//
+		//https://github.com/thangngoc89/quiz/blob/d14fcdabdba78442412500541bc17222bb226a00/app/controllers/MainController.php
 	}
 
 }

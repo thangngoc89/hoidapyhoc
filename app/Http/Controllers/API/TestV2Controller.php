@@ -3,7 +3,8 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
-use Quiz\Events\Test\ExamUpdateEvent;
+use Quiz\Events\Exam\ExamUpdateEvent;
+
 use Quiz\Http\Requests\Exam\TestCheckRequest;
 use Quiz\Http\Requests\Exam\ExamSaveRequest;
 use Quiz\Http\Requests\Exam\ExamEditRequest;

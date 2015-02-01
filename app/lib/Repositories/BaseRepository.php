@@ -42,6 +42,8 @@ interface BaseRepository {
 
     public function count();
 
+    public function getTable();
+
     public function tag($string);
 
     public function untag($string);

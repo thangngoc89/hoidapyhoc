@@ -1,45 +1,55 @@
-<?php
-use ApiHandler;
+<?php namespace Quiz\Http\Controllers\API;
 
-class RolesV2Controller extends \APIController {
+use Illuminate\Http\Request;
+use Sorskod\Larasponse\Larasponse;
+use Quiz\lib\Repositories\User\UserRepository;
+use Quiz\Models\Enstrust\Role;
+use Quiz\Models\Enstrust\Permission;
+use Quiz\lib\API\Role\RoleTransformers;
+
+class RoleV2Controller extends APIController {
 
     protected $user;
     protected $role;
-    protected $permission;
+    /**
+     * @var Larasponse
+     */
+    private $fractal;
+    /**
+     * @var Request
+     */
+    private $request;
 
-    public function __construct(User $user, Role $role, Permission $permission)
+
+    /**
+     * @param UserRepository $user
+     * @param Role $role
+     * @param Request $request
+     * @param Larasponse $fractal
+     */
+    public function __construct(UserRepository $user, Role $role, Request $request,Larasponse $fractal)
     {
         parent::__construct();
         $this->user = $user;
         $this->role = $role;
-        $this->permission = $permission;
+        $this->fractal = $fractal;
+        $this->request = $request;
     }
 
     public function index()
     {
-        try{
-            $statusCode = 200;
-            // dd($this->passParams('roles'));
-            $builder = ApiHandler::parseMultiple($this->role->with('perms'), array(), $this->passParams('roles'));
-            $roles = $builder->getResult();
+        $test = $this->builder($this->request,$this->role);
 
-            $response = [];
-            foreach($roles as $role){
-                $response[] = $this->responseMap($role);
-            }
-            return $this->makeResponse($response,$statusCode, $builder);
-        }catch (Exception $e){
-            $statusCode = 500;
-            $message = $e->getMessage();
-            return Response::json($message, $statusCode);
-        }
+        $result = $this->fractal->paginatedCollection($test, new RoleTransformers());
+
+        return $result;
     }
 
     public function show($id)
     {
         try{
             $statusCode = 200;
-            $role = $this->role->findOrFail($id);
+            $role = $this->role->find($id);
             $response = $this->responseMap($role, true);
             return Response::json($response, $statusCode);
         }catch (Exception $e){
@@ -121,23 +131,5 @@ class RolesV2Controller extends \APIController {
             $error = $e->getMessage();
             return Response::json($error, $statusCode);
         }
-    }
-
-    private function responseMap($object, $show = false)
-    {
-        /*
-         * Prevent multi pivot table query on listView (which is useless)
-         */
-        $return = [
-            'id'            => $object->id,
-            'name'          => $object->name,
-            'count'         => $object->assigned_role()->count(),
-            'created_at'    => $object->created_at,
-        ];
-        if ($show)
-        {
-            $return['permissions'] = $object->perms()->get()->modelKeys();
-        }
-        return $return;
     }
 }

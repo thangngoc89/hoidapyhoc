@@ -127,7 +127,7 @@ abstract class AbstractEloquentRepository {
 
     public function get()
     {
-        return $this->get();
+        return $this->model->get();
     }
 
     public function paginate($number)
@@ -144,6 +144,11 @@ abstract class AbstractEloquentRepository {
     public function count()
     {
         return $this->model->count();
+    }
+
+    public function getTable()
+    {
+        return $this->model->getTable();
     }
 
 

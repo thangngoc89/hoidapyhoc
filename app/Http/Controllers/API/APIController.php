@@ -2,57 +2,90 @@
 
 
 class APIController extends \Quiz\Http\Controllers\Controller {
-    /**
-     * @var Larasponse
-     */
 
-    /**
-     * @param Larasponse $fractal
-     */
+    protected $query;
+
+    protected $search;
+
+    protected $input;
+
     public function __construct()
     {
 
     }
-    public function passParams($table_name){
-        //Print out all table's columns
-        $columns = Schema::getColumnListing($table_name);
-        $params = [
-            '_limit'    => 10,
-            '_offset'   => 0,
-        ];
-        // If have _sort is a valid column
-        if (in_array(Input::get('_sort'), $columns))
-        {
-            // Default sortDir is ASC
-            $sortDir = (!empty(Input::get('_sortDir'))) ? Input::get('_sortDir') : 'ASC';
-            // ASC --> null   DESC --> -
-            $sort = ($sortDir === 'ASC' ) ? '' : '-';
-            $sort .= Input::get('_sort');
-            $params ['_sort'] = $sort;
-        }
-        if (!empty(Input::get('page')) && !empty(Input::get('per_page')))
-        {
-            $params['_limit'] = Input::get('per_page');
-            $params['_offset'] = (Input::get('page') - 1)*Input::get('per_page');
-        }
-        if (!empty(Input::get('q')) && Input::get('q') != '{}')
-        {
-            $query = json_decode(Input::get('q'));
-            $params['_q'] = $query->query;
-        }
 
-        foreach ($columns as $column)
-        {
-            // Use strlen == 0 instead of !empty to prevent boolean filter broken
-            if (strlen(Input::get($column)) != 0)
-            {
-                $params[$column] = Input::get($column);
-            }
-        }
-        $params ['_config'] = 'meta-filter-count';
-        return $params;
+    public function makeResponse($result){
+        return response()->json($result)->header('X-Total-Count',$result['meta']['pagination']['total']);
     }
-    public function makeResponse($response,$statusCode, $builder){
-        return Response::json($response,$statusCode)->header('X-Total-Count', $builder->getHeaders()['Meta-Filter-Count']);
+
+    public function builder($input, $model, $search = array())
+    {
+        $columnList = \Schema::getColumnListing($model->getTable());
+
+        // Set some share data in class
+        $this->search = $search;
+
+        $this->query = $model;
+
+        $this->input = $input;
+
+        // Apply where clause
+        $this->whereClause($columnList);
+
+        // Apply API keywords
+        $this->parseKeywords();
+
+        return $this->query;
+    }
+
+    private function whereClause($columnList)
+    {
+        foreach ($this->input->all() as $col)
+        {
+            if (!in_array($col,$columnList)) continue;
+
+            if (!empty($col) and $col != 0)
+                $this->query = $this->query->where($col,'like','%'.$col.'%');
+        }
+    }
+
+    private function parseKeywords()
+    {
+        $keywords = ['page','q','_sort','_sortDir','per_page'];
+        foreach ($keywords as $keyword)
+            $this->{$keyword}();
+    }
+
+    private function page()
+    {
+        // do nothing
+    }
+
+    private function q()
+    {
+        if (empty($this->search))
+            return false;
+
+        // Search here with given cloumn
+        foreach ($this->search as $col)
+        {
+            $this->query = $this->query->orWhere($col,'like','%'.$this->input->q.'%');
+        }
+    }
+    private function _sort()
+    {
+        if (is_null($this->input->_sort))
+            return false;
+        $this->query = $this->query->orderBy($this->input->_sort,$this->input->_sortDir);
+    }
+
+    private function _sortDir()
+    {
+        // do nothing
+    }
+
+    private function per_page()
+    {
+        $this->query = $this->query->paginate($this->input->per_page);
     }
 }

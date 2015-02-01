@@ -36,7 +36,7 @@ class UserV2Controller extends APIController {
      * @param Guard $auth
      * @param Larasponse $fractal
      */
-    public function __construct(UserRepository $user, Request $request, Guard $auth, Larasponse $fractal)
+    public function __construct(User $user, Request $request, Guard $auth, Larasponse $fractal)
     {
         $this->user = $user;
         $this->request = $request;
@@ -45,13 +45,12 @@ class UserV2Controller extends APIController {
     }
 	public function index()
 	{
-//        \App::bind('League\Fractal\Serializer\SerializerAbstract', 'League\Fractal\Serializer\JsonApiSerializer');
-        $limit = $this->request->limit ?: 20;
-        $test = $this->user->paginate($limit);
+        $user = $this->builder($this->request,$this->user,['email','username','name']);
 
-        $result = $this->fractal->paginatedCollection($test, new UserTransformers());
+        $result = $this->fractal->paginatedCollection($user, new UserTransformers());
 
-        return $result;
+//        return $result;
+        return $this->makeResponse($result);
 	}
 
 	/**

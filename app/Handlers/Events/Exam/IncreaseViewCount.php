@@ -1,4 +1,4 @@
-<?php namespace Quiz\Handlers\Events;
+<?php namespace Quiz\Handlers\Events\Exam;
 
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;

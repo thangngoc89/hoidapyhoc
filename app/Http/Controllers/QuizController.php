@@ -28,30 +28,37 @@ class QuizController extends Controller {
      * @var Tag
      */
     private $tag;
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
      * @param Tag $tag
      * @param Exam $test
      * @param History $history
      * @param Guard $auth
+     * @param Request $request
      */
-    public function __construct(Tag $tag, Exam $test, History $history, Guard $auth)
+    public function __construct(Tag $tag, Exam $test, History $history, Guard $auth, Request $request)
     {
         $this->test     = $test;
         $this->history  = $history;
         $this->auth     = $auth;
         $this->tag      = $tag;
-        $this->middleware('auth', ['except' => ['index','show','showHistory','leaderboard']]);
+        $this->middleware('auth', ['only' => ['create','edit']]);
+        $this->middleware('tests.view_throttle', ['except' => ['create','edit','index']]);
+        $this->request = $request;
     }
 
+
     /**
-     * @param bool $filter
-     * @param bool $info
-     * @return mixed
+     * @param QuizHomePage $view
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request, QuizHomePage $view)
+    public function index(QuizHomePage $view)
 	{
-        return $view->execute($request);
+        return $view->execute($this->request);
 	}
 
 
@@ -76,7 +83,7 @@ class QuizController extends Controller {
                             ->get();
         }
 
-        event(new ViewTestEvent($t));
+        event(new ViewTestEvent($t, $this->request));
         // Define for blade template
         $viewHistory = false;
         return view('quiz.do',compact('t','haveHistory','viewHistory'));
@@ -100,6 +107,8 @@ class QuizController extends Controller {
             ->where('isDone',1)
             ->with('user')
             ->paginate(50);
+
+        event(new ViewTestEvent($t, $this->request));
 
         return view('quiz.leaderboard',compact('t','top'));
 
@@ -125,6 +134,8 @@ class QuizController extends Controller {
 
         // Define for blade template
         $viewHistory = true;
+
+        event(new ViewTestEvent($t, $this->request));
 
         return view('quiz.history',compact('t','history','viewHistory'));
     }

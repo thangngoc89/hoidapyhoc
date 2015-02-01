@@ -48,7 +48,7 @@
              </div>
              <div class="media--conversation__meta hide-mobile">
                   <span class="media--conversation__replies">
-                      <a href="{{ $t->link() }}">{{ $t->countHistory() }}</a>lượt xem
+                      <a href="{{ $t->link() }}">{{ $t->views }}</a>lượt xem
                   </span>
               </div>
 

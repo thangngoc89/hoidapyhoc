@@ -28,6 +28,7 @@ class Kernel extends HttpKernel {
 		'auth' => 'Quiz\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'Quiz\Http\Middleware\RedirectIfAuthenticated',
+		'tests.view_throttle' => 'Quiz\Http\Middleware\TestViewsCountThrottle',
 	];
 
 }

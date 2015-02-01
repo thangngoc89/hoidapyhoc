@@ -21,7 +21,7 @@ Testimonials
 @section('body')
 <div class="container">
     <!-- TESTIMONIALS -->
-    <div class="testimonials" id="home-reviews">
+    <div class="testimonials">
         <div class="container wrap wow fadeIn">
 
         <h2 class="section-heading">

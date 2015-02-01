@@ -1,7 +1,7 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
-use Quiz\Http\Requests\UserRegisterFinishRequest;
+use Quiz\Http\Requests\AuthEditRequest;
 use Quiz\lib\Repositories\User\UserRepository as User;
 use Quiz\Models\History;
 
@@ -32,20 +32,30 @@ class UserController extends Controller {
         $this->history = $history;
     }
 
+    public function index()
+    {
+        $page = \Input::get('page');
+
+        $users = \Cache::remember('usersIndex'.$page, 1440, function () {
+            return $this->user->orderBy('created_at')->paginate(51);
+        });
+
+        return view('user.usersIndex', compact('users'));
+    }
     public function getFinish()
     {
         $user = $this->auth->user();
         if (!is_null($user->username))
-            return redirect('/@'.$user->username)->with('info','Bạn đã hoàn thành đăng kí');
+            return redirect('/@'.$user->username)->with('info','Bạn đã hoàn tất quá trình đăng kí');
 
-        return view('user.finishRegistra',compact('user'));
+        return view('user.authEdit',compact('user'));
     }
 
     /**
-     * @param UserRegisterFinishRequest $request
+     * @param AuthEditRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postFinish(UserRegisterFinishRequest $request)
+    public function postFinish(AuthEditRequest $request)
     {
         $user = $this->user->find($this->auth->user()->id);
         $user->update($request->input());
@@ -57,7 +67,7 @@ class UserController extends Controller {
         $user = $this->user->getFirstBy('username', $username);
 
         $key = 'profileUserHistory'.$user->id;
-        $history = \Cache::tags('history','user'.$user->id)->remember($key, 10, function() use ($user) {
+        $history = \Cache::tags('user'.$user->id)->remember($key, 10, function() use ($user) {
             return $this->history->where('user_id',$user->id)
                 ->with('test','test.category','test.question')
                 ->orderBy('updated_at','DESC')

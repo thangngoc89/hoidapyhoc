@@ -26,7 +26,7 @@ interface BaseRepository {
 
     public function update($input);
 
-    public function orderBy($column, $direction);
+    public function orderBy($column, $direction = 'ASC');
 
     public function sortByDesc($callback);
 

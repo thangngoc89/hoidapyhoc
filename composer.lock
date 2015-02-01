@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0834d5740d33bcd04b5e480769296016",
+    "hash": "70913a70056573c22269219b8358895a",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -950,7 +950,7 @@
         },
         {
             "name": "intervention/image",
-            "version": "dev-master",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
@@ -1009,13 +1009,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Intervention/imagecache.git",
-                "reference": "72611e41da15d3766e7325fb0dfa9d7290ffc19b"
+                "url": "https://github.com/thangngoc89/imagecache.git",
+                "reference": "40754c24861e88419477b8fbbb4f9dc095990f11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/imagecache/zipball/72611e41da15d3766e7325fb0dfa9d7290ffc19b",
-                "reference": "72611e41da15d3766e7325fb0dfa9d7290ffc19b",
+                "url": "https://api.github.com/repos/thangngoc89/imagecache/zipball/40754c24861e88419477b8fbbb4f9dc095990f11",
+                "reference": "40754c24861e88419477b8fbbb4f9dc095990f11",
                 "shasum": ""
             },
             "require": {
@@ -1035,7 +1035,6 @@
                     "Intervention\\Image\\": "src/Intervention/Image"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1055,7 +1054,10 @@
                 "imagick",
                 "laravel"
             ],
-            "time": "2015-01-29 15:58:56"
+            "support": {
+                "source": "https://github.com/thangngoc89/imagecache/tree/master"
+            },
+            "time": "2015-02-01 05:40:36"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -4113,8 +4115,6 @@
         "sorskod/larasponse": 20,
         "cocur/slugify": 20,
         "predis/predis": 20,
-        "intervention/image": 20,
-        "intervention/imagecache": 20,
         "barryvdh/laravel-debugbar": 20,
         "filp/whoops": 20
     },

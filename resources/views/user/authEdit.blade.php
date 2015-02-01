@@ -24,7 +24,6 @@
             <div class="panel-body">
 
                 <fieldset>
-                @include('notification')
                     <h3 class="signup-subheading">Thông tin:</h3>
 
                     <!-- Text input-->

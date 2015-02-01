@@ -70,7 +70,7 @@ abstract class AbstractEloquentRepository {
      * @param $direction
      * @return mixed
      */
-    public function orderBy($column, $direction)
+    public function orderBy($column, $direction = 'ASC')
     {
         return $this->model->orderBy($column, $direction);
     }

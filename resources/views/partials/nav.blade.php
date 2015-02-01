@@ -86,7 +86,7 @@
 
             <!-- Member -->
             <li id="navbar-link--work">
-                <a class="navbar-link" href="/users" target="_blank">Thành viên</a>
+                <a class="navbar-link" href="/users">Thành viên</a>
             </li>
         </ul>
         <!-- Search -->

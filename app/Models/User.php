@@ -103,7 +103,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getGravatar()
     {
         $email = $this->email;
-        $s = 50;
+        $s = 200;
         $d = 'monsterid'; # [ 404 | mm | identicon | monsterid | wavatar ]
         $r = 'g';
         $img = false;

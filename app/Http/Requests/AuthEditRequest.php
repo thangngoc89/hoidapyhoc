@@ -2,7 +2,7 @@
 
 use Illuminate\Validation\Validator;
 
-class UserRegisterFinishRequest extends Request {
+class AuthEditRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -13,8 +13,7 @@ class UserRegisterFinishRequest extends Request {
 	{
         if (\Auth::check())
 		    return true;
-        else
-            return false;
+        return false;
 	}
 
 	/**
@@ -24,9 +23,10 @@ class UserRegisterFinishRequest extends Request {
 	 */
 	public function rules()
 	{
+        $user = \Auth::user();
 		return [
 			'name'  => 'required|min:6',
-            'username'  => 'required|min:3|alpha_num|unique:users'
+            'username'  => 'required|min:3|alpha_num|unique:users,id,'.$user->id
 		];
 	}
 
@@ -57,7 +57,7 @@ class UserRegisterFinishRequest extends Request {
         return [
             'required'      => 'Bạn phải nhập :attribute.',
             'min'           => ':attribute phải có độ dài tối thiểu :min',
-            'username.required' => 'Tên thành viên là trường bắt buộc',
+            'username.required' => 'Tên thành viên không được để trống',
             'username.unique' => 'Tên thành viên này đã có người sử dụng',
             'name.min'     => 'Tên có độ dài tối thiểu 6 kí tự'
         ];

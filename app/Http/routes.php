@@ -34,24 +34,25 @@ get('cleanCache','HomeController@cleanCache');
 get('testimonials','HomeController@testimonials');
 
 /** ------------------------------------------
- *  User Group
+ *  Auth and User Group
  *  ------------------------------------------
  */
 get('@{username}','UserController@profile');
+get('users','UserController@index');
 
 get('auth/external/{provider}','Auth\AuthController@external');
-
 get('auth/edit','UserController@getFinish');
 post('auth/edit','UserController@postFinish');
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-    'user' => 'UserController',
 ]);
 
+/** ------------------------------------------
+ *  Quiz Group
+ *  ------------------------------------------
+ */
 Route::resource('quiz','QuizController');
-
 Route::group(array('prefix' => 'quiz'), function()
 {
     Route::get('lam-bai/{slug}/{tests}', 'QuizController@show');
@@ -59,6 +60,10 @@ Route::group(array('prefix' => 'quiz'), function()
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 });
 
+/** ------------------------------------------
+ *  API V2 Group
+ *  ------------------------------------------
+ */
 Route::group(array('prefix' => 'api/v2'), function()
 {
     post('tests/{tests}/check', 'API\TestV2Controller@check');

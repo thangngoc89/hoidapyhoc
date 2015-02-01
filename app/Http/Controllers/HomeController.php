@@ -88,6 +88,11 @@ class HomeController extends Controller {
         return view('site.stat', compact('stat'));
     }
 
+    public function admin()
+    {
+        return view('site.admin');
+    }
+
     public function cleanCache()
     {
         //

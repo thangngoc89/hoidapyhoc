@@ -1,7 +1,18 @@
 <?php namespace Quiz\Http\Controllers\API;
 
-class APIController extends \Quiz\Http\Controllers\Controller {
 
+class APIController extends \Quiz\Http\Controllers\Controller {
+    /**
+     * @var Larasponse
+     */
+
+    /**
+     * @param Larasponse $fractal
+     */
+    public function __construct()
+    {
+
+    }
     public function passParams($table_name){
         //Print out all table's columns
         $columns = Schema::getColumnListing($table_name);

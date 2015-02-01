@@ -5,8 +5,8 @@
     <title>ng-admin Admin CP for Laravel 4 Bootstrap Starter Site</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/assets/css/ng-admin.min.css">
-    <link rel="stylesheet" href="/assets/css/admin.css">
-    <meta name="csrf" content="{{ $encrypted_token['encrypted_token'] }}" />d
+    {{--<link rel="stylesheet" href="/assets/css/admin.css">--}}
+    <csrf name="csrf" content="{{ $encrypted_token['encrypted_token'] }}" />
 </head>
 
 <body ng-app="myApp" ng-controller="main">

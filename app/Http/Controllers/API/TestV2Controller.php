@@ -13,7 +13,6 @@ use Quiz\lib\API\Exam\TestStoreSaver;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
 
-use Quiz\Services\PullExternalImage;
 use Sorskod\Larasponse\Larasponse;
 
 class TestV2Controller extends APIController {
@@ -36,7 +35,7 @@ class TestV2Controller extends APIController {
     /**
      * @var Larasponse
      */
-    private $fractal;
+//    private $fractal;
 
 
     /**
@@ -44,7 +43,6 @@ class TestV2Controller extends APIController {
      * @param History $history
      * @param Request $request
      * @param Guard $auth
-     * @param Question $question
      * @param Larasponse $fractal
      */
     public function __construct(Exam $test, History $history, Request $request, Guard $auth, Larasponse $fractal)

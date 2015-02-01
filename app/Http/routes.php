@@ -33,6 +33,7 @@ get('/','HomeController@index');
 get('thongke','HomeController@stat');
 get('cleanCache','HomeController@cleanCache');
 get('testimonials','HomeController@testimonials');
+get('admin','HomeController@admin');
 
 /** ------------------------------------------
  *  Auth and User Group
@@ -74,6 +75,9 @@ Route::group(array('prefix' => 'api/v2'), function()
     Route::resource('files','API\UploadV2Controller');
     Route::resource('tests', 'API\TestV2Controller');
     Route::resource('search','API\SearchV2Controller');
+    Route::resource('users','API\UserV2Controller');
+    Route::resource('roles','API\RoleV2Controller');
+    Route::resource('permissions','API\PermissionV2Controller');
 });
 
 /** ------------------------------------------

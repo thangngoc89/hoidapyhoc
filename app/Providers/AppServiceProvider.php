@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->bind(
             'League\Fractal\Serializer\SerializerAbstract',
-            'League\Fractal\Serializer\DataArraySerializer'
+            'League\Fractal\Serializer\ArraySerializer'
         );
 	}
 

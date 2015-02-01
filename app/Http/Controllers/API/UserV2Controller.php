@@ -1,7 +1,14 @@
 <?php namespace Quiz\Http\Controllers\API;
 
-use Quiz\Http\Controllers\API\APIController;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
+use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\Models\User;
+use Sorskod\Larasponse\Larasponse;
+
+use Quiz\lib\API\User\UserTransformers;
+
+
 class UserV2Controller extends APIController {
 
 	/**
@@ -10,28 +17,42 @@ class UserV2Controller extends APIController {
 	 * @return Response
 	 */
     protected $user;
-    public function __construct(User $user)
+    /**
+     * @var Request
+     */
+    private $request;
+    /**
+     * @var Guard
+     */
+    private $auth;
+    /**
+     * @var Larasponse
+     */
+    private $fractal;
+
+    /**
+     * @param UserRepository $user
+     * @param Request $request
+     * @param Guard $auth
+     * @param Larasponse $fractal
+     */
+    public function __construct(UserRepository $user, Request $request, Guard $auth, Larasponse $fractal)
     {
-        parent::__construct();
-        $this->user         = $user;
+        $this->user = $user;
+        $this->request = $request;
+        $this->auth = $auth;
+        $this->fractal = $fractal;
     }
 	public function index()
 	{
-        try{
-            $statusCode = 200;
-            $builder = ApiHandler::parseMultiple($this->user->with('history'), array('name,username'), $this->passParams('users'));
-            $users = $builder->getResult();
-            $response = [];
-            foreach($users as $user){
-                $response[] = $this->responseMap($user);
-            }
+//        \App::bind('League\Fractal\Serializer\SerializerAbstract', 'League\Fractal\Serializer\JsonApiSerializer');
+        $limit = $this->request->limit ?: 20;
+        $test = $this->user->paginate($limit);
 
-            return $this->makeResponse($response,$statusCode, $builder);
-        }catch (Exception $e){
-            $statusCode = 500;
-            $message = $e->getMessage();
-            return Response::json($message, $statusCode);
-        }
+        $result = $this->fractal->paginatedCollection($test, new UserTransformers());
+//        return array_merge($result['data']);
+
+        return $result;
 	}
 
 	/**

@@ -30,7 +30,7 @@ interface BaseRepository {
 
     public function sortByDesc($callback);
 
-    public function with(array $with = array());
+    public function with($with);
 
     public function has($relation);
 

@@ -69,28 +69,4 @@ class Tag extends Eloquent {
 		$this->attributes['name'] = call_user_func($displayer, $value);
 	}
 
-    /**
-     * Return an array of tag list and count for Select2
-     * @return array
-     */
-    public function tagListForSelect2()
-    {
-        return \Cache::tags('tests','tags')->rememberForever('tagListForSelect2', function() {
-            $tagList = $this->with('exams')->get()->sortByDesc(function($tag)
-            {
-                return $tag->exams->count();
-            });
-
-            $tags = array();
-            foreach($tagList as $tag)
-            {
-                $tags[] = [
-                    'text' => $tag->name,
-                    'count' => $tag->exams->count()
-                ];
-            }
-
-            return $tags;
-        });
-    }
 }

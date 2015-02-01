@@ -86,7 +86,7 @@ abstract class AbstractEloquentRepository {
      * @param array $with
      * @return mixed
      */
-    public function with(array $with = array())
+    public function with($with)
     {
         return $this->model->with($with);
     }

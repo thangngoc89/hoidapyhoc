@@ -3,6 +3,7 @@
 use Illuminate\Auth\Guard;
 use Quiz\Events\ViewTestEvent;
 use Quiz\lib\API\Exam\ExamTransformers;
+use Quiz\lib\Repositories\Tag\TagRepository;
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
@@ -40,7 +41,7 @@ class QuizController extends Controller {
      * @param Guard $auth
      * @param Request $request
      */
-    public function __construct(Tag $tag, Exam $test, History $history, Guard $auth, Request $request)
+    public function __construct(TagRepository $tag, Exam $test, History $history, Guard $auth, Request $request)
     {
         $this->test     = $test;
         $this->history  = $history;
@@ -120,7 +121,6 @@ class QuizController extends Controller {
         event(new ViewTestEvent($t, $this->request));
 
         return view('quiz.leaderboard',compact('t','top'));
-
     }
 
     /**
@@ -159,7 +159,7 @@ class QuizController extends Controller {
         $name = "Tạo đề thi mới";
         $data = [
             'type' => 'create',
-            'tags' => $this->tag->tagListForSelect2(),
+            'tags' => $this->tag->allTagsWithCount(),
         ];
 
         $data = json_encode($data);
@@ -179,7 +179,7 @@ class QuizController extends Controller {
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($tests),
-            'tags' => $tests->selectedTags(),
+            'tags' => $this->tag->examSelectedTags($tests->id)
         ];
 
         $data = json_encode($data);

@@ -91,13 +91,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getAvatar()
     {
         return ("/files/user/{$this->id}/avatar.jpg");
-//
-//        if ($this->avatar != null)
-//        {
-//            return $this->avatar;
-//        } else {
-//            return $this->getGravatar();
-//        }
     }
 
     /**
@@ -105,9 +98,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getName()
     {
-        if ($this->username != null)
-            return $this->username;
-        return $this->name;
+        if (is_null($this->username))
+            return $this->name;
+        return $this->username;
     }
 
     /**

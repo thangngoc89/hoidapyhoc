@@ -117,11 +117,6 @@ class TestV2Controller extends APIController {
 //        });
     }
 
-//    public function pullPicture($id, PullExternalImage $puller)
-//    {
-//        $test = $this->test->find($id);
-//        return $puller->excute($test->content);
-//    }
     /**
      * Create a new history for test
      * @param $id

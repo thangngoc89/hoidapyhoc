@@ -4,6 +4,7 @@ use Quiz\lib\Tagging\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Quiz\lib\Tagging\Tag;
 use Quiz\lib\Helpers\Str;
+use Quiz\lib\Repositories\Tag\TagRepository;
 
 class Exam extends Model {
 
@@ -11,7 +12,7 @@ class Exam extends Model {
 
     protected $table = 'tests';
 
-    protected $fillable = array('name','cid','content','begin','thoigian','description','is_file','file_id');
+    protected $fillable = array('name','content','begin','thoigian','description','is_file','file_id');
 
     public static function boot()
     {
@@ -53,14 +54,13 @@ class Exam extends Model {
         return $this->hasMany('Quiz\Models\History','test_id');
     }
 
-
     /*
      * Belongs to
      */
-    public function category()
-    {
-        return $this->belongsTo('Quiz\Models\Category','cid');
-    }
+//    public function category()
+//    {
+//        return $this->belongsTo('Quiz\Models\Category','cid');
+//    }
     public function user()
     {
         return $this->belongsTo('Quiz\Models\User');
@@ -73,9 +73,8 @@ class Exam extends Model {
 
     public function date($date=null)
     {
-        if(is_null($date)) {
+        if(is_null($date))
             return $date = $this->created_at->diffForHumans();
-        }
     }
 
     /*
@@ -83,16 +82,13 @@ class Exam extends Model {
      */
     public function link($type = null)
     {
-        switch($type)
-        {
-            case 'bangdiem':
-                return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
-            case 'edit':
-                return '/quiz/'.$this->id.'/edit';
-            default:
-                return '/quiz/lam-bai/'.$this->slug.'/'.$this->id;
-        }
+        if ($type == 'bangdiem')
+            return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
 
+        if ($type == 'edit')
+            return '/quiz/'.$this->id.'/edit';
+
+        return '/quiz/lam-bai/'.$this->slug.'/'.$this->id;
     }
 
     public function countHistory()
@@ -131,37 +127,6 @@ class Exam extends Model {
             }
 
             return $questions;
-        });
-    }
-
-    /**
-     * Return an array of selected tags and all tag for Select2
-     * @return mixed
-     */
-    public function selectedTags()
-    {
-        $key = 'selectedTags'.$this->id;
-
-        return \Cache::tags('tests','tags')->rememberForever($key, function() {
-            $tagList = Tag::with('exams')->get()->sortByDesc(function($tag)
-            {
-                return $tag->exams->count();
-            });
-
-            $selectedTags = $this->tagNames();
-            $tags = array();
-
-            foreach($tagList as $tag)
-            {
-                $tags[] = [
-                    'id' => $tag->name,
-                    'text' => $tag->name,
-                    'selected' => (boolean)(in_array($tag->name,$selectedTags)),
-                    'count' => (int) $tag->exams->count()
-                ];
-            }
-
-            return $tags;
         });
     }
 }

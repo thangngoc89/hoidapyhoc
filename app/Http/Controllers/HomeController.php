@@ -5,8 +5,8 @@ use Quiz\lib\Repositories\User\UserRepository;
 
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
-use Quiz\Models\Enstrust\Role;
-use Quiz\Models\Enstrust\Permission;
+
+use Quiz\lib\Repositories\Tag\TagRepository;
 
 use Quiz\Models\User;
 
@@ -93,9 +93,10 @@ class HomeController extends Controller {
         return view('site.admin');
     }
 
-    public function cleanCache()
+    public function cleanCache(TagRepository $tag)
     {
-        $user = \Auth::user();
-        dd($user->can('manage_exams'));
+        $tags = $tag->exams->find(1);
+
+        dd($tags);
     }
 }

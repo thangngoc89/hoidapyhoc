@@ -56,8 +56,8 @@ Route::controllers([
 Route::resource('quiz','QuizController');
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('lam-bai/{slug}/{tests}', 'QuizController@show');
-    Route::get('bang-diem/{slug}/{tests}', 'QuizController@leaderboard');
+    Route::get('lam-bai/{slug}/{id}', 'QuizController@show');
+    Route::get('bang-diem/{slug}/{id}', 'QuizController@leaderboard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 });
 

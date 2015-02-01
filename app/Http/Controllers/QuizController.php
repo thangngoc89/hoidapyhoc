@@ -68,8 +68,12 @@ class QuizController extends Controller {
      * @param $t
      * @return \Illuminate\View\View
      */
-    public function show($slug = null, $t)
+    public function show($slug = null, $id)
 	{
+        $t = \Cache::tags('tests')->rememberForever("testShow$slug$id", function () use ($id) {
+            return $this->test->getFirstBy('id',$id,['tagged','question']);
+        });
+        if (is_null($t)) abort(404);
         if ($t->slug != $slug)
             return redirect()->to($t->link());
 
@@ -96,8 +100,13 @@ class QuizController extends Controller {
      * @param $t
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function leaderboard($slug = null, $t)
+    public function leaderboard($slug = null, $id)
     {
+        $t = \Cache::tags('tests')->rememberForever("testLeaderboard$slug$id", function () use ($id) {
+            return $this->test->getFirstBy('id',$id,['tagged','question']);
+        });
+        if (is_null($t))
+            abort(404);
         if ($t->slug != $slug)
             return redirect()->to($t->link('bangdiem'));
 

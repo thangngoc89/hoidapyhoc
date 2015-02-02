@@ -33,7 +33,7 @@
 		],
 		"psr-4": {
 			"Quiz\\": "app/",
-            "Zizaco\\Entrust\\": "app/lib/entrust/src/Entrust/"
+            "Zizaco\\Entrust\\": "app/lib/Entrust"
 		}
 	},
 	"autoload-dev": {

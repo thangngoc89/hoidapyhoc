@@ -10,7 +10,7 @@ class RoleTransformers extends TransformerAbstract {
         return [
             'id'            => $role->id,
             'name'          => $role->name,
-            'count'         => $role->assigned_role()->count(),
+            'count'         => $role->users()->count(),
             'created_at'    => $role->created_at,
             'permissions'   => $role->perms()->get()->modelKeys(),
         ];

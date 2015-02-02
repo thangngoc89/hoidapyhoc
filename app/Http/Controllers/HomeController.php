@@ -4,13 +4,11 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
+use Quiz\Models\Enstrust\Permission;
+use Quiz\Models\Enstrust\Role;
 use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
-
-use Quiz\lib\Repositories\Tag\TagRepository;
-
-use Quiz\Models\User;
 
 class HomeController extends Controller {
 
@@ -95,8 +93,8 @@ class HomeController extends Controller {
         return view('site.admin');
     }
 
-    public function cleanCache(Filesystem $filesystem)
+    public function cleanCache()
     {
-        $filesystem->put('abc.txt','fsdfdsf');
+
     }
 }

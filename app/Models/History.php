@@ -34,15 +34,15 @@ class History extends Model {
      * @param $test_id
      * @return bool
      */
-    public function firstTime($user_id, $test_id )
+    public function firstTime($user_id)
     {
-        $history  = $this->where('test_id','=',$test_id)
+        $history  = $this->where('test_id','=',$this->test_id)
             ->where('user_id','=',$user_id)
             ->count();
         if ($history == 0)
             return true;
-        else
-            return false;
+
+        return false;
     }
 
     /**

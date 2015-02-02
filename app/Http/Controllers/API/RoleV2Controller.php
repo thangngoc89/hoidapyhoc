@@ -1,6 +1,7 @@
 <?php namespace Quiz\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Quiz\Http\Requests\API\RoleCreateRequest;
 use Sorskod\Larasponse\Larasponse;
 use Quiz\Models\Enstrust\Role;
 use Quiz\Models\Enstrust\Permission;
@@ -17,28 +18,21 @@ class RoleV2Controller extends APIController {
      */
     private $fractal;
     /**
-     * @var Request
-     */
-    private $request;
-
-
-    /**
      * @param Role $role
      * @param Request $request
      * @param Larasponse $fractal
      */
-    public function __construct(Role $role, Request $request,Larasponse $fractal)
+    public function __construct(Role $role, Larasponse $fractal)
     {
         $this->role = $role;
         $this->fractal = $fractal;
-        $this->request = $request;
 
         $this->middleware('admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $roles = $this->builder($this->request,$this->role);
+        $roles = $this->builder($request,$this->role);
 
         $result = $this->fractal->paginatedCollection($roles, new RoleTransformers());
 
@@ -53,42 +47,32 @@ class RoleV2Controller extends APIController {
     /**
      * Store a newly created resource in storage.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(RoleCreateRequest $request)
     {
-        $rules = array(
-            'name' => 'required|min:3',
-            'permissions' => 'required',
-        );
+        try {
+            $role = $this->role;
 
-        $validator = Validator::make(Input::all(), $rules);
-        if ($validator->passes())
-        {
-            $inputs = Input::except('csrf_token');
-            $this->role->name = $inputs['name'];
-            $this->role->save();
-            $this->role->perms()->sync($inputs['permissions']);
+            $role->name = $request->name;
 
-            // Was the role created?
-            if ($this->role->id)
-            {
-                return $this->show($this->role->id);
-            } else {
-                $statusCode = 500;
-                $message = 'Something happen from our server';
-            }
-        } else {
-            $statusCode = 400;
-            $messages = $validator->messages();
+            $role->save();
+
+            $role->perms()->sync($request->permissions);
+
+            return response()->json($this->show($role), 201);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
+
         }
-        return Response::json($messages, $statusCode);
+
     }
 
 
-    public function update($id)
+    public function update($role)
     {
-        $role = $this->role->findOrFail($id);
         $rules = array(
             'name' => 'required|min:3',
             'permissions' => 'required',

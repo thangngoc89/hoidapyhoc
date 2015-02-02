@@ -137,7 +137,7 @@ class ExamV2Controller extends APIController {
                 'test_id' => $exam->id,
                 'isDone'  => 0
             ]);
-            $history->is_first = $this->history->firstTime($history->user_id, $history->test_id);
+            $history->is_first = $this->history->firstTime($history->user_id);
 
             $response = [
                 'user_history_id' => $history->id
@@ -176,7 +176,7 @@ class ExamV2Controller extends APIController {
 	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($test)
+	public function destroy($exam)
 	{
 //        $test->delete();
         return 'Deleted';

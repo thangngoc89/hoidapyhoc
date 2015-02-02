@@ -13,6 +13,7 @@ class History extends Model {
 
         History::saved(function($history){
             \Cache::tags('history','user'.$history->user_id)->flush();
+            \Cache::tags('tests'.$history->test_id)->flush();
         });
     }
     public function test()
@@ -58,7 +59,7 @@ class History extends Model {
     }
     /**
      * @return int
-     * Count answerd question
+     * Count answered question
      */
     public function answeredCount(){
         return strlen(str_replace('_','',$this->answer));

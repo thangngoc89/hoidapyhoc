@@ -17,7 +17,7 @@ abstract class Controller extends BaseController {
             return $this->callBackIsResult($callback);
 
         }catch (\Exception $e){
-            $statusCode = $e->getCode();
+            $statusCode = ($e->getCode() != 0) ?: 500;
             $error = [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),

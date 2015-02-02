@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="answer-box option_test" id="option_test">
-            <form id="frmTest" action="/api/v2/tests/{{$t->id}}/check" method="POST">
+            <form id="frmTest" action="/api/v2/exams/{{$t->id}}/check" method="POST">
                 <table width="100%" border="0">
                 <tbody>
                 <?php $i=$t->begin; ?>

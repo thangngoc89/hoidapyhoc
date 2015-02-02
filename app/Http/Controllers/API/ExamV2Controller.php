@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers\API;
 
+use Quiz\Commands\Exam\ExamCheckCommand;
 use Quiz\Exceptions\ExamSaveException;
 
 use Illuminate\Contracts\Auth\Guard;
@@ -68,7 +69,7 @@ class ExamV2Controller extends APIController {
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @return Response
+	 * @return \Illuminate\Http\Response
 	 */
 	public function store(ExamCreateRequest $request, ExamTransformers $transformer)
 	{
@@ -90,11 +91,11 @@ class ExamV2Controller extends APIController {
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\Http\Response
 	 */
-	public function show($test)
+	public function show($exam)
 	{
-        return $this->fractal->item($test, new ExamTransformers());
+        return $this->fractal->item($exam, new ExamTransformers());
 	}
 
     /**
@@ -104,7 +105,7 @@ class ExamV2Controller extends APIController {
      * @param ExamUpdateRequest $request
      * @param ExamTransformers $transformer
      * @internal param int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function update($exam, ExamUpdateRequest $request, ExamTransformers $transformer)
     {
@@ -125,15 +126,15 @@ class ExamV2Controller extends APIController {
     /**
      * Create a new history for test
      * @param $id
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
-    public function start($test)
+    public function start($exam)
     {
-        return $this->tryCatch(function() use ($test) {
+        return $this->tryCatch(function() use ($exam) {
 
             $history = $this->history->firstOrCreate([
                 'user_id' => $this->auth->user()->id,
-                'test_id' => $test->id,
+                'test_id' => $exam->id,
                 'isDone'  => 0
             ]);
             $history->is_first = $this->history->firstTime($history->user_id, $history->test_id);
@@ -151,25 +152,29 @@ class ExamV2Controller extends APIController {
      * @param $test
      * @param ExamTransformers $transformer
      * @param ExamCheckRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\Response
      */
-    public function check ($test, ExamTransformers $transformer, ExamCheckRequest $request)
+    public function check ($exam, ExamTransformers $transformer, ExamCheckRequest $request)
     {
-        return $this->tryCatch(function() use ($test,$transformer, $request)
-        {
-            $history = new ExamCheckSaver($request->all(),$test);
-            $history = $history->save();
+        try {
+            $history = $this->dispatch(new ExamCheckCommand($exam, $request));
+
             $response = $transformer->checkResponse($history);
 
-            return $response;
-        });
+            return response()->json($response, 200);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
+
+        }
     }
 
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($test)
 	{

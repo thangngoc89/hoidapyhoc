@@ -13,7 +13,7 @@ class ExamUpdateCommand extends Command {
      */
     public $exam;
     /**
-     * @var Request
+     * @var ExamUpdateRequest
      */
     public $request;
 

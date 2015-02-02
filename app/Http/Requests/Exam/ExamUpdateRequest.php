@@ -3,7 +3,6 @@
 use Illuminate\Contracts\Auth\Guard;
 use Quiz\Http\Requests\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
-use Quiz\lib\Repositories\Upload\UploadRepository;
 
 class ExamUpdateRequest extends Request {
     /**

@@ -20,10 +20,7 @@ use Sorskod\Larasponse\Larasponse;
 use Quiz\lib\API\Exam\ExamTransformers;
 
 class ExamV2Controller extends APIController {
-    /**
-     * @var Exam
-     */
-    private $test;
+
     /**
      * @var History
      */
@@ -49,9 +46,8 @@ class ExamV2Controller extends APIController {
      * @param Guard $auth
      * @param Larasponse $fractal
      */
-    public function __construct(Exam $test, History $history, Request $request, Guard $auth, Larasponse $fractal)
+    public function __construct(History $history, Request $request, Guard $auth, Larasponse $fractal)
     {
-        $this->test = $test;
         $this->history = $history;
         $this->request = $request;
         $this->auth = $auth;
@@ -60,13 +56,11 @@ class ExamV2Controller extends APIController {
     }
 
 
-	public function index()
+	public function index(Exam $exam)
 	{
-        $limit = $this->request->limit ?: 10;
+        $exam = $this->builder($this->request,$exam,['name']);
 
-        $test = $this->test->paginate($limit);
-
-        $result = $this->fractal->paginatedCollection($test, new ExamTransformers());
+        $result = $this->fractal->paginatedCollection($exam, new ExamTransformers());
 
         return $result;
     }

@@ -54,11 +54,13 @@
         var user = new Entity('users');
         var role = new Entity('roles');
         var permission = new Entity('permissions');
+        var tag = new Entity('tags');
 
         app
             .addEntity(user)
             .addEntity(role)
-            .addEntity(permission);
+            .addEntity(permission)
+            .addEntity(tag);
 
         /*
          * Permission section
@@ -92,10 +94,8 @@
             .title('All roles')
             .addField(new Field('name').isDetailLink(true))
             .addField(new Field('count').label('# of Users'))
-            .addField(new Field().type('template').label('Created Date')
-                .template('<created-at></created-at>')
-        )
             .listActions(['edit', 'delete']);
+
         role.creationView()
             .addField(new Field('name').validation({required: true, minlength: 3}) )
             .addField(new ReferenceMany('permissions')
@@ -107,7 +107,7 @@
             .addField(new ReferenceMany('permissions')
                 .targetEntity(permission)
                 .targetField(new Field('display_name'))
-        )
+        );
 
         /*
          * User section
@@ -117,7 +117,7 @@
 
         user.dashboardView()
             .title('Newest User')
-            .sortField('username')
+            .sortField('id')
             .sortDir('DESC')
             .order(3)
             .limit(10)
@@ -127,8 +127,10 @@
         user.listView()
             .title('All users')
             .addField(new Field('id'))
-            .addField(new Field('username'))
+            .fields([new Field('user').isDetailLink(true)])
             .addField(new Field('email'))
+            .addField(new Field('created_at'))
+            .addField(new Field('updated_at'))
             .listActions(['edit', 'delete']);
 
         user.creationView()
@@ -162,6 +164,51 @@
                 .targetEntity(role)
                 .targetField(new Field('name'))
         );
+
+
+        /*
+         * Tag section
+         *
+         */
+
+
+        tag.menuView()
+            .order(3)
+            .icon('<span class="glyphicon glyphicon-tags"></span>');
+
+        tag.dashboardView()
+            .title('Recent tags')
+            .order(3)
+            .limit(10)
+            .fields([
+                new Field('id'),
+                new Field('name'),
+                new Field('suggest').label('Is suggest ?').type('boolean')
+            ]);
+
+        tag.listView()
+            .infinitePagination(false) // by default, the list view uses infinite pagination. Set to false to use regulat pagination
+            .fields([
+                new Field('id').label('ID'),
+                new Field('name'),
+                new Field('suggest').type('boolean').cssClasses(function(entry) { // add custom CSS classes to inputs and columns
+                    if (entry.values.published) {
+                        return 'bg-success text-center';
+                    }
+                    return 'bg-warning text-center';
+                }),
+                new Field('custom')
+                    .type('template')
+                    .label('Upper name')
+                    .template('{{ entry.values.name.toUpperCase() }}')
+            ])
+            .listActions(['show']);
+
+        tag.showView()
+            .fields([
+                new Field('name'),
+                new Field('suggest').type('boolean')
+            ]);
 
         NgAdminConfigurationProvider.configure(app);
     });

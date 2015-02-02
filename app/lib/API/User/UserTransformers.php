@@ -12,6 +12,8 @@ class UserTransformers extends TransformerAbstract
             'name'      => $user->name,
             'username'  => $user->username,
             'email'     => $user->email,
+            'created_at'     => $user->created_at->diffForHumans(),
+            'updated_at'     => $user->updated_at->diffForHumans(),
         ];
     }
 }

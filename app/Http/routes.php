@@ -28,6 +28,7 @@ Route::model('user', '\Quiz\Models\User');
 Route::model('users', '\Quiz\Models\User');
 Route::model('roles', '\Quiz\Models\Enstrust\Role');
 Route::model('permissions', '\Quiz\Models\Enstrust\Permission');
+Route::model('tags', '\Quiz\lib\Tagging\Tag');
 
 /** ------------------------------------------
  *  HomePage Group
@@ -82,6 +83,7 @@ Route::group(array('prefix' => 'api/v2'), function()
     Route::resource('users','API\UserV2Controller');
     Route::resource('roles','API\RoleV2Controller');
     Route::resource('permissions','API\PermissionV2Controller');
+    Route::resource('tags','API\TagV2Controller');
 });
 
 /** ------------------------------------------

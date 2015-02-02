@@ -26,7 +26,6 @@ class APIController extends \Quiz\Http\Controllers\Controller {
 
         // Apply where clause
         $this->whereClause();
-
         // Apply API keywords
         $this->parseKeywords();
 
@@ -69,7 +68,8 @@ class APIController extends \Quiz\Http\Controllers\Controller {
     {
         if (empty($this->search))
             return false;
-
+        if (empty($this->input->q))
+            return false;
         // Search here with given cloumn
         foreach ($this->search as $col)
         {

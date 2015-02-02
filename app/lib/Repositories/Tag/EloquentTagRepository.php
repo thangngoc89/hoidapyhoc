@@ -61,7 +61,7 @@ class EloquentTagRepository extends AbstractEloquentRepository implements TagRep
 
         $tagList = $this->tagListOrderByExamCount();
 
-        $tags = $this->tagsListTransformer($examId, $tagList);
+        $tags = $this->tagsListTransformer($tagList, $examId);
 
         $cache->forever($key, $tags);
 

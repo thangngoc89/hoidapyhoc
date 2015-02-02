@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "70913a70056573c22269219b8358895a",
+    "hash": "eabaa4cee5c42a5925ba2316eabf588b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1251,12 +1251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "8a19d18ff80338f64bf01a32d0297b9bd97344a8"
+                "reference": "f6fac77f04895e53a518bdb7fb6517e8553aacfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8a19d18ff80338f64bf01a32d0297b9bd97344a8",
-                "reference": "8a19d18ff80338f64bf01a32d0297b9bd97344a8",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f6fac77f04895e53a518bdb7fb6517e8553aacfc",
+                "reference": "f6fac77f04895e53a518bdb7fb6517e8553aacfc",
                 "shasum": ""
             },
             "require": {
@@ -1368,7 +1368,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-01-30 19:09:23"
+            "time": "2015-02-01 21:50:00"
         },
         {
             "name": "laravel/socialite",
@@ -1572,16 +1572,16 @@
         },
         {
             "name": "league/oauth1-client",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth1-client.git",
-                "reference": "9f83f960db9d3b27acc774965dfb4c9d22db16f4"
+                "reference": "2bcdde3df4e59ebefd2be902102ac185ade844b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/9f83f960db9d3b27acc774965dfb4c9d22db16f4",
-                "reference": "9f83f960db9d3b27acc774965dfb4c9d22db16f4",
+                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/2bcdde3df4e59ebefd2be902102ac185ade844b7",
+                "reference": "2bcdde3df4e59ebefd2be902102ac185ade844b7",
                 "shasum": ""
             },
             "require": {
@@ -1631,7 +1631,7 @@
                 "tumblr",
                 "twitter"
             ],
-            "time": "2015-01-26 22:56:20"
+            "time": "2015-02-01 23:22:54"
         },
         {
             "name": "monolog/monolog",
@@ -2881,12 +2881,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "8bc0265b6235a461a9fd2a3d377104c4ccb09c53"
+                "reference": "caa8c24412eb538c5d80f82f5bb74b06a68561fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/8bc0265b6235a461a9fd2a3d377104c4ccb09c53",
-                "reference": "8bc0265b6235a461a9fd2a3d377104c4ccb09c53",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/caa8c24412eb538c5d80f82f5bb74b06a68561fa",
+                "reference": "caa8c24412eb538c5d80f82f5bb74b06a68561fa",
                 "shasum": ""
             },
             "require": {
@@ -2927,7 +2927,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2015-01-30 08:40:58"
+            "time": "2015-02-02 09:07:07"
         },
         {
             "name": "doctrine/instantiator",

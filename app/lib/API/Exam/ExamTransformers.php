@@ -48,8 +48,8 @@ class ExamTransformers extends TransformerAbstract {
     {
         if ($test->is_file)
             return [
-                $test->file->id,
-                $test->file->url(),
+                'id' => $test->file->id,
+                'link' => $test->file->url(),
             ];
         return '';
     }

@@ -10,6 +10,7 @@ class APIController extends \Quiz\Http\Controllers\Controller {
     protected $input;
 
     protected $columnList;
+
     public function makeResponse($result){
         return response()->json($result)->header('X-Total-Count',$result['meta']['pagination']['total']);
     }

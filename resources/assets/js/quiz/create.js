@@ -59,7 +59,8 @@
         if(test.file)
         {
             $ele.tabContent.last().tab('show');
-            embedPdf(test.file);
+            pdfFile = {'link' : test.file.link, 'id' : test.file.id };
+            embedPdf(pdfFile);
         }
 
         if (test.tags)
@@ -366,6 +367,7 @@
 
     function embedPdf(data)
     {
+        console.log(data);
         $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.link+'"></iframe>');
         global.pdf_file_id = data.id;
     }

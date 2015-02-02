@@ -5,7 +5,7 @@ use Quiz\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Quiz\Models\Exam;
 
-class ExamUpdateEvent extends Event {
+class ExamUpdatedEvent extends Event {
 
 	use SerializesModels;
 
@@ -15,7 +15,7 @@ class ExamUpdateEvent extends Event {
      * Create a new event instance.
      *
      * @param Exam $test
-     * @return \Quiz\Events\Test\ExamUpdateEvent
+     * @return \Quiz\Events\Test\ExamUpdatedEvent
      */
 	public function __construct(Exam $test)
 	{

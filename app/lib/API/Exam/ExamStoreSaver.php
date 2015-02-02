@@ -42,7 +42,6 @@ class ExamStoreSaver
 
             return $exam;
         });
-
     }
 
     public function storeQuestion($id)

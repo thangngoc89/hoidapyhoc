@@ -37,12 +37,12 @@
                                 <form method="POST" action="https://laracasts.com/discuss/notifications/mentions" accept-charset="UTF-8" class="text-center"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="MpFOyCHwKW5wkiFtDLx6Sm7Vk3kt1h5VjyBne6f5">                    <input class="naked-btn" type="submit" value="Clear All">                </form>            </li>
                         </ul>
                     </li>-->
-                @if (!Auth::check())
+                @if (! \Auth::check())
                 <li>
                     <button type="button" class="navbar-link btn btn-join" data-toggle="modal" data-target="#loginModal">Đăng nhập</button>
                 </li>
                 @else
-                <?php $user = Auth::user(); ?>
+                <?php $user = \Auth::user(); ?>
                 <li class="dropdown" id="user-options">
                     <a href="#" class="dropdown-toggle navbar-link" data-toggle="dropdown">
                         {{ $user->name }} <b class="caret"></b>

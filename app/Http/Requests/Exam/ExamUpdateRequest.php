@@ -5,7 +5,7 @@ use Quiz\Http\Requests\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\Upload\UploadRepository;
 
-class ExamEditRequest extends Request {
+class ExamUpdateRequest extends Request {
     /**
      * @var ExamRepository
      */
@@ -15,7 +15,7 @@ class ExamEditRequest extends Request {
      * Determine if the user is authorized to make this request.
      *
      * @param ExamRepository $exam
-     * @return \Quiz\Http\Requests\Exam\ExamEditRequest
+     * @return \Quiz\Http\Requests\Exam\ExamUpdateRequest
      */
     public function __construct(ExamRepository $exam)
     {
@@ -62,7 +62,7 @@ class ExamEditRequest extends Request {
         }
 
         if ($exam->file_id != $this->request->get('file_id'))
-            $rules['file_id'] = 'exists:states';
+            $rules['file_id'] = 'exists:users_upload,id';
 
         return $rules;
 

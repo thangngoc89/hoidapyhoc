@@ -84,15 +84,15 @@
             dataType: "json",
             url: quiz.postUrl,
             data: data,
-            beforesend: function(){
+            beforeSend: function(){
                 $ele.btnCreateSubmit.button('loading');
             },
             error: function (data) {
+                $ele.btnCreateSubmit.button('reset');
                 toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
                 data = $.parseJSON(data.responseText);
                 validationError(data);
                 debug(data);
-                $ele.btnCreateSubmit.button('reset');
             },
             success: function (data) {
                 successPostMessage(data);

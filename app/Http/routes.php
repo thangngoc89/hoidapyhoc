@@ -73,12 +73,14 @@ Route::group(array('prefix' => 'quiz'), function()
  */
 Route::group(array('prefix' => 'api/v2'), function()
 {
-    post('tests/{tests}/check', 'API\TestV2Controller@check');
-    post('tests/{tests}/start', 'API\TestV2Controller@start');
+    post('exams/{exams}/check', 'API\ExamV2Controller@check');
+    post('exams/{exams}/start', 'API\ExamV2Controller@start');
+
     post('files/paste', 'API\UploadV2Controller@paste');
 
     Route::resource('files','API\UploadV2Controller');
-    Route::resource('tests', 'API\TestV2Controller');
+    Route::resource('tests', 'API\ExamV2Controller');
+    Route::resource('exams', 'API\ExamV2Controller');
     Route::resource('search','API\SearchV2Controller');
     Route::resource('users','API\UserV2Controller');
     Route::resource('roles','API\RoleV2Controller');

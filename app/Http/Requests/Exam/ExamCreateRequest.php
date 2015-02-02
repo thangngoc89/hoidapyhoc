@@ -3,7 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Quiz\Http\Requests\Request;
 
-class ExamSaveRequest extends Request {
+class ExamCreateRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

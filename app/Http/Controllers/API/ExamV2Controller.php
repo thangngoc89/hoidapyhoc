@@ -1,25 +1,27 @@
 <?php namespace Quiz\Http\Controllers\API;
 
+use Quiz\Exceptions\ExamSaveException;
+
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
-use Quiz\Events\Exam\ExamUpdateEvent;
+use Quiz\Http\Requests\Exam\ExamCreateRequest;
+use Quiz\Commands\Exam\ExamCreateCommand;
+
+use Quiz\Http\Requests\Exam\ExamUpdateRequest;
+use Quiz\Commands\Exam\ExamUpdateCommand;
 
 use Quiz\Http\Requests\Exam\TestCheckRequest;
-use Quiz\Http\Requests\Exam\ExamSaveRequest;
-use Quiz\Http\Requests\Exam\ExamEditRequest;
 
-use Quiz\lib\API\Exam\ExamEditSaver;
 use Quiz\lib\API\Exam\ExamCheckSaver;
-use Quiz\lib\API\Exam\ExamTransformers;
-use Quiz\lib\API\Exam\ExamStoreSaver;
 
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
 
 use Sorskod\Larasponse\Larasponse;
+use Quiz\lib\API\Exam\ExamTransformers;
 
-class TestV2Controller extends APIController {
+class ExamV2Controller extends APIController {
     /**
      * @var Exam
      */
@@ -76,16 +78,20 @@ class TestV2Controller extends APIController {
 	 *
 	 * @return Response
 	 */
-	public function store(ExamSaveRequest $request, ExamTransformers $transformer)
+	public function store(ExamCreateRequest $request, ExamTransformers $transformer)
 	{
-        return $this->tryCatch(function() use ($transformer,$request)
-        {
-            $test = new ExamStoreSaver($request->all());
-            $test = $test->save();
-            $response = $transformer->createResponse($test);
+        try {
+            $exam = $this->dispatch(new ExamCreateCommand($request));
 
-            return $response;
-        });
+            $response = $transformer->createResponse($exam);
+
+            return response()->json($response, 200);
+
+        } catch (\Exception $e) {
+
+            $this->throwError($e);
+
+        }
     }
 
 	/**
@@ -103,20 +109,33 @@ class TestV2Controller extends APIController {
      * Update the specified resource in storage.
      *
      * @param $test
-     * @param ExamEditRequest $request
+     * @param ExamUpdateRequest $request
      * @param ExamTransformers $transformer
      * @internal param int $id
      * @return Response
      */
-    public function update($test, ExamEditRequest $request, ExamTransformers $transformer)
+    public function update($exam, ExamUpdateRequest $request, ExamTransformers $transformer)
     {
+        try {
+            $exam = $this->dispatch(new ExamUpdateCommand($exam, $request));
+
+            $response = $transformer->createResponse($exam);
+
+            return response()->json($response, 200);
+
+        } catch (\Exception $e) {
+
+            $this->throwError($e);
+
+        }
+
         return $this->tryCatch(function() use ($transformer,$request, $test)
         {
             $test = new ExamEditSaver($request->all(),$test);
             $test = $test->save();
             $response = $transformer->createResponse($test);
 
-            event( new ExamUpdateEvent($test));
+            event( new ExamUpdatedEvent($test));
 
             return $response;
         });

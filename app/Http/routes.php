@@ -21,7 +21,7 @@ Route::pattern('id', '[0-9]+');
  *  Route model binding
  *  ------------------------------------------
  */
-Route::model('tests', '\Quiz\Models\Exam');
+Route::model('exams', '\Quiz\Models\Exam');
 Route::model('quiz', '\Quiz\Models\Exam');
 Route::model('user', '\Quiz\Models\User');
 // API Part
@@ -79,7 +79,6 @@ Route::group(array('prefix' => 'api/v2'), function()
     post('files/paste', 'API\UploadV2Controller@paste');
 
     Route::resource('files','API\UploadV2Controller');
-    Route::resource('tests', 'API\ExamV2Controller');
     Route::resource('exams', 'API\ExamV2Controller');
     Route::resource('search','API\SearchV2Controller');
     Route::resource('users','API\UserV2Controller');

@@ -913,13 +913,19 @@ function quizDoInt()
     })
 }
 function setCounter(){
-    counter = setInterval(timer, 1000);
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: '/api/v2/tests/'+testId+'/start',
+        url: '/api/v2/exams/'+testId+'/start',
+        error: function (data) {
+            toastr.error(':( Đã có lỗi xảy ra. Mong các bạn hãy thử lại');
+            data = $.parseJSON(data.responseText);
+            validationError(data);
+            console.log(data);
+        },
         success: function(data){
             userHistoryId = data.user_history_id;
+            counter = setInterval(timer, 1000);
         }
 
     });
@@ -1078,7 +1084,7 @@ function updateAnswerCount(){
     };
 
     var quiz= {
-        postUrl : '/api/v2/tests',
+        postUrl : '/api/v2/exams',
         postAjaxMethod : 'POST',
         answerArray : {},
         preventClose: true
@@ -1124,7 +1130,7 @@ function updateAnswerCount(){
         $ele.adjustTotal.hide();
 
         quiz.postAjaxMethod = 'PUT';
-        quiz.postUrl = '/api/v2/tests/'+test.id;
+        quiz.postUrl = '/api/v2/exams/'+test.id;
 
         initCreate();
     }

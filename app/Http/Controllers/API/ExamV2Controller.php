@@ -135,8 +135,6 @@ class ExamV2Controller extends APIController {
             $test = $test->save();
             $response = $transformer->createResponse($test);
 
-            event( new ExamUpdatedEvent($test));
-
             return $response;
         });
     }

@@ -22,7 +22,7 @@
     };
 
     var quiz= {
-        postUrl : '/api/v2/tests',
+        postUrl : '/api/v2/exams',
         postAjaxMethod : 'POST',
         answerArray : {},
         preventClose: true
@@ -68,7 +68,7 @@
         $ele.adjustTotal.hide();
 
         quiz.postAjaxMethod = 'PUT';
-        quiz.postUrl = '/api/v2/tests/'+test.id;
+        quiz.postUrl = '/api/v2/exams/'+test.id;
 
         initCreate();
     }

@@ -1,8 +1,8 @@
 <?php namespace Quiz\Commands\Exam;
 
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Request;
 use Quiz\Commands\Command;
+use Quiz\Http\Requests\Exam\ExamUpdateRequest;
 use Quiz\Models\Exam;
 
 class ExamUpdateCommand extends Command {
@@ -21,10 +21,10 @@ class ExamUpdateCommand extends Command {
      * Create a new command instance.
      *
      * @param Exam $exam
-     * @param Request $request
+     * @param ExamUpdateRequest $request
      * @return \Quiz\Commands\Exam\ExamUpdateCommand
      */
-	public function __construct(Exam $exam, Request $request)
+	public function __construct(Exam $exam, ExamUpdateRequest $request)
 	{
         $this->exam = $exam;
         $this->request = $request;

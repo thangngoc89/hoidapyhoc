@@ -2,7 +2,7 @@
 
 use Quiz\Http\Requests\Request;
 
-class TestCheckRequest extends Request {
+class ExamCheckRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

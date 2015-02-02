@@ -11,9 +11,7 @@ use Quiz\Commands\Exam\ExamCreateCommand;
 use Quiz\Http\Requests\Exam\ExamUpdateRequest;
 use Quiz\Commands\Exam\ExamUpdateCommand;
 
-use Quiz\Http\Requests\Exam\TestCheckRequest;
-
-use Quiz\lib\API\Exam\ExamCheckSaver;
+use Quiz\Http\Requests\Exam\ExamCheckRequest;
 
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\Models\History;
@@ -89,7 +87,7 @@ class ExamV2Controller extends APIController {
 
         } catch (\Exception $e) {
 
-            $this->throwError($e);
+            return $this->throwError($e);
 
         }
     }
@@ -125,18 +123,9 @@ class ExamV2Controller extends APIController {
 
         } catch (\Exception $e) {
 
-            $this->throwError($e);
+            return $this->throwError($e);
 
         }
-
-        return $this->tryCatch(function() use ($transformer,$request, $test)
-        {
-            $test = new ExamEditSaver($request->all(),$test);
-            $test = $test->save();
-            $response = $transformer->createResponse($test);
-
-            return $response;
-        });
     }
 
     /**
@@ -167,10 +156,10 @@ class ExamV2Controller extends APIController {
      * Check post and return right answer
      * @param $test
      * @param ExamTransformers $transformer
-     * @param TestCheckRequest $request
+     * @param ExamCheckRequest $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function check ($test, ExamTransformers $transformer, TestCheckRequest $request)
+    public function check ($test, ExamTransformers $transformer, ExamCheckRequest $request)
     {
         return $this->tryCatch(function() use ($test,$transformer, $request)
         {

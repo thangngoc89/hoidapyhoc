@@ -1,6 +1,5 @@
 <?php namespace Quiz\Handlers\Commands\Exam;
 
-use Illuminate\Support\Facades\Request;
 use Quiz\Commands\Exam\ExamUpdateCommand;
 
 use Illuminate\Queue\InteractsWithQueue;

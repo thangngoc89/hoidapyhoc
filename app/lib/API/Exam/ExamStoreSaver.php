@@ -31,16 +31,18 @@ class ExamStoreSaver
 
     public function save()
     {
-        $test = new Exam($this->attributes);
-        if (!$test->save())
-            throw new \Exception("ErrorWhenSaveTest");
+        return \DB::transaction(function()
+        {
+            $exam = new Exam($this->attributes);
+            if (!$exam->save())
+                throw new \Exception("ErrorWhenSaveTest");
 
-        $test->tag($this->attributes['tags']);
-        $this->storeQuestion($test->id);
+            $exam->tag($this->attributes['tags']);
+            $this->storeQuestion($exam->id);
 
-        #TODO: Delete saved test when error on saving questions
+            return $exam;
+        });
 
-        return $test;
     }
 
     public function storeQuestion($id)

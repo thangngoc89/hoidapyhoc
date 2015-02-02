@@ -1205,7 +1205,8 @@ function updateAnswerCount(){
         }
         // Detect upload tab to create a pdf-based exam
         pdf_upload = $('a[role="tab"][aria-expanded="true"]').attr('href');
-        if(pdf_upload == '#upload')
+        pdf_upload = (pdf_upload == '#upload');
+        if(pdf_upload)
         {
             if (!global.pdf_file_id)
             {
@@ -1216,7 +1217,9 @@ function updateAnswerCount(){
             file_id = global.pdf_file_id;
         }
 
-        if (!content)
+        console.log(!content && !pdf_upload);
+
+        if (!content && !pdf_upload)
         {
             toastr['warning']('Bạn chưa nhập nội dung đề thi');
             return false;

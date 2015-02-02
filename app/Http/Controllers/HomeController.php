@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
@@ -94,9 +95,8 @@ class HomeController extends Controller {
         return view('site.admin');
     }
 
-    public function cleanCache(Exam $tag)
+    public function cleanCache(Filesystem $filesystem)
     {
-
-        dd($tag->getTable());
+        $filesystem->put('abc.txt','fsdfdsf');
     }
 }

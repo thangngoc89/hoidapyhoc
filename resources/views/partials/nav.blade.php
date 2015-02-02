@@ -27,6 +27,16 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <!--<li id="navbar-notifications" class="badge dropdown">
+                        1
+                        <ul class="dropdown-menu" data-model="Forum">
+                                            <li>
+                                    <a href="https://laracasts.com/discuss/channels/general-discussion/l5-use-flysystem-replicate-adapter-with-filesystem?page=1#reply-28833" data-click="clearNotification" data-notification-id="40043">usman mentioned you in "Add new Adapter to Laravel Filesystem"</a>                </li>
+
+                            <li>
+                                <form method="POST" action="https://laracasts.com/discuss/notifications/mentions" accept-charset="UTF-8" class="text-center"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="MpFOyCHwKW5wkiFtDLx6Sm7Vk3kt1h5VjyBne6f5">                    <input class="naked-btn" type="submit" value="Clear All">                </form>            </li>
+                        </ul>
+                    </li>-->
                 @if (!Auth::check())
                 <li>
                     <button type="button" class="navbar-link btn btn-join" data-toggle="modal" data-target="#loginModal">Đăng nhập</button>

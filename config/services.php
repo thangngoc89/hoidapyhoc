@@ -36,13 +36,13 @@ return [
     'google' => [
         'client_id' => getenv('GOOGLE_CLIENT_ID'),
         'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://newquiz.dev/auth/external/google'
+        'redirect' => 'http://'.getenv('HOST_NAME').'/auth/external/google'
     ],
 
     'facebook' => [
         'client_id' => getenv('FACEBOOK_CLIENT_ID'),
         'client_secret' => getenv('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'http://newquiz.dev/auth/external/facebook'
+        'redirect' => 'http://'.getenv('HOST_NAME').'/auth/external/facebook'
     ]
 
 ];

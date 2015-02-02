@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Quiz\Http\Requests\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
+use Quiz\lib\Repositories\Upload\UploadRepository;
 
 class ExamEditRequest extends Request {
     /**
@@ -45,14 +46,25 @@ class ExamEditRequest extends Request {
 	{
         $exam = $this->getExam();
 
-        return [
+        $rules = [
             'name' => 'required|min:6|unique:tests,id,'.$exam->id,
             'thoigian' => 'required|integer|between:5,200',
-            'content' => 'required',
             'begin' => 'required|integer|min:1',
             'tags'   => 'required',
             'questions' => 'required|array'
         ];
+
+        // It much have both is_file and file_id fields to be accepted
+        if (!$this->request->get('is_file') || !$this->request->get('file_id'))
+        {
+            $rules['content'] = 'required|min:10';
+            return $rules;
+        }
+
+        if ($exam->file_id != $this->request->get('file_id'))
+            $rules['file_id'] = 'exists:states';
+
+        return $rules;
 
 	}
 

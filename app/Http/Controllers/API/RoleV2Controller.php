@@ -2,15 +2,13 @@
 
 use Illuminate\Http\Request;
 use Quiz\Http\Requests\API\RoleCreateRequest;
+use Quiz\Http\Requests\API\RoleUpdateRequest;
 use Sorskod\Larasponse\Larasponse;
 use Quiz\Models\Enstrust\Role;
 use Quiz\Models\Enstrust\Permission;
 use Quiz\lib\API\Role\RoleTransformers;
 
 class RoleV2Controller extends APIController {
-
-    protected $user;
-
 
     protected $role;
     /**
@@ -39,6 +37,12 @@ class RoleV2Controller extends APIController {
         return $this->makeResponse($result);
     }
 
+    /**
+     * Show a role
+     *
+     * @param \Quiz\Models\Enstrust\Role
+     * @return \Illuminate\Http\Response
+     */
     public function show($role)
     {
         return $this->fractal->item($role, new RoleTransformers());
@@ -47,6 +51,7 @@ class RoleV2Controller extends APIController {
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Quiz\Models\Enstrust\Role
      * @return \Illuminate\Http\Response
      */
     public function store(RoleCreateRequest $request)
@@ -65,49 +70,53 @@ class RoleV2Controller extends APIController {
         } catch (\Exception $e) {
 
             return $this->throwError($e);
-
         }
-
     }
 
-
-    public function update($role)
+    /**
+     * Update a resource in storage.
+     *
+     * @param \Quiz\Models\Enstrust\Role
+     * @return \Illuminate\Http\Response
+     */
+    public function update($role, RoleUpdateRequest $request)
     {
-        $rules = array(
-            'name' => 'required|min:3',
-            'permissions' => 'required',
-        );
+        try {
+            $role->name = $request->name;
 
-        $validator = Validator::make(Input::all(), $rules);
-        if ($validator->passes())
-        {
-            $inputs = Input::except('csrf_token');
-            $role->name = $inputs['name'];
             $role->save();
-            $role->perms()->sync($inputs['permissions']);
 
-            return $this->show($role->id);
-        } else {
-            $statusCode = 400;
-            $messages = $validator->messages();
+            $role->perms()->sync($request->permissions);
+
+            return response()->json($this->show($role), 201);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
         }
-        return Response::json($messages, $statusCode);
     }
 
-    public function destroy($id)
+    /**
+     * Delete a resource
+     *
+     * @param \Quiz\Models\Enstrust\Role
+     */
+    public function destroy($role)
     {
+        #TODO: Add this validation on model's boot
         try
         {
-            $role = $this->role->findOrFail($id);
-            if ($role->assigned_role()->count() > 0)
-                throw new Exception ('This Role was assigned to user(s). CAN NOT delete');
-            else
-                $role->delete();
+            if ($role->users()->count() > 0)
+                throw new \Exception ('This Role was assigned to user(s). CAN NOT delete');
 
-        } catch (Exception $e){
-            $statusCode = 400;
-            $error = $e->getMessage();
-            return Response::json($error, $statusCode);
+            $role->delete();
+
+            $response = ['message' => 'Deleted Role'];
+
+            return response()->json($response, 200);
+
+        } catch (\Exception $e){
+            $this->throwError($e);
         }
     }
 }

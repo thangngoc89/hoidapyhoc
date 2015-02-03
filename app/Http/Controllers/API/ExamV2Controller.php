@@ -31,10 +31,6 @@ class ExamV2Controller extends APIController {
      */
     private $request;
     /**
-     * @var Guard
-     */
-    private $auth;
-    /**
      * @var Larasponse
      */
     private $fractal;
@@ -44,14 +40,12 @@ class ExamV2Controller extends APIController {
      * @param Exam $test
      * @param History $history
      * @param Request $request
-     * @param Guard $auth
      * @param Larasponse $fractal
      */
-    public function __construct(History $history, Request $request, Guard $auth, Larasponse $fractal)
+    public function __construct(History $history, Request $request, Larasponse $fractal)
     {
         $this->history = $history;
         $this->request = $request;
-        $this->auth = $auth;
         $this->fractal = $fractal;
         $this->middleware('auth', ['except' => 'index']);
     }
@@ -90,7 +84,7 @@ class ExamV2Controller extends APIController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+     * @param Exam $exam
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($exam)
@@ -101,7 +95,7 @@ class ExamV2Controller extends APIController {
     /**
      * Update the specified resource in storage.
      *
-     * @param $test
+     * @param Exam $exam
      * @param ExamUpdateRequest $request
      * @param ExamTransformers $transformer
      * @internal param int $id
@@ -124,16 +118,17 @@ class ExamV2Controller extends APIController {
     }
 
     /**
-     * Create a new history for test
-     * @param $id
+     * Create a new history for exam
+     *
+     * @param Exam $exam
      * @return \Illuminate\Http\Response
      */
-    public function start($exam)
+    public function start($exam, Guard $auth)
     {
-        return $this->tryCatch(function() use ($exam) {
+        return $this->tryCatch(function() use ($exam, $auth) {
 
             $history = $this->history->firstOrCreate([
-                'user_id' => $this->auth->user()->id,
+                'user_id' => $auth->user()->id,
                 'test_id' => $exam->id,
                 'isDone'  => 0
             ]);
@@ -149,7 +144,7 @@ class ExamV2Controller extends APIController {
 
     /**
      * Check post and return right answer
-     * @param $test
+     * @param Exam $exam
      * @param ExamTransformers $transformer
      * @param ExamCheckRequest $request
      * @return \Illuminate\Http\Response

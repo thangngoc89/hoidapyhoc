@@ -51,7 +51,6 @@ class PermissionV2Controller extends APIController {
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Quiz\Models\Enstrust\Permission
      * @return \Illuminate\Http\Response
      */
     public function store(PermissionCreateRequest $request)
@@ -70,7 +69,7 @@ class PermissionV2Controller extends APIController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+     * @param Permission $perm
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($perm)
@@ -81,7 +80,7 @@ class PermissionV2Controller extends APIController {
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+     * @param Permission $perm
 	 * @return \Illuminate\Http\Response
 	 */
     public function update($perm, PermissionUpdateRequest $request)
@@ -100,7 +99,7 @@ class PermissionV2Controller extends APIController {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param int $id
+	 * @param Permission $perm
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($perm, PermissionDeleteRequest $request)

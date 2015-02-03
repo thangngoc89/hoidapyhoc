@@ -1,6 +1,7 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
+use Illuminate\Contracts\View\View;
 use Quiz\Events\ViewTestEvent;
 use Quiz\lib\API\Exam\ExamTransformers;
 use Quiz\lib\Repositories\Tag\TagRepository;
@@ -95,7 +96,7 @@ class QuizController extends Controller {
 	}
 
     /**
-     * Show leaderboard of test
+     * Show leaderboard of exam
      *
      * @param null $slug
      * @param $t
@@ -151,7 +152,7 @@ class QuizController extends Controller {
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -170,15 +171,15 @@ class QuizController extends Controller {
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
-	public function edit($tests, ExamTransformers $transformer)
+	public function edit($exam, ExamTransformers $transformer)
 	{
         $name = 'Sửa đề thi';
         $data = [
             'type' => 'edit',
-            'test' => $transformer->transform($tests),
-            'tags' => $this->tag->examSelectedTags($tests->id)
+            'test' => $transformer->transform($exam),
+            'tags' => $this->tag->examSelectedTags($exam->id)
         ];
 
         $data = json_encode($data);

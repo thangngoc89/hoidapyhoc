@@ -55,11 +55,13 @@
         var role = new Entity('roles');
         var permission = new Entity('permissions');
         var tag = new Entity('tags');
+        var testimonial = new Entity('testimonials');
 
         app
             .addEntity(user)
             .addEntity(role)
             .addEntity(permission)
+            .addEntity(testimonial)
             .addEntity(tag);
 
         /*
@@ -90,6 +92,7 @@
          *
          */
         role.dashboardView().disable();
+
         role.listView()
             .title('All roles')
             .addField(new Field('name').isDetailLink(true))
@@ -192,7 +195,7 @@
                 new Field('id').label('ID'),
                 new Field('name'),
                 new Field('suggest').type('boolean').cssClasses(function(entry) { // add custom CSS classes to inputs and columns
-                    if (entry.values.published) {
+                    if (entry.values.suggest) {
                         return 'bg-success text-center';
                     }
                     return 'bg-warning text-center';
@@ -208,6 +211,36 @@
             .fields([
                 new Field('name'),
                 new Field('suggest').type('boolean')
+            ]);
+
+        /*
+         * Testimonial section
+         *
+         */
+
+
+        testimonial.menuView()
+            .order(3)
+            .icon('<span class="fa fa-thumbs-up"></span>');
+
+        testimonial.dashboardView().disable();
+
+        testimonial.listView()
+            .title('All Testimonials')
+            .fields([
+                new Field('name'),
+                new Field('isHome').type('boolean'),
+                new Field('content').type('wysiwyg').map(truncate),
+            ])
+            .listActions(['show','edit']);
+
+        testimonial.showView()
+            .title('Testimonials of {{ entry.values.name }}')
+            .fields([
+                testimonial.listView().fields(),
+                new Field('link'),
+                new Field('content').type('wysiwyg'),
+                new Field('avatar')
             ]);
 
         NgAdminConfigurationProvider.configure(app);

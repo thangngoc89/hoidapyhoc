@@ -16,6 +16,9 @@
  */
 
 Route::pattern('id', '[0-9]+');
+Route::pattern('exams', '[0-9]+');
+Route::pattern('permissions', '[0-9]+');
+Route::pattern('tags', '[0-9]+');
 
 /** ------------------------------------------
  *  Route model binding
@@ -29,6 +32,7 @@ Route::model('users', '\Quiz\Models\User');
 Route::model('roles', '\Quiz\Models\Enstrust\Role');
 Route::model('permissions', '\Quiz\Models\Enstrust\Permission');
 Route::model('tags', '\Quiz\lib\Tagging\Tag');
+Route::model('testimonials', '\Quiz\Models\Testimonial');
 
 /** ------------------------------------------
  *  HomePage Group
@@ -38,6 +42,7 @@ get('/','HomeController@index');
 get('thongke','HomeController@stat');
 get('cleanCache','HomeController@cleanCache');
 get('testimonials','HomeController@testimonials');
+
 get('admin','HomeController@admin');
 
 /** ------------------------------------------
@@ -78,13 +83,15 @@ Route::group(array('prefix' => 'api/v2'), function()
 
     post('files/paste', 'API\UploadV2Controller@paste');
 
-    Route::resource('files','API\UploadV2Controller');
     Route::resource('exams', 'API\ExamV2Controller');
+    Route::resource('files','API\UploadV2Controller');
+    Route::resource('tags','API\TagV2Controller');
     Route::resource('search','API\SearchV2Controller');
     Route::resource('users','API\UserV2Controller');
     Route::resource('roles','API\RoleV2Controller');
     Route::resource('permissions','API\PermissionV2Controller');
-    Route::resource('tags','API\TagV2Controller');
+    Route::resource('testimonials','API\TestimonialV2Controller');
+
 });
 
 /** ------------------------------------------

@@ -57,11 +57,7 @@ class RoleV2Controller extends APIController {
     public function store(RoleCreateRequest $request)
     {
         try {
-            $role = $this->role;
-
-            $role->name = $request->name;
-
-            $role->save();
+            $role = $this->role->create($request->all());
 
             $role->perms()->sync($request->permissions);
 
@@ -95,11 +91,11 @@ class RoleV2Controller extends APIController {
             return $this->throwError($e);
         }
     }
-
     /**
      * Delete a resource
      *
      * @param \Quiz\Models\Enstrust\Role
+     * @return \Illuminate\Http\Response
      */
     public function destroy($role)
     {
@@ -111,9 +107,9 @@ class RoleV2Controller extends APIController {
 
             $role->delete();
 
-            $response = ['message' => 'Deleted Role'];
+            $response = ['message' => 'Role Deleted'];
 
-            return response()->json($response, 200);
+            return response()->json($response, 204);
 
         } catch (\Exception $e){
             $this->throwError($e);

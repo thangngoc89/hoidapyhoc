@@ -1,106 +1,118 @@
 <?php namespace Quiz\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Quiz\lib\API\Permission\PermissionTransformers;
 use Quiz\Models\Enstrust\Permission;
 
-use Sorskod\Larasponse\Larasponse;
+use Quiz\Http\Requests\API\PermissionCreateRequest;
+use Quiz\Http\Requests\API\PermissionDeleteRequest;
+use Quiz\Http\Requests\API\PermissionUpdateRequest;
 
+use Quiz\lib\API\Permission\PermissionTransformers;
+use Sorskod\Larasponse\Larasponse;
 
 class PermissionV2Controller extends APIController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+    /**
+     * @var Permission $permission
+     */
     protected $permission;
     /**
      * @var Larasponse
      */
     private $fractal;
-    /**
-     * @var Request
-     */
-    private $request;
 
     /**
      * @param Permission $permission
      * @param Request $request
      * @param Larasponse $fractal
      */
-    public function __construct(Permission $permission, Request $request, Larasponse $fractal)
+    public function __construct(Permission $permission, Larasponse $fractal)
     {
         $this->permission = $permission;
         $this->fractal = $fractal;
-        $this->request = $request;
 
         $this->middleware('admin');
     }
-	public function index()
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+	public function index(Request $request)
 	{
-        $permissions = $this->builder($this->request,$this->permission);
+        $permissions = $this->builder($request,$this->permission);
 
         $result = $this->fractal->paginatedCollection($permissions, new PermissionTransformers());
 
         return $result;
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Quiz\Models\Enstrust\Permission
+     * @return \Illuminate\Http\Response
+     */
+    public function store(PermissionCreateRequest $request)
+    {
+        try {
+            $perm = $this->permission->create($request->all());
+
+            return response()->json($this->show($perm), 201);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
+        }
+    }
 
 	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\Http\Response
 	 */
-	public function show($permission)
+	public function show($perm)
 	{
-        return $this->fractal->item($permission, new PermissionTransformers());
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		dd(Input::all());
+        return $this->fractal->item($perm, new PermissionTransformers());
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-     * @method PUT
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\Http\Response
 	 */
-	public function update($id)
-	{
-        return Response::json(Input::all());
-	}
+    public function update($perm, PermissionUpdateRequest $request)
+    {
+        try {
+            $perm->update($request->all());
+
+            return response()->json($this->show($perm), 200);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
+        }
+    }
 
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
+	public function destroy($perm, PermissionDeleteRequest $request)
 	{
-        $test = $this->permission->findOrFail($id);
-        $test->delete();
-        return 'Deleted';
+        try {
+            $perm->delete();
+
+            return response()->json('Deleted', 204);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
+        }
 	}
 }

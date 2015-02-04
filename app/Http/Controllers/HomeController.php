@@ -1,12 +1,8 @@
 <?php namespace Quiz\Http\Controllers;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
-use Quiz\Models\Enstrust\Permission;
-use Quiz\Models\Enstrust\Role;
-use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 

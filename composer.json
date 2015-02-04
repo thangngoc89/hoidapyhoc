@@ -11,9 +11,9 @@
         }
     ],
 	"require": {
-		"laravel/framework": "5.0.x-dev ",
+		"laravel/framework": "5.0.x",
         "illuminate/html": "5.0.x-dev",
-        "laravel/socialite": "2.0.*@dev",
+        "laravel/socialite": "2.0.x",
         "doctrine/dbal": "~2.6@dev",
 		"sunra/php-simple-html-dom-parser": "dev-master",
         "sorskod/larasponse": "dev-L5",

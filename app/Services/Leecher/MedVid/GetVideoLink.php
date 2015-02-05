@@ -5,7 +5,7 @@ use Illuminate\Cache\Repository as Cache;
 use Sunra\PhpSimple\HtmlDomParser;
 
 
-class GetVideoInfo {
+class GetVideoLink {
     /**
      * @var Client
      */
@@ -31,6 +31,11 @@ class GetVideoInfo {
         $this->parser = $parser;
     }
 
+
+    /**
+     * @param $link
+     * @return $this
+     */
     public function get($link)
     {
         $response = $this->client->get($link);
@@ -40,63 +45,46 @@ class GetVideoInfo {
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function parse()
     {
         $html = $this->parser->str_get_html($this->body);
 
-        $videoLink = $this->parseVideoLink($html);
-        $info = $this->parseInfo($html);
+        $list = $html->find('div[id=content-list]');
 
-        return array_merge($videoLink, $info);
+        $data = [];
+        foreach ($list as $node)
+        {
+            $data[] = $this->parseInfo($node);
+        }
+
+        return $data;
 
     }
 
-    /**
-     * Parse Video *.mp4 link from response
-     * @param array
-     */
-    private function parseVideoLink($html)
+    private function parseInfo($node)
     {
-        $embedValue = $html->find('input[name=embedded]',0)->value;
-        $embedValue = html_entity_decode($embedValue);
+        $node = $node->find('ul[class=content-list-thumb]', 0)->find('li',0)->find('a',0);
 
-        $link = explode('"file=', $embedValue)[1];
-        $link = explode('&sharing.link=', $link)[0];
-
-        return ['link' => $link];
-    }
-
-    private function parseInfo($html)
-    {
-        $listTree = $html->find('ul[class=video-details-list]', 0)->find('li');
-
-        $channel = $listTree[3]->plaintext;
-        $channel = str_replace('Channel:&nbsp;&nbsp;','',$channel);
-
-        $title = $listTree[2]->plaintext;
-        $title = str_replace('Medical Video Title:&nbsp;&nbsp;','', $title);
-
-        $desc = $listTree[4]->plaintext;
-        $desc = str_replace('This Medical Video:&nbsp;&nbsp;','', $desc);
-
-        $tag = $listTree[5]->plaintext;
-        $tag = str_replace('Tags:&nbsp;&nbsp;','', $tag);
+        $link = $node->href;
+        $img = $node->find('img',0)->src;
 
         $data = [
-            'title' => $title,
-            'channel' => $channel,
-            'description' => $desc,
-            'tag' => $tag,
+            'link' => $link,
+            'img' => $img,
         ];
 
         return $this->serialize($data);
+
     }
 
     public function serialize($data)
     {
         foreach ($data as $key => $d)
         {
-            $data[$key] = trim($d);
+            $data[$key] = 'http://www.medicalvideos.org/'.trim($d);
         }
 
         return $data;

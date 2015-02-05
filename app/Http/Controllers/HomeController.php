@@ -91,6 +91,7 @@ class HomeController extends Controller {
 
     public function cleanCache()
     {
-
+        return view('site.video');
     }
+
 }

@@ -113,3 +113,6 @@ get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
  *  ------------------------------------------
  */
 get('{sitemap}.xml','SitemapController@index');
+
+
+get('test','TestController@index');

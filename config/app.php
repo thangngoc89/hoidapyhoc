@@ -207,9 +207,9 @@ return [
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
 
         'Form'      => 'Illuminate\Html\FormFacade',
-        'Slugify'   => "Cocur\Slugify\Bridge\Laravel\SlugifyFacade",
+        'Slugify'   => 'Cocur\Slugify\Bridge\Laravel\SlugifyFacade',
         'Image'     => 'Intervention\Image\Facades\Image',
-        'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+        'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
 	],
 
 ];

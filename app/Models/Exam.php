@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Quiz\Models\Exam
  *
@@ -51,6 +51,7 @@ use Quiz\lib\Helpers\Str;
 class Exam extends Model {
 
     use TaggableTrait;
+    use SoftDeletes;
 
     protected $table = 'tests';
 
@@ -97,10 +98,12 @@ class Exam extends Model {
     /*
      * Belongs to
      */
-//    public function category()
-//    {
-//        return $this->belongsTo('Quiz\Models\Category','cid');
-//    }
+
+    // This relationship was keeped for migration
+    public function category()
+    {
+        return $this->belongsTo('Quiz\Models\Category','cid');
+    }
     public function user()
     {
         return $this->belongsTo('Quiz\Models\User');

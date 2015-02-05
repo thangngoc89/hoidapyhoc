@@ -12,7 +12,10 @@ class ExamSoftDelete extends Migration {
 	 */
 	public function up()
 	{
-		//
+        Schema::table('tests', function($table)
+        {
+            $table->softDeletes();
+        });
 	}
 
 	/**

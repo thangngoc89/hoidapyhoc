@@ -9,4 +9,5 @@ interface TagRepository extends BaseRepository {
     public function examSelectedTags($examId);
 
     public function examTagNames($examId);
+
 }

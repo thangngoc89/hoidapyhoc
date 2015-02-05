@@ -19,6 +19,7 @@ Route::pattern('id', '[0-9]+');
 Route::pattern('exams', '[0-9]+');
 Route::pattern('permissions', '[0-9]+');
 Route::pattern('tags', '[0-9]+');
+Route::pattern('tags', '[a-zA-z\-]+');
 
 /** ------------------------------------------
  *  Route model binding
@@ -106,3 +107,9 @@ get('tag/{slug}', 'TagController@show');
  *  ------------------------------------------
  */
 get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
+
+/** ------------------------------------------
+ *  Sitemap
+ *  ------------------------------------------
+ */
+get('{sitemap}.xml','SitemapController@index');

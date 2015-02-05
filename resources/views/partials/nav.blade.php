@@ -19,11 +19,17 @@
                         <i class="fa fa-graduation-cap"></i> Quiz
                     </a>
                 </li>
+                <li class="{{ (Request::is('video*') ? 'active' : '') }}">
+                    <a href="/video" class="navbar-link">
+                        <i class="icon-movie-play-1"></i> Video
+                    </a>
+                </li>
                 <li class="">
                     <a href="//ask.hoidapyhoc.com" class="navbar-link">
                         <i class="icon-chat-4"></i> Diễn đàn
                     </a>
                 </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

@@ -73,13 +73,19 @@ class GetVideoLink {
 
         $data = [
             'link' => $link,
-            'img' => $img,
+            'thumb' => $img,
         ];
 
         return $this->serialize($data);
 
     }
 
+    /**
+     * Return absolute url
+     *
+     * @param $data
+     * @return mixed
+     */
     public function serialize($data)
     {
         foreach ($data as $key => $d)

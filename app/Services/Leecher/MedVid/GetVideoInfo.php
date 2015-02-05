@@ -75,6 +75,7 @@ class GetVideoInfo {
 
         $title = $listTree[2]->plaintext;
         $title = str_replace('Medical Video Title:&nbsp;&nbsp;','', $title);
+        $title = str_replace('</a>','', $title);
 
         $desc = $listTree[4]->plaintext;
         $desc = str_replace('This Medical Video:&nbsp;&nbsp;','', $desc);
@@ -84,9 +85,8 @@ class GetVideoInfo {
 
         $data = [
             'title' => $title,
-            'channel' => $channel,
             'description' => $desc,
-            'tag' => $tag,
+            'tag' => $tag.$channel,
         ];
 
         return $this->serialize($data);

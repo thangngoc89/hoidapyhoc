@@ -41,6 +41,15 @@ class Tag extends Eloquent {
     public function exams() {
         return $this->morphedByMany('\Quiz\Models\Exam','taggable');
     }
+
+    public function videos() {
+        return $this->morphedByMany('\Quiz\Models\Video','taggable');
+    }
+
+    public function link()
+    {
+        return "/tag/".$this->slug;
+    }
 	
 	public function save(array $options = array()) {
 		$validator = \Validator::make(

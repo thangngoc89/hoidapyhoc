@@ -34,6 +34,7 @@ Route::model('roles', '\Quiz\Models\Enstrust\Role');
 Route::model('permissions', '\Quiz\Models\Enstrust\Permission');
 Route::model('tags', '\Quiz\lib\Tagging\Tag');
 Route::model('testimonials', '\Quiz\Models\Testimonial');
+Route::model('video', '\Quiz\Models\Video');
 
 /** ------------------------------------------
  *  HomePage Group
@@ -71,6 +72,16 @@ Route::group(array('prefix' => 'quiz'), function()
     Route::get('lam-bai/{slug}/{id}', 'QuizController@show');
     Route::get('bang-diem/{slug}/{id}', 'QuizController@leaderboard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
+});
+
+/** ------------------------------------------
+ *  Video Group
+ *  ------------------------------------------
+ */
+Route::group(array('prefix' => 'video'), function()
+{
+    Route::get('{slug}/{video}', 'VideoController@show');
+    Route::get('/', 'VideoController@index');
 });
 
 /** ------------------------------------------
@@ -116,3 +127,4 @@ get('{sitemap}.xml','SitemapController@index');
 
 
 get('test','TestController@index');
+get('videoinfo','TestController@getVideoInfo');

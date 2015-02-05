@@ -155,6 +155,9 @@ trait TaggableTrait {
 	 */
 	private function addTag($tagName) {
 		$tagName = trim($tagName);
+
+        if (strlen($tagName) < 1)
+            return false;
 		
 		$normalizer = config('tagging.normalizer');
 		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
@@ -195,8 +198,11 @@ trait TaggableTrait {
 	 * @param $tagName string
 	 */
 	private function removeTag($tagName) {
+
 		$tagName = trim($tagName);
-		
+
+        if (strlen($tagName) < 1)
+            return false;
 		$normalizer = config('tagging.normalizer');
 		$normalizer = empty($normalizer) ? '\Quiz\lib\Tagging\TaggingUtil::slug' : $normalizer;
 		

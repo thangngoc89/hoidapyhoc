@@ -4,6 +4,18 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Zizaco\Entrust\EntrustPermission
+ *
+ * @property integer $id 
+ * @property string $name 
+ * @property string $display_name 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\Enstrust\Role[] $roles 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustPermission whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustPermission whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustPermission whereDisplayName($value)
+ */
 class EntrustPermission extends Model
 {
     /**

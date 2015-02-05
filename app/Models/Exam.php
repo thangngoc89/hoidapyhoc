@@ -4,6 +4,50 @@ use Illuminate\Database\Eloquent\Model;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
 
+/**
+ * Quiz\Models\Exam
+ *
+ * @property integer $id 
+ * @property string $name 
+ * @property string $slug 
+ * @property string $description 
+ * @property string $content 
+ * @property integer $thoigian 
+ * @property integer $cid 
+ * @property integer $user_id 
+ * @property integer $user_id_edited 
+ * @property integer $begin 
+ * @property boolean $is_file 
+ * @property boolean $is_approve 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property integer $file_id 
+ * @property integer $views 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\Question[] $question 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\History[] $history 
+ * @property-read \Quiz\Models\User $user 
+ * @property-read \Quiz\Models\Upload $file 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\lib\Tagging\Tag[] $tagged 
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereThoigian($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereCid($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereUserIdEdited($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereBegin($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereIsFile($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereIsApprove($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereFileId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Exam whereViews($value)
+ * @method static \Quiz\Models\Exam withAllTags($tagNames)
+ * @method static \Quiz\Models\Exam withAnyTag($tagNames)
+ */
 class Exam extends Model {
 
     use TaggableTrait;

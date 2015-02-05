@@ -2,6 +2,24 @@
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Quiz\Models\Testimonial
+ *
+ * @property integer $id 
+ * @property string $name 
+ * @property string $link 
+ * @property string $avatar 
+ * @property string $content 
+ * @property boolean $isHome 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Testimonial whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Testimonial whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Testimonial whereLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Testimonial whereAvatar($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Testimonial whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\Testimonial whereIsHome($value)
+ * @method static \Quiz\Models\Testimonial home()
+ */
 class Testimonial extends Model {
 
     public static function boot()

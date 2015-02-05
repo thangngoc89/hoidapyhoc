@@ -2,6 +2,31 @@
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Quiz\Models\History
+ *
+ * @property integer $id 
+ * @property integer $user_id 
+ * @property integer $test_id 
+ * @property string $answer 
+ * @property integer $score 
+ * @property boolean $is_first 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property boolean $isDone 
+ * @property-read \Quiz\Models\Exam $test 
+ * @property-read \Quiz\Models\User $user 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereTestId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereAnswer($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereScore($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereIsFirst($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\History whereIsDone($value)
+ */
 class History extends Model {
 
     protected $table = 'history';

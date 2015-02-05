@@ -9,7 +9,36 @@ use Zizaco\Entrust\HasRole;
 
 /**
  * Class User
+ *
  * @package Quiz\Models
+ * @property integer $id 
+ * @property string $username 
+ * @property string $name 
+ * @property string $avatar 
+ * @property string $email 
+ * @property string $password 
+ * @property string $confirmation_code 
+ * @property string $remember_token 
+ * @property boolean $confirmed 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\Exam[] $test 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\History[] $history 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\Profile[] $profiles 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\Upload[] $upload 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\config('entrust.role')[] $roles 
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereAvatar($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereConfirmationCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereConfirmed($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Quiz\Models\User whereUpdatedAt($value)
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 

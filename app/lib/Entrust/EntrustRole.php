@@ -5,6 +5,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * Zizaco\Entrust\EntrustRole
+ *
+ * @property integer $id 
+ * @property string $name 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\config('auth.model')[] $users 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Quiz\Models\Enstrust\Permission[] $perms 
+ * @property mixed $permissions 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustRole whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustRole whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustRole whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Zizaco\Entrust\EntrustRole whereUpdatedAt($value)
+ */
 class EntrustRole extends Model
 {
     /**

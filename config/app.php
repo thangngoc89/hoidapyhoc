@@ -13,6 +13,7 @@ return [
 	|
 	*/
 
+//	'debug' => false,
 	'debug' => env('APP_DEBUG'),
 
 	/*
@@ -26,7 +27,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://newquiz.dev',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -32,13 +32,13 @@ class HomeController extends Controller {
 	/**
 	 * Show the application dashboard to the user.
 	 *
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
 	public function index(Testimonial $testimonial)
 	{
         $testimonial = \Cache::tags('testimonial')->rememberForever('indexTestimonial', function() use ($testimonial)
         {
-            return $testimonial->where('isHome','1')->limit(9)->get();
+            return $testimonial->home()->limit(9)->get();
         });
 
         return view('index',compact('testimonial'));

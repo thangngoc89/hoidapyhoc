@@ -38,7 +38,7 @@ Trang chủ
 <div id="buy-lunch">
     <div class="text-center container wrap">
         <h2 class="wow fadeIn alone">
-            <a href="{{ URL::to('user/login') }}">Tham gia ngay</a> để cùng nhau xây dựng một cộng đồng sinh viên Y Khoa lớn mạnh.
+            <a href="/auth/login">Tham gia ngay</a> để cùng nhau xây dựng một cộng đồng sinh viên Y Khoa lớn mạnh.
         </h2>
     </div>
 </div>
@@ -88,7 +88,7 @@ Trang chủ
 <div class="text-center piece" id="level-up">
     <div class="container wrap">
         <h2 class="wow pulse alone">
-            <a href="/quiz">Khám phá Quiz</a> và <a href="/auth/login">và tham gia cùng chúng tớ!</a>
+            <a href="/quiz">Khám phá Quiz</a> và <a href="/auth/login">tham gia cùng chúng tớ!</a>
         </h2>
     </div>
 </div>

@@ -22,4 +22,9 @@ class Testimonial extends Model {
 	// Don't forget to fill this array
 	protected $fillable = ['name','link','avatar','content','isHome'];
 
+    public function scopeHome($query)
+    {
+        return $query->where('isHome', true);
+    }
+
 }

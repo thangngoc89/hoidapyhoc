@@ -6,6 +6,7 @@ use Quiz\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Tagging\Tag;
+use Quiz\Models\Video;
 
 class SearchV2Controller extends Controller {
     /**
@@ -20,15 +21,23 @@ class SearchV2Controller extends Controller {
      * @var Tag
      */
     private $tag;
+    /**
+     * @var Video
+     */
+    private $video;
 
     /**
      * @param Request $request
+     * @param ExamRepository $test
+     * @param Tag $tag
+     * @param Video $video
      */
-    public function __construct(Request $request, ExamRepository $test, Tag $tag)
+    public function __construct(Request $request, ExamRepository $test, Tag $tag, Video $video)
     {
         $this->request = $request;
         $this->test = $test;
         $this->tag = $tag;
+        $this->video = $video;
     }
 
     public function index()
@@ -40,8 +49,9 @@ class SearchV2Controller extends Controller {
 
         $tests = $this->getTestsResponse($query)->toArray();
         $tags = $this->getTagsResponse($query)->toArray();
+        $videos = $this->getVideosResponse($query)->toArray();
 
-        $data = array_merge($tests, $tags);
+        $data = array_merge($tests, $tags, $videos);
         $response = [
             'data' => $data
         ];
@@ -97,6 +107,31 @@ class SearchV2Controller extends Controller {
 
         return $mapper;
     }
+
+    public function getVideosResponse($query)
+    {
+        $videos = $this->video
+            ->where('title','like','%'.$query.'%')
+            ->orderBy('title','asc')
+            ->take(5)
+            ->get(array('id','slug','title'));
+
+//        $tests = $this->test->whereRaw('MATCH(name) AGAINST(\'?\' IN BOOLEAN MODE)',[$query])
+//            ->get(['id','slug','name']);
+
+        $mapper = $videos->map(function($video){
+            return [
+                'name' => $video->title,
+                'url'  => url($video->link()),
+                'group' => 'video'
+            ];
+        });
+
+        return $mapper;
+
+        return $mapper;
+    }
+
     public function appendValue($data, $type, $element)
     {
         // operate on the item passed by reference, adding the element and type

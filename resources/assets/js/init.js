@@ -20,7 +20,8 @@ $(function() {
         },
         optgroups: [
             {value: 'tag', label: 'Tag'},
-            {value: 'exam', label: 'Đề thi'}
+            {value: 'exam', label: 'Đề thi'},
+            {value: 'video', label: 'Video'}
         ],
         optgroupField: 'group',
         optgroupOrder: ['exam','tag'],

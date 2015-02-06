@@ -1,6 +1,5 @@
 <?php namespace Quiz\Http\Controllers;
 
-use Carbon\Carbon;
 use Quiz\Http\Requests;
 use Quiz\Http\Controllers\Controller;
 

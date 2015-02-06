@@ -40,7 +40,7 @@ Route::model('video', '\Quiz\Models\Video');
  *  HomePage Group
  *  ------------------------------------------
  */
-get('/','HomeController@index')->where('home', '^(|home)$');;
+get('{home}','HomeController@index')->where('home', '^(|home)$');;
 get('thongke','HomeController@stat');
 get('cleanCache','HomeController@cleanCache');
 get('testimonials','HomeController@testimonials');

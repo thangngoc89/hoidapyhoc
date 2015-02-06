@@ -38,7 +38,7 @@ class TestController extends Controller {
 
         $baseUrl = 'http://www.medicalvideos.org/videos/load/recent/';
 
-        for ($i=205; $i>0; $i--)
+        for ($i=44; $i>0; $i--)
         {
             $videoList = \Cache::rememberForever("videoList{$i}", function() use ($baseUrl, $i, $getLink)
             {

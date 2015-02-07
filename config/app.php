@@ -143,6 +143,7 @@ return [
         'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
         'Sorskod\Larasponse\LarasponseServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
+        'Jenssegers\Date\DateServiceProvider',
 
         /*
          * Dev
@@ -209,7 +210,7 @@ return [
         'Form'      => 'Illuminate\Html\FormFacade',
         'Slugify'   => 'Cocur\Slugify\Bridge\Laravel\SlugifyFacade',
         'Image'     => 'Intervention\Image\Facades\Image',
-        'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
+        'Date'      => 'Jenssegers\Date\Date',
 	],
 
 ];

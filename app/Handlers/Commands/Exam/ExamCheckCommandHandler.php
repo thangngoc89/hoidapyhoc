@@ -55,11 +55,11 @@ class ExamCheckCommandHandler {
         $answerString = '';
         $map = ['_','A','B','C','D','E'];
 
-        foreach ($exam->questionsList() as $index => $q)
+        foreach ($exam->questions as $index => $q)
         {
             $answer = $map[$givenAnswer[$index]];
             $answerString .= $answer;
-            if ($q->right_answer == $answer)
+            if ($q->answer == $answer)
                 $score++;
         }
 

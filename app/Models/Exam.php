@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Quiz\lib\Tagging\TaggableTrait;
+use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Helpers\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,6 +10,7 @@ class Exam extends Model {
 
     use SoftDeletes;
     use TaggableTrait;
+    use LocalizationDateTrait;
 
     protected $table = 'tests';
 
@@ -73,10 +75,10 @@ class Exam extends Model {
         return $this->belongsTo('Quiz\Models\Upload','file_id');
     }
 
-    public function date($date=null)
+    public function date()
     {
-        if(is_null($date))
-            return $date = $this->created_at->diffForHumans();
+        $date = \Date::parse($this->created_at);
+        return $date->diffForHumans();
     }
 
     /*

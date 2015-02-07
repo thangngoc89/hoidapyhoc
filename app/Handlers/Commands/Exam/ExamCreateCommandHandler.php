@@ -58,15 +58,4 @@ class ExamCreateCommandHandler {
         return $exam;
 	}
 
-    public function storeQuestion($request, $examId)
-    {
-        foreach ($request->questions as $q)
-        {
-            $question = new Question($q);
-            $question->test_id = $examId;
-            if (!$question->save())
-                throw new ExamSaveException ("Could not save exam");
-        }
-    }
-
 }

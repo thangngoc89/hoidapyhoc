@@ -15,8 +15,8 @@
          @include('quiz.partials.content')
     </div>
 </div>
-<div id="conversations-sidebar" class="col-md-4 white" id="answer_block">
-    <div class="lessons-nav lessons-nav--forum inline-nav">
+<div id="quiz-sidebar" class="col-md-4 white">
+    <div class="quiz-nav lessons-nav--forum inline-nav">
         <div class="container">
            <div class="result-box">
                <ul>
@@ -25,11 +25,10 @@
                        <span class="text-error"> {{ $history->score }} điểm</span>
                    </li>
                    <li class="pull-right">
-                       <strong>Kết quả:</strong>
-                       <span class="text-error"> TRƯỢT</span>
-                   </li>
+                        <button id="btnSheet" type="button" class="btn btn-primary"><i class="fa fa-th-list"></i></button>
+                    </li>
                </ul>
-               <div class="row no-padding">
+               <div class="row no-padding static-box">
                     <dl class="col-md-8 dl-horizontal score">
                         <dt>Điểm cao nhất:</dt>
                         <dd>7.5<dd>
@@ -52,7 +51,7 @@
     </div>
     @if ($history)
     <div class="quiz-sidebar-section">
-        <div class="statistic-box testHeader" >
+        <div class="statistic-box testHeader" class="answer-box option_test">
             <div class="userAnswerCount" value="0">
                 <strong>Bạn đã trả lời: </strong>
                 <span id="answeredCount">{{ $history->answeredCount() }}</span>
@@ -88,7 +87,7 @@
                     ?>
                     <td>
                         <a data-original-title="Xem gợi ý" href="javascript:void(0);" class="iconHint " data-toggle="tooltip" title="" data-questionid="63963">
-                            <i class="zn-icon icon-hint"></i>
+                            <i class="zn-icon icon-hint @unless (empty($q->content)) hinted @endunless"></i>
                         </a>
                     </td>
                 </tr>

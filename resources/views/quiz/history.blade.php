@@ -42,10 +42,21 @@
 @section('script')
 <script>
 $(document).ready(function(){
-    $("#conversations-sidebar, .threads-inner").stick_in_parent();
+//    $("#conversations-sidebar, .threads-inner").stick_in_parent();
+    sticky();
+    resize_do();
+    $(window).on('resize', (function(){
+        resize_do();
+    }))
+    .on('scroll', (function(){
+        resize_do();
+    }));
+    $('#btnSheet').on('click', function(){
+        $('.quiz-sidebar-section').slideToggle();
+    });
     $('[data-toggle="tooltip"]').tooltip();
     $('.ansRow').popover({
-        placement: 'left',
+        placement: 'bottom',
         trigger: 'manually',
         html: true,
         title: function(){

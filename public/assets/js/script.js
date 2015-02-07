@@ -852,7 +852,11 @@ toastr.options = {
 
 function sticky()
 {
-    $("#quiz-sidebar, #mainRow").stick_in_parent();
+    width=parseInt($(window).width());
+
+    if(width>767) {
+        $("#quiz-sidebar, #mainRow").stick_in_parent();
+    }
 }
 function resize_do(){
     width=parseInt($(window).width());
@@ -1093,6 +1097,7 @@ function updateAnswerCount(){
 
     function initCreate()
     {
+        fixTemplate();
         setupQuestion();
         buttonListener();
         iconListener();
@@ -1495,6 +1500,12 @@ function updateAnswerCount(){
                 return 'Bạn có chắc chắn muốn thoát ? ';
             }
         };
+    }
+
+    function fixTemplate()
+    {
+        // Fixing sidebar on create/edit mode
+        $('.quiz-sidebar-section').css('max-height','100%').toggle();
     }
 
     function debug(data)

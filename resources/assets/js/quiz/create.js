@@ -30,6 +30,7 @@
 
     function initCreate()
     {
+        fixTemplate();
         setupQuestion();
         buttonListener();
         iconListener();
@@ -432,6 +433,12 @@
                 return 'Bạn có chắc chắn muốn thoát ? ';
             }
         };
+    }
+
+    function fixTemplate()
+    {
+        // Fixing sidebar on create/edit mode
+        $('.quiz-sidebar-section').css('max-height','100%').toggle();
     }
 
     function debug(data)

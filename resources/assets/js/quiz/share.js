@@ -1,6 +1,10 @@
 function sticky()
 {
-    $("#quiz-sidebar, #mainRow").stick_in_parent();
+    width=parseInt($(window).width());
+
+    if(width>767) {
+        $("#quiz-sidebar, #mainRow").stick_in_parent();
+    }
 }
 function resize_do(){
     width=parseInt($(window).width());

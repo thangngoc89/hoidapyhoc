@@ -6,6 +6,15 @@
 
 @section('style')
 <link href="http://vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
+<style>
+div.videocontent {
+    width: 100%;
+    max-width: 848px;
+}
+
+.video-js {padding-top: 56.25%}
+.vjs-fullscreen {padding-top: 0px}
+</style>
 @endsection
 
 @section('body')
@@ -14,8 +23,8 @@
         <div class="row">
             <div class="col-md-9">
                 <article class="article clearfix">
-                    <div>
-                        <video id="video_player" class="video-js vjs-default-skin" controls preload="auto" width="848" height="530"
+                    <div class="videocontent">
+                        <video id="video_player" class="video-js vjs-default-skin" controls preload="auto" width="auto" height="auto"
                                 poster="{{ $video->thumb }}"
                                 data-setup='{ "playbackRates": [0.5, 1, 1.5, 2] }'>
                             <source src="{{ $video->link }}" type='video/mp4'>

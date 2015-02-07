@@ -15,42 +15,42 @@
      </div>
  </div>
  <div class="wrap">
-     @foreach ($tests as $t)
+     @foreach ($exams as $exam)
          <article class="media media--conversation
             {{--If user done this test then make it grey--}}
-            @if (!($doneTestId) || !in_array($t->id, $doneTestId))
+            @if (!($doneTestId) || !in_array($exam->id, $doneTestId))
             updated
             @endif">
              <div class="media--conversation__avatar">
-                 <a href="{{ $t->user->profileLink() }}">
-                     <img class="media-object media--conversation__object" src="{{ $t->user->getAvatar() }}" alt="{{ $t->user->getName() }}">
+                 <a href="{{ $exam->user->profileLink() }}">
+                     <img class="media-object media--conversation__object" src="{{ $exam->user->getAvatar() }}" alt="{{ $exam->user->getName() }}">
                  </a>
              </div>
 
              <div class="media-body media--conversation__body">
                  <h5 class="media-heading media--conversation__heading">
-                     <a href="{{ $t->link() }}" title="{{ $t-> name }}">{{ str_limit($t->name,45) }}</a>
+                     <a href="{{ $exam->link() }}" title="{{ $exam-> name }}">{{ str_limit($exam->name,45) }}</a>
                  </h5>
-                 @foreach ($t->tagged as $tag)
-                    <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
+                 @foreach ($exam->tagged as $examag)
+                    <a href="/tag/{{ $examag->slug }}" class="post-tag" title="" rel="tag">{{ $examag->name }}</a>
                  @endforeach
                  <span class="text-muted label-small last-updated">
-                     đăng vào <a href="{{ $t->link() }}">{{ $t->created_at->diffForHumans() }}</a>
+                     đăng vào <a href="{{ $exam->link() }}">{{ $exam->created_at->diffForHumans() }}</a>
                      &nbsp;
-                     <a href="{{ $t->link() }}" title="{{ $t->questions_count }} câu hỏi">
-                        <i class="fa fa-puzzle-piece"></i> {{ $t->questions_count }}</a>
-                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
+                     <a href="{{ $exam->link() }}" title="{{ $exam->questions_count }} câu hỏi">
+                        <i class="fa fa-puzzle-piece"></i> {{ $exam->questions_count }}</a>
+                     &nbsp; <a href="{{ $exam->link() }}" title="{{ $exam->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $exam->thoigian }}</a>
                  </span>
              </div>
 
              <div class="media--conversation__meta">
                  <span class="media--conversation__replies">
-                     <a href="{{ $t->link() }}">{{ $t->countHistory() }}</a>lượt thi
+                     <a href="{{ $exam->link() }}">{{ $exam->countHistory() }}</a>lượt thi
                  </span>
              </div>
              <div class="media--conversation__meta hide-mobile">
                   <span class="media--conversation__replies">
-                      <a href="{{ $t->link() }}">{{ $t->views }}</a>lượt xem
+                      <a href="{{ $exam->link() }}">{{ $exam->views }}</a>lượt xem
                   </span>
               </div>
 
@@ -58,7 +58,7 @@
      @endforeach
      <div class="forum-pagination">
          <ul class="pagination">
-             {!! $tests->render() !!}
+             {!! $exams->render() !!}
          </ul>
      </div>
  </div>

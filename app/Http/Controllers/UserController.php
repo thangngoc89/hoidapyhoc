@@ -69,7 +69,7 @@ class UserController extends Controller {
         $key = 'profileUserHistory'.$user->id;
         $history = \Cache::tags('user'.$user->id)->remember($key, 10, function() use ($user) {
             return $this->history->where('user_id',$user->id)
-                ->with('test','test.category','test.question')
+                ->with('test')
                 ->orderBy('updated_at','DESC')
                 ->take(5)
                 ->get();

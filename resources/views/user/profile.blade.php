@@ -34,7 +34,7 @@
                         @foreach ($h->test->tagged as $tag)
                             <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
                         @endforeach đạt
-                        {{ $h->score }}/<strong>{{ $h->test->question->count() }}</strong> điểm.
+                        {{ $h->score }}/<strong>{{ $h->test->questionsCount }}</strong> điểm.
                     </p>
                 </div>
 

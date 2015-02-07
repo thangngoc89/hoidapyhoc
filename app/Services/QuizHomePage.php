@@ -98,6 +98,6 @@ class QuizHomePage {
         if ($this->auth->check())
             $doneTestId = $this->exam->doneTestId($this->auth->user());
 
-        return view('quiz.index',compact('tests','name','doneTestId'))->render();
+        return view('quiz.index',compact('exams','name','doneTestId'))->render();
     }
-} 
+}

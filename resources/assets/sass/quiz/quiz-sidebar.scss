@@ -180,7 +180,7 @@
   background-color: $grey-light;
 //  border-bottom: 2px solid $grey-darker;
   padding-bottom: 1em;
-  z-index: 10000;
+  z-index: 1999;
 }
 .quiz-side-fixed.quiz-nav{
   background-color: $grey-light;
@@ -188,6 +188,11 @@
 #btnSheet{
   display: none;
 }
+
+.answer-box{
+  max-height: 300px;
+}
+
 @media(max-width: 767px){
   .quiz-sidebar-section{
     display: none;
@@ -202,6 +207,24 @@
   }
   .answer-box {
     max-height: 10em;
-    padding-bottom: 3em;
+    padding-bottom: 0em;
+  }
+  .quiz-side-fixed{
+    padding-bottom: 0.5em;
+  }
+
+
+}
+/* Static box in history mode */
+@media(max-width: 767px){
+  .static-box {
+    display: none;
+  }
+  .result-box {
+    min-height: 40px;
+  }
+  .result-box > ul {
+    padding-bottom: 0;
+    border: 0;
   }
 }

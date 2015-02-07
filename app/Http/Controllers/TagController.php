@@ -42,9 +42,9 @@ class TagController extends Controller {
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
-	public function show($slug, ExamRepository $tests, Guard $auth)
+	public function show($slug, ExamRepository $exams, Guard $auth)
 	{
         $tag = $this->tag->where('slug',$slug)->first();
 
@@ -52,19 +52,19 @@ class TagController extends Controller {
             abort(404);
 
         #TODO: Expand function when have new taggable object
-        $doneTestId = ($auth->check()) ? $tests->doneTestId($auth->user()) : false;
+        $doneTestId = ($auth->check()) ? $exams->doneTestId($auth->user()) : false;
         $name = "Tag {$tag->name}";
 
         $key = $this->request->url().$this->request->page;
 
-        $tests = \Cache::tags('tags','index')->remember($key, 10, function() use ($tag, $tests)
+        $exams = \Cache::tags('tags','index')->remember($key, 10, function() use ($tag, $exams)
         {
-            return $tests->withAllTags($tag->name)->with('tagged','user')->paginate(20);
+            return $exams->withAllTags($tag->name)->with('tagged','user')->paginate(20);
         });
 
-        $tests->appends($this->request->except('page'));
+        $exams->appends($this->request->except('page'));
 
-        return view('quiz.index',compact('tests','name','doneTestId'));
+        return view('quiz.index',compact('exams','name','doneTestId'));
 	}
 
 }

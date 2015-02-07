@@ -80,13 +80,13 @@
                 </div>
             </div>
             <div class="form-group row" id="adjustTotal">
-                <div class="input-group col-md-5">
+                <div class="input-group col-md-5 col-sm-5">
                       <span class="input-group-btn">
                         <button class="btn btn-info" id="btn-add"><i class="fa fa-plus"></i></button>
                       </span>
                       {!! Form::input('number','total_add','1', ['class' => 'form-control', 'id' => 'total_add']) !!}
                 </div>
-                <div class="input-group col-md-5">
+                <div class="input-group col-md-5 col-sm-5">
                       <span class="input-group-btn">
                         <button class="btn btn-primary" id="btn-remove"><i class="fa fa-times"></i></button>
                       </span>
@@ -135,8 +135,10 @@
         </div>
       </div>
     </div>
-    <div class="form-group pull-right">
-        {!! Form::submit('Lưu', ['class' => 'btn btn-primary', 'id' => 'btnCreateSubmit', 'data-loading-text' => 'Đang gửi...']) !!}
+    <div class="form-group">
+        <div class="pull-right">
+            {!! Form::submit('Lưu', ['class' => 'btn btn-primary', 'id' => 'btnCreateSubmit', 'data-loading-text' => 'Đang gửi...']) !!}
+        </div>
     </div>
     </div>
 </div>

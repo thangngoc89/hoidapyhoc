@@ -39,7 +39,7 @@ class ExamTransformers extends TransformerAbstract {
     {
         return [
             'score' => $history->score,
-            'totalQuestion' => $history->test->questionsCount(),
+            'totalQuestion' => $history->test->questionsCount,
             'url'   => '/quiz/ket-qua/'.$history->test->slug.'/'.$history->id,
         ];
     }

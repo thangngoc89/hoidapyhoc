@@ -66,12 +66,6 @@ class Exam extends Model {
         return $this->belongsTo('Quiz\Models\Upload','file_id');
     }
 
-    public function date()
-    {
-        $date = \Date::parse($this->created_at);
-        return $date->diffForHumans();
-    }
-
     /*
      * Frontend Content
      */
@@ -117,7 +111,7 @@ class Exam extends Model {
     }
 
     /**
-     * Count and store questions count into database
+     * Count questions
      *
      */
     public function getQuestionsCountAttribute()

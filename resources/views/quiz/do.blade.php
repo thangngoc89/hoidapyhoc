@@ -15,7 +15,7 @@
                 <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
             @endforeach
             <span class="text-muted label-small last-updated">
-                đăng vào {{ $t->date() }}
+                đăng vào {{ $t->created_at->diffForHumans() }}
                 | {{ $t->questionsCount }} câu hỏi
                 | {{ $t->thoigian }} phút
             </span></h4>

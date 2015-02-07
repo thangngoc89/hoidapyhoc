@@ -133,7 +133,7 @@ class QuizController extends Controller {
     public function showHistory($slug,$id)
     {
         $history = \Cache::tags('history')->rememberForever('history'.$id, function() use ($id){
-            return $this->history->with('user','test.question')->findOrFail($id);
+            return $this->history->with('user','test')->findOrFail($id);
         });
 
         $t = $history->test;

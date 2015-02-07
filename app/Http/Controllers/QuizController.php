@@ -73,7 +73,7 @@ class QuizController extends Controller {
     public function show($slug = null, $id)
 	{
         $t = \Cache::tags('tests')->rememberForever("testShow$slug$id", function () use ($id) {
-            return $this->test->getFirstBy('id',$id,['tagged','question']);
+            return $this->test->getFirstBy('id',$id,['tagged']);
         });
         if (is_null($t)) abort(404);
         if ($t->slug != $slug)
@@ -104,7 +104,7 @@ class QuizController extends Controller {
      */
     public function leaderboard($slug = null, $id)
     {
-        $t = $this->test->getFirstBy('id',$id,['tagged','question']);
+        $t = $this->test->getFirstBy('id',$id,['tagged']);
 
         if (is_null($t)) abort(404);
 

@@ -2,6 +2,12 @@
 
 use Jenssegers\Date\Date;
 
+/**
+ * Trait LocalizationDateTrait
+ * Helper trait to convert Carbon date into Localization Date
+ * @package Quiz\lib\Helpers
+ */
+
 trait LocalizationDateTrait {
 
     public function getCreatedAtAttribute($date)

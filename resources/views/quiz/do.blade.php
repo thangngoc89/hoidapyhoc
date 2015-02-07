@@ -16,7 +16,7 @@
             @endforeach
             <span class="text-muted label-small last-updated">
                 đăng vào {{ $t->date() }}
-                | {{ $t->question->count() }} câu hỏi
+                | {{ $t->questionsCount }} câu hỏi
                 | {{ $t->thoigian }} phút
             </span></h4>
         <a href="/quiz/create" class="btn btn-primary">

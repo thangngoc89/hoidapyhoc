@@ -35,14 +35,14 @@ class ExamCreateCommandHandler {
 
         try {
 
-            $exam = new Exam($request->all());
+            #TODO: Validate Questions Array
 
+            $exam = new Exam($request->all());
+            $exam->user_id = \Auth::user()->id;
             if (!$exam->save())
                 throw new ExamSaveException ("Could not save exam");
 
             $exam->tag($request->tags);
-
-            $this->storeQuestion($request, $exam->id);
 
         } catch (\Exception $e) {
 

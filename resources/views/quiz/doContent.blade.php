@@ -43,7 +43,7 @@
                 <strong>Phần trả lời: </strong>
                 <span id="answeredCount">0</span>
                 /
-                <span id="totalAnswer">{{ $t->question->count() }}</span>
+                <span id="totalAnswer">{{ $t->questionsCount }}</span>
             </div>
         </div>
         <div class="answer-box option_test" id="option_test">
@@ -51,22 +51,22 @@
                 <table width="100%" border="0">
                 <tbody>
                 <?php $i=$t->begin; ?>
-                @foreach( $t->question as $q)
-                <tr class="questionRow table-back01 unanswered " data-question-id="{{ $q->id }}" data-question-order="{{$i}}">
+                @foreach( $t->questions as $q)
+                <tr class="questionRow table-back01 unanswered " data-question-order="{{$i}}">
                     <td align="center" class="questionNumber">{{$i}}.</td>
-                    <td><a id="a_{{$i}}_a" rel="1" class="icontest-option op-a " href="#" data-question-id="{{ $q->id }}">a</a>
+                    <td><a id="a_{{$i}}_a" rel="1" class="icontest-option op-a " href="#">a</a>
                         <input type="hidden" id="answer_{{$i}}_a" name="answer_{{$i}}_1" value="0">
                     </td>
-                    <td><a id="a_{{$i}}_b" rel="1" class="icontest-option op-b " href="#" data-question-id="{{ $q->id }}">b</a>
+                    <td><a id="a_{{$i}}_b" rel="1" class="icontest-option op-b " href="#">b</a>
                         <input type="hidden" id="answer_{{$i}}_b" name="answer_{{$i}}_2" value="0">
                     </td>
-                    <td><a id="a_{{$i}}_c" rel="1" class="icontest-option op-c " href="#" data-question-id="{{ $q->id }}">c</a>
+                    <td><a id="a_{{$i}}_c" rel="1" class="icontest-option op-c " href="#">c</a>
                         <input type="hidden" id="answer_{{$i}}_c" name="answer_{{$i}}_3" value="0">
                     </td>
-                    <td><a id="a_{{$i}}_d" rel="1" class="icontest-option op-d " href="#" data-question-id="{{ $q->id }}">d</a>
+                    <td><a id="a_{{$i}}_d" rel="1" class="icontest-option op-d " href="#">d</a>
                         <input type="hidden" id="answer_{{$i}}_d" name="answer_{{$i}}_4" value="0">
                     </td>
-                    <td><a id="a_{{$i}}_e" rel="1" class="icontest-option op-e " href="#" data-question-id="{{ $q->id }}">e</a>
+                    <td><a id="a_{{$i}}_e" rel="1" class="icontest-option op-e " href="#">e</a>
                         <input type="hidden" id="answer_{{$i}}_d" name="answer_{{$i}}_5" value="0">
                     </td>
                 </tr>

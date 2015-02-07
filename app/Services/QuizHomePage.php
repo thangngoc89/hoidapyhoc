@@ -89,7 +89,7 @@ class QuizHomePage {
 
     private function makeView()
     {
-        $tests = $this->result->has('question')->with('tagged','user')->paginate(10);;
+        $tests = $this->result->with('tagged','user')->paginate(10);;
 
         $tests->appends($this->request->only('tab'));
 

@@ -34,23 +34,14 @@ class Exam extends Model {
         {
             \Cache::tags('tests')->flush();
         });
-
-        Exam::creating(function ($exam)
-        {
-            $exam->user_id = \Auth::user()->id;
-        });
-        Exam::updating(function ($exam)
-        {
-            $exam->user_id_edited = \Auth::user()->id;
-        });
     }
     /*
      * Has Many Relationship
      */
-    public function question()
-    {
-        return $this->hasMany('Quiz\Models\Question','test_id');
-    }
+//    public function question()
+//    {
+//        return $this->hasMany('Quiz\Models\Question','test_id');
+//    }
     public function history()
     {
         return $this->hasMany('Quiz\Models\History','test_id');
@@ -104,28 +95,6 @@ class Exam extends Model {
         });
     }
 
-    public function questionsCount()
-    {
-        return $this->questions_count;
-    }
-
-    /**
-     * Return an array of question info
-     */
-    public function questionsList()
-    {
-        return $this->questions;
-    }
-
-
-    /**
-     * Count and store questions count into database
-     *
-     */
-    public function setQuestionsCountAttribute()
-    {
-        $this->attributes['questions_count'] = count($this->attributes['questions']);
-    }
     /**
      * Return an array of json data from database
      *
@@ -147,5 +116,13 @@ class Exam extends Model {
         $this->attributes['questions'] = json_encode($questions);
     }
 
+    /**
+     * Count and store questions count into database
+     *
+     */
+    public function getQuestionsCountAttribute()
+    {
+        return count($this->questions);
+    }
 
 }

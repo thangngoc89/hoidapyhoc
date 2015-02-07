@@ -6,32 +6,32 @@ use Quiz\Models\History;
 
 class ExamTransformers extends TransformerAbstract {
 
-    public function transform(Exam $test)
+    public function transform(Exam $exam)
     {
         return [
-            'id'            => (int) $test->id,
-            'user_id'       => (int) $test->user_id,
-            'name'          => $test->name,
-            'slug'          => $test->slug,
-            'description'   => $test->description,
-            'content'       => $test->content,
-            'thoigian'      => (int) $test->thoigian,
-            'questionsCount' => $test->questions_count,
-            'questions'      => $test->questions,
-            'file'          => $this->file($test),
-            'tags'          => $test->tagNames(),
-            'approved'      => (boolean) $test->is_approve,
-            'created_at'    => $test->created_at,
-            'updated_at'    => $test->updated_at
+            'id'            => (int) $exam->id,
+            'user_id'       => (int) $exam->user_id,
+            'name'          => $exam->name,
+            'slug'          => $exam->slug,
+            'description'   => $exam->description,
+            'content'       => $exam->content,
+            'thoigian'      => (int) $exam->thoigian,
+            'questionsCount' => $exam->questions_count,
+            'questions'      => $exam->questions,
+            'file'          => $this->file($exam),
+            'tags'          => $exam->tagNames(),
+            'approved'      => (boolean) $exam->is_approve,
+            'created_at'    => $exam->created_at,
+            'updated_at'    => $exam->updated_at
         ];
     }
 
-    public function createResponse(Exam $test)
+    public function createResponse(Exam $exam)
     {
         return [
-            'id'        => $test->id,
-            'url'       => $test->link(),
-            'editUrl'   => $test->link('edit'),
+            'id'        => $exam->id,
+            'url'       => $exam->link(),
+            'editUrl'   => $exam->link('edit'),
         ];
     }
 
@@ -44,30 +44,13 @@ class ExamTransformers extends TransformerAbstract {
         ];
     }
 
-    private function file($test)
+    private function file($exam)
     {
-        if ($test->is_file)
+        if ($exam->is_file)
             return [
-                'id' => $test->file->id,
-                'link' => $test->file->url(),
+                'id' => $exam->file->id,
+                'link' => $exam->file->url(),
             ];
-        return '';
-    }
-
-    private function tag($test)
-    {
-        $tagged = $test->tagged()->get();
-        $tags = array();
-        if ($tagged->count() == 0)
-            return '';
-        foreach ($tagged as $tag)
-        {
-            $tags []= [
-                'id' => $tag->id,
-                'name' => $tag->name
-            ];
-        }
-
         return '';
     }
 

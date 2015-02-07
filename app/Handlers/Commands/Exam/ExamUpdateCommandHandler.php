@@ -35,17 +35,18 @@ class ExamUpdateCommandHandler {
 
         try {
 
+            #TODO: Validate Questions Array
             $exam->fill($request->all());
 
-            if (count($request->questions) != $exam->question->count())
+            $exam->user_id_edited = \Auth::user()->id;
+
+            if (count($request->questions) != $exam->questions_count)
                 throw new ExamSaveException ("Questions are not equal");
 
             if (!$exam->save())
                 throw new ExamSaveException ("Can not update exam");
 
             $exam->retag($request->tags);
-
-            $this->editQuestion($exam, $request);
 
        } catch (\Exception $e) {
 
@@ -60,23 +61,5 @@ class ExamUpdateCommandHandler {
 
         return $exam;
 	}
-
-    public function editQuestion(Exam $exam, $request)
-    {
-        $questions = $exam->question();
-
-        $givenQuestions = $request->questions;
-
-        foreach ($questions as $key => $q)
-        {
-            $updateData = $givenQuestions[$key];
-
-            $q->fill($updateData);
-
-            if (!$q->save())
-                throw new \Exception ("Can not update question");
-        }
-    }
-
 
 }

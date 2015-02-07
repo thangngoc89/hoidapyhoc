@@ -32,9 +32,7 @@ class CopyQuestionsDataFromQuestionTable extends Migration {
 
         $jsonData = $this->questionsToJson($questions);
 
-//        dd($jsonData);
         $exam->questions = json_encode($jsonData);
-        $exam->questions_count = $questions->count();
 
         $exam->save();
     }

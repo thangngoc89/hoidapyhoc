@@ -15,7 +15,6 @@ class IntegrateQuestionsWithinExamTableForRevisionable extends Migration {
 		Schema::table('tests', function($table)
         {
             $table->mediumText('questions');
-            $table->integer('questions_count')->index();
         });
 	}
 

@@ -159,7 +159,6 @@ class QuizController extends Controller {
         $name = "Tạo đề thi mới";
         $data = [
             'type' => 'create',
-            'tags' => $this->tag->allTagsWithCount(),
         ];
 
         $data = json_encode($data);
@@ -180,13 +179,10 @@ class QuizController extends Controller {
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($exam),
-            'tags' => $this->tag->examSelectedTags($exam->id)
         ];
-
 
         $data = json_encode($data);
 
-//        dd($data);
         return view('quiz.create',compact('data','name'));
 	}
 

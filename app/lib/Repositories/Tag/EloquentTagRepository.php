@@ -85,7 +85,7 @@ class EloquentTagRepository extends AbstractEloquentRepository implements TagRep
      */
     public function tagListOrderByExamCount()
     {
-        $tagList = $this->with('exams')->get();
+        $tagList = $this->with('exams')->take(50)->get();
 
         $tagList = $tagList->sortByDesc(function($tag)
         {

@@ -176,14 +176,17 @@ class QuizController extends Controller {
 	public function edit($exam, ExamTransformers $transformer)
 	{
         $name = 'Sửa đề thi';
+
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($exam),
             'tags' => $this->tag->examSelectedTags($exam->id)
         ];
 
+
         $data = json_encode($data);
 
+//        dd($data);
         return view('quiz.create',compact('data','name'));
 	}
 

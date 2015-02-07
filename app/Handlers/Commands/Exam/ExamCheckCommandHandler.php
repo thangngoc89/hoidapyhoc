@@ -55,7 +55,7 @@ class ExamCheckCommandHandler {
         $answerString = '';
         $map = ['_','A','B','C','D','E'];
 
-        foreach ($exam->question as $index => $q)
+        foreach ($exam->questionsList() as $index => $q)
         {
             $answer = $map[$givenAnswer[$index]];
             $answerString .= $answer;

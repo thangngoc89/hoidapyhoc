@@ -47,9 +47,7 @@ class ExamUpdateCommandHandler {
 
             $this->editQuestion($exam, $request);
 
-            return $exam;
-
-        } catch (\Exception $e) {
+       } catch (\Exception $e) {
 
             \DB::rollback();
 

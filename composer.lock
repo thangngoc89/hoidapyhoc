@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "681f0028bfdefb39acb81a64b2fa9010",
+    "hash": "66fa081115ffd35383121ea9197a287d",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1249,6 +1249,53 @@
                 }
             ],
             "time": "2014-07-14 20:59:35"
+        },
+        {
+            "name": "jenssegers/date",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jenssegers/laravel-date.git",
+                "reference": "0733a49ab833886e7011974e69ce5560732c016f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jenssegers/laravel-date/zipball/0733a49ab833886e7011974e69ce5560732c016f",
+                "reference": "0733a49ab833886e7011974e69ce5560732c016f",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "*",
+                "php": ">=5.3.0",
+                "symfony/translation": "*"
+            },
+            "require-dev": {
+                "satooshi/php-coveralls": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Jenssegers\\Date": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Segers",
+                    "homepage": "http://jenssegers.be"
+                }
+            ],
+            "description": "A date library to help you work with dates",
+            "keywords": [
+                "date",
+                "datetime",
+                "laravel",
+                "time"
+            ],
+            "time": "2015-02-06 09:10:27"
         },
         {
             "name": "jeremeamia/SuperClosure",
@@ -4235,6 +4282,7 @@
         "cocur/slugify": 20,
         "predis/predis": 20,
         "barryvdh/laravel-ide-helper": 20,
+        "jenssegers/date": 20,
         "barryvdh/laravel-debugbar": 20,
         "filp/whoops": 20
     },

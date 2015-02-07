@@ -50,7 +50,8 @@ class CopyQuestionsDataFromQuestionTable extends Migration {
         {
             $data[] = [
                 'answer' => $q->right_answer,
-                'content' => $q->content
+                'content' => $q->content,
+                'type' => 'single_choice',
             ];
         }
 

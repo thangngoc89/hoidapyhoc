@@ -115,6 +115,15 @@ class Exam extends Model {
         return $this->questions;
     }
 
+
+    /**
+     * Count and store questions count into database
+     *
+     */
+    public function setQuestionsCountAttribute()
+    {
+        $this->attributes['questions_count'] = count($this->attributes['questions']);
+    }
     /**
      * Return an array of json data from database
      *
@@ -135,4 +144,6 @@ class Exam extends Model {
     {
         $this->attributes['questions'] = json_encode($questions);
     }
+
+
 }

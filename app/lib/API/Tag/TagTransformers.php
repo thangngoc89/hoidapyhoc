@@ -10,6 +10,7 @@ class TagTransformers extends TransformerAbstract {
         return [
             'id'            => (int) $tag->id,
             'name'          => $tag->name,
+            'count'         => $tag->count(),
             'suggest'       => (boolean) $tag->suggest,
             'created_at'    => $tag->created_at,
             'updated_at'    => $tag->updated_at,

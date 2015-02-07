@@ -95,6 +95,8 @@ Route::group(array('prefix' => 'api/v2'), function()
 
     post('files/paste', 'API\UploadV2Controller@paste');
 
+    get('tags/search/{query}', 'API\TagV2Controller@search');
+
     Route::resource('exams', 'API\ExamV2Controller');
     Route::resource('files','API\UploadV2Controller');
     Route::resource('tags','API\TagV2Controller');

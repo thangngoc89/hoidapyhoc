@@ -2,7 +2,7 @@
 
 use Quiz\lib\Repositories\AbstractEloquentRepository;
 use Quiz\lib\Tagging\Tag;
-use Quiz\Models\Exam;
+use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 
 class EloquentTagRepository extends AbstractEloquentRepository implements TagRepository {
     /**
@@ -59,9 +59,17 @@ class EloquentTagRepository extends AbstractEloquentRepository implements TagRep
         if ($cache->has($key))
             return $cache->get($key);
 
-        $tagList = $this->tagListOrderByExamCount();
+        $tagList = $this->exam->findOrFail($examId)->tagged->all();
 
-        $tags = $this->tagsListTransformer($tagList, $examId);
+        $tags = [];
+        foreach ($tagList as $tag)
+        {
+            $tags[] = [
+                'text' => $tag->name,
+                'selected' => (boolean) true,
+                'count' => (int) $tag->count(),
+            ];
+        }
 
         $cache->forever($key, $tags);
 
@@ -95,6 +103,11 @@ class EloquentTagRepository extends AbstractEloquentRepository implements TagRep
         return $tagList;
     }
 
+    public function searchByName($query)
+    {
+        return $this->model->where('name', 'like', '%' . $query . '%');
+    }
+
     /**
      * Map return Eloquent Collection into an array
      *
@@ -112,7 +125,7 @@ class EloquentTagRepository extends AbstractEloquentRepository implements TagRep
                 $selected = in_array($tag->name, $this->examTagNames($examId));
 
             return [
-                'text' => $tag->name,
+                'name' => $tag->name,
                 'selected' => (boolean) $selected,
                 'count' => (int)$tag->exams->count()
             ];

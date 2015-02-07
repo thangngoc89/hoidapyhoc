@@ -28,3 +28,18 @@ function validationError(response)
         });
     });
 }
+
+function preventClosing()
+{
+    window.onbeforeunload = function (e) {
+        e = e || window.event;
+        if(global.preventClose){
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Bạn có chắc chắn muốn thoát ? ';
+            }
+            // For Safari
+            return 'Bạn có chắc chắn muốn thoát ? ';
+        }
+    };
+}

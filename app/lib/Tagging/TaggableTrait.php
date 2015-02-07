@@ -36,14 +36,7 @@ trait TaggableTrait {
 	 * @return array
 	 */
 	public function tagNames() {
-		$tagNames = array();
-		$tagged = $this->tagged()->get(array('name'));
-
-		foreach($tagged as $tag) {
-			$tagNames[] = $tag->name;
-		}
-		
-		return $tagNames;
+		return $this->tagged->lists('name');
 	}
 
 	/**
@@ -52,15 +45,8 @@ trait TaggableTrait {
 	 * @return array
 	 */
 	public function tagSlugs() {
-		$tagSlugs = array();
-		$tagged = $this->tagged()->get(array('slug'));
-
-		foreach($tagged as $tag) {
-			$tagSlugs[] = $tag->slug;
-		}
-		
-		return $tagSlugs;
-	}
+        return $this->tagged->lists('slug');
+    }
 
     public function tagList() {
         $tagged = $this->tagged()->get();

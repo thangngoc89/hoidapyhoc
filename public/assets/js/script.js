@@ -880,6 +880,21 @@ function validationError(response)
         });
     });
 }
+
+function preventClosing()
+{
+    window.onbeforeunload = function (e) {
+        e = e || window.event;
+        if(global.preventClose){
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Bạn có chắc chắn muốn thoát ? ';
+            }
+            // For Safari
+            return 'Bạn có chắc chắn muốn thoát ? ';
+        }
+    };
+}
 function quizDoInt()
 {
     resize_do();
@@ -1465,9 +1480,9 @@ function updateAnswerCount(){
 
         $("#select-tags").selectize({
             plugins: ['remove_button'],
-            options: global.data.tags,
-            valueField: 'text',
-            labelField: 'text',
+            valueField: 'name',
+            labelField: 'name',
+            searchField: 'name',
             create: function(input) {
                 return {
                     value: input,
@@ -1478,11 +1493,24 @@ function updateAnswerCount(){
             render: {
                 option: function(item, escape) {
 
-                    return '<div><span class="post-tag">' + escape(item.text) + '</span>'
+                    return '<div><span class="post-tag">' + escape(item.name) + '</span>'
                     + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
                     '<span class="item-multiplier-count">' + item.count +
                     '</span></span></div>';
                 }
+            },
+            load: function(query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: '/api/v2/tags/search/' + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function() {
+                        callback();
+                    },
+                    success: function(data) {
+                        callback(data.data);
+                    }
+                });
             }
         });
     }
@@ -1505,7 +1533,11 @@ function updateAnswerCount(){
     function fixTemplate()
     {
         // Fixing sidebar on create/edit mode
-        $('.quiz-sidebar-section').css('max-height','100%').toggle();
+        width=parseInt($(window).width());
+
+        if(width<=767) {
+            $('.quiz-sidebar-section').css('max-height', '100%').toggle();
+        }
     }
 
     function debug(data)

@@ -70,7 +70,7 @@ class Tag extends Eloquent {
 
     public function count() {
         return \Cache::tags('tags')->rememberForever('tagCount'.$this->id, function() {
-            return $this->exams->count();
+            return $this->exams->count() + $this->videos->count();
         });
     }
 	

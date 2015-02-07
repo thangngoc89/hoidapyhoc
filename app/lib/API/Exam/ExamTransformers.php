@@ -19,7 +19,7 @@ class ExamTransformers extends TransformerAbstract {
             'questionsCount' => $exam->questions_count,
             'questions'      => $exam->questions,
             'file'          => $this->file($exam),
-            'tags'          => $exam->tagNames(),
+            'tags'          => $exam->tagged->lists('name'),
             'approved'      => (boolean) $exam->is_approve,
             'created_at'    => $exam->created_at,
             'updated_at'    => $exam->updated_at

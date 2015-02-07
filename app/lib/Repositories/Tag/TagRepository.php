@@ -10,4 +10,6 @@ interface TagRepository extends BaseRepository {
 
     public function examTagNames($examId);
 
+    public function searchByName($query);
+
 }

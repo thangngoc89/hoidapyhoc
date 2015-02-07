@@ -37,7 +37,6 @@ class TagV2Controller extends APIController {
         $this->request = $request;
         $this->auth = $auth;
         $this->fractal = $fractal;
-        $this->middleware('auth', ['except' => 'index']);
         $this->tag = $tag;
     }
 
@@ -103,48 +102,17 @@ class TagV2Controller extends APIController {
     }
 
     /**
-     * Create a new history for test
-     * @param $id
-     * @return mixed
+     * Return an array of tag base on query
+     *
+     * @param $query
      */
-    public function start($test)
+    public function search($query)
     {
-        return $this->tryCatch(function() use ($test) {
+        $tags = $this->tag->searchByName($query)->paginate(20);
 
-            $history = $this->history->firstOrCreate([
-                'user_id' => $this->auth->user()->id,
-                'test_id' => $test->id,
-                'isDone'  => 0
-            ]);
-            $history->is_first = $this->history->firstTime($history->user_id, $history->test_id);
+        return $this->fractal->paginatedCollection($tags, new TagTransformers());
 
-            $response = [
-                'user_history_id' => $history->id
-            ];
-
-            return $response;
-        });
     }
-
-    /**
-     * Check post and return right answer
-     * @param $test
-     * @param ExamTransformers $transformer
-     * @param TestCheckRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function check ($test, ExamTransformers $transformer, TestCheckRequest $request)
-    {
-        return $this->tryCatch(function() use ($test,$transformer, $request)
-        {
-            $history = new ExamCheckSaver($request->all(),$test);
-            $history = $history->save();
-            $response = $transformer->checkResponse($history);
-
-            return $response;
-        });
-    }
-
 	/**
 	 * Remove the specified resource from storage.
 	 *

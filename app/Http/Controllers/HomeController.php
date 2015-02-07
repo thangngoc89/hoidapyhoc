@@ -3,6 +3,7 @@
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
+use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 
@@ -91,6 +92,12 @@ class HomeController extends Controller {
 
     public function cleanCache()
     {
+        $exam = Exam::find(25);
+        foreach($exam->revisionHistory as $history)
+        {
+            echo "<li>{ucfirst($history->key)} changed from {$history->old_value } to { $history->new_value }</li>";
+        }
+
         return view('site.video');
     }
 

@@ -35,8 +35,10 @@
                     <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
                  @endforeach
                  <span class="text-muted label-small last-updated">
-                     đăng vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                     &nbsp; <a href="{{ $t->link() }}" title="{{ $t->questionsCount() }} câu hỏi"><i class="fa fa-puzzle-piece"></i> {{ $t->questionsCount() }}</a>
+                     đăng vào <a href="{{ $t->link() }}">{{ $t->created_at->diffForHumans() }}</a>
+                     &nbsp;
+                     <a href="{{ $t->link() }}" title="{{ $t->questions_count }} câu hỏi">
+                        <i class="fa fa-puzzle-piece"></i> {{ $t->questions_count }}</a>
                      &nbsp; <a href="{{ $t->link() }}" title="{{ $t->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $t->thoigian }}</a>
                  </span>
              </div>

@@ -189,7 +189,7 @@
             givenAnswer = $('input[id^="answer_'+questionOrder+'_"][value=1]').attr('name');
             givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
             question = {
-                'right_answer' : givenAnswer.toUpperCase(),
+                'answer' : givenAnswer.toUpperCase(),
                 'content' : (quiz.answerArray[index+1]) ? quiz.answerArray[index+1] : '',
             };
             questions.push(question);

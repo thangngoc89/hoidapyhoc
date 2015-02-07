@@ -16,7 +16,7 @@
         <ul>
         @foreach ($haveHistory  as $h)
             <li>
-                <a href="{{ $h->link() }}">Bạn đạt {{ $h->score }}/{{ strlen($h->answer) }} điểm vào {{ $h->date() }}</a>
+                <a href="{{ $h->link() }}">Bạn đạt {{ $h->score }}/{{ strlen($h->answer) }} điểm vào {{ $h->updated_at->diffForHumans() }}</a>
             </li>
         @endforeach
         </ul>

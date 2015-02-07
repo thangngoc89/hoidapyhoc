@@ -12,12 +12,9 @@ class QuizHomePage {
     /**
      * @var ExamRepository
      */
-    private $test;
-
+    private $exam;
     private $request;
-
     private $result;
-
     private $name;
     /**
      * @var Cache
@@ -26,13 +23,13 @@ class QuizHomePage {
 
     /**
      * @param Guard $auth
-     * @param ExamRepository $test
+     * @param ExamRepository $exam
      * @param Cache $cache
      */
-    public function __construct(Guard $auth, ExamRepository $test, Cache $cache)
+    public function __construct(Guard $auth, ExamRepository $exam, Cache $cache)
     {
         $this->auth = $auth;
-        $this->test = $test;
+        $this->exam = $exam;
         $this->cache = $cache;
     }
     public function execute($request)
@@ -61,14 +58,14 @@ class QuizHomePage {
     {
         if (! $this->auth->check())
             abort(503);
-        $this->result = $this->test->doneTest($this->auth->user());
+        $this->result = $this->exam->doneTest($this->auth->user());
 
         $this->name = 'Các đề bạn đã làm';
     }
 
     private function latestTab()
     {
-        $this->result = $this->test->orderBy('tests.created_at','DESC');
+        $this->result = $this->exam->orderBy('tests.created_at','DESC');
         $this->name = 'Quiz';
     }
 
@@ -89,16 +86,17 @@ class QuizHomePage {
 
     private function makeView()
     {
-        $tests = $this->result->has('question')->with('tagged','user')->paginate(10);;
+        $exams = $this->result->with('tagged','user')->paginate(10);;
 
-        $tests->appends($this->request->only('tab'));
+        // Appends pagination
+        $exams->appends($this->request->except('tab'));
 
-        $name  = $this->name;
+        $name = $this->name;
 
         $doneTestId = false;
 
         if ($this->auth->check())
-            $doneTestId = $this->test->doneTestId($this->auth->user());
+            $doneTestId = $this->exam->doneTestId($this->auth->user());
 
         return view('quiz.index',compact('tests','name','doneTestId'))->render();
     }

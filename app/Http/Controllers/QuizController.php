@@ -73,7 +73,7 @@ class QuizController extends Controller {
     public function show($slug = null, $id)
 	{
         $t = \Cache::tags('tests')->rememberForever("testShow$slug$id", function () use ($id) {
-            return $this->test->getFirstBy('id',$id,['tagged','question']);
+            return $this->test->getFirstBy('id',$id,['tagged']);
         });
         if (is_null($t)) abort(404);
         if ($t->slug != $slug)
@@ -104,7 +104,7 @@ class QuizController extends Controller {
      */
     public function leaderboard($slug = null, $id)
     {
-        $t = $this->test->getFirstBy('id',$id,['tagged','question']);
+        $t = $this->test->getFirstBy('id',$id,['tagged']);
 
         if (is_null($t)) abort(404);
 
@@ -133,7 +133,7 @@ class QuizController extends Controller {
     public function showHistory($slug,$id)
     {
         $history = \Cache::tags('history')->rememberForever('history'.$id, function() use ($id){
-            return $this->history->with('user','test.question')->findOrFail($id);
+            return $this->history->with('user','test')->findOrFail($id);
         });
 
         $t = $history->test;
@@ -176,14 +176,17 @@ class QuizController extends Controller {
 	public function edit($exam, ExamTransformers $transformer)
 	{
         $name = 'Sửa đề thi';
+
         $data = [
             'type' => 'edit',
             'test' => $transformer->transform($exam),
             'tags' => $this->tag->examSelectedTags($exam->id)
         ];
 
+
         $data = json_encode($data);
 
+//        dd($data);
         return view('quiz.create',compact('data','name'));
 	}
 

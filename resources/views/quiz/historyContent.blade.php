@@ -57,7 +57,7 @@
                 <strong>Bạn đã trả lời: </strong>
                 <span id="answeredCount">{{ $history->answeredCount() }}</span>
                 /
-                <span id="totalAnswer">{{ $t->question->count() }}</span>
+                <span id="totalAnswer">{{ $t->questionsCount }}</span>
             </div>
         </div>
         <div class="answer-box option_test" id="option_test">
@@ -68,11 +68,11 @@
                     $option = ['a','b','c','d','e'];
                     $userChoices = str_split($history->answer,1);
                 ?>
-                @foreach( $t->question as $index => $q)
-                <tr class="ansRow" data-qindex="{{ $i }}" data-qid="{{ $q->id }}" data-content="{{ $q->content }}">
+                @foreach( $t->questions as $index => $q)
+                <tr class="ansRow" data-qindex="{{ $i }}" data-content="{{ $q->content }}">
                     <td align="center">{{$i}}.</td>
                     <?php
-                        $rightAnswer = strtolower($q->right_answer);
+                        $rightAnswer = strtolower($q->answer);
                         $userChoice = strtolower($userChoices[$index]);
                         foreach($option as $op)
                         {
@@ -96,7 +96,6 @@
                 @endforeach
                 </tbody>
             </table>
-            <input name="testId" value="2063" type="hidden">
         </div>
     </div>
     @endif

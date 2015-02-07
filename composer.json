@@ -21,7 +21,7 @@
 		"predis/predis": "~1.1@dev",
 		"intervention/imagecache": "master",
 		"barryvdh/laravel-ide-helper": "~2.0@dev",
-		"venturecraft/revisionable": "dev-master"
+		"jenssegers/date": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

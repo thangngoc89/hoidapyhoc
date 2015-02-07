@@ -15,8 +15,8 @@
                 <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
             @endforeach
             <span class="text-muted label-small last-updated">
-                vào <a href="{{ $t->link() }}">{{ $t->date() }}</a>
-                | <a href="{{ $t->link() }}">{{ $t->question->count() }}</a> câu hỏi
+                vào <a href="{{ $t->link() }}">{{ $t->updated_at->diffForHumans() }}</a>
+                | <a href="{{ $t->link() }}">{{ $t->questionsCount }}</a> câu hỏi
                 | <a href="{{ $t->link() }}">{{ $t->thoigian }}</a> phút
             </span></h4>
         <a href="/quiz/create" class="btn btn-primary">

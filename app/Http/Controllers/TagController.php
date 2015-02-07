@@ -6,8 +6,7 @@ use Quiz\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
-use Quiz\lib\Tagging\Tag;
-use Quiz\Models\Exam;
+use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Quiz\Services\TagHomePage;
 
 class TagController extends Controller {
@@ -32,7 +31,7 @@ class TagController extends Controller {
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return Response
+	 * @return TagHomePage
 	 */
 	public function index(TagHomePage $view)
     {
@@ -60,7 +59,7 @@ class TagController extends Controller {
 
         $tests = \Cache::tags('tags','index')->remember($key, 10, function() use ($tag, $tests)
         {
-            return $tests->withAllTags($tag->name)->has('question')->with('tagged','user')->paginate(20);
+            return $tests->withAllTags($tag->name)->with('tagged','user')->paginate(20);
         });
 
         $tests->appends($this->request->except('page'));

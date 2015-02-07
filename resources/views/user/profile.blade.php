@@ -25,7 +25,7 @@
                 </div>
                 <div class="media-body media--conversation__body">
                     <h5 class="media-heading media--conversation__heading">
-                        {{ $h->date() }},
+                        {{ $h->updated_at->diffForHumans() }},
                         <a href="{{ $user->profileLink() }}">{{ $user->getName() }}</a>
                         đã làm đề thi
                         <a href="{{ $h->test->link() }}">{{$h->test->name}}</a>

@@ -1,14 +1,43 @@
-<?php
+<?php namespace Quiz\lib\Repositories\Exam;
+
+use Illuminate\Validation\Validator;
+
 /**
- * Created by PhpStorm.
- * User: Dang
- * Date: 09/02/2015
- * Time: 10:27 AM
+ * Custom validator for input questions array
+ *
+ * Class QuestionValidator
+ * @package Quiz\lib\Repositories\Exam
  */
+class QuestionValidator extends Validator {
 
-namespace Quiz\lib\Repositories\Exam;
+    public function validateQuestions($attribute, $value, $parameters)
+    {
+        if (!is_array($value))
+            return false;
+        foreach ($value as $question)
+        {
+            if (!is_array($question))
+                return false;
+            if ( !isset($question['answer']) || !$this->answerKey($question['answer']) )
+                return false;
+        }
 
+        return true;
+    }
 
-class QuestionValidator {
+    /**
+     * Question answer on can be these in $acceptString array
+     *
+     * @param $key
+     * @return bool
+     */
+    public function answerKey($key)
+    {
+        $acceptString = ['A','B','C','D','E'];
+        if ( !in_array($key, $acceptString) )
+            return false;
+        return true;
 
-} 
+    }
+
+}

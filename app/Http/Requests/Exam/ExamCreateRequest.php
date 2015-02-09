@@ -30,7 +30,7 @@ class ExamCreateRequest extends Request {
             'content' => 'required',
             'begin' => 'required|integer|min:1',
             'tags'   => 'required',
-            'questions' => 'required|array'
+            'questions' => 'required|questions'
 		];
 	}
 

@@ -1,11 +1,13 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Quiz\lib\Repositories\Exam\ExamRepository;
+use Quiz\lib\Repositories\History\HistoryRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
+use Quiz\Models\Video;
 
 class HomeController extends Controller {
 
@@ -69,7 +71,7 @@ class HomeController extends Controller {
      * @param History $history
      * @return \Illuminate\View\View
      */
-    public function stat(UserRepository $user, ExamRepository $test, History $history)
+    public function stat(UserRepository $user, ExamRepository $test, HistoryRepository $history, Video $video)
     {
         $key = 'siteStat';
         if (\Cache::has($key)) {
@@ -78,8 +80,9 @@ class HomeController extends Controller {
             $user = $user->count();
             $test = $test->count();
             $history = $history->count();
+            $video = $video->count();
 
-            $stat = [$user,$test,$history];
+            $stat = [$user,$test,$history, $video];
             \Cache::put($key, $stat, 30);
         }
         return view('site.stat', compact('stat'));
@@ -92,20 +95,10 @@ class HomeController extends Controller {
 
     public function cleanCache(Tag $tag)
     {
-        $all = $tag->join('taggables','tagging_tags.id','=','taggables.tag_id')
-                    ->where('taggables.tag_id',169)
-                    ->groupBy('taggables.taggable_id')
-                    ->get();
+        $allTag = $tag->with(['exams', 'videos'])->find(161);
+        $relations = $allTag->getRelations();
 
-//        dd($all);
-
-        $all = \DB::table('tagging_tags')
-                ->selectRaw('`tagging_tags`.*, `taggables`.`taggable_id` as `pivot_taggable_id`, `taggables`.`tag_id` as `pivot_tag_id`')
-            ->where(`tag_id`,14)
-            ->join('taggables','tagging_tags.id','=' ,'taggables.tag_id')
-                ->get();
-
-        dd($all);
+        dd($relations);
     }
 
 }

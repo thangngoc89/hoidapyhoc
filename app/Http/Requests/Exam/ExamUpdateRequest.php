@@ -50,7 +50,7 @@ class ExamUpdateRequest extends Request {
             'thoigian' => 'required|integer|between:5,200',
             'begin' => 'required|integer|min:1',
             'tags'   => 'required',
-            'questions' => 'required|array'
+            'questions' => 'required|questions'
         ];
 
         // It much have both is_file and file_id fields to be accepted

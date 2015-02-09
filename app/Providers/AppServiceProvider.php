@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+        $this->app->validator->resolver(function($translator, $data, $rules, $messages)
+        {
+            return new \Quiz\lib\Repositories\Exam\QuestionValidator($translator, $data, $rules, $messages);
+        });
 	}
 
 	/**

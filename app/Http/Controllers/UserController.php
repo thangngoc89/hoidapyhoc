@@ -58,6 +58,7 @@ class UserController extends Controller {
     public function postFinish(AuthEditRequest $request)
     {
         $user = $this->user->find($this->auth->user()->id);
+
         $user->update($request->input());
 
         return redirect()->back();
@@ -72,6 +73,7 @@ class UserController extends Controller {
      */
     public function profile($username)
     {
+        #TODO: Add recent upload exam
         $user = $this->user->getFirstBy('username', $username);
 
         $history = $this->history->recentDoneExam($user->id);

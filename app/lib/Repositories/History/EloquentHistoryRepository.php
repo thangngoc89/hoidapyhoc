@@ -17,6 +17,13 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
         $this->model = $model;
     }
 
+    /**
+     * Find all previous history done by User on a single exam
+     *
+     * @param $examId
+     * @param $userId
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function findUserHistoryOfExam($examId, $userId)
     {
         return $this->model
@@ -26,16 +33,30 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
             ->get();
     }
 
+    /**
+     * All history of one exam
+     *
+     * @param $examId
+     * @param int $perPage
+     * @return mixed
+     */
     public function leaderBoardOfExam($examId, $perPage = 50)
     {
         return $this->model->orderBy('score','DESC')
-                ->where('test_id',$examId)
-                ->where('is_first',1)
-                ->where('isDone',1)
-                ->with('user')
-                ->paginate($perPage);
+            ->where('test_id',$examId)
+            ->where('is_first',1)
+            ->where('isDone',1)
+            ->with('user')
+            ->paginate($perPage);
     }
 
+    /**
+     * User's recent done exam
+     *
+     * @param $userId
+     * @param int $limit
+     * @return mixed
+     */
     public function recentDoneExam($userId, $limit = 5)
     {
         return $this->model->where('user_id',$userId)

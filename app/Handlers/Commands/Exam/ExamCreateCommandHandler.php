@@ -35,8 +35,6 @@ class ExamCreateCommandHandler {
 
         try {
 
-            #TODO: Validate Questions Array
-
             $exam = new Exam($request->all());
             $exam->user_id = \Auth::user()->id;
             if (!$exam->save())

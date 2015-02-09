@@ -35,7 +35,6 @@ class ExamUpdateCommandHandler {
 
         try {
 
-            #TODO: Validate Questions Array
             $exam->fill($request->all());
 
             $exam->user_id_edited = \Auth::user()->id;

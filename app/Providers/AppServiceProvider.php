@@ -50,6 +50,11 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         $this->app->bind(
+            'Quiz\lib\Repositories\History\HistoryRepository',
+            'Quiz\lib\Repositories\History\EloquentHistoryRepository'
+        );
+
+        $this->app->bind(
             'League\Fractal\Serializer\SerializerAbstract',
             'League\Fractal\Serializer\ArraySerializer'
         );

@@ -38,6 +38,10 @@ class Tag extends Eloquent {
         });
     }
 
+    public function tagged() {
+        return $this->morphToMany('Quiz\lib\Tagging\Tag', 'taggable')->orWhereRaw('taggables.taggable_type IS NOT NULL');
+    }
+
     public function exams() {
         return $this->morphedByMany('\Quiz\Models\Exam','taggable');
     }

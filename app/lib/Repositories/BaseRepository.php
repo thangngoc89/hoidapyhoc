@@ -10,6 +10,8 @@ interface BaseRepository {
 
     public function firstOrNew($array);
 
+    public function firstOrCreate($array);
+
     public function whereRaw($query, $variables = null);
 
     public function where($key, $method, $value = null);
@@ -32,6 +34,8 @@ interface BaseRepository {
 
     public function with($with);
 
+    public function load($relationship);
+
     public function has($relation);
 
     public function get();
@@ -44,6 +48,12 @@ interface BaseRepository {
 
     public function getTable();
 
+    /**
+     * Tag a taggable item
+     *
+     * @param $string
+     * @return mixed
+     */
     public function tag($string);
 
     public function untag($string);

@@ -15,7 +15,7 @@ use Quiz\Commands\Exam\ExamUpdateCommand;
 use Quiz\Http\Requests\Exam\ExamCheckRequest;
 
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
-use Quiz\Models\History;
+use Quiz\lib\Repositories\History\HistoryRepository as History;
 
 use Sorskod\Larasponse\Larasponse;
 use Quiz\lib\API\Exam\ExamTransformers;
@@ -132,7 +132,6 @@ class ExamV2Controller extends APIController {
                 'test_id' => $exam->id,
                 'isDone'  => 0
             ]);
-            $history->is_first = $this->history->firstTime($history->user_id);
 
             $response = [
                 'user_history_id' => $history->id

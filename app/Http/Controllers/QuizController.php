@@ -1,13 +1,12 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
-use Illuminate\Contracts\View\View;
 use Quiz\Events\ViewTestEvent;
 use Quiz\lib\API\Exam\ExamTransformers;
-use Quiz\lib\Repositories\Tag\TagRepository;
-use Quiz\lib\Tagging\Tag;
-use Quiz\Models\History;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
+use Quiz\lib\Repositories\Tag\TagRepository as Tag;
+use Quiz\lib\Repositories\History\HistoryRepository as History;
+
 use Illuminate\Http\Request;
 
 use Quiz\Services\QuizHomePage;
@@ -17,7 +16,7 @@ class QuizController extends Controller {
     /**
      * @var Exam
      */
-    private $test;
+    private $exam;
     /**
      * @var History
      */
@@ -26,31 +25,26 @@ class QuizController extends Controller {
      * @var Guard
      */
     private $auth;
-    /**
-     * @var Tag
-     */
-    private $tag;
+
     /**
      * @var Request
      */
     private $request;
 
     /**
-     * @param Tag $tag
-     * @param Exam $test
+     * @param Exam $exam
      * @param History $history
      * @param Guard $auth
      * @param Request $request
      */
-    public function __construct(TagRepository $tag, Exam $test, History $history, Guard $auth, Request $request)
+    public function __construct(Exam $exam, History $history, Guard $auth, Request $request)
     {
-        $this->test     = $test;
+        $this->exam     = $exam;
         $this->history  = $history;
         $this->auth     = $auth;
-        $this->tag      = $tag;
+        $this->request = $request;
         $this->middleware('auth', ['only' => ['create','edit']]);
         $this->middleware('tests.view_throttle', ['except' => ['create','edit','index']]);
-        $this->request = $request;
     }
 
 
@@ -70,24 +64,17 @@ class QuizController extends Controller {
      * @param $t
      * @return \Illuminate\View\View
      */
-    public function show($slug = null, $id)
+    public function show($slug = null, $t)
 	{
-        $t = \Cache::tags('tests')->rememberForever("testShow$slug$id", function () use ($id) {
-            return $this->test->getFirstBy('id',$id,['tagged']);
-        });
-        if (is_null($t)) abort(404);
+        $t->load('tagged');
+
         if ($t->slug != $slug)
             return redirect()->to($t->link());
 
         $haveHistory = false;
+
         if ($this->auth->check())
-        {
-            $haveHistory = $this->history
-                            ->with('test')
-                            ->where('test_id',$t->id)
-                            ->where('user_id',$this->auth->user()->id)
-                            ->get();
-        }
+            $haveHistory = $this->history->findUserHistoryOfExam($t->id, $this->auth->user()->id);
 
         event(new ViewTestEvent($t, $this->request));
         // Define for blade template
@@ -102,21 +89,14 @@ class QuizController extends Controller {
      * @param $t
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function leaderboard($slug = null, $id)
+    public function leaderBoard($slug = null, $t)
     {
-        $t = $this->test->getFirstBy('id',$id,['tagged']);
-
-        if (is_null($t)) abort(404);
+        $t->load('tagged');
 
         if ($t->slug != $slug)
             return redirect()->to($t->link('bangdiem'));
 
-        $top = $this->history->orderBy('score','DESC')
-            ->where('test_id',$t->id)
-            ->where('is_first',1)
-            ->where('isDone',1)
-            ->with('user')
-            ->paginate(50);
+        $top = $this->history->leaderBoardOfExam($t->id);
 
         event(new ViewTestEvent($t, $this->request));
 
@@ -132,14 +112,12 @@ class QuizController extends Controller {
      */
     public function showHistory($slug,$id)
     {
-        $history = \Cache::tags('history')->rememberForever('history'.$id, function() use ($id){
-            return $this->history->with('user','test')->findOrFail($id);
-        });
+        $history = $this->history->getFirstBy('id',$id,['user']);
 
-        $t = $history->test;
+        $t = $history->exam;
 
         if ($t->slug != $slug)
-            return redirect()->to('/quiz/ket-qua/'.$t->slug.'/'.$id);
+            return redirect()->to($history->link());
 
         // Define for blade template
         $viewHistory = true;

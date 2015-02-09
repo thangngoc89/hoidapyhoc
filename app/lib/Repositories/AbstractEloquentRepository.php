@@ -25,6 +25,11 @@ abstract class AbstractEloquentRepository {
         return $this->model->firstOrNew($array);
     }
 
+    public function firstOrCreate($array)
+    {
+        return $this->model->firstOrCreate($array);
+    }
+
     public function where($key, $method, $value = null)
     {
         return $this->model->where($key, $method, $value);
@@ -89,6 +94,12 @@ abstract class AbstractEloquentRepository {
     public function with($with)
     {
         return $this->model->with($with);
+    }
+
+    public function load($relationship)
+    {
+
+        return $this->model->load($relationship);
     }
 
     /**

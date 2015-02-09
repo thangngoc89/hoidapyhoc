@@ -18,8 +18,6 @@
 Route::pattern('id', '[0-9]+');
 Route::pattern('exams', '[0-9]+');
 Route::pattern('permissions', '[0-9]+');
-Route::pattern('tags', '[0-9]+');
-Route::pattern('tags', '[a-zA-z\-]+');
 
 /** ------------------------------------------
  *  Route model binding
@@ -69,8 +67,10 @@ Route::controllers([
 Route::resource('quiz','QuizController');
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('lam-bai/{slug}/{id}', 'QuizController@show');
-    Route::get('bang-diem/{slug}/{id}', 'QuizController@leaderboard');
+    Route::get('lam-bai/{slug}/{exams}', 'QuizController@show');
+
+    #TODO: Remove this route
+    Route::get('bang-diem/{slug}/{exams}', 'QuizController@leaderBoard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 });
 
@@ -129,4 +129,3 @@ get('{sitemap}.xml','SitemapController@index');
 
 
 get('test','TestController@index');
-get('videoinfo','TestController@getVideoInfo');

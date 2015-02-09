@@ -15,8 +15,8 @@
                 <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
              @endforeach
             <span class="text-muted label-small last-updated">
-                đăng vào {{ $t->date() }}
-                | {{ $t->question->count() }} câu hỏi
+                đăng vào {{ $t->created_at->diffForHumans() }}
+                | {{ $t->questionsCount }} câu hỏi
                 | {{ $t->thoigian }} phút
             </span></h4>
         <a href="/quiz/create" class="btn btn-primary">
@@ -77,7 +77,7 @@ Bảng điểm :: {{ trim($t->name) }}
                 <div class="media--conversation__meta">
                     <span class="media--conversation__replies">
                         <span class="experience-points">{{ $h->score }}</span>
-                        <span class="experience-heading">/{{ $t->question->count() }}</span>
+                        <span class="experience-heading">/{{ $t->questionsCount }}</span>
                     </span>
                 </div>
             </article>

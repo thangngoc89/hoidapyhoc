@@ -3,7 +3,7 @@
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
-use Quiz\Models\Exam;
+use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 
@@ -90,15 +90,15 @@ class HomeController extends Controller {
         return view('site.admin');
     }
 
-    public function cleanCache()
+    public function cleanCache(Tag $tag)
     {
-        $exam = Exam::find(25);
-        foreach($exam->revisionHistory as $history)
-        {
-            echo "<li>{ucfirst($history->key)} changed from {$history->old_value } to { $history->new_value }</li>";
-        }
+        $all = $tag->join('taggables','tagging_tags.id','=','taggables.tag_id')
+                    ->where('taggables.tag_id',169)
+                    ->groupBy('taggables.taggable_id')
+                    ->get();
 
-        return view('site.video');
+        dd($all);
+
     }
 
 }

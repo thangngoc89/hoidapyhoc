@@ -14,14 +14,25 @@ class History extends Model {
     {
         parent::boot();
 
+        History::saving(function($history)
+        {
+            /**
+             * Append is first attribute
+             */
+            $oldHistory  = History::where('test_id','=',$history->test_id)
+                ->where('user_id','=',$history->user_id)
+                ->count();
+            if ($oldHistory == 0)
+                $history->is_first = true;
+        });
         History::saved(function($history){
             \Cache::tags('history','user'.$history->user_id)->flush();
             \Cache::tags('tests'.$history->test_id)->flush();
         });
     }
-    public function test()
+    public function exam()
     {
-        return $this->belongsTo('Quiz\Models\Exam');
+        return $this->belongsTo('Quiz\Models\Exam','test_id');
     }
 
     /**
@@ -32,25 +43,10 @@ class History extends Model {
         return $this->belongsTo('Quiz\Models\User','user_id');
     }
 
-    /**
-     * @param $user_id
-     * @param $test_id
-     * @return bool
-     */
-    public function firstTime($user_id)
-    {
-        $history  = $this->where('test_id','=',$this->test_id)
-            ->where('user_id','=',$user_id)
-            ->count();
-        if ($history == 0)
-            return true;
-
-        return false;
-    }
 
     public function link()
     {
-        return '/quiz/ket-qua/'.$this->test->slug.'/'.$this->id;
+        return '/quiz/ket-qua/'.$this->exam->slug.'/'.$this->id;
     }
     /**
      * @return int

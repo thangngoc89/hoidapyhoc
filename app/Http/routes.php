@@ -120,12 +120,12 @@ get('tag/{slug}', 'TagController@show');
  *  ------------------------------------------
  */
 get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
+get('files/image/{size}/{file}','ResourcesController@image');
 
 /** ------------------------------------------
  *  Sitemap
  *  ------------------------------------------
  */
 get('{sitemap}.xml','SitemapController@index');
-
 
 get('test','TestController@index');

@@ -13,7 +13,7 @@ class LeechImageFile {
 
     /**
      * @param $link
-     * @return Image Stream
+     * @return \Image Stream
      */
     public function execute($link, $object = false)
     {
@@ -29,17 +29,7 @@ class LeechImageFile {
 
     private function setImg()
     {
-        $this->img = \Image::cache(function($image) {
-            $image->make($this->link)->encode('jpg');
-        }, 14400, $this->object);
+        $this->img = \Image::make($this->link)->encode('jpg');
     }
-
-//    public function encode()
-//    {
-//        $imgData = base64_encode($this->img);
-//        $src = 'data: '.$this->img->mime().';base64,'.$imgData;
-//
-//        return $src;
-//    }
 
 }

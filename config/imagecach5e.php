@@ -31,8 +31,7 @@ return array(
     */
     
     'paths' => array(
-        public_path('uploads'),
-        'http://media.hoidapyhoc.com/'
+        public_path('uploads')
     ),
 
     /*

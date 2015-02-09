@@ -142,7 +142,6 @@ return [
         'Laravel\Socialite\SocialiteServiceProvider',
         'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
         'Sorskod\Larasponse\LarasponseServiceProvider',
-        'Zizaco\Entrust\EntrustServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
 
         /*

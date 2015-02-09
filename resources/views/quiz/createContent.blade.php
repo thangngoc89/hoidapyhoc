@@ -41,6 +41,7 @@
                 </a>
             </li>
           </ul>
+            <div id="dropzone" class="dropzone"></div>
           <br>
           <!-- Tab panes -->
           <div class="tab-content">
@@ -143,4 +144,5 @@
     </div>
 </div>
 {!! Form::close() !!}
+
 

@@ -42,7 +42,7 @@
         });
         sticky();
         editor();
-        uploader();
+        //uploader();
         
         preventClosing();
 

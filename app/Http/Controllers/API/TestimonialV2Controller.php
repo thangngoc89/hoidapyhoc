@@ -98,7 +98,6 @@ class TestimonialV2Controller extends APIController {
      */
     public function destroy($role)
     {
-        #TODO: Add this validation on model's boot
         try
         {
             if ($role->users()->count() > 0)

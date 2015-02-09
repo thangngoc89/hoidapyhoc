@@ -9,11 +9,14 @@ use Illuminate\Http\Request;
 use Quiz\lib\Helpers\OnlineServices;
 use Quiz\Services\LeechImageFile;
 
+use File;
+use Cache;
+
 class ResourcesController extends Controller {
 
     public function userAvatar($user, LeechImageFile $leecher)
     {
-        return \Cache::driver('file')->rememberForever("userAvatar{$user->id}", function () use ($user, $leecher) {
+        return Cache::driver('file')->rememberForever("userAvatar{$user->id}", function () use ($user, $leecher) {
 
             $avatar = $user->avatar;
 
@@ -24,13 +27,14 @@ class ResourcesController extends Controller {
 
             $response = response()->make($img);
 
-            return $this->imageHeader($response);
+            return $this->staticHeader($response);
         });
 
     }
 
     /**
      * Return an image from storage_path()/uploads/file
+     * /files/image/{$size}/{$path}
      *
      * @param $size
      * @param $path
@@ -39,18 +43,34 @@ class ResourcesController extends Controller {
     public function image($size, $path)
     {
         $response = $this->dispatch(new ImageServer($size, $path));
-        return $this->imageHeader($response);
+        return $this->staticHeader($response);
     }
 
-    public function shortUrl($uuid)
+    /**
+     * Return pdf file download response
+     * /files/pdf/{$filename.pdf}
+     *
+     * @param $file
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function pdf($file)
     {
+        preg_match('/\.[^\.]+$/i',$file,$ext);
+        if ($ext[0] != '.pdf')
+            abort(404);
 
+        $path = storage_path("uploads/".$file);
+
+        if (!File::exists($path))
+            abort(404);
+
+        return response()->download($path);
     }
 
-    public function imageHeader($response)
+    public function staticHeader($response, $type = 'image/jpg')
     {
         $response->header('Pragma', 'public');
-        $response->header('Content-Type', 'image/jpg');
+        $response->header('Content-Type', $type);
         $response->header('Cache-Control', 'public, max-age=');
         $response->header('Expires', gmdate('D, d M Y H:i:s \G\M\T', time() + 31557600));
 

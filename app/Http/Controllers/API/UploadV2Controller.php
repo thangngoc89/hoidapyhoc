@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Quiz\Http\Requests\uploadFileRequest;
 use Quiz\lib\Helpers\Str;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
+use Image;
 
 class UploadV2Controller extends APIController {
     /**
@@ -29,7 +30,7 @@ class UploadV2Controller extends APIController {
 
     public function store(uploadFileRequest $request)
     {
-        $file = \Input::file('file');
+        $file = $request->file('file');
 
         $info = [
             'orginal_filename' => $file->getClientOriginalName(),
@@ -48,7 +49,6 @@ class UploadV2Controller extends APIController {
         // If file was not existed then upload it
         if (!$upload)
         {
-            #TODO: Config S3 and test it
             $destination = public_path().'/uploads/';
             $file->move($destination, $this->createFileNameFromInfo($info));
 
@@ -59,7 +59,7 @@ class UploadV2Controller extends APIController {
     }
 
     /**
-     * Process a
+     * Process a paste in base64 encoded image
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -69,7 +69,7 @@ class UploadV2Controller extends APIController {
     {
         // array('image' => base64 string)
 
-        $img = \Image::make($request->image);
+        $img = Image::make($request->image);
 
         $info = [
             'orginal_filename' => 'pastedImage'.time(),
@@ -77,9 +77,10 @@ class UploadV2Controller extends APIController {
             'mimetype'  => $img->mime(),
             'size'      => $img->filesize()
         ];
+
         $filename = $this->createFileNameFromInfo($info);
 
-        $img->save("uploads/{$filename}");
+        $img->save(storage_path("uploads/{$filename}"));
 
         $upload = $this->saveFileData($info);
 
@@ -97,6 +98,7 @@ class UploadV2Controller extends APIController {
         $upload->user_id = $this->auth->user()->id;
         $upload->filename = $this->createFileNameFromInfo($info);
         $upload->location = config('filesystems.default');
+
         if (!$upload->save())
             throw new \Exception('Cannot save file info');
 
@@ -124,6 +126,7 @@ class UploadV2Controller extends APIController {
             'filename' => $upload->filename,
             'link' => $upload->url()
         ];
+
         return response()->json($response, 200);
     }
 } 

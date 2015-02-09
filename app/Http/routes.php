@@ -121,6 +121,7 @@ get('tag/{slug}', 'TagController@show');
  */
 get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
 get('files/image/{size}/{file}','ResourcesController@image');
+get('files/pdf/{file}','ResourcesController@pdf');
 
 /** ------------------------------------------
  *  Sitemap

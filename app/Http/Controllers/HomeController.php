@@ -97,8 +97,15 @@ class HomeController extends Controller {
                     ->groupBy('taggables.taggable_id')
                     ->get();
 
-        dd($all);
+//        dd($all);
 
+        $all = \DB::table('tagging_tags')
+                ->selectRaw('`tagging_tags`.*, `taggables`.`taggable_id` as `pivot_taggable_id`, `taggables`.`tag_id` as `pivot_tag_id`')
+            ->where(`tag_id`,14)
+            ->join('taggables','tagging_tags.id','=' ,'taggables.tag_id')
+                ->get();
+
+        dd($all);
     }
 
 }

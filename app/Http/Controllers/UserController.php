@@ -3,7 +3,7 @@
 use Illuminate\Auth\Guard;
 use Quiz\Http\Requests\AuthEditRequest;
 use Quiz\lib\Repositories\User\UserRepository as User;
-use Quiz\Models\History;
+use Quiz\lib\Repositories\History\HistoryRepository as History;
 
 class UserController extends Controller {
     /**
@@ -62,18 +62,19 @@ class UserController extends Controller {
 
         return redirect()->back();
     }
+
+    /**
+     * User's profile page
+     *
+     * @route @username
+     * @param $username
+     * @return \Illuminate\View\View
+     */
     public function profile($username)
     {
         $user = $this->user->getFirstBy('username', $username);
 
-        $key = 'profileUserHistory'.$user->id;
-        $history = \Cache::tags('user'.$user->id)->remember($key, 10, function() use ($user) {
-            return $this->history->where('user_id',$user->id)
-                ->with('test')
-                ->orderBy('updated_at','DESC')
-                ->take(5)
-                ->get();
-        });
+        $history = $this->history->recentDoneExam($user->id);
 
         return view('user.profile',compact('user','history'));
     }

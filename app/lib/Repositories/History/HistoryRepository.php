@@ -8,4 +8,6 @@ interface HistoryRepository extends BaseRepository {
 
     public function leaderBoardOfExam($examId, $perPage = 50);
 
+    public function recentDoneExam($userId, $limit = 5);
+
 }

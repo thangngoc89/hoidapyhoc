@@ -28,19 +28,19 @@
                         {{ $h->updated_at->diffForHumans() }},
                         <a href="{{ $user->profileLink() }}">{{ $user->getName() }}</a>
                         đã làm đề thi
-                        <a href="{{ $h->test->link() }}">{{$h->test->name}}</a>
+                        <a href="{{ $h->exam->link() }}">{{$h->exam->name}}</a>
                     </h5>
                     <p>
-                        @foreach ($h->test->tagged as $tag)
+                        @foreach ($h->exam->tagged as $tag)
                             <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
                         @endforeach đạt
-                        {{ $h->score }}/<strong>{{ $h->test->questionsCount }}</strong> điểm.
+                        {{ $h->score }}/<strong>{{ $h->exam->questionsCount }}</strong> điểm.
                     </p>
                 </div>
 
                 <div class="media--conversation__meta">
                     <span class="label label-info">
-                        <a href="{{ $h->test->link() }}">Làm ngay</a>
+                        <a href="{{ $h->exam->link() }}">Làm ngay</a>
                     </span>
                 </div>
             </article>

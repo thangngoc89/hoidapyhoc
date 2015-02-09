@@ -36,5 +36,13 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
                 ->paginate($perPage);
     }
 
+    public function recentDoneExam($userId, $limit = 5)
+    {
+        return $this->model->where('user_id',$userId)
+            ->with('exam')
+            ->orderBy('updated_at','DESC')
+            ->take($limit)
+            ->get();
+    }
 
 }

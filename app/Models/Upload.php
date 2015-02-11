@@ -31,7 +31,7 @@ class Upload extends Model {
             return '//media.hoidapyhoc.com/'.$this->filename;
 
         if(in_array($this->extension, ['png','jpeg','jpg','gif']))
-            return url("/files/image/{$this->filename}");
+            return url("/files/image/medium/{$this->filename}");
 
         if ($this->extension == 'pdf')
             return url('/files/pdf/'.$this->filename);
@@ -44,5 +44,10 @@ class Upload extends Model {
         if ($this->extension != 'pdf')
             return false;
         return getenv('PDF_VIEWER').$this->url();
+    }
+
+    public function getPathAttribute()
+    {
+        return storage_path("uploads/".$this->filename);
     }
 }

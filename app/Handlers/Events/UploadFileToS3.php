@@ -1,11 +1,17 @@
 <?php namespace Quiz\Handlers\Events;
 
-use Quiz\Events\;
+use Quiz\Events\NewFileUploaded;
 
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 
-class UploadFileToS3 {
+/**
+ * Backup all uploaded file into S3
+ *
+ * Class UploadFileToS3
+ * @package Quiz\Handlers\Events
+ */
+class UploadFileToS3  {
 
 	/**
 	 * Create the event handler.
@@ -20,10 +26,10 @@ class UploadFileToS3 {
 	/**
 	 * Handle the event.
 	 *
-	 * @param  Events  $event
+	 * @param NewFileUploaded $event
 	 * @return void
 	 */
-	public function handle(Events $event)
+	public function handle(NewFileUploaded $event)
 	{
 		//
 	}

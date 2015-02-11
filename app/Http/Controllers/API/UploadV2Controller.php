@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Quiz\Events\NewFileUploaded;
 use Quiz\Http\Requests\uploadFileRequest;
 use Quiz\lib\Helpers\Str;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
@@ -49,10 +50,12 @@ class UploadV2Controller extends APIController {
         // If file was not existed then upload it
         if (!$upload)
         {
-            $destination = public_path().'/uploads/';
+            $destination = storage_path().'/uploads/';
             $file->move($destination, $this->createFileNameFromInfo($info));
 
             $upload = $this->saveFileData($info);
+
+
         }
 
         return $this->createResponse($upload);
@@ -83,6 +86,8 @@ class UploadV2Controller extends APIController {
         $img->save(storage_path("uploads/{$filename}"));
 
         $upload = $this->saveFileData($info);
+
+        event(new NewFileUploaded($upload));
 
         return $this->createResponse($upload);
     }

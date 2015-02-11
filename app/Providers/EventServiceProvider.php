@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider {
         \Quiz\Events\Exam\ExamUpdatedEvent::class => [
             \Quiz\Handlers\Events\Exam\RebakeHistoryScore::class,
         ],
+        \Quiz\Events\NewFileUploaded::class=>[
+            \Quiz\Handlers\Events\UploadFileToS3::class,
+        ]
 	];
 
 }

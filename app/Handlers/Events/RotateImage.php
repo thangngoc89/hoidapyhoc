@@ -1,7 +1,5 @@
 <?php namespace Quiz\Handlers\Events;
 
-use Quiz\Events\;
-
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 use Quiz\Events\NewFileUploaded;

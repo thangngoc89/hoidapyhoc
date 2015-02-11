@@ -21,6 +21,7 @@ class EventServiceProvider extends ServiceProvider {
         ],
         \Quiz\Events\NewFileUploaded::class=>[
             \Quiz\Handlers\Events\UploadFileToS3::class,
+            \Quiz\Handlers\Events\RotateImage::class,
         ]
 	];
 

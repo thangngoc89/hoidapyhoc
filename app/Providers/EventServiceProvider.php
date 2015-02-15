@@ -13,14 +13,31 @@ class EventServiceProvider extends ServiceProvider {
 		'event.name' => [
 			'EventListener',
 		],
-        \Quiz\Events\ViewTestEvent::class => [
-            \Quiz\Handlers\Events\Exam\IncreaseViewCount::class,
+
+        /** ------------------------------------------
+         *  Exam's events
+         *  ------------------------------------------
+         */
+        \Quiz\Events\Exam\ExamViewEvent::class => [
+            \Quiz\Handlers\Events\IncreaseViewCount::class,
         ],
         \Quiz\Events\Exam\ExamUpdatedEvent::class => [
             \Quiz\Handlers\Events\Exam\RebakeHistoryScore::class,
         ],
+        /** ------------------------------------------
+         *  Video's events
+         *  ------------------------------------------
+         */
+        \Quiz\Events\Video\VideoViewEvent::class => [
+            \Quiz\Handlers\Events\IncreaseViewCount::class,
+        ],
+
+        /** ------------------------------------------
+         *  General events
+         *  ------------------------------------------
+         */
         \Quiz\Events\NewFileUploaded::class=>[
-            \Quiz\Handlers\Events\UploadFileToS3::class,
+            \Quiz\Handlers\Events\BackupUploadedFile::class,
             \Quiz\Handlers\Events\RotateImage::class,
         ]
 	];

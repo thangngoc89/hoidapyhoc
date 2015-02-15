@@ -1,10 +1,9 @@
 <?php namespace Quiz\Http\Controllers;
 
 use Illuminate\Auth\Guard;
-use Quiz\Events\ViewTestEvent;
+use Quiz\Events\Exam\ExamViewEvent;
 use Quiz\lib\API\Exam\ExamTransformers;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
-use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Quiz\lib\Repositories\History\HistoryRepository as History;
 
 use Illuminate\Http\Request;
@@ -44,7 +43,7 @@ class QuizController extends Controller {
         $this->auth     = $auth;
         $this->request = $request;
         $this->middleware('auth', ['only' => ['create','edit']]);
-        $this->middleware('tests.view_throttle', ['except' => ['create','edit','index']]);
+        $this->middleware('view_throttle', ['except' => ['create','edit','index']]);
     }
 
 
@@ -76,7 +75,7 @@ class QuizController extends Controller {
         if ($this->auth->check())
             $haveHistory = $this->history->findUserHistoryOfExam($t->id, $this->auth->user()->id);
 
-        event(new ViewTestEvent($t, $this->request));
+        event(new ExamViewEvent($t, $this->request));
         // Define for blade template
         $viewHistory = false;
         return view('quiz.do',compact('t','haveHistory','viewHistory'));
@@ -98,7 +97,7 @@ class QuizController extends Controller {
 
         $top = $this->history->leaderBoardOfExam($t->id);
 
-        event(new ViewTestEvent($t, $this->request));
+        event(new ExamViewEvent($t, $this->request));
 
         return view('quiz.leaderboard',compact('t','top'));
     }
@@ -122,7 +121,7 @@ class QuizController extends Controller {
         // Define for blade template
         $viewHistory = true;
 
-        event(new ViewTestEvent($t, $this->request));
+        event(new ExamViewEvent($t, $this->request));
 
         return view('quiz.history',compact('t','history','viewHistory'));
     }

@@ -1,4 +1,4 @@
-<?php namespace Quiz\Events;
+<?php namespace Quiz\Events\Exam;
 
 use Illuminate\Http\Request;
 use Quiz\Events\Event;
@@ -6,7 +6,7 @@ use Quiz\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Quiz\Models\Exam;
 
-class ViewTestEvent extends Event {
+class ExamViewEvent extends Event {
 
 	use SerializesModels;
     /**
@@ -26,11 +26,11 @@ class ViewTestEvent extends Event {
      *
      * @param Exam $test
      * @param Request $request
-     * @return \Quiz\Events\ViewTestEvent
+     * @return \Quiz\Events\Exam\ExamViewEvent
      */
-	public function __construct(Exam $test, Request $request)
+	public function __construct(Exam $exam, Request $request)
 	{
-        $this->test = $test;
+        $this->exam = $exam;
         $this->request = $request;
     }
 

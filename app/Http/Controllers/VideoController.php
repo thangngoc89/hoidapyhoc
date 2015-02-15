@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers;
 
+use Quiz\Events\Video\VideoViewEvent;
 use Quiz\Http\Requests;
 use Quiz\Http\Controllers\Controller;
 
@@ -11,13 +12,21 @@ class VideoController extends Controller {
      * @var Video
      */
     private $video;
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
      * @param Video $video
+     * @param Request $request
      */
-    public function __construct(Video $video)
+    public function __construct(Video $video, Request $request)
     {
         $this->video = $video;
+
+        $this->middleware( 'view_throttle', [ 'only' => ['show'] ] );
+        $this->request = $request;
     }
 
 	/**
@@ -52,6 +61,8 @@ class VideoController extends Controller {
         $video->load(['tagged.videos' => function ($q) use ( &$relatedVideos, $video ) {
             $relatedVideos = $q->where('videos.id', '<>', $video->id)->limit(6)->get()->unique();
         }]);
+
+        event(new VideoViewEvent($video, $this->request));
 
         return view('video.videoShow',compact('video','relatedVideos'));
 	}

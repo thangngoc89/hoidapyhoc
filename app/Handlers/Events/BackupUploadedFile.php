@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldBeQueued;
  * Class UploadFileToS3
  * @package Quiz\Handlers\Events
  */
-class UploadFileToS3  {
+class BackupUploadedFile implements ShouldBeQueued  {
 
 	/**
 	 * Create the event handler.

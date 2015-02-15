@@ -41,5 +41,5 @@ elixir(function(mix) {
         ], 'bower_components', 'public/assets/js/editor.js')
         //.phpSpec()
         //.phpUnit()
-        .version(['css/main.css','assets/js/script.js']);
+        .version(['css/main.css','public/assets/js/script.js']);
 });

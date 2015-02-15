@@ -1,35 +1,27 @@
 <?php namespace Quiz\Http\Controllers;
 
-use Intervention\Image\Facades\Image;
 use Quiz\Commands\Site\ImageServer;
+use Quiz\Commands\Site\ShowUserAvatar;
+
 use Quiz\Http\Requests;
 use Quiz\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Quiz\lib\Helpers\OnlineServices;
-use Quiz\Services\LeechImageFile;
 
 use File;
-use Cache;
 
 class ResourcesController extends Controller {
 
-    public function userAvatar($user, LeechImageFile $leecher)
+    /**
+     * Download user avatar and cache in file driver for better performance
+     *
+     * @param $user
+     * @return mixed
+     */
+    public function userAvatar($user)
     {
-        return Cache::driver('file')->rememberForever("userAvatar{$user->id}", function () use ($user, $leecher) {
-
-            $avatar = $user->avatar;
-
-            if (!$avatar)
-                $avatar = OnlineServices::getGravatar($user->email);
-
-            $img = $leecher->execute($avatar);
-
-            $response = response()->make($img);
-
-            return $this->staticHeader($response);
-        });
-
+        $response = $this->dispatch(new ShowUserAvatar($user));
+        return $this->staticHeader($response);
     }
 
     /**
@@ -63,6 +55,8 @@ class ResourcesController extends Controller {
 
         if (!File::exists($path))
             abort(404);
+
+        #TODO: Dispatch this into a command handler with file name
 
         return response()->download($path);
     }

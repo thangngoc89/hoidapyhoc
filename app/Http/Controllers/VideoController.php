@@ -7,34 +7,36 @@ use Illuminate\Http\Request;
 use Quiz\Models\Video;
 
 class VideoController extends Controller {
+    /**
+     * @var Video
+     */
+    private $video;
+
+    /**
+     * @param Video $video
+     */
+    public function __construct(Video $video)
+    {
+        $this->video = $video;
+    }
 
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
 	public function index()
 	{
-		$videos = Video::latest()->paginate(15);
+		$videos = $this->video->latest()->paginate(15);
         return view('video.videoIndex',compact('videos'));
 	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 *
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
 	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
 	{
 		//
 	}
@@ -43,11 +45,10 @@ class VideoController extends Controller {
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
 	public function show($slug, $video)
 	{
-
         $video->load(['tagged.videos' => function ($q) use ( &$relatedVideos, $video ) {
             $relatedVideos = $q->where('videos.id', '<>', $video->id)->limit(6)->get()->unique();
         }]);
@@ -59,20 +60,9 @@ class VideoController extends Controller {
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
 	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
 	{
 		//
 	}
@@ -81,7 +71,7 @@ class VideoController extends Controller {
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return \Illuminate\View\View
 	 */
 	public function destroy($id)
 	{

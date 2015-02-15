@@ -5,7 +5,7 @@ use Illuminate\Contracts\Queue\ShouldBeQueued;
 use Quiz\Events\NewFileUploaded;
 use Image;
 
-class RotateImage implements ShouldBeQueued {
+class RotateImage {
 
 	/**
 	 * Create the event handler.

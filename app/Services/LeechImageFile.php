@@ -9,16 +9,12 @@ class LeechImageFile {
 
     public $link;
 
-    public $object;
-
     /**
      * @param $link
      * @return \Image Stream
      */
-    public function execute($link, $object = false)
+    public function execute($link)
     {
-        $this->object = $object;
-
         $this->link = $link;
 
         $this->setImg();

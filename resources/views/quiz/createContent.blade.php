@@ -35,12 +35,20 @@
                     <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">
                         <i class="fa fa-file-pdf-o"></i> Upload file PDF</a>
                 </li>
+                <li role="presentation" class="pull-right">
+                    <a href="javascript:void(0)" id="toggle-uploader" title="Ẩn/Hiện trình upload ảnh">
+                        <i class="fa fa-image"></i> Upload ảnh</a>
+                </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
                 <!-- Composer tab -->
                 <div role="tabpanel" class="tab-pane active" id="editor">
-                    <div id="images-uploader" class="dropzone"></div>
+                    <div id="images-uploader" class="dropzone">
+                        <div id="close-uploader" class="pull-right">
+                            x Đóng
+                        </div>
+                    </div>
                     <div id="content" data-placeholder="Nhập nội dung cho đề thi">
                     <h3><strong>Chú ý : Khu vực này chính là trình soạn thảo của các bạn</strong></h3><p>Hãy xóa tất cả để bắt đầu soạn thảo đề thi.</p><p><br></p><h3><strong>1. Cần thanh công cụ? </strong></h3><p>Nhấp chuột/bôi đen đoạn văn bản cần định dạng, thanh công cụ sẽ xuất hiện. Các bạn có thể định dạng văn bản với những chức hay hay dùng như Work.<img alt="Image title" class="fr-fin fr-dib" src="/img/tut/select-tut.jpg" width="561"></p><h3><strong>2. Soạn thảo nhanh bằng phím tắt:</strong></h3><p>Đây là một danh sách ngắn những phím tắt có sẵn để các bạn sử dụng:</p><p>- Ctrl + <strong>B</strong> : <strong>In đậm</strong></p><p><strong>- </strong>Ctrl + <u>U</u> : Gạch chân</p><p>- Ctrl + <em>I &nbsp;</em>: Chữ nghiêng</p><p>- Ctrl + S : <strike>Gạch ngang qua chữ</strike></p><p><br></p><p><strong style="font-size: 24px; line-height: 1.1; letter-spacing: -0.1px;">3. Chèn hình ảnh ?</strong></p><p>Quiz cho phép các bạn upload ảnh chụp một cách nhanh chóng để tạo một đề thi mới. Sau đây mình sẽ hướng dẫn các bạn các chèn hình ảnh vào đề thi</p> </div>
                 </div>

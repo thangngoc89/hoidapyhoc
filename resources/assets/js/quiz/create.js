@@ -392,6 +392,15 @@
                 });
             }
         });
+
+        $('div#close-uploader').on('click', function(){
+           $(this).parent().slideUp();
+        });
+
+        $('a#toggle-uploader').on('click', function(event){
+           event.preventDefault();
+            $('div#images-uploader').slideToggle();
+        });
     }
 
     function embedPdf(data)

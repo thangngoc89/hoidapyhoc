@@ -58,24 +58,6 @@ class TestController extends Controller {
     }
 
 
-    public function getVideoLink(GetVideoLink $data)
-    {
-        $link = 'http://www.medicalvideos.org/videos/load/recent/410';
-
-        $data = $data->get($link)->parse();
-
-        return $data;
-    }
-
-	public function getVideoInfo(GetVideoInfo $data)
-	{
-        $link = 'http://www.medicalvideos.org/videos/86/examination-of-an-enucleated-socket';
-
-        $data = $data->get($link)->parse();
-
-        return $data;
-	}
-
     /**
      * @param GetVideoInfo $getInfo
      * @param $video
@@ -89,7 +71,13 @@ class TestController extends Controller {
             return $getInfo->get($video['link'])->parse();
         });
 
-        $saveVideo = $this->video->firstOrNew(array('source' => $video['link']));
+        $saveVideo = $this->video->find(array('source' => $video['link']));
+
+        if (!is_null($saveVideo))
+            return;
+
+        $saveVideo = new $this->video;
+
         $saveVideo->fill($info);
         $saveVideo->thumb = $video['thumb'];
         $saveVideo->source = $video['link'];
@@ -101,5 +89,35 @@ class TestController extends Controller {
             $saveVideo->retag($info['tag']);
     }
 
+
+    /**
+     * Demo class function usage
+     *
+     * @param GetVideoLink $data
+     * @return array|GetVideoLink
+     */
+    public function getVideoLink(GetVideoLink $data)
+    {
+        $link = 'http://www.medicalvideos.org/videos/load/recent/410';
+
+        $data = $data->get($link)->parse();
+
+        return $data;
+    }
+
+    /**
+     * Demo class function usage
+     *
+     * @param GetVideoInfo $data
+     * @return array|GetVideoInfo
+     */
+    public function getVideoInfo(GetVideoInfo $data)
+    {
+        $link = 'http://www.medicalvideos.org/videos/86/examination-of-an-enucleated-socket';
+
+        $data = $data->get($link)->parse();
+
+        return $data;
+    }
 
 }

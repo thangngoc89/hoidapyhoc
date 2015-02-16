@@ -53,7 +53,7 @@ div.videocontent {
 </div>
 <div class="lesson-follow-ups">
     <div class="container wrap--video">
-        <h3 class="lesson-prerequisites-title">Continue Your Learning</h3>
+        <h3 class="lesson-prerequisites-title">Video liên quan</h3>
         <span class="lesson-prerequisites-title-divider"></span>
 
             <?php  $i=1; ?>

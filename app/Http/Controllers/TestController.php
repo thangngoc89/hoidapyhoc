@@ -38,16 +38,20 @@ class TestController extends Controller {
 
         $baseUrl = 'http://www.medicalvideos.org/videos/load/recent/';
 
-        for ($i=44; $i>0; $i--)
+
+        for ($i=1; $i<10; $i++)
         {
             $videoList = \Cache::rememberForever("videoList{$i}", function() use ($baseUrl, $i, $getLink)
             {
                 return $getLink->get($baseUrl.$i)->parse();
             });
 
+
             foreach ($videoList as $video)
             {
-                $this->saveVideo($getInfo, $video);
+                if (!$this->saveVideo($getInfo, $video))
+                    return;
+
 
                 sleep(2);
             }
@@ -62,6 +66,7 @@ class TestController extends Controller {
      * @param GetVideoInfo $getInfo
      * @param $video
      * @param $user
+     * @return boolean
      */
     private function saveVideo(GetVideoInfo $getInfo, $video)
     {
@@ -73,20 +78,24 @@ class TestController extends Controller {
 
         $saveVideo = $this->video->find(array('source' => $video['link']));
 
-        if (!is_null($saveVideo))
-            return;
+        if ($saveVideo->isEmpty())
+        {
+            $saveVideo = new $this->video;
 
-        $saveVideo = new $this->video;
+            $saveVideo->fill($info);
+            $saveVideo->thumb = $video['thumb'];
+            $saveVideo->source = $video['link'];
 
-        $saveVideo->fill($info);
-        $saveVideo->thumb = $video['thumb'];
-        $saveVideo->source = $video['link'];
+            $saveVideo->user()->associate($user);
+            $saveVideo->save();
 
-        $saveVideo->user()->associate($user);
-        $saveVideo->save();
+            if (!empty($info['tag']))
+                $saveVideo->retag($info['tag']);
 
-        if (!empty($info['tag']))
-            $saveVideo->retag($info['tag']);
+            return true;
+        }
+
+        return false;
     }
 
 

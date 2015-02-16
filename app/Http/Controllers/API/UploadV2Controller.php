@@ -43,7 +43,7 @@ class UploadV2Controller extends APIController {
         return $this->excute($file, $info);
     }
 
-    public function excute($file, $info)
+    private function excute($file, $info)
     {
         $upload = $this->upload->getFileInfo($info);
 
@@ -54,8 +54,6 @@ class UploadV2Controller extends APIController {
             $file->move($destination, $this->createFileNameFromInfo($info));
 
             $upload = $this->saveFileData($info);
-
-
         }
 
         return $this->createResponse($upload);
@@ -87,8 +85,6 @@ class UploadV2Controller extends APIController {
 
         $upload = $this->saveFileData($info);
 
-        event(new NewFileUploaded($upload));
-
         return $this->createResponse($upload);
     }
 
@@ -106,6 +102,8 @@ class UploadV2Controller extends APIController {
 
         if (!$upload->save())
             throw new \Exception('Cannot save file info');
+
+        event (new NewFileUploaded($upload));
 
         return $upload;
     }
@@ -129,7 +127,8 @@ class UploadV2Controller extends APIController {
         $response = [
             'id' => $upload->id,
             'filename' => $upload->filename,
-            'link' => $upload->url()
+            'original_filename' => $upload->orginal_filename,
+            'link' => $upload->url()."#{$upload->orginal_filename}",
         ];
 
         return response()->json($response, 200);

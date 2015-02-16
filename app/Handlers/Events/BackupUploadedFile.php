@@ -29,12 +29,16 @@ class BackupUploadedFile implements ShouldBeQueued  {
 	 * Handle the event.
 	 *
 	 * @param NewFileUploaded $event
-	 * @return void
+	 * @return $this
 	 */
 	public function handle(NewFileUploaded $event)
 	{
         $upload = $event->upload;
         $imageExtension = ['png','jpg','jpeg','gif'];
+
+        print_r($upload);
+        die();
+
         if (!in_array($upload->extension,$imageExtension) )
             return $this->toFlickr($upload);
 

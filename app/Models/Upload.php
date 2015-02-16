@@ -11,10 +11,7 @@ class Upload extends Model {
 
     public static function boot()
     {
-        Upload::saved(function($upload)
-        {
-            event (new NewFileUploaded($upload));
-        });
+
     }
 
     /*

@@ -384,7 +384,7 @@ function updateAnswerCount(){
         });
         sticky();
         editor();
-        //uploader();
+        uploader();
         
         preventClosing();
 
@@ -462,7 +462,7 @@ function updateAnswerCount(){
                 } else {
                     location.href = data.editUrl;
                 }
-            });
+        });
     }
 
     function validator()
@@ -512,6 +512,7 @@ function updateAnswerCount(){
             return false;
         }
 
+        // Return serialize and validated data for sending
         return {
             name: name,
             description: description,
@@ -609,7 +610,7 @@ function updateAnswerCount(){
     {
         selectedAnswer = false;
         content = false;
-        answerd = ''
+        answerd = '';
         if (data)
         {
             selectedAnswer = data.answer.toLowerCase();
@@ -694,33 +695,56 @@ function updateAnswerCount(){
 
     function uploader()
     {
-        $("#uploadarea").uploadFile({
-            url:"/api/v2/files",
-            maxFileSize: 10*1024*1024,   //Bytes
-            allowedTypes: 'pdf',
-            showStatusAfterSuccess: false,
-            formData: { type: 'json' },
-            dragDropStr: "<span><b>Kéo và thả file vào đây để upload</b></span>",
-            sizeErrorStr: "quá lớn. Dung lượng file tối đa là ",
-            uploadErrorStr: "Đã có lỗi xảy ra trong quá trình upload",
-            uploadButtonClass:"btn btn-info",
-            onSuccess:function(files,data,xhr)
-            {
-                embedPdf(data);
+        Dropzone.autoDiscover = false;
+
+        $("div#images-uploader").dropzone({
+            url: '/api/v2/files',
+            paramName: "file",
+            headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
+            maxFilesize: 3, // MB
+            acceptedFiles: 'image/*',
+            dictDefaultMessage: 'Kéo và thả ảnh vào đây để upload',
+            dictInvalidFileType: 'Định dạng file không cho phép',
+            init: function() {
+                this.on("success", function(file,response) {
+                    imgHTML = "<img src='"+response.link+"' alt='"+response.original_filename+"'/>";
+
+                    $ele.content.editable("insertHTML", imgHTML, true);
+                });
+                this.on("error", function(){
+                    toastr["warning"]('Có lỗi xảy ra trong quá trình upload file');
+                });
+            }
+        });
+        // PDF uploader init
+        $("div#pdf-uploader").dropzone({
+            url: '/api/v2/files',
+            paramName: "file",
+            headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
+            maxFilesize: 10,
+            acceptedFiles: 'application/pdf',
+            dictDefaultMessage: 'Kéo và thả file PDF vào đây<br>Kích thước tối đa 10MB',
+            dictInvalidFileType: 'Định dạng file không cho phép',
+            init: function() {
+                this.on("success", function(file,response) {
+                    embedPdf(response);
+                });
+                this.on("error", function(){
+                    toastr["warning"]('Có lỗi xảy ra trong quá trình upload file');
+                });
             }
         });
     }
 
     function embedPdf(data)
     {
-        console.log(data);
         $('#pdf').html('<iframe width="100%" height="750px" src="http://hoidapyhoc.com/assets/pdfjs/web/viewer.html?file='+data.link+'"></iframe>');
         global.pdf_file_id = data.id;
     }
 
     function editor()
     {
-        $('#content').editable({
+        $ele.content.editable({
             inlineMode: true,
             alwaysVisible: true,
             pasteImage: true,

@@ -41,6 +41,9 @@ class IncreaseViewCount {
 
         $object = $this->getObject($event);
 
+        print_r($object);
+        die();
+
         if ( ! $this->isPostViewed($path))
         {
             // Increment the view counter by one...

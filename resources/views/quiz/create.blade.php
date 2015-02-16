@@ -19,7 +19,7 @@
 @section('body')
 <div class="container">
     <div class="row" id="mainRow">
-    @include('quiz.createContent')
+        @include('quiz.createContent')
     </div>
 </div>
 
@@ -47,25 +47,10 @@
 @section('script')
 <script src="/assets/js/editor.js"></script>
 <script>
-
-Dropzone.options.dropzone = {
-
-    url: '/api/v2/files',
-    paramName: "file",
-    headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
-    maxFilesize: 10, // MB
-    acceptedFiles: 'image/*,application/pdf',
-    dictDefaultMessage: 'Kéo và thả file vào đây để upload',
-    dictInvalidFileType: 'Định dạng file không cho phép',
-    init: function() {
-        this.on("addedfile", function(file) { console.log("Added file."); });
-    }
-};
-
-global.data = {!! $data !!};
-$(document).ready(function(){
-    $(window).quiz();
-});
+    global.data = {!! $data !!};
+    $(document).ready(function(){
+        $(window).quiz();
+    });
 </script>
 @stop
 

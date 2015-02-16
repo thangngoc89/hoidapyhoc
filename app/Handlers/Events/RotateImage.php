@@ -26,6 +26,12 @@ class RotateImage {
 	public function handle(NewFileUploaded $event)
 	{
 		$upload = $event->upload;
+
+        \Log::info('Upload info',['info' =>  $upload]);
+
+        print_r($upload);
+        die();
+
         // Don't touch gif file
         $imageExtension = ['png','jpg','jpeg'];
         if (!in_array($upload->extension,$imageExtension) )

@@ -2,5 +2,20 @@
 
 @import 'base/config';
 
-@import 'vendor/uploadfile';
+@import 'vendor/dropzone';
 @import 'vendor/froala_editor';
+
+#close-uploader{
+  padding: 8px;
+  color: #fff;
+  background: $base-color;
+  border-radius: 0.2em;
+  cursor: pointer;
+}
+
+.dropzone {
+  border: 3px $base-color dashed;
+  margin-top: 0.5em;
+  font-size: 1.5em;
+}
+

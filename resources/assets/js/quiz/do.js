@@ -33,7 +33,10 @@ function quizDoInt()
         toastr.info('Bắt đầu làm bài thôi nào ^_^');
         choiceDo();
         setCounter();
-    })
+
+        global.preventClose = true;
+        preventClosing();
+    });
 }
 function setCounter(){
     $.ajax({
@@ -100,8 +103,10 @@ function sendSubmitTest(){
         error: function(data){
             console.log(data.responseText);
             toastr.error('Có lỗi xảy ra. Vui lòng kiểm tra kĩ và thử lại');
+            $("#btnSubmit").button('reset');
         },
         success: function(data){
+            global.preventClose = false;
 
             swal({
                     title: "Bạn làm đúng "+data.score+'/'+data.totalQuestion+' câu hỏi',
@@ -137,10 +142,7 @@ function gatherAnswer(){
             // Cut the final char (givenAnswer)
             givenAnswer = givenAnswer.substring(givenAnswer.length-1, givenAnswer.length);
         }
-//            answer = {
-//                'qID' : questionId,
-//                'a' : givenAnswer
-//            };
+
         answers.push(givenAnswer);
     });
     return answers;

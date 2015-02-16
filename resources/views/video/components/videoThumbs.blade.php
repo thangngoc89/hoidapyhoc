@@ -16,11 +16,11 @@
             <a href="{{ $video->link() }}" title="{{ $video->title }}">{{ str_limit($video->title,20) }}</a>
         </h3>
 
-        <small class="lesson-block-length">11:27</small>
+        <!--<small class="lesson-block-length">11:27</small>-->
     </div>
 
     <div class="lesson-block-meta">
-        <div class="lesson-date">{{ $video->updated_at->format('d-M-y') }} </div>
+        <div class="lesson-date">{{ $video->updated_at->format('d/m/Y') }} </div>
 
         <div class="lesson-status lesson-meta-item">
             <form method="POST" action="https://laracasts.com/lessons/complete" accept-charset="UTF-8" class="watched-form lesson-watched-toggle">

@@ -18,6 +18,8 @@ class Exam extends Model {
 
     public static function boot()
     {
+        parent::boot();
+
         Exam::saving(function($exam)
         {
             if (empty($exam->file_id))
@@ -38,10 +40,10 @@ class Exam extends Model {
     /*
      * Has Many Relationship
      */
-//    public function question()
-//    {
-//        return $this->hasMany('Quiz\Models\Question','test_id');
-//    }
+    public function question()
+    {
+        return $this->hasMany('Quiz\Models\Question','test_id');
+    }
     public function history()
     {
         return $this->hasMany('Quiz\Models\History','test_id');

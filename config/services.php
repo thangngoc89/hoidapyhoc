@@ -43,6 +43,11 @@ return [
         'client_id' => getenv('FACEBOOK_CLIENT_ID'),
         'client_secret' => getenv('FACEBOOK_CLIENT_SECRET'),
         'redirect' => 'http://'.getenv('HOST_NAME').'/auth/external/facebook'
+    ],
+
+    'flickr' => [
+        'client_id' => 'a84b8e83825245304cac128ce9811ca5',
+        'client_secret' => 'bb38d596ba93acc5',
     ]
 
 ];

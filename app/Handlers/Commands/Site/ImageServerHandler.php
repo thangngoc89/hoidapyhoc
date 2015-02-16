@@ -33,7 +33,6 @@ class ImageServerHandler {
         if (Cache::driver('file')->has($key))
             return Cache::driver('file')->get($key);
 
-
         if (!File::exists($path))
             abort(404);
 

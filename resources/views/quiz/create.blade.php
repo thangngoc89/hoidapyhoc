@@ -19,7 +19,7 @@
 @section('body')
 <div class="container">
     <div class="row" id="mainRow">
-    @include('quiz.createContent')
+        @include('quiz.createContent')
     </div>
 </div>
 
@@ -47,11 +47,10 @@
 @section('script')
 <script src="/assets/js/editor.js"></script>
 <script>
-var editorContent;
-global.data = {!! $data !!};
-$(document).ready(function(){
-    $(window).quiz();
-});
+    global.data = {!! $data !!};
+    $(document).ready(function(){
+        $(window).quiz();
+    });
 </script>
 @stop
 

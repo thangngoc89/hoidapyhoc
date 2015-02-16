@@ -50,9 +50,9 @@ return [
 
 		's3' => [
 			'driver' => 's3',
-			'key'    => 'your-key',
-			'secret' => 'your-secret',
-			'bucket' => 'your-bucket',
+			'key'    => 'AKIAIMATHS7T6SEDSZ2Q',
+			'secret' => '7POU7IgkdiPkHCMbbgDb+WHhLw5mAbASlwhV0Zlf',
+			'bucket' => 'media.hoidapyhoc.com',
 		],
 
 		'rackspace' => [

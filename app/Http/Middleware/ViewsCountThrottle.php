@@ -3,7 +3,7 @@
 use Closure;
 use Illuminate\Session\Store;
 
-class TestViewsCountThrottle {
+class ViewsCountThrottle {
 
     /**
      * @var Store
@@ -19,7 +19,7 @@ class TestViewsCountThrottle {
 
 	/**
 	 * This middle view handle incoming request and remove all old
-     * Count throttle of viewed_tests array
+     * Count throttle of viewed_array array
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \Closure  $next
@@ -27,26 +27,26 @@ class TestViewsCountThrottle {
 	 */
     public function handle($request, Closure $next)
     {
-        $tests = $this->getViewedPosts();
+        $objects = $this->getViewedArray();
 
-        if ( ! is_null($tests))
+        if ( ! is_null($objects))
         {
-            $tests = $this->cleanExpiredViews($tests);
+            $objects = $this->cleanExpiredViews($objects);
 
-            $this->storeTests($tests);
+            $this->store($objects);
         }
 
         return $next($request);
     }
 
-    private function getViewedPosts()
+    private function getViewedArray()
     {
         // Get all the viewed posts from the session. If no
         // entry in the session exists, default to null.
-        return $this->session->get('viewed_tests', null);
+        return $this->session->get('viewed_array', null);
     }
 
-    private function cleanExpiredViews($tests)
+    private function cleanExpiredViews($objects)
     {
         $time = time();
 
@@ -56,7 +56,7 @@ class TestViewsCountThrottle {
         // Filter through the post array. The argument passed to the
         // function will be the value from the array, which is the
         // timestamp in our case.
-        return array_filter($tests, function ($timestamp) use ($time, $throttleTime)
+        return array_filter($objects, function ($timestamp) use ($time, $throttleTime)
         {
             // If the view timestamp + the throttle time is
             // still after the current timestamp the view
@@ -65,9 +65,9 @@ class TestViewsCountThrottle {
         });
     }
 
-    private function storeTests($tests)
+    private function store($objects)
     {
-        $this->session->put('viewed_tests', $tests);
+        $this->session->put('viewed_array', $objects);
     }
 
 }

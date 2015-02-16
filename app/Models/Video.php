@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
 
@@ -9,6 +10,7 @@ class Video extends Model {
 
     use TaggableTrait;
     use SoftDeletes;
+    use LocalizationDateTrait;
 
     protected $table = 'videos';
     protected $fillable = ['title','link','thumb','description','source'];

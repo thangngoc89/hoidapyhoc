@@ -21,7 +21,6 @@ class ExamCreatedEvent extends Event {
      */
 	public function __construct(Exam $exam)
 	{
-		//
         $this->exam = $exam;
     }
 

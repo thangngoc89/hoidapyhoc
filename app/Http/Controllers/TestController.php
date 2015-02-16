@@ -38,16 +38,20 @@ class TestController extends Controller {
 
         $baseUrl = 'http://www.medicalvideos.org/videos/load/recent/';
 
-        for ($i=44; $i>0; $i--)
+
+        for ($i=1; $i<10; $i++)
         {
             $videoList = \Cache::rememberForever("videoList{$i}", function() use ($baseUrl, $i, $getLink)
             {
                 return $getLink->get($baseUrl.$i)->parse();
             });
 
+
             foreach ($videoList as $video)
             {
-                $this->saveVideo($getInfo, $video);
+                if (!$this->saveVideo($getInfo, $video))
+                    return;
+
 
                 sleep(2);
             }
@@ -58,28 +62,11 @@ class TestController extends Controller {
     }
 
 
-    public function getVideoLink(GetVideoLink $data)
-    {
-        $link = 'http://www.medicalvideos.org/videos/load/recent/410';
-
-        $data = $data->get($link)->parse();
-
-        return $data;
-    }
-
-	public function getVideoInfo(GetVideoInfo $data)
-	{
-        $link = 'http://www.medicalvideos.org/videos/86/examination-of-an-enucleated-socket';
-
-        $data = $data->get($link)->parse();
-
-        return $data;
-	}
-
     /**
      * @param GetVideoInfo $getInfo
      * @param $video
      * @param $user
+     * @return boolean
      */
     private function saveVideo(GetVideoInfo $getInfo, $video)
     {
@@ -89,17 +76,57 @@ class TestController extends Controller {
             return $getInfo->get($video['link'])->parse();
         });
 
-        $saveVideo = $this->video->firstOrNew(array('source' => $video['link']));
-        $saveVideo->fill($info);
-        $saveVideo->thumb = $video['thumb'];
-        $saveVideo->source = $video['link'];
+        $saveVideo = $this->video->find(array('source' => $video['link']));
 
-        $saveVideo->user()->associate($user);
-        $saveVideo->save();
+        if ($saveVideo->isEmpty())
+        {
+            $saveVideo = new $this->video;
 
-        if (!empty($info['tag']))
-            $saveVideo->retag($info['tag']);
+            $saveVideo->fill($info);
+            $saveVideo->thumb = $video['thumb'];
+            $saveVideo->source = $video['link'];
+
+            $saveVideo->user()->associate($user);
+            $saveVideo->save();
+
+            if (!empty($info['tag']))
+                $saveVideo->retag($info['tag']);
+
+            return true;
+        }
+
+        return false;
     }
 
+
+    /**
+     * Demo class function usage
+     *
+     * @param GetVideoLink $data
+     * @return array|GetVideoLink
+     */
+    public function getVideoLink(GetVideoLink $data)
+    {
+        $link = 'http://www.medicalvideos.org/videos/load/recent/410';
+
+        $data = $data->get($link)->parse();
+
+        return $data;
+    }
+
+    /**
+     * Demo class function usage
+     *
+     * @param GetVideoInfo $data
+     * @return array|GetVideoInfo
+     */
+    public function getVideoInfo(GetVideoInfo $data)
+    {
+        $link = 'http://www.medicalvideos.org/videos/86/examination-of-an-enucleated-socket';
+
+        $data = $data->get($link)->parse();
+
+        return $data;
+    }
 
 }

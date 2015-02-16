@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Quiz\Events\NewFileUploaded;
 use Quiz\Http\Requests\uploadFileRequest;
 use Quiz\lib\Helpers\Str;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
@@ -23,7 +24,6 @@ class UploadV2Controller extends APIController {
      */
     public function __construct (Upload $upload, Guard $auth)
     {
-
         $this->upload = $upload;
         $this->auth = $auth;
     }
@@ -42,14 +42,14 @@ class UploadV2Controller extends APIController {
         return $this->excute($file, $info);
     }
 
-    public function excute($file, $info)
+    private function excute($file, $info)
     {
         $upload = $this->upload->getFileInfo($info);
 
         // If file was not existed then upload it
         if (!$upload)
         {
-            $destination = public_path().'/uploads/';
+            $destination = storage_path().'/uploads/';
             $file->move($destination, $this->createFileNameFromInfo($info));
 
             $upload = $this->saveFileData($info);
@@ -124,7 +124,8 @@ class UploadV2Controller extends APIController {
         $response = [
             'id' => $upload->id,
             'filename' => $upload->filename,
-            'link' => $upload->url()
+            'original_filename' => $upload->orginal_filename,
+            'link' => $upload->url()."#{$upload->orginal_filename}",
         ];
 
         return response()->json($response, 200);

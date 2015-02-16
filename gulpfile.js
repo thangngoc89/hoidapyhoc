@@ -27,7 +27,6 @@ elixir(function(mix) {
         ], "bower_components",'public/assets/js/vendor.js')
         .scripts([
             'assets/js/jquery.alterclass.js',
-            'assets/js/jquery.uploadfile.js',
             'assets/js/init.js',
             'assets/js/quiz/share.js',
             'assets/js/quiz/history.js',
@@ -37,9 +36,10 @@ elixir(function(mix) {
         .scripts([
             'bower_components/FroalaWysiwygEditor/js/froala_editor.min.js',
             'bower_components/FroalaWysiwygEditor/js/langs/vi.js',
-            'bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js'
+            'bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js',
+            'bower_components/dropzone/dist/dropzone.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         //.phpSpec()
         //.phpUnit()
-        .version(['css/main.css','assets/js/script.js']);
+        .version(['css/main.css','public/assets/js/script.js']);
 });

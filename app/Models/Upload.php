@@ -11,9 +11,12 @@ class Upload extends Model {
 
     public static function boot()
     {
+        parent::boot();
 
+        Upload::created(function($upload){
+            event (new NewFileUploaded($upload));
+        });
     }
-
     /*
      * Belongs to
      */

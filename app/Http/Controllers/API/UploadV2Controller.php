@@ -24,7 +24,6 @@ class UploadV2Controller extends APIController {
      */
     public function __construct (Upload $upload, Guard $auth)
     {
-
         $this->upload = $upload;
         $this->auth = $auth;
     }
@@ -102,8 +101,6 @@ class UploadV2Controller extends APIController {
 
         if (!$upload->save())
             throw new \Exception('Cannot save file info');
-
-        event (new NewFileUploaded($upload));
 
         return $upload;
     }

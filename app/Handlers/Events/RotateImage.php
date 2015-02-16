@@ -2,20 +2,26 @@
 
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
+use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
 use Quiz\Events\NewFileUploaded;
 use Image;
 
 class RotateImage {
+    /**
+     * @var Upload
+     */
+    private $upload;
 
-	/**
-	 * Create the event handler.
-	 *
-	 * @return void
-	 */
-	public function __construct()
+    /**
+     * Create the event handler.
+     *
+     * @param Upload $upload
+     * @return \Quiz\Handlers\Events\RotateImage
+     */
+	public function __construct(Upload $upload)
 	{
-		//
-	}
+        $this->upload = $upload;
+    }
 
 	/**
 	 * Handle the event.
@@ -27,10 +33,7 @@ class RotateImage {
 	{
 		$upload = $event->upload;
 
-        \Log::info('Upload info',['info' =>  $upload]);
-
-        print_r($upload);
-        die();
+//        $upload = $this->upload->find($upload->id);
 
         // Don't touch gif file
         $imageExtension = ['png','jpg','jpeg'];

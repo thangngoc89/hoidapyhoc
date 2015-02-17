@@ -165,7 +165,7 @@ function pushState(hash)
 }
 function quizDoInt()
 {
-    handleTabs();5
+    handleTabs();
     resize_do();
     $(window).on('resize', (function(){
         resize_do();
@@ -363,13 +363,55 @@ function handleTabs()
 
 // Change hash for page-reload
     $('.lessons-nav__primary a').on('shown.bs.tab', function (e) {
+
         pushState(e.target.hash);
+
+        if (e.target.hash == '#leaderBoard')
+            showLeaderBoard();
     });
 }
 
 function showLeaderBoard()
 {
+    ele = $('div#leaderBoard');
 
+    if (!ele.html().trim())
+    {
+        getRenderedLeaderBoard('/api/v2/exams/'+ testId +'/leaderboard');
+    }
+}
+
+function getRenderedLeaderBoard(url)
+{
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: {
+            'render': true
+        },
+        error: function(data){
+            console.log(data.responseText);
+            toastr.error('Không thể tải bảng điểm. Vui lòng thử lại sau');
+        },
+        success: function(data){
+            ele.html(data);
+            ajaxLoadPage();
+        }
+    });
+
+}
+
+function ajaxLoadPage()
+{
+    console.log('loaded ajaxLoadPage function');
+    $pagination = $('#leaderBoard > .forum-pagination a');
+
+    //$pagination.unbind();
+    $('#leaderBoard > .forum-pagination a').on('click', function(event){
+        event.preventDefault();
+        console.log('clicked');
+        getRenderedLeaderBoard($(this).attr('href'));
+    });
 }
 (function ( $ ) {
     $.fn.quiz = function() {

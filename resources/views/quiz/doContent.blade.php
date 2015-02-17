@@ -30,7 +30,7 @@
         </div>
         <!-- Leader Board Tab -->
         <div role="tabpanel" class="tab-pane fade" id="leaderBoard">
-            leader board
+
         </div>
         <!-- Facebook Comment -->
         <div role="tabpanel" class="tab-pane fade" id="comment">
@@ -42,7 +42,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <div id="quiz-sidebar" class="col-md-4 white">
     <div class="quiz-nav lessons-nav--forum inline-nav">

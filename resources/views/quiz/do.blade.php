@@ -52,6 +52,7 @@
 
 @section('script')
 <script>
+// TODO: move this vars into global var
     var testId = $('input[name="test_id"]').val();
     var userHistoryId;
     var count = {{ $t->thoigian * 60 }};

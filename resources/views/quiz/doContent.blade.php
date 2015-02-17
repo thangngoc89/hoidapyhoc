@@ -1,12 +1,12 @@
 <div class="col-md-8 threads-inner white">
     <div class="lessons-nav lessons-nav--forum inline-nav">
          <div class="container">
-             <ul class="lessons-nav__primary">
-                 <li class="active">
-                      <a href="{{ $t->link() }}">Đề thi</a>
+             <ul class="lessons-nav__primary" role="tablist">
+                 <li role="presentation" class="active">
+                      <a href="#doContent" aria-controls="doContent" role="tab" data-toggle="tab">Đề thi</a>
                   </li>
-                  <li>
-                     <a href="{{ $t->link('bangdiem') }}">Bảng điểm</a>
+                  <li role="presentation">
+                     <a href="#leaderBoard" aria-controls="leaderBoard" role="tab" data-toggle="tab">Bảng điểm</a>
                   </li>
                   <li class="pull-right">
                      <a href="{{ $t->link('edit') }}">Sửa</a>
@@ -14,9 +14,15 @@
              </ul>
          </div>
      </div>
-    <div class="wrap">
-        @include('quiz.partials.content')
+    <div class="wrap tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="doContent">
+            @include('quiz.partials.content')
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="leaderBoard">
+            leader board
+        </div>
     </div>
+
 </div>
 <div id="quiz-sidebar" class="col-md-4 white">
     <div class="quiz-nav lessons-nav--forum inline-nav">

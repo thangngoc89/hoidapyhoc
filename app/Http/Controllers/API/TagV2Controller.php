@@ -2,7 +2,9 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
+use Quiz\Http\Requests\API\TagDeleteRequest;
 use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Quiz\lib\API\Tag\TagTransformers;
 use Sorskod\Larasponse\Larasponse;
@@ -48,23 +50,6 @@ class TagV2Controller extends APIController {
         $result = $this->fractal->paginatedCollection($tags, new TagTransformers());
 
         return $result;
-    }
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(ExamSaveRequest $request, ExamTransformers $transformer)
-	{
-        return $this->tryCatch(function() use ($transformer,$request)
-        {
-            $test = new ExamStoreSaver($request->all());
-            $test = $test->save();
-            $response = $transformer->createResponse($test);
-
-            return $response;
-        });
     }
 
 	/**
@@ -119,10 +104,11 @@ class TagV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($test)
+	public function destroy($tag, TagDeleteRequest $request)
 	{
-//        $test->delete();
-        return 'Deleted';
+        $tag->delete();
+
+        return response('',204);
 	}
 
 }

@@ -200,18 +200,16 @@
                     }
                     return 'bg-warning text-center';
                 }),
-                new Field('custom')
-                    .type('template')
-                    .label('Upper name')
-                    .template('{{ entry.values.name.toUpperCase() }}')
             ])
-            .listActions(['show']);
+            .listActions(['show','delete']);
 
         tag.showView()
             .fields([
                 new Field('name'),
                 new Field('suggest').type('boolean')
             ]);
+        tag.deletionView()
+            .title('Delete Tag {{ entry.values.name }}');
 
         /*
          * Testimonial section

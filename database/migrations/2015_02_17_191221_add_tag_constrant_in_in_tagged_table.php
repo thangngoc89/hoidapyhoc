@@ -14,7 +14,7 @@ class AddTagConstrantInInTaggedTable extends Migration {
 	{
         // Edit 2 column with the same datatype
         DB::statement('ALTER TABLE taggables MODIFY COLUMN tag_id int(10) unsigned');
-        
+
         \Schema::table('taggables', function($table) {
             $table->foreign('tag_id')->references('id')->on('tagging_tags')->onDelete('cascade')->onUpdate('cascade');
         });

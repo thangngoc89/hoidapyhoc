@@ -60,4 +60,15 @@ span.timecou{
 }
 
 
+/*Facebook comment*/
+.fb_iframe_widget, .fb_iframe_widget span,.fb_iframe_widget span iframe[style] {
+  min-width: 100% !important;
+  width: 100% !important;
+}
+#social-buttons{
+  margin-top: 10px;
+  margin-bottom: 5px;
+  display: block;
+}
+
 

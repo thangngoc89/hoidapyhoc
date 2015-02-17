@@ -82,27 +82,6 @@ class QuizController extends Controller {
 	}
 
     /**
-     * Show leaderboard of exam
-     *
-     * @param null $slug
-     * @param $t
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function leaderBoard($slug = null, $t)
-    {
-        $t->load('tagged');
-
-        if ($t->slug != $slug)
-            return redirect()->to($t->link('bangdiem'));
-
-        $top = $this->history->leaderBoardOfExam($t->id);
-
-        event(new ExamViewEvent($t, $this->request));
-
-        return view('quiz.leaderboard',compact('t','top'));
-    }
-
-    /**
      * Show History after done test
      *
      * @param $slug

@@ -76,12 +76,13 @@
     </div>
 
     <div class="footer__bottom">
-        <p class="pull-left">
-            Bản quyền thuộc về &#169; Hỏi Đáp Y Học 2015.
-        </p>
+        <div class="pull-left">
+            <div class="fb-like" data-href="https://www.facebook.com/hoidapyhoc" data-layout="standard" data-action="like" data-show-faces="true" data-share="false" data-width="270"></div>
+        </div>
 
-        <div class="pull-right">
-            Liên hệ: <a href="mailto::admin@hoidapyhoc.com">admin@hoidapyhoc.com</a>.
+        <div class="pull-right" style="text-align: right">
+            <p>Copyright &#169; Hỏi Đáp Y Học 2015.</p>
+            <p>Liên hệ: <a href="mailto::admin@hoidapyhoc.com">admin@hoidapyhoc.com</a>.</p>
         </div>
     </div>
 </div>

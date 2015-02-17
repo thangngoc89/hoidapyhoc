@@ -1,21 +1,49 @@
 <div class="col-md-8 threads-inner white">
     <div class="lessons-nav lessons-nav--forum inline-nav">
          <div class="container">
-             <ul class="lessons-nav__primary">
-                 <li class="active">
-                      <a href="{{ $t->link() }}">Đề thi</a>
-                  </li>
-                  <li>
-                     <a href="{{ $t->link('bangdiem') }}">Bảng điểm</a>
-                  </li>
-                  <li class="pull-right">
-                     <a href="{{ $t->link('edit') }}">Sửa</a>
-                  </li>
+             <ul class="lessons-nav__primary" role="tablist">
+                 <li role="presentation" class="active">
+                    <a href="#doContent" aria-controls="doContent" role="tab" data-toggle="tab">
+                        <i class="icon-box-3"></i> Đề thi</a> </li>
+                 <li role="presentation">
+                    <a href="#leaderBoard" aria-controls="leaderBoard" role="tab" data-toggle="tab">
+                        <i class="icon-award-4"></i> Bảng điểm</a> </li>
+                 <li role="presentation">
+                    <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
+                        <i class="icon-chat-4"></i> Bình luận</a> </li>
+
+                 @if ( \Auth::check())
+                    @if (\Auth::user()->can('manage_exams') || \Auth::user()->id == $t->user_id )
+                 <!-- Edit button -->
+                         <li class="pull-right">
+                            <a href="{{ $t->link('edit') }}">
+                                <i class="icon-pencil-3"></i> Sửa</a> </li>
+                    @endif
+                 @endif
              </ul>
          </div>
      </div>
-    <div class="wrap">
-        @include('quiz.partials.content')
+    @include('components.socialButtons')
+     <!-- Place this tag where you want the +1 button to render. -->
+    <div class="wrap tab-content">
+
+        <!-- Main Exam Content -->
+        <div role="tabpanel" class="tab-pane fade in active" id="doContent">
+            @include('quiz.partials.content')
+        </div>
+        <!-- Leader Board Tab -->
+        <div role="tabpanel" class="tab-pane fade" id="leaderBoard">
+
+        </div>
+        <!-- Facebook Comment -->
+        <div role="tabpanel" class="tab-pane fade" id="comment">
+            <div class="fb-comments"
+                data-href="{{ \Request::url() }}"
+                data-numposts="10"
+                data-colorscheme="light"
+                data-width="100%">
+            </div>
+        </div>
     </div>
 </div>
 <div id="quiz-sidebar" class="col-md-4 white">

@@ -40,7 +40,7 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
      * @param int $perPage
      * @return mixed
      */
-    public function leaderBoardOfExam($examId, $perPage = 50)
+    public function leaderBoardOfExamAndPaginated($examId, $perPage = 50)
     {
         return $this->model->orderBy('score','DESC')
             ->where('test_id',$examId)

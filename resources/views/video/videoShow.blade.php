@@ -4,6 +4,12 @@
 {{ $video->title }}
 @endsection
 
+@if (!empty($video->description))
+    @section('meta_description')
+        {{ $video->description }}
+    @endsection
+@endif
+
 @section('style')
 <link href="http://vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>
@@ -71,6 +77,16 @@ div.videocontent {
             <?php $i++; ?>
             @endforeach
 
+    </div>
+</div>
+<div class="row">
+    <div class="container wrap--video">
+        <div class="fb-comments"
+            data-href="{{ \Request::url() }}"
+            data-numposts="10"
+            data-colorscheme="light"
+            data-width="100%">
+        </div>
     </div>
 </div>
 @endsection

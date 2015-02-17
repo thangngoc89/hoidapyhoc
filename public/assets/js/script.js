@@ -153,8 +153,19 @@ function preventClosing()
         }
     };
 }
+
+function pushState(hash)
+{
+    if(history.pushState) {
+        history.pushState(null, null, hash);
+    }
+    else {
+        location.hash = hash;
+    }
+}
 function quizDoInt()
 {
+    handleTabs();
     resize_do();
     $(window).on('resize', (function(){
         resize_do();
@@ -191,6 +202,7 @@ function quizDoInt()
 
         global.preventClose = true;
         preventClosing();
+
     });
 }
 function setCounter(){
@@ -339,6 +351,65 @@ function updateAnswerCount(){
 //        Only submit when answered half of questions
     if (answered >= (totalAnswer/2))
         $('#btnSubmit').attr('disabled',null);
+}
+
+function handleTabs()
+{
+    // Javascript to enable link to tab
+    var hash = document.location.hash;
+    if (hash) {
+        $('.lessons-nav__primary a[href='+hash+']').tab('show');
+    }
+
+// Change hash for page-reload
+    $('.lessons-nav__primary a').on('shown.bs.tab', function (e) {
+
+        pushState(e.target.hash);
+
+        if (e.target.hash == '#leaderBoard')
+            showLeaderBoard();
+    });
+}
+
+function showLeaderBoard()
+{
+    ele = $('div#leaderBoard');
+
+    if (!ele.html().trim())
+    {
+        getRenderedLeaderBoard('/api/v2/exams/'+ testId +'/leaderboard');
+    }
+}
+
+function getRenderedLeaderBoard(url)
+{
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: {
+            'render': true
+        },
+        error: function(data){
+            console.log(data.responseText);
+            toastr.error('Không thể tải bảng điểm. Vui lòng thử lại sau');
+        },
+        success: function(data){
+            ele.html(data);
+            ajaxLoadPage();
+        }
+    });
+
+}
+
+function ajaxLoadPage()
+{
+    $pagination = $('#leaderBoard > .forum-pagination a');
+
+    $pagination.unbind();
+    $pagination.on('click', function(event){
+        event.preventDefault();
+        getRenderedLeaderBoard($(this).attr('href'));
+    });
 }
 (function ( $ ) {
     $.fn.quiz = function() {

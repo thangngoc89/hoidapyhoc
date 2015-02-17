@@ -31,6 +31,16 @@
     {{ trim($t->name) }}
 @stop
 
+@if (!empty($t->description))
+    @section('meta_description')
+        {{ $t->description }}
+    @endsection
+@endif
+
+@section('meta_author')
+    {{ $t->user->getName() }}
+@endsection
+
 {{--Body Section--}}
 @section('body')
 <div class="container">
@@ -42,6 +52,7 @@
 
 @section('script')
 <script>
+// TODO: move this vars into global var
     var testId = $('input[name="test_id"]').val();
     var userHistoryId;
     var count = {{ $t->thoigian * 60 }};

@@ -1,4 +1,4 @@
-<h4 class="video-sidebar__heading">Lesson Prerequisite</h4>
+<!--<h4 class="video-sidebar__heading">Lesson Prerequisite</h4>
 
     <article class="col-md-4 lesson-block lesson-block-lesson lesson-208 lesson-block--sidebar">
 
@@ -44,7 +44,6 @@
                 </form>
             </div>
 
-            <!-- This displays the favorited form and heart icon thing -->
             <div class="lesson-favorite">
                 <form method="POST" action="https://laracasts.com/lessons/208/favorite" accept-charset="UTF-8" class="favorite-form">
                     <input name="_token" type="hidden" value="ISN2qSvBgCGyHGKhMFIMBK6DUXgC6ZfcKvKnZMmU">
@@ -59,7 +58,8 @@
             <p>In this lesson, Taylor Otwell, himself, drops by to give us an update on an important new feature in Laravel<a href="https://laracasts.com/lessons/laravel-5-commands">...</a>
             </p>
         </div>
-    </article>
+    </article>-->
+    @include('components.socialButtons')
     <span class="video-sidebar__divider"></span>
     <ul class="video-sidebar__buttons">
         <li>
@@ -139,7 +139,7 @@
             </form>
         </li>
     </ul>
-
+    <div>
     <!-- Index list for lesson -->
     <p class="lesson-tags">
         <strong>Tag:</strong>
@@ -147,5 +147,4 @@
             <a href="{{ $tag->link() }}">{{ $tag->name }}</a>&nbsp;
         @endforeach
     </p>
-
-    <!-- The associated tool versions for the lesson -->
+    </div>

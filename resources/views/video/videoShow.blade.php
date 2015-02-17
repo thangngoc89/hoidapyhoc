@@ -4,10 +4,6 @@
 {{ $video->title }}
 @endsection
 
-@section('title')
-    {{ trim($t->name) }}
-@stop
-
 @if (!empty($video->description))
     @section('meta_description')
         {{ $video->description }}
@@ -81,6 +77,16 @@ div.videocontent {
             <?php $i++; ?>
             @endforeach
 
+    </div>
+</div>
+<div class="row">
+    <div class="container wrap--video">
+        <div class="fb-comments"
+            data-href="{{ \Request::url() }}"
+            data-numposts="10"
+            data-colorscheme="light"
+            data-width="100%">
+        </div>
     </div>
 </div>
 @endsection

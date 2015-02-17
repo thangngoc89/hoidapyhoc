@@ -22,6 +22,7 @@
     </div>
 </div>
 @endif
+<!-- Social Embed -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -30,7 +31,9 @@
   js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&appId=383096061852800&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
+<script src="https://apis.google.com/js/platform.js" async defer>
+  {lang: 'vi'}
+</script>
 <script src="/assets/js/vendor.js"></script>
 <script src="{{ elixir('assets/js/script.js') }}"></script>
 <script>new WOW().init();</script>

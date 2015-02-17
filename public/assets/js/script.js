@@ -403,13 +403,11 @@ function getRenderedLeaderBoard(url)
 
 function ajaxLoadPage()
 {
-    console.log('loaded ajaxLoadPage function');
     $pagination = $('#leaderBoard > .forum-pagination a');
 
-    //$pagination.unbind();
-    $('#leaderBoard > .forum-pagination a').on('click', function(event){
+    $pagination.unbind();
+    $pagination.on('click', function(event){
         event.preventDefault();
-        console.log('clicked');
         getRenderedLeaderBoard($(this).attr('href'));
     });
 }

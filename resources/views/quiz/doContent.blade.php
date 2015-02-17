@@ -23,7 +23,10 @@
              </ul>
          </div>
      </div>
+    @include('components.socialButtons')
+     <!-- Place this tag where you want the +1 button to render. -->
     <div class="wrap tab-content">
+
         <!-- Main Exam Content -->
         <div role="tabpanel" class="tab-pane fade in active" id="doContent">
             @include('quiz.partials.content')

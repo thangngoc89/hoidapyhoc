@@ -25,11 +25,7 @@ class LeechImageFile {
 
     private function setImg()
     {
-        $this->img = \Image::make($this->link)
-                    ->resize(50 , null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })
-                    ->encode('jpg',80);
+        $this->img = \Image::make($this->link)->encode('jpg',80);
     }
 
 }

@@ -95,9 +95,7 @@ class QuizController extends Controller {
         if ($t->slug != $slug)
             return redirect()->to($t->link('bangdiem'));
 
-        $top = $this->history->leaderBoardOfExam($t->id);
-
-        event(new ExamViewEvent($t, $this->request));
+        $top = $this->history->leaderBoardOfExamAndPaginated($t->id);
 
         return view('quiz.leaderboard',compact('t','top'));
     }

@@ -90,16 +90,33 @@ Route::group(array('prefix' => 'video'), function()
  */
 Route::group(array('prefix' => 'api/v2'), function()
 {
+    /** ------------------------------------------
+     *  Exams
+     *  ------------------------------------------
+     */
     post('exams/{exams}/check', 'API\ExamV2Controller@check');
     post('exams/{exams}/start', 'API\ExamV2Controller@start');
-
-    post('files/paste', 'API\UploadV2Controller@paste');
-
-    get('tags/search/{query}', 'API\TagV2Controller@search');
-
+    get('exams/{exams}/leaderboard','API\ExamV2Controller@leaderboard');
     Route::resource('exams', 'API\ExamV2Controller');
+
+    /** ------------------------------------------
+     *  Files
+     *  ------------------------------------------
+     */
+    post('files/paste', 'API\UploadV2Controller@paste');
     Route::resource('files','API\UploadV2Controller');
+
+    /** ------------------------------------------
+     *  Tags
+     *  ------------------------------------------
+     */
+    get('tags/search/{query}', 'API\TagV2Controller@search');
     Route::resource('tags','API\TagV2Controller');
+
+    /** ------------------------------------------
+     *  Others
+     *  ------------------------------------------
+     */
     Route::resource('search','API\SearchV2Controller');
     Route::resource('users','API\UserV2Controller');
     Route::resource('roles','API\RoleV2Controller');

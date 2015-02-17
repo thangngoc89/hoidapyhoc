@@ -164,6 +164,28 @@ class ExamV2Controller extends APIController {
         }
     }
 
+    /**
+     * Show exam's leader board
+     *
+     * @_GET['render'] boolean
+     * @param $exam
+     *
+     * @return mixed
+     */
+    public function leaderBoard($exam, Request $request)
+    {
+        $render = ($request->has('render')) ? filter_var($request->render, FILTER_VALIDATE_BOOLEAN) : false;
+        
+        $top = $this->history->leaderBoardOfExamAndPaginated($exam->id);
+        $top->appends( $request->except('page') );
+
+        if ( !$render )
+            #TODO: Return an paginated API of history collection using fractal
+            return $top;
+
+        return view('quiz.leaderboard',compact('top'));
+    }
+
 	/**
 	 * Remove the specified resource from storage.
 	 *

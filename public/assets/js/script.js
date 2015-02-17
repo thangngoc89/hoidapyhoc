@@ -153,8 +153,19 @@ function preventClosing()
         }
     };
 }
+
+function pushState(hash)
+{
+    if(history.pushState) {
+        history.pushState(null, null, hash);
+    }
+    else {
+        location.hash = hash;
+    }
+}
 function quizDoInt()
 {
+    handleTabs();5
     resize_do();
     $(window).on('resize', (function(){
         resize_do();
@@ -191,6 +202,7 @@ function quizDoInt()
 
         global.preventClose = true;
         preventClosing();
+
     });
 }
 function setCounter(){
@@ -339,6 +351,21 @@ function updateAnswerCount(){
 //        Only submit when answered half of questions
     if (answered >= (totalAnswer/2))
         $('#btnSubmit').attr('disabled',null);
+}
+
+function handleTabs()
+{
+    // Javascript to enable link to tab
+    var hash = document.location.hash;
+    var prefix = "tab_";
+    if (hash) {
+        $('.lessons-nav__primary a[href='+hash+']').tab('show');
+    }
+
+// Change hash for page-reload
+    $('.lessons-nav__primary a').on('shown.bs.tab', function (e) {
+        pushState(e.target.hash);
+    });
 }
 (function ( $ ) {
     $.fn.quiz = function() {

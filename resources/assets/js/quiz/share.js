@@ -43,3 +43,13 @@ function preventClosing()
         }
     };
 }
+
+function pushState(hash)
+{
+    if(history.pushState) {
+        history.pushState(null, null, hash);
+    }
+    else {
+        location.hash = hash;
+    }
+}

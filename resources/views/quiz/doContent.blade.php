@@ -9,7 +9,8 @@
                     <a href="#leaderBoard" aria-controls="leaderBoard" role="tab" data-toggle="tab">Bảng điểm</a>
                  </li>
                  <li role="presentation">
-                    <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">Bình luận</a>
+                    <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
+                        <i class="icon-chat-4"></i> Bình luận</a>
                  </li>
 
                  <li class="pull-right">

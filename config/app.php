@@ -143,6 +143,7 @@ return [
         'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
         'Sorskod\Larasponse\LarasponseServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
+        'GrahamCampbell\HTMLMin\HTMLMinServiceProvider',
 
         /*
          * Dev

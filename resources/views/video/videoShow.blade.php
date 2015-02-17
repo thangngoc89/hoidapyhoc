@@ -4,6 +4,16 @@
 {{ $video->title }}
 @endsection
 
+@section('title')
+    {{ trim($t->name) }}
+@stop
+
+@if (!empty($video->description))
+    @section('meta_description')
+        {{ $video->description }}
+    @endsection
+@endif
+
 @section('style')
 <link href="http://vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>

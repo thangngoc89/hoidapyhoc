@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-Medical Video
+    Tổng hợp Video Y Khoa
 @endsection
 
 
@@ -11,8 +11,8 @@ Medical Video
         <h2 class="jumbotron__heading">Video Y Học</h2>
         <h4 class="jumbotron__sub-heading">Không gì tốt hơn học tập qua video.</h4>
 
-        <!--<a href="/quiz/create" class="btn btn-primary">
-            <i class="fa fa-plus"></i> Tạo đề thi mới
+        <!--<a href="/video/create" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Gửi Video mới
         </a>-->
     </div>
 </div>

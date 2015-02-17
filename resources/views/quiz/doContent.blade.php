@@ -12,19 +12,27 @@
                     <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
                         <i class="icon-chat-4"></i> Bình luận</a> </li>
 
-                 <li class="pull-right">
-                    <a href="{{ $t->link('edit') }}">
-                        <i class="icon-pencil-3"></i> Sửa</a> </li>
+                 @if ( \Auth::check())
+                    @if (\Auth::user()->can('manage_exams') || \Auth::user()->id == $t->user_id )
+                 <!-- Edit button -->
+                         <li class="pull-right">
+                            <a href="{{ $t->link('edit') }}">
+                                <i class="icon-pencil-3"></i> Sửa</a> </li>
+                    @endif
+                 @endif
              </ul>
          </div>
      </div>
     <div class="wrap tab-content">
+        <!-- Main Exam Content -->
         <div role="tabpanel" class="tab-pane fade in active" id="doContent">
             @include('quiz.partials.content')
         </div>
+        <!-- Leader Board Tab -->
         <div role="tabpanel" class="tab-pane fade" id="leaderBoard">
             leader board
         </div>
+        <!-- Facebook Comment -->
         <div role="tabpanel" class="tab-pane fade" id="comment">
             <div class="fb-comments"
                 data-href="{{ \Request::url() }}"

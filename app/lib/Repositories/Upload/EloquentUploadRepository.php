@@ -5,7 +5,7 @@ use Quiz\Models\Upload;
 
 class EloquentUploadRepository extends AbstractEloquentRepository implements UploadRepository {
     /**
-     * @var Exam
+     * @var Upload
      */
     protected $model;
 
@@ -27,6 +27,9 @@ class EloquentUploadRepository extends AbstractEloquentRepository implements Upl
                             ->first();
         if (is_null($file))
             return false;
+        if (! \File::exists(storage_path('uploads'.$file->filename)))
+            return false;
+
         return $file;
     }
 

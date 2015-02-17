@@ -3,19 +3,18 @@
          <div class="container">
              <ul class="lessons-nav__primary" role="tablist">
                  <li role="presentation" class="active">
-                    <a href="#doContent" aria-controls="doContent" role="tab" data-toggle="tab">Đề thi</a>
-                 </li>
+                    <a href="#doContent" aria-controls="doContent" role="tab" data-toggle="tab">
+                        <i class="icon-box-3"></i> Đề thi</a> </li>
                  <li role="presentation">
-                    <a href="#leaderBoard" aria-controls="leaderBoard" role="tab" data-toggle="tab">Bảng điểm</a>
-                 </li>
+                    <a href="#leaderBoard" aria-controls="leaderBoard" role="tab" data-toggle="tab">
+                        <i class="icon-award-4"></i> Bảng điểm</a> </li>
                  <li role="presentation">
                     <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
-                        <i class="icon-chat-4"></i> Bình luận</a>
-                 </li>
+                        <i class="icon-chat-4"></i> Bình luận</a> </li>
 
                  <li class="pull-right">
-                    <a href="{{ $t->link('edit') }}">Sửa</a>
-                 </li>
+                    <a href="{{ $t->link('edit') }}">
+                        <i class="icon-pencil-3"></i> Sửa</a> </li>
              </ul>
          </div>
      </div>

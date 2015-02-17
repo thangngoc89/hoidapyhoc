@@ -70,9 +70,10 @@ class ExamV2Controller extends APIController {
         try {
             $exam = $this->dispatch(new ExamCreateCommand($request));
 
+            #TODO: Move link generated into javascript
             $response = $transformer->createResponse($exam);
 
-            return response()->json($response, 200);
+            return response()->json($response, 201);
 
         } catch (\Exception $e) {
 
@@ -106,6 +107,7 @@ class ExamV2Controller extends APIController {
         try {
             $exam = $this->dispatch(new ExamUpdateCommand($exam, $request));
 
+            #TODO: Move link generated into javascript
             $response = $transformer->createResponse($exam);
 
             return response()->json($response, 200);
@@ -125,8 +127,7 @@ class ExamV2Controller extends APIController {
      */
     public function start($exam, Guard $auth)
     {
-        return $this->tryCatch(function() use ($exam, $auth) {
-
+        try {
             $history = $this->history->firstOrCreate([
                 'user_id' => $auth->user()->id,
                 'test_id' => $exam->id,
@@ -137,8 +138,13 @@ class ExamV2Controller extends APIController {
                 'user_history_id' => $history->id
             ];
 
-            return $response;
-        });
+            return response()->json($response, 201);
+
+        } catch (\Exception $e) {
+
+            return $this->throwError($e);
+
+        }
     }
 
     /**
@@ -175,7 +181,7 @@ class ExamV2Controller extends APIController {
     public function leaderBoard($exam, Request $request)
     {
         $render = ($request->has('render')) ? filter_var($request->render, FILTER_VALIDATE_BOOLEAN) : false;
-        
+
         $top = $this->history->leaderBoardOfExamAndPaginated($exam->id);
         $top->appends( $request->except('page') );
 

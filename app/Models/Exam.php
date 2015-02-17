@@ -72,8 +72,8 @@ class Exam extends Model {
      */
     public function link($type = null)
     {
-        if ($type == 'bangdiem')
-            return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
+//        if ($type == 'bangdiem')
+//            return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
 
         if ($type == 'edit')
             return '/quiz/'.$this->id.'/edit';

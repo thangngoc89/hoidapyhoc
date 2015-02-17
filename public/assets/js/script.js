@@ -357,7 +357,6 @@ function handleTabs()
 {
     // Javascript to enable link to tab
     var hash = document.location.hash;
-    var prefix = "tab_";
     if (hash) {
         $('.lessons-nav__primary a[href='+hash+']').tab('show');
     }
@@ -366,6 +365,11 @@ function handleTabs()
     $('.lessons-nav__primary a').on('shown.bs.tab', function (e) {
         pushState(e.target.hash);
     });
+}
+
+function showLeaderBoard()
+{
+
 }
 (function ( $ ) {
     $.fn.quiz = function() {

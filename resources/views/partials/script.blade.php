@@ -34,7 +34,7 @@
 <script src="https://apis.google.com/js/platform.js" async defer>
   {lang: 'vi'}
 </script>
-<script src="/assets/js/vendor.js"></script>
+<script src="{{ elixir('assets/js/vendor.js') }}"></script>
 <script src="{{ elixir('assets/js/script.js') }}"></script>
 <script>new WOW().init();</script>
 <script>var global = {};</script>

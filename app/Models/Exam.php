@@ -35,38 +35,37 @@ class Exam extends Model {
         Exam::saved(function($exam)
         {
             \Cache::tags('tests')->flush();
+            \Cache::tags('exam'.$exam->id)->flush();
         });
     }
-    /*
-     * Has Many Relationship
-     */
-    public function question()
-    {
-        return $this->hasMany('Quiz\Models\Question','test_id');
-    }
+
+
     public function history()
     {
         return $this->hasMany('Quiz\Models\History','test_id');
     }
-
-    /*
-     * Belongs to
-     */
-
-    // This relationship was keeped for migration
-    public function category()
+    public function file()
     {
-        return $this->belongsTo('Quiz\Models\Category','cid');
+        return $this->belongsTo('Quiz\Models\Upload','file_id');
     }
+
     public function user()
     {
         return $this->belongsTo('Quiz\Models\User');
     }
 
-    public function file()
+
+    // These relationships were kept for further migration
+    public function category()
     {
-        return $this->belongsTo('Quiz\Models\Upload','file_id');
+        return $this->belongsTo('Quiz\Models\Category','cid');
     }
+    public function question()
+    {
+        return $this->hasMany('Quiz\Models\Question','test_id');
+    }
+
+
 
     /*
      * Frontend Content
@@ -86,7 +85,7 @@ class Exam extends Model {
     {
         $key = 'historyCountTest' . $this->id;
 
-        return \Cache::tags('tests', 'history')->rememberForever($key, function () {
+        return \Cache::tags('exam'.$this->id, 'history'.$this->id)->rememberForever($key, function () {
             return $this->history->count();
         });
     }

@@ -65,8 +65,14 @@ class QuizHomePage {
 
     private function latestTab()
     {
-        $this->result = $this->exam->orderBy('tests.created_at','DESC');
+        $this->result = $this->exam->latest();
         $this->name = 'Quiz';
+    }
+
+    private function yourExamTab()
+    {
+        $this->result = $this->exam->where('user_id',$this->auth->user()->id);
+        $this->name = 'Đề thi đã gửi';
     }
 
 
@@ -74,9 +80,9 @@ class QuizHomePage {
     {
         $tab = $this->request->tab;
 
-        if (!$tab)
+        if ( !$tab )
             $tab = 'latest';
-        if (!in_array($tab, ['done','latest']))
+        if ( !in_array($tab, ['done','latest','yourExam']) )
             abort(404);
 
         $tab .= 'Tab';
@@ -89,7 +95,7 @@ class QuizHomePage {
         $exams = $this->result->with('tagged','user')->paginate(10);;
 
         // Appends pagination
-        $exams->appends($this->request->except('tab'));
+        $exams->appends($this->request->except('page'));
 
         $name = $this->name;
 

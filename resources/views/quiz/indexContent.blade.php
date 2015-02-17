@@ -4,6 +4,9 @@
              <li class="{{ (\Input::get('tab') == '' && \Request::is('quiz')) ? 'active' : '' }}">
                  <a href="/quiz">Mới nhất</a> </li>
 
+             <li class="{{ \Input::get('tab') == 'yourExam' ? 'active' : '' }}">
+                  <a href="/quiz?tab=yourExam">Đề thi đã gửi</a> </li>
+
              @if (\Auth::check())
              <li class="{{ (\Input::get('tab') == 'done') ? 'active' : '' }}">
                  <a href="/quiz?tab=done">Đề bạn đã thi</a> </li>

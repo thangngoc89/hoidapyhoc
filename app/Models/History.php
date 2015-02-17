@@ -27,7 +27,7 @@ class History extends Model {
         });
         History::saved(function($history){
             \Cache::tags('history','user'.$history->user_id)->flush();
-            \Cache::tags('tests'.$history->test_id)->flush();
+            \Cache::tags('exam'.$history->test_id,'history'.$history->test_id)->flush();
         });
     }
     public function exam()

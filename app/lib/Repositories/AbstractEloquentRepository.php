@@ -80,6 +80,11 @@ abstract class AbstractEloquentRepository {
         return $this->model->orderBy($column, $direction);
     }
 
+    public function latest()
+    {
+        return $this->model->latest();
+    }
+
     public function sortByDesc($callback)
     {
         return $this->model->sortByDesc($callback);

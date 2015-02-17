@@ -30,6 +30,8 @@ interface BaseRepository {
 
     public function orderBy($column, $direction = 'ASC');
 
+    public function latest();
+
     public function sortByDesc($callback);
 
     public function with($with);

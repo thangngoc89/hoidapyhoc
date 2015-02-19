@@ -434,6 +434,7 @@
             valueField: 'name',
             labelField: 'name',
             searchField: 'name',
+            persist: false,
             create: function(input) {
                 return {
                     value: input,

@@ -33,7 +33,7 @@
     <h3 class="text-center">Chúc bạn <span class="color-red">MAY MẮN</span></h3>
 </div>
 <div id="quiz-content" class="@if (!$viewHistory) hide @endif">
-    <div id="quiz-content-detail">
+    <div id="quiz-content-detail" class="froala-view">
     @if ($t->is_file)
         <span class="color-red"><b>Chú ý: &nbsp;</b></span>
         <a href="http://ask.hoidapyhoc.com/t/sua-loi-khong-tai-duoc-de-thi/1167">Nếu bị lỗi tải đề thi , nhấp vào đây để khắc phục</a>

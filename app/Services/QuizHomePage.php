@@ -71,6 +71,9 @@ class QuizHomePage {
 
     private function yourExamTab()
     {
+        if (! $this->auth->check())
+            abort(503);
+
         $this->result = $this->exam->where('user_id',$this->auth->user()->id);
         $this->name = 'Đề thi đã gửi';
     }

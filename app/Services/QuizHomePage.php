@@ -34,12 +34,12 @@ class QuizHomePage {
     }
     public function execute($request)
     {
-        $key = $request->url().$request->tab.$request->page;
+//        $key = $request->url().$request->tab.$request->page;
 
-        $cache = $this->cache->tags('index','tests');
+//        $cache = $this->cache->tags('index','tests');
 
-        if ($cache->has($key) && getenv('APP_ENV') != 'local')
-            return $cache->get($key);
+//        if ($cache->has($key) && getenv('APP_ENV') != 'local')
+//            return $cache->get($key);
 
         $this->request = $request;
 
@@ -49,7 +49,7 @@ class QuizHomePage {
 
         $view = $this->makeView();
 
-        $cache->put($key,$view,20);
+//        $cache->put($key,$view,20);
 
         return $view;
     }

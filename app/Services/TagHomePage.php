@@ -53,14 +53,14 @@ class TagHomePage {
      */
     public function execute($request)
     {
-        $key = $request->url().implode('.',$request->all());
+//        $key = $request->url().implode('.',$request->all());
 
         // Set Cache tag for incoming cache handle
-        $cache = $this->cache->tags('tags');
+//        $cache = $this->cache->tags('tags');
 
         // If there this page was cached, show result immediately
-        if ($cache->has($key))
-            return $cache->get($key);
+//        if ($cache->has($key))
+//            return $cache->get($key);
 
         $this->request = $request;
 
@@ -72,7 +72,7 @@ class TagHomePage {
 
         $view = $this->makeView();
 
-        $cache->put($key,$view,10);
+//        $cache->put($key,$view,10);
 
         return $view;
 

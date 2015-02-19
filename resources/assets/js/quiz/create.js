@@ -435,12 +435,7 @@
             labelField: 'name',
             searchField: 'name',
             persist: false,
-            create: function(input) {
-                return {
-                    value: input,
-                    text: input
-                }
-            },
+            create: true,
             maxItems: 5,
             render: {
                 option: function(item, escape) {

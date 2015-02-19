@@ -2,6 +2,9 @@
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler {
 
@@ -38,13 +41,14 @@ class Handler extends ExceptionHandler {
 	{
 		if ($this->isHttpException($e))
 		{
-//            return $this->renderHttpException($e);
-
-            return $this->renderExceptionWithWhoops($e);
+            return $this->renderHttpException($e);
 		}
 		else
 		{
 //            return parent::render($request, $e);
+
+            if ($e instanceof ApiException)
+                \Log::error($e);
 
             return $this->renderExceptionWithWhoops($e);
         }
@@ -66,6 +70,37 @@ class Handler extends ExceptionHandler {
             $e->getStatusCode(),
             $e->getHeaders()
         );
+    }
+
+    /**
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $e)
+    {
+        $status = $e->getStatusCode();
+
+        $dataArray = [
+            '404' => 'Oops! Không tìm thấy trang bạn đang yêu cầu',
+            '403' => 'Bạn không được phép truy cập trang này',
+            '503' => 'Trang web đang được bảo trì. Quay lại sau nhé',
+            '500' => 'Oops! Có lỗi xảy ra từ phía chúng tớ. Hãy kiên nhẫn nhé. Chúng tớ sẽ sửa nhanh thôi'
+        ];
+
+        if ( isset($dataArray[$status]) )
+        {
+            $data = [
+                'status' => $status,
+                'message' => $dataArray[$status],
+            ];
+            return response()->view('layouts.errorLayout', $data, $status);
+        }
+        else
+        {
+            return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
+        }
     }
 
 }

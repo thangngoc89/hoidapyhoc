@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Quiz\Events\NewFileUploaded;
+use Quiz\Exceptions\ApiException;
 use Quiz\Http\Requests\uploadFileRequest;
 use Quiz\lib\Helpers\Str;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
@@ -30,16 +31,22 @@ class UploadV2Controller extends APIController {
 
     public function store(uploadFileRequest $request)
     {
-        $file = $request->file('file');
+        try
+        {
+            $file = $request->file('file');
 
-        $info = [
-            'orginal_filename' => $file->getClientOriginalName(),
-            'extension' => $file->getClientOriginalExtension(),
-            'mimetype'  => $file->getClientMimeType(),
-            'size' => $file->getClientSize(),
-        ];
+            $info = [
+                'orginal_filename' => $file->getClientOriginalName(),
+                'extension' => $file->getClientOriginalExtension(),
+                'mimetype'  => $file->getClientMimeType(),
+                'size' => $file->getClientSize(),
+            ];
+            return $this->excute($file, $info);
 
-        return $this->excute($file, $info);
+        } catch (ApiException $e) {
+
+            return $this->throwError($e);
+        }
     }
 
     private function excute($file, $info)
@@ -119,7 +126,7 @@ class UploadV2Controller extends APIController {
      * @param $upload
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createResponse($upload)
+    private function createResponse($upload)
     {
         $response = [
             'id' => $upload->id,

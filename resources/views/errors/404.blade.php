@@ -1,0 +1,1 @@
+@include('layouts.errorLayout',['errorCode' => 404, 'message' => 'Oops! Không tìm thấy trang bạn đang yêu cầu'])

@@ -57,7 +57,7 @@ class QuizHomePage {
     private function doneTab()
     {
         if (! $this->auth->check())
-            abort(503);
+            abort(403);
         $this->result = $this->exam->doneTest($this->auth->user());
 
         $this->name = 'Các đề bạn đã làm';
@@ -72,7 +72,7 @@ class QuizHomePage {
     private function yourExamTab()
     {
         if (! $this->auth->check())
-            abort(503);
+            abort(403);
 
         $this->result = $this->exam->where('user_id',$this->auth->user()->id);
         $this->name = 'Đề thi đã gửi';
@@ -85,6 +85,8 @@ class QuizHomePage {
 
         if ( !$tab )
             $tab = 'latest';
+
+        #TODO: Check for method instead of given array
         if ( !in_array($tab, ['done','latest','yourExam']) )
             abort(404);
 

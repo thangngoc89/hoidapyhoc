@@ -20,7 +20,7 @@ elixir(function(mix) {
             'bower_components/sticky-kit/jquery.sticky-kit.js',
             'bower_components/toastr/toastr.js',
             'bower_components/bootstrap-sweetalert/lib/sweet-alert.js',
-            'bower_components/pace/pace.js',
+            //'bower_components/pace/pace.js',
             'bower_components/jquery-unveil/jquery.unveil.js',
             'bower_components/jquery-form/jquery.form.js',
             'bower_components/selectize/dist/js/standalone/selectize.js'

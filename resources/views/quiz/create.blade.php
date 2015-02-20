@@ -40,11 +40,9 @@
 </div>
 @stop
 
-@section('style')
-<link href="/css/editor.css" rel="stylesheet">
-@endsection
-
 @section('script')
+
+@include('components._loadCSS',['link' => elixir('css/editor.css')])
 <script src="/assets/js/editor.js"></script>
 <script>
     global.data = {!! $data !!};

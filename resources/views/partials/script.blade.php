@@ -23,7 +23,7 @@
 </div>
 @endif
 
-@include('components._loadCSS')
+@include('components._loadCSS',['link' => elixir('css/main.css')])
 <!-- Main file -->
 <script src="{{ elixir('assets/js/vendor.js') }}"></script>
 <script src="{{ elixir('assets/js/script.js') }}"></script>

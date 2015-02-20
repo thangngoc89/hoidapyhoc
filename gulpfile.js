@@ -35,11 +35,11 @@ elixir(function(mix) {
         ], 'resources','public/assets/js/script.js')
         .scripts([
             'bower_components/FroalaWysiwygEditor/js/froala_editor.min.js',
-            //'resources/assets/js/froala_vi.js',
+            //'bower_components/FroalaWysiwygEditor/js/langs/vi.js',
             'bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js',
             'bower_components/dropzone/dist/dropzone.js'
         ], 'bower_components', 'public/assets/js/editor.js')
         //.phpSpec()
         //.phpUnit()
-        .version(['css/main.css','public/assets/js/script.js','public/assets/js/vendor.js']);
+        .version(['css/main.css','css/editor.css','public/assets/js/script.js','public/assets/js/vendor.js']);
 });

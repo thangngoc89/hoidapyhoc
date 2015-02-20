@@ -16,7 +16,7 @@ video
 
 @section('header')
 <meta property="og:video" content="{{ $video->link }}"/>
-<link href="http://vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
+<link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>
 div.videocontent {
     width: 100%;
@@ -97,5 +97,5 @@ div.videocontent {
 @endsection
 
 @section('script')
-<script src="http://vjs.zencdn.net/4.11/video.js"></script>
+<script src="//vjs.zencdn.net/4.11/video.js"></script>
 @endsection

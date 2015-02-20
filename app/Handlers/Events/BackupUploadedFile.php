@@ -5,7 +5,6 @@ use Quiz\Events\NewFileUploaded;
 
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
-use Illuminate\Contracts\Filesystem\Cloud;
 use Quiz\Models\Upload;
 
 /**
@@ -47,9 +46,7 @@ class BackupUploadedFile implements ShouldBeQueued {
 	{
         $upload = $event->upload;
 
-        \Log::info('Upload file',$upload);
         #TODO: Unable to serialize Model here
-        $upload = $this->upload->find($upload->id);
 
         $imageExtension = ['png','jpg','jpeg','gif'];
 

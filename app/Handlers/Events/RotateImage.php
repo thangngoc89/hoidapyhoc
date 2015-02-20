@@ -33,7 +33,7 @@ class RotateImage {
 	{
 		$upload = $event->upload;
 
-        $upload = $this->upload->find($upload->id);
+//        $upload = $this->upload->find($upload->id);
 
         // Don't touch gif file
         $imageExtension = ['png','jpg','jpeg'];

@@ -53,8 +53,9 @@ class UploadV2Controller extends APIController {
     {
         $upload = $this->upload->getFileInfo($info);
 
-        // If file was not existed then upload it
-        if (!$upload || !\File::exists(storage_path('app/uploads/'.$upload->filename)) )
+        #TODO: Add Database transaction into this to prevent data saved but file was not uploaded
+
+        if ( is_null($upload) )
         {
             $destination = storage_path('app/uploads/');
             $file->move($destination, $this->createFileNameFromInfo($info));

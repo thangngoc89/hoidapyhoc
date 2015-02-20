@@ -40,7 +40,7 @@ class EventServiceProvider extends ServiceProvider {
          *  ------------------------------------------
          */
         \Quiz\Events\NewFileUploaded::class=>[
-            \Quiz\Handlers\Events\BackupUploadedFile::class,
+//            \Quiz\Handlers\Events\BackupUploadedFile::class,
             \Quiz\Handlers\Events\RotateImage::class,
         ]
 	];

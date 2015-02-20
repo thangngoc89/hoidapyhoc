@@ -25,11 +25,6 @@ class EloquentUploadRepository extends AbstractEloquentRepository implements Upl
                             ->where('mimetype',$array['mimetype'])
                             ->where('extension',$array['extension'])
                             ->first();
-        if (is_null($file))
-            return false;
-        if (! \File::exists(storage_path('uploads'.$file->filename)))
-            return false;
-
         return $file;
     }
 

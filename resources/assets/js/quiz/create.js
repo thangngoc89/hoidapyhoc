@@ -55,7 +55,7 @@
         $ele.name.val(test.name);
         $ele.description.val(test.description);
         $ele.content.html(test.content);
-        $ele.begin.html(test.begin);
+        $ele.begin.val(test.begin);
 
         if(test.file)
         {

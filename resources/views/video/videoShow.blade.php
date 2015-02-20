@@ -10,7 +10,12 @@
     @endsection
 @endif
 
-@section('style')
+@section('meta_type')
+video
+@endsection
+
+@section('header')
+<meta property="og:video" content="{{ $video->link }}"/>
 <link href="http://vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>
 div.videocontent {

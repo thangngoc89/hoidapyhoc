@@ -147,9 +147,10 @@ a.text-muted:hover{color:#c5c5c5}
   background: $white;
 }
 
+//TODO: Need to have different style on small screen
 @media (max-width: 767px) {
   .lessons-nav {
-    display: none;
+//    display: none;
   }
 }
 

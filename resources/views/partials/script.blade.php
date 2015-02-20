@@ -22,6 +22,8 @@
     </div>
 </div>
 @endif
+
+@include('components._loadCSS')
 <!-- Main file -->
 <script src="{{ elixir('assets/js/vendor.js') }}"></script>
 <script src="{{ elixir('assets/js/script.js') }}"></script>

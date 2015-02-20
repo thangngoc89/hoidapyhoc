@@ -19,5 +19,6 @@
         <meta property="og:url" content="{{ url() }}"/>
 
         <link rel="icon" href="//ask.hoidapyhoc.com/uploads/default/11/7c97ab16287c739c.png" type="image/x-icon">
+        @include('components._loadCSS',['link' => elixir('css/main.css')])
         @yield('style')
 </head>

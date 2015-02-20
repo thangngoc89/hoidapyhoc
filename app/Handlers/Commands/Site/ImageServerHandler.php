@@ -37,7 +37,7 @@ class ImageServerHandler {
         if (!File::exists($path))
             abort(404);
 
-        if (!method_exists('\Quiz\Handlers\Commands\Site\ImageServerHandler',$size))
+        if (!method_exists($this, $size))
             abort(404);
 
         $image = Image::make($path);

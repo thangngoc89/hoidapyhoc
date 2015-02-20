@@ -124,8 +124,10 @@ class TagHomePage {
 
         if (!$tab)
             $tab = 'popular';
-        if (!in_array($tab, ['popular', 'new', 'list']))
-            throw new \Exception ('TabNotFound');
+
+        if ( !method_exists($this, $tab.'Tab') )
+            abort(404);
+
         $tab .= 'Tab';
         return $tab;
     }

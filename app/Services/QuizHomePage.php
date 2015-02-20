@@ -86,8 +86,7 @@ class QuizHomePage {
         if ( !$tab )
             $tab = 'latest';
 
-        #TODO: Check for method instead of given array
-        if ( !in_array($tab, ['done','latest','yourExam']) )
+        if ( !method_exists($this, $tab.'Tab') )
             abort(404);
 
         $tab .= 'Tab';

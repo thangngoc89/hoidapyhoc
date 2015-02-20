@@ -144,7 +144,7 @@ get('files/pdf/{file}','ResourcesController@pdf');
  *  Sitemap
  *  ------------------------------------------
  */
-get('{sitemap}.xml','SitemapController@index');
+get('{sitemap}.xml','Site\SitemapController@index');
 
 get('test','TestController@index');
 

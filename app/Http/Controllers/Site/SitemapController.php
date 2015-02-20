@@ -1,4 +1,4 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Site;
 
 use Quiz\Http\Requests;
 use Quiz\Http\Controllers\Controller;

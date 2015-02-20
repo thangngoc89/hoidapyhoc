@@ -51,7 +51,7 @@ class ResourcesController extends Controller {
         if ($ext[0] != '.pdf')
             abort(404);
 
-        $path = storage_path("uploads/".$file);
+        $path = storage_path("app/uploads/".$file);
 
         if (!File::exists($path))
             abort(404);

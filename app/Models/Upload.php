@@ -48,6 +48,11 @@ class Upload extends Model {
 
     public function getPathAttribute()
     {
-        return storage_path("uploads/".$this->filename);
+        return storage_path('app/uploads/'.$this->filename);
+    }
+
+    public function getFilesystemPathAttribute()
+    {
+        return 'uploads/'.$this->filename;
     }
 }

@@ -26,7 +26,7 @@ class ImageServerHandler {
 	 */
 	public function handle(ImageServer $command)
 	{
-        $path = storage_path("uploads/".$command->path);
+        $path = storage_path("app/uploads/".$command->path);
         $size = $command->size;
 
         $key = 'image_cache'.$path.$size;

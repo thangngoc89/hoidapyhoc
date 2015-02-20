@@ -44,8 +44,8 @@ return [
 	'disks' => [
 
 		'local' => [
-			'driver' => 'dropbox',
-			'root'   => storage_path().'/app',
+			'driver' => 'local',
+			'root'   => storage_path('app'),
 		],
 
 		's3' => [
@@ -53,6 +53,7 @@ return [
 			'key'    => 'AKIAIMATHS7T6SEDSZ2Q',
 			'secret' => '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',
 			'bucket' => 'media.hoidapyhoc.com',
+            'region' => 'ap-southeast-1',
 		],
 
 		'rackspace' => [

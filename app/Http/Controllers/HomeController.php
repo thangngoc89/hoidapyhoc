@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers;
 
+use Illuminate\Contracts\Filesystem\Factory as Filesystem;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\History\HistoryRepository;
 use Quiz\lib\Repositories\User\UserRepository;
@@ -7,6 +8,7 @@ use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\lib\Tagging\Tag;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
+use Quiz\Models\Upload;
 use Quiz\Models\Video;
 
 class HomeController extends Controller {
@@ -93,12 +95,19 @@ class HomeController extends Controller {
         return view('site.admin');
     }
 
-    public function cleanCache(Tag $tag)
+    public function cleanCache(Tag $tag, Filesystem $filesystem)
     {
-        $allTag = $tag->with(['exams', 'videos'])->find(161);
-        $relations = $allTag->getRelations();
+//        $allTag = $tag->with(['exams', 'videos'])->find(161);
+//        $relations = $allTag->getRelations();
 
-        dd($relations);
+        $file = Upload::find(121);
+
+        $content = $filesystem->disk('local')->get($file->filesystemPath);
+
+        dd($content);
+        $backup = $filesystem->disk('s3')->put('uploads/'.$file->filename, $content);
+
+        dd($backup);
     }
 
 }

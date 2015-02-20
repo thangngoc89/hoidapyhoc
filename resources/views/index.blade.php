@@ -1,6 +1,11 @@
 @section('title')
 Trang chủ
 @stop
+
+@section('header')
+    <meta property="og:image" content="http://ask.hoidapyhoc.com/uploads/default/12/51cfb3b4bf8211c3.png"/>
+@endsection
+
 <!DOCTYPE html>
 <html lang="vi">
 

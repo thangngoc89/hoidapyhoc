@@ -13,11 +13,11 @@
 @section('meta_type')video @endsection
 
 @section('header')
-<meta property="og:video" content="{{ $video->link }}">
 <meta property="og:video:url" content="{{ $video->link }}">
 <meta property="og:video:width" content="640">
 <meta property="og:video:height" content="360">
 <meta property="og:video:type" content="video/mp4">
+<meta property="og:image" content="{{ $video->thumb }}">
 
 <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>

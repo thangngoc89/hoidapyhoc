@@ -49,7 +49,7 @@
 
         var app = new Application('Hỏi Đáp Y Học')
             // remember to change the following to your api link
-            .baseApiUrl('http://newquiz.dev/api/v2/');
+            .baseApiUrl(location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/api/v2/');
 
         var user = new Entity('users');
         var role = new Entity('roles');

@@ -147,3 +147,8 @@ get('files/pdf/{file}','ResourcesController@pdf');
 get('{sitemap}.xml','SitemapController@index');
 
 get('test','TestController@index');
+
+// Redirect old url
+Route::get('quiz/t/{slug}','Site\RedirectController@quiz');
+Route::get('quiz/c/{slug}','Site\RedirectController@category');
+Route::get('user/profile/{username}','Site\RedirectController@userProfile');

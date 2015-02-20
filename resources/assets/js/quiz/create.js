@@ -61,7 +61,7 @@
 
         if(test.file)
         {
-            $ele.tabContent.last().tab('show');
+            $('a[href="#upload"]').tab('show');
             pdfFile = {'link' : test.file.link, 'id' : test.file.id };
             embedPdf(pdfFile);
         }

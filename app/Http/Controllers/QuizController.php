@@ -78,6 +78,7 @@ class QuizController extends Controller {
         event(new ExamViewEvent($t, $this->request));
         // Define for blade template
         $viewHistory = false;
+//        dd(json_decode($t->questions));
         return view('quiz.do',compact('t','haveHistory','viewHistory'));
 	}
 

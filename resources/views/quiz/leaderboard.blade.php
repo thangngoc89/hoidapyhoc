@@ -1,6 +1,6 @@
 <div>
 @if (!$top->count())
-<h3>Đề này chưa có ai làm. Hãy <a href="{{ $t->link() }}" class="red">làm ngay</a></h3>
+<h3>Đề này chưa có thành viên làm. Hãy làm ngay đi nào</h3>
 @else
     @foreach($top as $index => $h)
     <article class="media media--conversation">

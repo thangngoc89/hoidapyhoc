@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class ImageServerHandler {
 
+    const IMG_QUALITY = 80;
 	/**
 	 * Create the command handler.
 	 *
@@ -49,22 +50,31 @@ class ImageServerHandler {
 
     public function big($image)
     {
+        if ($image->width() < 1300)
+            return $image;
+
         return $image->resize(1300 , null, function ($constraint) {
             $constraint->aspectRatio();
-        })->encode('jpg', 80);
+        })->encode('jpg', self::IMG_QUALITY);
     }
 
     public function medium($image)
     {
+        if ($image->width() < 800)
+            return $image;
+
         return $image->resize(800, null, function ($constraint) {
             $constraint->aspectRatio();
-        })->encode('jpg', 80);
+        })->encode('jpg', self::IMG_QUALITY);
     }
 
     public function small($image)
     {
-        return $image->resize(600, null, function ($constraint) {
+        if ($image->width() < 500)
+            return $image;
+
+        return $image->resize(500, null, function ($constraint) {
             $constraint->aspectRatio();
-        })->encode('jpg', 80);
+        })->encode('jpg', self::IMG_QUALITY);
     }
 }

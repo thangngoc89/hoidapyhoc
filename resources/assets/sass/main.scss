@@ -37,14 +37,14 @@
 
 @import 'quiz/quiz-sidebar';
 @import 'quiz/create';
-
-/* TODO: Test for responsive broken */
 @import 'quiz/quiz';
 
 @import 'vendor/selectize.bootstrap3';
 
 @import 'vendor/sweet-alert';
 @import '../../../bower_components/toastr/toastr';
+$fa-font-path:        "/font/awesome" !default;
+@import '../../../bower_components/fontawesome/scss/font-awesome';
 
 
 

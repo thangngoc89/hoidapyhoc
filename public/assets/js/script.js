@@ -834,8 +834,8 @@ function ajaxLoadPage()
             pastedImagesUploadURL: "/api/v2/files/paste",
             maxImageSize: 1024 * 1024 * 3,
             noFollow: true,
-            defaultImageWidth: '100%',
             imageUploadURL: '/api/v2/files',
+            defaultImageWidth: 0,
             imageUploadParams: {
                 type: "json"
             },

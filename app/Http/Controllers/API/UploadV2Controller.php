@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Quiz\Commands\Upload\UploadNewFileCommand;
 use Quiz\Events\NewFileUploaded;
 use Quiz\Exceptions\ApiException;
 use Quiz\Http\Requests\uploadFileRequest;
@@ -33,38 +34,15 @@ class UploadV2Controller extends APIController {
     {
         try
         {
-            $file = $request->file('file');
+            return $this->dispatch(new UploadNewFileCommand($request));
 
-            $info = [
-                'orginal_filename' => $file->getClientOriginalName(),
-                'extension' => $file->getClientOriginalExtension(),
-                'mimetype'  => $file->getClientMimeType(),
-                'size' => $file->getClientSize(),
-            ];
-            return $this->excute($file, $info);
-
-        } catch (ApiException $e) {
+        } catch (\Exception $e) {
 
             return $this->throwError($e);
         }
     }
 
-    private function excute($file, $info)
-    {
-        $upload = $this->upload->getFileInfo($info);
 
-        #TODO: Add Database transaction into this to prevent data saved but file was not uploaded
-
-        if ( is_null($upload) )
-        {
-            $destination = storage_path('app/uploads/');
-            $file->move($destination, $this->createFileNameFromInfo($info));
-
-            $upload = $this->saveFileData($info);
-        }
-
-        return $this->createResponse($upload);
-    }
 
     /**
      * Process a paste in base64 encoded image
@@ -73,69 +51,26 @@ class UploadV2Controller extends APIController {
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function paste(Request $request)
-    {
-        // array('image' => base64 string)
+//    public function paste(Request $request)
+//    {
+//        // array('image' => base64 string)
+//
+//        $img = Image::make($request->image);
+//
+//        $info = [
+//            'orginal_filename' => 'pastedImage'.time(),
+//            'extension' => Str::extensionFromMimeType($img->mime()),
+//            'mimetype'  => $img->mime(),
+//            'size'      => $img->filesize()
+//        ];
+//
+//        $filename = $this->createFileNameFromInfo($info);
+//
+//        $img->save(storage_path("app/uploads/{$filename}"));
+//
+//        $upload = $this->saveFileData($info);
+//
+//        return $this->createResponse($upload);
+//    }
 
-        $img = Image::make($request->image);
-
-        $info = [
-            'orginal_filename' => 'pastedImage'.time(),
-            'extension' => Str::extensionFromMimeType($img->mime()),
-            'mimetype'  => $img->mime(),
-            'size'      => $img->filesize()
-        ];
-
-        $filename = $this->createFileNameFromInfo($info);
-
-        $img->save(storage_path("app/uploads/{$filename}"));
-
-        $upload = $this->saveFileData($info);
-
-        return $this->createResponse($upload);
-    }
-
-    /**
-     * @param $info
-     * @param $filename
-     * @return mixed
-     */
-    private function saveFileData($info)
-    {
-        $upload = $this->upload->fill($info);
-        $upload->user_id = $this->auth->user()->id;
-        $upload->filename = $this->createFileNameFromInfo($info);
-        $upload->location = config('filesystems.default');
-
-        if (!$upload->save())
-            throw new \Exception('Cannot save file info');
-
-        return $upload;
-    }
-
-    /**
-     * @param $info
-     * @return string
-     */
-    private function createFileNameFromInfo($info)
-    {
-        $filename = md5($info['orginal_filename'] . time()) . '.' . $info['extension'];
-        return $filename;
-    }
-
-    /**
-     * @param $upload
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function createResponse($upload)
-    {
-        $response = [
-            'id' => $upload->id,
-            'filename' => $upload->filename,
-            'original_filename' => $upload->orginal_filename,
-            'link' => $upload->url()."#{$upload->orginal_filename}",
-        ];
-
-        return response()->json($response, 200);
-    }
 } 

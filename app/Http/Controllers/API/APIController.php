@@ -17,11 +17,15 @@ class APIController extends \Quiz\Http\Controllers\Controller {
 
     public function throwError($e)
     {
+
         $error = [
             'message' => $e->getMessage(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
         ];
+
+        \Log::error('API Error',$error);
+
         return response()->json($error, 500);
     }
 

@@ -10,14 +10,11 @@
     @endsection
 @endif
 
-@section('meta_type')
-video
-@endsection
+@section('meta_type')video @endsection
 
 @section('header')
 <meta property="og:video" content="{{ $video->link }}">
 <meta property="og:video:url" content="{{ $video->link }}">
-<meta property="og:video:type" content="text/html">
 <meta property="og:video:width" content="640">
 <meta property="og:video:height" content="360">
 <meta property="og:video:type" content="video/mp4">

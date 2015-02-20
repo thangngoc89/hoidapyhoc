@@ -360,6 +360,7 @@
             paramName: "file",
             headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
             maxFilesize: 3, // MB
+            parallelUploads: 1,
             acceptedFiles: 'image/*',
             dictDefaultMessage: 'Kéo và thả ảnh vào đây để upload',
             dictInvalidFileType: 'Định dạng file không cho phép',
@@ -369,8 +370,8 @@
 
                     $ele.content.editable("insertHTML", imgHTML, true);
                 });
-                this.on("error", function(){
-                    toastr["warning"]('Có lỗi xảy ra trong quá trình upload file');
+                this.on("error", function(file,response){
+                    validationError(response);
                 });
             }
         });
@@ -380,15 +381,17 @@
             paramName: "file",
             headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
             maxFilesize: 10,
+            parallelUploads: 1,
             acceptedFiles: 'application/pdf',
             dictDefaultMessage: 'Kéo và thả file PDF vào đây<br>Kích thước tối đa 10MB',
             dictInvalidFileType: 'Định dạng file không cho phép',
+            dictResponseError: 'abc',
             init: function() {
                 this.on("success", function(file,response) {
                     embedPdf(response);
                 });
-                this.on("error", function(){
-                    toastr["warning"]('Có lỗi xảy ra trong quá trình upload file');
+                this.on("error", function(file,response){
+                    validationError(response);
                 });
             }
         });

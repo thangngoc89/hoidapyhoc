@@ -18,6 +18,7 @@ class ExamTransformers extends TransformerAbstract {
             'thoigian'      => (int) $exam->thoigian,
             'questionsCount' => $exam->questions_count,
             'questions'      => $exam->questions,
+            'beginFrom'     => $exam->begin,
             'file'          => $this->file($exam),
             'tags'          => $exam->tagged->lists('name'),
             'approved'      => (boolean) $exam->is_approve,

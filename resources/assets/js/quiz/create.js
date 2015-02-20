@@ -55,9 +55,8 @@
         $ele.name.val(test.name);
         $ele.description.val(test.description);
         $ele.content.html(test.content);
-        console.log($ele.begin.val());
+
         $ele.begin.val(parseInt(test.beginFrom));
-        console.log($ele.begin.val());
 
 
         if(test.file)

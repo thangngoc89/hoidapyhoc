@@ -4,6 +4,7 @@ use Illuminate\Auth\Guard;
 use Quiz\Commands\Upload\UploadNewFileCommand;
 
 use Illuminate\Queue\InteractsWithQueue;
+use Quiz\Exceptions\ApiException;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
 
 class UploadNewFileCommandHandler {
@@ -40,7 +41,7 @@ class UploadNewFileCommandHandler {
 
         $file = $request->file('file');
 
-        $info = $this->getFileInfoFromObject($file);
+        $info = $this->getFileInfoFromRequestObject($file);
 
         #TODO: Add Database transaction into this to prevent data saved but file was not uploaded
 
@@ -67,7 +68,7 @@ class UploadNewFileCommandHandler {
         $upload->location = config('filesystems.default');
 
         if (!$upload->save())
-            throw new \Exception('Cannot save file info');
+            throw new ApiException('Cannot save file info');
 
         return $upload;
     }
@@ -92,7 +93,7 @@ class UploadNewFileCommandHandler {
             'id' => $upload->id,
             'filename' => $upload->filename,
             'original_filename' => $upload->orginal_filename,
-            'link' => $upload->url()."#{$upload->orginal_filename}",
+            'link' => $upload->url()."?filename={$upload->orginal_filename}",
         ];
 
         return response()->json($response, 200);
@@ -102,7 +103,7 @@ class UploadNewFileCommandHandler {
      * @param $file
      * @return array
      */
-    private function getFileInfoFromObject($file)
+    private function getFileInfoFromRequestObject($file)
     {
         $info = [
             'orginal_filename' => $file->getClientOriginalName(),

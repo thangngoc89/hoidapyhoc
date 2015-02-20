@@ -13,6 +13,6 @@
 <div ui-view></div>
 <script src="/assets/js/angular.js" type="text/javascript"></script>
 <script src="/assets/js/ng-admin.min.js" type="text/javascript"></script>
-<script src="/assets/js/admin.js" type="text/javascript"></script>
+<script src="{{ elixir('assets/js/admin.js') }}" type="text/javascript"></script>
 </body>
 </html>

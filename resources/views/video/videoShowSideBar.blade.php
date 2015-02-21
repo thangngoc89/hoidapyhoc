@@ -61,9 +61,8 @@
     </article>-->
     @include('components.socialButtons')
     <span class="video-sidebar__divider"></span>
-    <ul class="video-sidebar__buttons">
+    <!--<ul class="video-sidebar__buttons">
         <li>
-            <!-- This displays the favorited form and heart icon thing -->
             <div class="lesson-favorite">
                 <form method="POST" action="https://laracasts.com/lessons/209/favorite" accept-charset="UTF-8" class="favorite-form">
                     <input name="_token" type="hidden" value="ISN2qSvBgCGyHGKhMFIMBK6DUXgC6ZfcKvKnZMmU">
@@ -147,4 +146,4 @@
             <a href="{{ $tag->link() }}">{{ $tag->name }}</a>&nbsp;
         @endforeach
     </p>
-    </div>
+    <!--</div>-->

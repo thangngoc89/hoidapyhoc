@@ -67,6 +67,19 @@ div.videocontent {
 </div>
 <div class="lesson-follow-ups">
     <div class="container wrap--video">
+        <h3 class="lesson-prerequisites-title">Bình luận</h3>
+        <span class="lesson-prerequisites-title-divider"></span>
+
+        <div class="fb-comments"
+            data-href="{{ \Request::url() }}"
+            data-numposts="10"
+            data-colorscheme="light"
+            data-width="100%">
+        </div>
+    </div>
+</div>
+<div class="lesson-follow-ups">
+    <div class="container wrap--video">
         <h3 class="lesson-prerequisites-title">Video liên quan</h3>
         <span class="lesson-prerequisites-title-divider"></span>
 
@@ -84,17 +97,6 @@ div.videocontent {
             @endif
             <?php $i++; ?>
             @endforeach
-
-    </div>
-</div>
-<div class="row">
-    <div class="container wrap--video">
-        <div class="fb-comments"
-            data-href="{{ \Request::url() }}"
-            data-numposts="10"
-            data-colorscheme="light"
-            data-width="100%">
-        </div>
     </div>
 </div>
 @endsection

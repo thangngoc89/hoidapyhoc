@@ -3,11 +3,14 @@
          <div class="container">
              <ul class="lessons-nav__primary">
                  <li class="active">
-                     <a href="#test">Đề thi</a>
-                 </li>
+                    <a href="{{ $t->link() }}#doContent">
+                        <i class="icon-box-3"></i> Đề thi</a> </li>
                  <li>
-                    <a href="#comment">Bình luận</a>
-                 </li>
+                    <a href="{{ $t->link() }}#leaderBoard">
+                        <i class="icon-award-4"></i> Bảng điểm</a> </li>
+                 <li>
+                    <a href="{{ $t->link() }}#comment">
+                        <i class="icon-chat-4"></i> Bình luận</a> </li>
              </ul>
          </div>
      </div>
@@ -30,12 +33,12 @@
                </ul>
                <div class="row no-padding static-box">
                     <dl class="col-md-8 dl-horizontal score">
-                        <dt>Điểm cao nhất:</dt>
-                        <dd>7.5<dd>
-                        <dt>Điểm trung bình:</dt>
-                        <dd>1.25</dd>
-                        <dt>Xếp hạng:</dt>
-                        <dd>9&nbsp;/&nbsp;15</dd>
+                        {{--<dt>Điểm cao nhất:</dt>--}}
+                        {{--<dd>7.5<dd>--}}
+                        {{--<dt>Điểm trung bình:</dt>--}}
+                        {{--<dd>1.25</dd>--}}
+                        {{--<dt>Xếp hạng:</dt>--}}
+                        {{--<dd>9&nbsp;/&nbsp;{{ $t->countHistory() }}</dd>--}}
                     </dl>
                    <dl class="col-md-4 dl-horizontal dl-custome desc">
                         <dt><a class="icontest-option op-choice" href="#"></a></dt>

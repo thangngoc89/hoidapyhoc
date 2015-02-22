@@ -55,4 +55,14 @@ class History extends Model {
     public function answeredCount(){
         return strlen(str_replace('_','',$this->answer));
     }
+
+    public function scopeDone($query)
+    {
+        return $query->where('isDone', 1);
+    }
+
+    public function scopeIsFirst($query)
+    {
+        return $query->where('is_first', 1);
+    }
 }

@@ -67,12 +67,36 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
             ->get();
     }
 
+    /**
+     * @param $examId
+     * @param $userId
+     * @return mixed
+     */
+    public function firstHistoryOfUserOfExam($examId, $userId)
+    {
+        return $this->model
+            ->where('test_id',$examId)
+            ->where('user_id',$userId)
+            ->where('is_first',1)
+            ->where('isDone',1)
+            ->first();
+    }
+
+
     public function userRankOfExam($examId, $userId)
     {
+        $history = $this->firstHistoryOfUserOfExam($examId, $userId);
+
+        if (is_null($history))
+            return null;
+
+//        dd($history->score);
+
         return $this->model->where('test_id','=', $examId)
-            ->where('score','>=', $examId)
+            ->where('score','>=', $history->score)
             ->where('user_id',$userId)
-            ->where('is_first','=',1)
+            ->where('is_first',1)
+            ->where('isDone',1)
             ->count();
     }
 

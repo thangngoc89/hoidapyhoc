@@ -10,5 +10,8 @@ interface HistoryRepository extends BaseRepository {
 
     public function recentDoneExam($userId, $limit = 5);
 
+    public function firstHistoryOfUserOfExam($examId, $userId);
+
     public function userRankOfExam($examId, $userId);
+
 }

@@ -101,6 +101,13 @@ class QuizController extends Controller {
         // Define for blade template
         $viewHistory = true;
 
+        #TODO: Fix this
+//        $rank = false;
+//        if ($this->auth->check())
+//        {
+//            $rank = $this->history->userRankOfExam($t->id, $this->auth->user()->id);
+//        }
+
         event(new ExamViewEvent($t, $this->request));
 
         return view('quiz.history',compact('t','history','viewHistory'));

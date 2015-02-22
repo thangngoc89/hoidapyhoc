@@ -5,7 +5,7 @@ use Quiz\Http\Requests;
 use Quiz\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Quiz\Models\Video;
+use Quiz\lib\Repositories\Video\VideoRepository as Video;
 
 class VideoController extends Controller {
     /**
@@ -58,9 +58,7 @@ class VideoController extends Controller {
 	 */
 	public function show($slug, $video)
 	{
-        $video->load(['tagged.videos' => function ($q) use ( &$relatedVideos, $video ) {
-            $relatedVideos = $q->where('videos.id', '<>', $video->id)->limit(6)->get()->unique();
-        }]);
+        $relatedVideos = $this->video->getRelatedVideosByTags($video);
 
         event(new VideoViewEvent($video, $this->request));
 

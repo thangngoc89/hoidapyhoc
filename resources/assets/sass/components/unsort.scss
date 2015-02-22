@@ -2168,6 +2168,9 @@ body.forum {
     width: 86%;
     margin-right: 0;
   };
+  .media--leaderboard__body {
+    width: 70%;
+  }
 }
 
 .media--conversation__body h5 {
@@ -2197,6 +2200,9 @@ body.forum {
 @media (max-width: 991px) {
   .media--conversation__meta {
     display: none;
+  };
+  .media--leaderboard__meta {
+    display: inline-block;
   };
 }
 

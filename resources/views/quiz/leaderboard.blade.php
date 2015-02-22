@@ -16,7 +16,7 @@
                 {{ $index+1+ $offset*50 }}
             </span>
         </div>
-        <div class="media-body media--conversation__body">
+        <div class="media-body media--conversation__body media--leaderboard__body">
             <h5 class="media-heading media--conversation__heading">
                 <a href="{{ $h->user->profileLink() }}">{{ $h->user->username }}</a>
             </h5>
@@ -24,7 +24,7 @@
                 <li>{{ $h->user->name }}</li>
             </ul>
         </div>
-        <div class="media--conversation__meta">
+        <div class="media--conversation__meta media--leaderboard__meta">
             <span class="media--conversation__replies">
                 <span class="experience-points">{{ $h->score }}</span>
                 <span class="experience-heading">/{{ strlen($h->answer) }}</span>

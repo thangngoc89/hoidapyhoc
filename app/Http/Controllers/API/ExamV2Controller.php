@@ -154,14 +154,12 @@ class ExamV2Controller extends APIController {
      * @param ExamCheckRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function check ($exam, ExamTransformers $transformer, ExamCheckRequest $request)
+    public function check ($exam, ExamCheckRequest $request)
     {
         try {
             $history = $this->dispatch(new ExamCheckCommand($exam, $request));
 
-            $response = $transformer->checkResponse($history);
-
-            return response()->json($response, 200);
+            return response()->json($history, 200);
 
         } catch (\Exception $e) {
 

@@ -6,6 +6,15 @@ use Quiz\Models\History;
 
 class ExamTransformers extends TransformerAbstract {
 
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'user'
+    ];
+
     public function transform(Exam $exam)
     {
         return [
@@ -18,12 +27,12 @@ class ExamTransformers extends TransformerAbstract {
             'thoigian'      => (int) $exam->thoigian,
             'questionsCount' => $exam->questions_count,
             'questions'      => $exam->questions,
-            'beginFrom'     => $exam->begin,
+            'beginFrom'     => (int) $exam->begin,
             'file'          => $this->file($exam),
             'tags'          => $exam->tagged->lists('name'),
             'approved'      => (boolean) $exam->is_approve,
-            'created_at'    => $exam->created_at,
-            'updated_at'    => $exam->updated_at
+            'created_at'    => (string) $exam->created_at,
+            'updated_at'    => (string) $exam->updated_at
         ];
     }
 
@@ -33,15 +42,6 @@ class ExamTransformers extends TransformerAbstract {
             'id'        => $exam->id,
             'url'       => $exam->link(),
             'editUrl'   => $exam->link('edit'),
-        ];
-    }
-
-    public function checkResponse(History $history)
-    {
-        return [
-            'score' => $history->score,
-            'totalQuestion' => $history->exam->questionsCount,
-            'url'   => '/quiz/ket-qua/'.$history->exam->slug.'/'.$history->id,
         ];
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Quiz\Commands\Exam\ExamCheckCommand;
 
 use Illuminate\Queue\InteractsWithQueue;
-use Quiz\Exceptions\ExamSaveException;
+use Quiz\Exceptions\ApiException;
 use Quiz\Models\History;
 
 class ExamCheckCommandHandler {
@@ -68,9 +68,24 @@ class ExamCheckCommandHandler {
         $history->isDone = true;
 
         if (!$history->save())
-            throw new ExamSaveException ('Can not update history');
+            throw new ApiException ('Can not update history');
 
-        return $history;
+        return $this->response($history);
 
+    }
+
+    /**
+     * Generate a api response for checked API
+     *
+     * @param $history
+     * @return array
+     */
+    private function response($history)
+    {
+        return [
+            'score' => $history->score,
+            'totalQuestion' => $history->exam->questionsCount,
+            'url'   => '/quiz/ket-qua/'.$history->exam->slug.'/'.$history->id,
+        ];
     }
 }

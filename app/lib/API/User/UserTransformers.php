@@ -9,11 +9,11 @@ class UserTransformers extends TransformerAbstract
     {
         return [
             'id'        => (int)$user->id,
-            'name'      => $user->name,
-            'username'  => $user->username,
-            'email'     => $user->email,
-            'created_at'     => $user->created_at->diffForHumans(),
-            'updated_at'     => $user->updated_at->diffForHumans(),
+            'name'      => (string) $user->name,
+            'username'  => (string) $user->username,
+            'email'     => (string) $user->email,
+            'created_at'     => (string) $user->created_at,
+            'updated_at'     => (string) $user->updated_at,
         ];
     }
 }

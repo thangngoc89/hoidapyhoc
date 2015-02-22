@@ -62,6 +62,16 @@ class VideoController extends Controller {
             $relatedVideos = $q->where('videos.id', '<>', $video->id)->limit(6)->get()->unique();
         }]);
 
+        $count = $relatedVideos->count();
+        if ($count < 6)
+        {
+            $currentIds = $relatedVideos->lists('id');
+            $currentIds []= $video->id;
+
+            $moreRelatedVideos = $this->video->whereRaw('RAND()')->whereNotIn('id',$currentIds)->take(6-$count)->get();
+            $relatedVideos = $relatedVideos->merge($moreRelatedVideos);
+        }
+
         event(new VideoViewEvent($video, $this->request));
 
         return view('video.videoShow',compact('video','relatedVideos'));

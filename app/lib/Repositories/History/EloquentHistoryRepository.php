@@ -24,12 +24,13 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
      * @param $userId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function findUserHistoryOfExam($examId, $userId)
+    public function findUserDoneHistoryOfExam($examId, $userId)
     {
         return $this->model
             ->with('exam')
             ->where('test_id',$examId)
             ->where('user_id',$userId)
+            ->where('isDone',1)
             ->get();
     }
 
@@ -64,6 +65,15 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
             ->orderBy('updated_at','DESC')
             ->take($limit)
             ->get();
+    }
+
+    public function userRankOfExam($examId, $userId)
+    {
+        return $this->model->where('test_id','=', $examId)
+            ->where('score','>=', $examId)
+            ->where('user_id',$userId)
+            ->where('is_first','=',1)
+            ->count();
     }
 
 }

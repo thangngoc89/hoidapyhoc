@@ -73,7 +73,7 @@ class QuizController extends Controller {
         $haveHistory = false;
 
         if ($this->auth->check())
-            $haveHistory = $this->history->findUserHistoryOfExam($t->id, $this->auth->user()->id);
+            $haveHistory = $this->history->findUserDoneHistoryOfExam($t->id, $this->auth->user()->id);
 
         event(new ExamViewEvent($t, $this->request));
         // Define for blade template

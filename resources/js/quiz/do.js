@@ -22,6 +22,8 @@ function quizDoInt()
 
     $('#btnStart').on('click',function(){
 
+        $('a[href="#doContent"]').tab('show');
+
         $('.icontest-option').off('click');
         $('#quiz-content').removeClass('hide');
         $('#quiz-rule').hide();
@@ -29,14 +31,13 @@ function quizDoInt()
         $('#btnSubmit').show();
         $('#btnStart').hide();
 
-        sticky();
-
         toastr.info('Bắt đầu làm bài thôi nào ^_^');
         choiceDo();
         setCounter();
 
         // Go to do tab
-        $('a[href="#doContent"]').tab('show');
+
+        sticky();
 
         global.preventClose = true;
         preventClosing();

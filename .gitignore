@@ -17,3 +17,6 @@ public/css
 .idea
 storage/uploads
 storage/app/uploads
+public/assets/js/editor.js
+public/assets/js/script.js
+public/assets/js/vendor.js

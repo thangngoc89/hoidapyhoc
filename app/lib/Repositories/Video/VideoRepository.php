@@ -1,15 +1,9 @@
-<?php namespace Quiz\lib\Repositories\Tag;
+<?php namespace Quiz\lib\Repositories\Video;
 
 use Quiz\lib\Repositories\BaseRepository;
 
-interface TagRepository extends BaseRepository {
+interface VideoRepository extends BaseRepository {
 
-    public function allTagsWithCount();
-
-    public function examSelectedTags($examId);
-
-    public function examTagNames($examId);
-
-    public function searchByName($query);
+    public function getRelatedVideosByTags($video, $amount = 6);
 
 }

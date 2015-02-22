@@ -1,136 +1,55 @@
-<?php namespace Quiz\lib\Repositories\Tag;
+<?php namespace Quiz\lib\Repositories\Video;
 
 use Quiz\lib\Repositories\AbstractEloquentRepository;
-use Quiz\lib\Tagging\Tag;
-use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
+use Quiz\Models\Video;
 
-class EloquentTagRepository extends AbstractEloquentRepository implements TagRepository {
+class EloquentVideoRepository extends AbstractEloquentRepository implements VideoRepository {
     /**
-     * @var Tag
+     * @var Video
      */
     protected $model;
-    /**
-     * @var Exam
-     */
-    private $exam;
 
     /**
-     * @param Tag $model
-     * @param Exam $exam
+     * @param Video $model
      */
-    public function __construct(Tag $model, Exam $exam)
+    public function __construct(Video $model)
     {
         $this->model = $model;
-        $this->exam = $exam;
     }
 
+
     /**
-     * Return an array of all tags with count
+     * Return an collection of related videos of given video id
      *
-     * @return array
+     * @param int || Video $video
+     * @param int $amount
      */
-    public function allTagsWithCount()
+    public function getRelatedVideosByTags($video, $amount = 6)
     {
-        $key = 'allTagsWithCount';
+        $video = $this->getItem($video);
 
-        $cache = \Cache::tags('tags');
+        $video->load(['tagged.videos' => function ($q) use ( &$relatedVideos, $video, $amount ) {
+            $relatedVideos = $q->where('videos.id', '<>', $video->id)->limit($amount)->get()->unique();
+        }]);
 
-        if ($cache->has($key))
-            return $cache->get($key);
-
-        $tagList = $this->tagListOrderByExamCount();
-
-        $tags = $this->tagsListTransformer($tagList);
-
-        $cache->forever($key, $tags);
-
-        return $tags;
-    }
-    /**
-     * @param $testId
-     * @return array
-     */
-    public function examSelectedTags($examId)
-    {
-        $key = 'selectedTags'.$examId;
-
-        $cache = \Cache::tags('test'.$examId,'tags');
-
-        if ($cache->has($key))
-            return $cache->get($key);
-
-        $tagList = $this->exam->findOrFail($examId)->tagged->all();
-
-        $tags = [];
-        foreach ($tagList as $tag)
+        $count = $relatedVideos->count();
+        if ($count < $amount)
         {
-            $tags[] = [
-                'text' => $tag->name,
-                'selected' => (boolean) true,
-                'count' => (int) $tag->count(),
-            ];
+            $currentIds = $relatedVideos->lists('id');
+            $currentIds []= $video->id;
+
+            $moreRelatedVideos = $this->video->whereRaw('RAND()')->whereNotIn('id',$currentIds)->take($amount-$count)->get();
+            $relatedVideos = $relatedVideos->merge($moreRelatedVideos);
         }
-
-        $cache->forever($key, $tags);
-
-        return $tags;
     }
 
-    /**
-     * Return an array of exam's tags list
-     *
-     * @param $examId
-     * @return array
-     */
-    public function examTagNames($examId)
+    private function getItem($video)
     {
-        return $this->exam->find($examId)->tagNames();
+        if ($video instanceof Video)
+            return $video;
+
+        return $this->model->find($video);
     }
 
-    /**
-     * Create a Eloquent Collection of exam tag list
-     * @return mixed
-     */
-    public function tagListOrderByExamCount()
-    {
-        $tagList = $this->with('exams')->take(50)->get();
-
-        $tagList = $tagList->sortByDesc(function($tag)
-        {
-            return $tag->exams->count();
-        });
-
-        return $tagList;
-    }
-
-    public function searchByName($query)
-    {
-        return $this->model->where('name', 'like', '%' . $query . '%');
-    }
-
-    /**
-     * Map return Eloquent Collection into an array
-     *
-     * @param $examId
-     * @param $tagList
-     * @return mixed
-     */
-    private function tagsListTransformer($tagList, $examId = null)
-    {
-        $tags = $tagList->map(function ($tag) use ($examId) {
-
-            $selected = null;
-
-            if (!is_null($examId))
-                $selected = in_array($tag->name, $this->examTagNames($examId));
-
-            return [
-                'name' => $tag->name,
-                'selected' => (boolean) $selected,
-                'count' => (int)$tag->exams->count()
-            ];
-        });
-        return $tags;
-    }
 
 }

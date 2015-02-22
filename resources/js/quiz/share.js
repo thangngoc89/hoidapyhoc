@@ -4,6 +4,7 @@ function sticky()
 
     if(width>767) {
         $("#quiz-sidebar, #mainRow").stick_in_parent();
+        console.log('triggerd sticky');
     }
 }
 function resize_do(){

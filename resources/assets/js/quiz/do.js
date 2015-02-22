@@ -35,6 +35,9 @@ function quizDoInt()
         choiceDo();
         setCounter();
 
+        // Go to do tab
+        $('a[href="#doContent"]').tab('show');
+
         global.preventClose = true;
         preventClosing();
 

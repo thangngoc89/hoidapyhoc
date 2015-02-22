@@ -206,7 +206,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
-
+        'HTML'      => 'Illuminate\Html\HtmlFacade',
         'Form'      => 'Illuminate\Html\FormFacade',
         'Slugify'   => 'Cocur\Slugify\Bridge\Laravel\SlugifyFacade',
         'Image'     => 'Intervention\Image\Facades\Image',

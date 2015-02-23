@@ -77,22 +77,33 @@ class GetQuiz extends BaseLeecher {
         $item = [];
         $inputs = $content->find('input[onclick^="alert"]');
 
-        $input = $inputs[0];
+        $input = $inputs[106];
 
-        foreach ($inputs as $input)
+        dd($input->parent()->outertext);
+        foreach ($inputs as $index => $input)
         {
             $cursor = $this->cursorPosition($input);
+
             if ($cursor == self::POS_FIRST_ANS)
             {
+                if (!empty($item))
+                {
+                    $questions[] = $item;
+                    $item = [];
+                }
+
                 $item[] = $this->getQuestionSentence($input);
-                $item[] = $this->parseHintAndValueFromInut($input->outertext);
+                $item[] = $this->parseHintAndValueFromInut($input);
             }
 
             if ($cursor == self::POS_MIDDLE_ANS)
-                $item[] = $this->parseHintAndValueFromInut($input->outertext);
+                $item[] = $this->parseHintAndValueFromInut($input);
+
+            if ($index == \Input::get('index'))
+                dd($questions);
         }
 
-//        $questions = array_filter($questions);
+        $questions = array_filter($questions);
 
     }
 
@@ -101,14 +112,23 @@ class GetQuiz extends BaseLeecher {
     {
         $parent = $input->parent()->parent();
 
+        if ($parent->tag != 'p')
+            $parent = $parent->parent();
+
         $next_sib = $parent->next_sibling();
         $prev_sib = $parent->prev_sibling();
 
-        if (is_null($prev_sib->find('input[onclick]')))
+        \Log::info($parent);
+
+        if ( empty( $prev_sib->find('input[onclick]') ))
             return self::POS_FIRST_ANS;
 
-        if (!is_null($next_sib)->find('input[onclick]'))
+//        if ($next_sib->plaintext == '&nbsp;' || $next_sib->outertext == '<hr>')
+//            return self::POS_LAST_ANS;
+
+        if ( !is_null($next_sib->find('input[onclick]')) )
             return self::POS_MIDDLE_ANS;
+
     }
 
     private function getQuestionSentence($input)
@@ -121,10 +141,10 @@ class GetQuiz extends BaseLeecher {
     private function parseHintAndValueFromInut($input)
     {
         preg_match('/&quot;(.*?)&quot;/i', $input, $hint);
-        preg_match('/value=\"(.*?)\"/i', $input, $value);
+        $value = "<b>{$input->value}. </b>".trim($input->parent()->parent()->plaintext);
 
         return [
-            'value' => $value[1],
+            'value' => $value,
             'hint' => $hint[1],
         ];
     }

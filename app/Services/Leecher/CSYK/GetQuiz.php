@@ -54,7 +54,9 @@ class GetQuiz extends BaseLeecher {
 
         $content = $html->find('div[class=pure_content]',0);
 
-        $questions = $this->breakIntoQuestions($content);
+        $questions = $this->parseQuestions($content);
+
+        return $
     }
 
     /**
@@ -71,73 +73,70 @@ class GetQuiz extends BaseLeecher {
         return $name;
     }
 
-    private function breakIntoQuestions($content)
+    private function parseQuestions($content)
     {
         $questions = [];
         $item = [];
         $inputs = $content->find('input[onclick^="alert"]');
 
-        $input = $inputs[106];
-
-        dd($input->parent()->outertext);
         foreach ($inputs as $index => $input)
         {
             $cursor = $this->cursorPosition($input);
 
-            if ($cursor == self::POS_FIRST_ANS)
+            if ($cursor['pos'] == self::POS_FIRST_ANS)
             {
+                # If this is a new questions
+                # then push to questions array
                 if (!empty($item))
                 {
                     $questions[] = $item;
                     $item = [];
                 }
 
-                $item[] = $this->getQuestionSentence($input);
+                $item[] = trim($cursor['sentence']->plaintext);
                 $item[] = $this->parseHintAndValueFromInut($input);
             }
 
-            if ($cursor == self::POS_MIDDLE_ANS)
+            if ($cursor['pos'] == self::POS_MIDDLE_ANS)
                 $item[] = $this->parseHintAndValueFromInut($input);
 
-            if ($index == \Input::get('index'))
-                dd($questions);
         }
 
-        $questions = array_filter($questions);
-
+        return $questions;
     }
 
 
     private function cursorPosition($input)
     {
-        $parent = $input->parent()->parent();
+        $parent = $input;
 
-        if ($parent->tag != 'p')
+        while ($parent->tag != 'p')
+        {
             $parent = $parent->parent();
+        }
 
         $next_sib = $parent->next_sibling();
         $prev_sib = $parent->prev_sibling();
 
-        \Log::info($parent);
-
         if ( empty( $prev_sib->find('input[onclick]') ))
-            return self::POS_FIRST_ANS;
-
-//        if ($next_sib->plaintext == '&nbsp;' || $next_sib->outertext == '<hr>')
-//            return self::POS_LAST_ANS;
+            return [
+                'pos' => self::POS_FIRST_ANS,
+                'sentence' => $prev_sib,
+            ];
 
         if ( !is_null($next_sib->find('input[onclick]')) )
-            return self::POS_MIDDLE_ANS;
-
-    }
-
-    private function getQuestionSentence($input)
-    {
-        $sentence = $input->parent()->parent()->prev_sibling()->plaintext;
-        return trim($sentence);
+            return [
+                'pos' => self::POS_MIDDLE_ANS,
+            ];
     }
 
 
+    /**
+     * Parse Hint(Javscript Alert Value) And Value From Input Tag
+     *
+     * @param $input
+     * @return array
+     */
     private function parseHintAndValueFromInut($input)
     {
         preg_match('/&quot;(.*?)&quot;/i', $input, $hint);
@@ -149,6 +148,10 @@ class GetQuiz extends BaseLeecher {
         ];
     }
 
+    private function createQuestionsArray($questions)
+    {
+
+    }
 
 
-} 
+}

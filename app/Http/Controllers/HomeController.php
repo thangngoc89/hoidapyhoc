@@ -10,6 +10,7 @@ use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
 use Quiz\Models\Video;
+use Quiz\Services\Leecher\CSYK\GetQuiz;
 
 class HomeController extends Controller {
 
@@ -95,19 +96,15 @@ class HomeController extends Controller {
         return view('site.admin');
     }
 
-    public function cleanCache(Tag $tag, Filesystem $filesystem)
+    public function cleanCache(GetQuiz $get)
     {
-//        $allTag = $tag->with(['exams', 'videos'])->find(161);
-//        $relations = $allTag->getRelations();
 
-        $file = Upload::find(121);
+        $link = \Input::get('link');
 
-        $content = $filesystem->disk('local')->get($file->filesystemPath);
+        $content = $get->get($link)->parse();
 
         dd($content);
-        $backup = $filesystem->disk('s3')->put('uploads/'.$file->filename, $content);
 
-        dd($backup);
     }
 
 }

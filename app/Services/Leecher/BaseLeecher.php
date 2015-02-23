@@ -1,14 +1,27 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Dang
- * Date: 23/02/2015
- * Time: 11:04 AM
- */
+<?php namespace Quiz\Services\Leecher;
 
-namespace Services\Leecher;
-
+use GuzzleHttp\Client;
+use Illuminate\Cache\Repository as Cache;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class BaseLeecher {
+    /**
+     * @var Client
+     */
+    protected $client;
+    /**
+     * @var HtmlDomParser
+     */
+    protected $parser;
+
+    /**
+     * @param Client $client
+     * @param HtmlDomParser $parser
+     */
+    public function __construct(Client $client, HtmlDomParser $parser)
+    {
+        $this->client = $client;
+        $this->parser = $parser;
+    }
 
 } 

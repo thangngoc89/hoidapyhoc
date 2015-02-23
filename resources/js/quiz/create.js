@@ -14,6 +14,7 @@
         content: $('#content'),
         description : $('#input-description'),
         begin : $('#begin'),
+        time : $('#select-time'),
         tag : $('#select-tags'),
         tabContent : $('#tab-content a'),
         adjustTotal : $('#adjustTotal'),
@@ -57,6 +58,7 @@
         $ele.content.html(test.content);
 
         $ele.begin.val(parseInt(test.beginFrom));
+        $ele.time.val(parseInt(test.thoigian));
 
 
         if(test.file)

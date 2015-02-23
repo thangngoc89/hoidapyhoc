@@ -101,9 +101,7 @@ class HomeController extends Controller {
 
         $link = \Input::get('link');
 
-        $content = $get->get($link)->parse();
-
-        dd($content);
+        return $get->get($link)->parse();
 
     }
 

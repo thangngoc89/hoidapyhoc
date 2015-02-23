@@ -56,7 +56,8 @@ class GetQuiz extends BaseLeecher {
 
         $questions = $this->parseQuestions($content);
 
-        return $
+//        dd($questions);
+        return view('quiz.render.chiaseykhoaHint',compact('questions'));
     }
 
     /**

@@ -144,6 +144,7 @@ return [
         'Sorskod\Larasponse\LarasponseServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
         'GrahamCampbell\HTMLMin\HTMLMinServiceProvider',
+        'Spatie\Backup\BackupServiceProvider',
 
         /*
          * Dev

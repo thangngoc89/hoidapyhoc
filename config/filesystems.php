@@ -56,6 +56,14 @@ return [
             'region' => 'ap-southeast-1',
 		],
 
+        's3-backup' => [
+            'driver' => 's3',
+            'key'    => 'AKIAIMATHS7T6SEDSZ2Q',
+            'secret' => '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',
+            'bucket' => 'hoidapyhocbackup',
+            'region' => 'ap-southeast-1',
+        ],
+
 		'rackspace' => [
 			'driver'    => 'rackspace',
 			'username'  => 'your-username',

@@ -60,7 +60,6 @@
         $ele.begin.val(parseInt(test.beginFrom));
         $ele.time.val(parseInt(test.thoigian));
 
-
         if(test.file)
         {
             $('a[href="#upload"]').tab('show');

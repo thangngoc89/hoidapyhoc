@@ -4,7 +4,6 @@ use GuzzleHttp\Client;
 use Illuminate\Cache\Repository as Cache;
 use Sunra\PhpSimple\HtmlDomParser;
 
-
 class GetVideoInfo {
     /**
      * @var Client

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b348b7d59b4532a00e0792d1c18e26ce",
+    "hash": "b5b52276c4426393d4118d6f8b3f2f9b",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2043,6 +2043,51 @@
                 "time"
             ],
             "time": "2015-02-06 05:07:29"
+        },
+        {
+            "name": "nicolaslopezj/searchable",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolaslopezj/searchable.git",
+                "reference": "b746779c42fdf32fc3060ec127ea0355057ead7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolaslopezj/searchable/zipball/b746779c42fdf32fc3060ec127ea0355057ead7c",
+                "reference": "b746779c42fdf32fc3060ec127ea0355057ead7c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "4.2.x|~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nicolaslopezj\\Searchable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Lopez",
+                    "email": "nicolaslopezj@me.com"
+                }
+            ],
+            "description": "Eloquent model search trait.",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "model",
+                "search",
+                "searchable"
+            ],
+            "time": "2015-02-07 21:32:58"
         },
         {
             "name": "nikic/php-parser",
@@ -4697,6 +4742,7 @@
         "graham-campbell/htmlmin": 20,
         "league/flysystem-aws-s3-v2": 20,
         "spatie/laravel-backup": 20,
+        "nicolaslopezj/searchable": 20,
         "barryvdh/laravel-debugbar": 20,
         "barryvdh/laravel-ide-helper": 20,
         "filp/whoops": 20

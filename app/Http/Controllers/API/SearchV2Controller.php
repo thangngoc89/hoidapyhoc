@@ -16,7 +16,7 @@ class SearchV2Controller extends Controller {
     /**
      * @var ExamRepository
      */
-    private $test;
+    private $exam;
     /**
      * @var Tag
      */
@@ -32,10 +32,10 @@ class SearchV2Controller extends Controller {
      * @param Tag $tag
      * @param Video $video
      */
-    public function __construct(Request $request, ExamRepository $test, Tag $tag, Video $video)
+    public function __construct(Request $request, ExamRepository $exam, Tag $tag, Video $video)
     {
         $this->request = $request;
-        $this->test = $test;
+        $this->exam = $exam;
         $this->tag = $tag;
         $this->video = $video;
     }
@@ -47,7 +47,7 @@ class SearchV2Controller extends Controller {
         if(!$query && $query == '')
             return response()->json(['error' => 'No query'], 400);
 
-        $tests = $this->getTestsResponse($query)->toArray();
+        $tests = $this->getExamsResponse($query)->toArray();
         $tags = $this->getTagsResponse($query)->toArray();
         $videos = $this->getVideosResponse($query)->toArray();
 
@@ -63,15 +63,15 @@ class SearchV2Controller extends Controller {
      * @param $query
      * @return mixed
      */
-    public function getTestsResponse($query)
+    public function getExamsResponse($query)
     {
-        $tests = $this->test
-            ->where('name','like','%'.$query.'%')
+        $tests = $this->exam
+            ->search($query)
             ->orderBy('name','asc')
             ->take(5)
             ->get(array('id','slug','name'));
 
-//        $tests = $this->test->whereRaw('MATCH(name) AGAINST(\'?\' IN BOOLEAN MODE)',[$query])
+//        $tests = $this->exam->whereRaw('MATCH(name) AGAINST(\'?\' IN BOOLEAN MODE)',[$query])
 //            ->get(['id','slug','name']);
 
         $mapper = $tests->map(function($test){
@@ -116,9 +116,6 @@ class SearchV2Controller extends Controller {
             ->take(5)
             ->get(array('id','slug','title'));
 
-//        $tests = $this->test->whereRaw('MATCH(name) AGAINST(\'?\' IN BOOLEAN MODE)',[$query])
-//            ->get(['id','slug','name']);
-
         $mapper = $videos->map(function($video){
             return [
                 'name' => $video->title,
@@ -129,7 +126,6 @@ class SearchV2Controller extends Controller {
 
         return $mapper;
 
-        return $mapper;
     }
 
     public function appendValue($data, $type, $element)

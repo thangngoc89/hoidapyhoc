@@ -18,6 +18,8 @@ interface BaseRepository {
 
     public function orWhere($key, $value);
 
+    public function search($query, $divided = 4);
+
     public function getFirstBy($key, $value, array $with = array());
 
     public function getManyBy($key, $value, array $with = array());

@@ -45,6 +45,11 @@ abstract class AbstractEloquentRepository {
         return $this->model->orWhere($key, $value);
     }
 
+    public function search($query, $divided = 4)
+    {
+        return $this->model->search($query, $divided);
+    }
+
     public function fill($input)
     {
         return $this->model->fill($input);

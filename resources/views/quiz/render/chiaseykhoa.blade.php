@@ -3,7 +3,7 @@
     @foreach($q as $row)
 
         @if( !is_array($row) )
-            <strong>{{$index + 1}}.  {{ $row }}</strong>
+            <strong><!--{{$index + 1}}.-->{{ $row }}</strong>
         @else
             <p>{!! $row['value'] !!}</p>
         @endif

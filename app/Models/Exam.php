@@ -2,25 +2,35 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Quiz\lib\Tagging\TaggableTrait;
-use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Helpers\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use Quiz\lib\Helpers\LocalizationDateTrait;
 
 class Exam extends Model {
 
     use SoftDeletes;
     use TaggableTrait;
     use LocalizationDateTrait;
+    use SearchableTrait;
 
     protected $table = 'tests';
 
     protected $fillable = array('name','content','begin','thoigian','description','is_file','file_id','questions');
 
+    protected $searchable = [
+        'columns' => [
+            'name' => 10,
+            'description' => 8,
+            'content' => 5,
+        ]
+    ];
+
     public static function boot()
     {
         parent::boot();
 
-        Exam::saving(function($exam)
+        static::saving(function($exam)
         {
             if (empty($exam->file_id))
             {
@@ -32,7 +42,7 @@ class Exam extends Model {
             $exam->slug = Str::slug(trim($exam->name));
 
         });
-        Exam::saved(function($exam)
+        static::saved(function($exam)
         {
             \Cache::tags('tests')->flush();
             \Cache::tags('exam'.$exam->id)->flush();
@@ -44,6 +54,7 @@ class Exam extends Model {
     {
         return $this->hasMany('Quiz\Models\History','test_id');
     }
+
     public function file()
     {
         return $this->belongsTo('Quiz\Models\Upload','file_id');

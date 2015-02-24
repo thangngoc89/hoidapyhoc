@@ -3,7 +3,7 @@
 use Quiz\Commands\Exam\ExamCreateCommand;
 
 use Illuminate\Queue\InteractsWithQueue;
-use Quiz\Exceptions\ExamSaveException;
+use Quiz\Exceptions\ApiException;
 use Quiz\Events\Exam\ExamCreatedEvent;
 use Quiz\Models\Exam;
 use Quiz\Models\Question;
@@ -38,9 +38,11 @@ class ExamCreateCommandHandler {
             $exam = new Exam($request->all());
             $exam->user_id = \Auth::user()->id;
             if (!$exam->save())
-                throw new ExamSaveException ("Could not save exam");
+                throw new ApiException("Could not save exam");
 
-            $exam->tag($request->tags);
+            \Log::info($request->tags);
+
+            $exam->retag($request->tags);
 
         } catch (\Exception $e) {
 

@@ -24,7 +24,7 @@ trait TaggableTrait {
 	 */
 	public function tag($tagNames) {
 		$tagNames = TaggingUtil::makeTagArray($tagNames);
-		
+
 		foreach($tagNames as $tagName) {
 			$this->addTag($tagName);
 		}

@@ -1,5 +1,6 @@
 <?php namespace Quiz\lib\Tagging;
 
+use Nicolaslopezj\Searchable\SearchableTrait;
 use Quiz\lib\Tagging\TaggingUtil;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -21,18 +22,26 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  */
 class Tag extends Eloquent {
 
+    use SearchableTrait;
+
 	protected $table = 'tagging_tags';
 	public $timestamps = false;
 	protected $softDelete = false;
 	public $fillable = ['name','description'];
-	
+
+    protected $searchable = [
+        'columns' => [
+            'name' => 10,
+        ]
+    ];
+
 	public function __construct(array $attributes = array()) {
 		parent::__construct($attributes);
 	}
 
     public static function boot()
     {
-        Tag::saving(function()
+        static::saving(function()
         {
             \Cache::tags('tags')->flush();
         });

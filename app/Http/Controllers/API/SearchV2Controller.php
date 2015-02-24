@@ -111,7 +111,7 @@ class SearchV2Controller extends Controller {
     public function getVideosResponse($query)
     {
         $videos = $this->video
-            ->where('title','like','%'.$query.'%')
+            ->search($query)
             ->orderBy('title','asc')
             ->take(5)
             ->get(array('id','slug','title'));

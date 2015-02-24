@@ -46,7 +46,7 @@ class TagController extends Controller {
 	 */
 	public function show($slug, ExamRepository $exams, Guard $auth)
 	{
-        $tag = $this->tag->where('slug',$slug)->first();
+        $tag = $this->tag->where('slug','=',$slug)->first();
 
         if (is_null($tag))
             abort(404);

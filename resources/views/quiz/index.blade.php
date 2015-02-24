@@ -19,6 +19,10 @@
     {{ $name }}
 @stop
 
+@section('meta_description')
+Tổng hợp đề thi Y Khoa. Làm đề thi trắc nghiệm trực tuyến
+@endsection
+
 @section('body')
 <div class="container">
     <div class="row">

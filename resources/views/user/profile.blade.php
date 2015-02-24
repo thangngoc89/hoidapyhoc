@@ -9,6 +9,10 @@
 {{ $user->name }}
 @stop
 
+@section('meta_description')
+Trang cá nhân - {{ $user->name }}
+@endsection
+
 @section('body')
 <div class="container wrap">
     <h2 class="section-heading">Bài thi gần đây</h2>

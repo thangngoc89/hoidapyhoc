@@ -1,7 +1,11 @@
 @extends('layouts.main')
 
 @section('title')
-Thống kê
+Thống kê trang web
+@endsection
+
+@section('meta_description')
+Thống kê các thông số của Hỏi Đáp Y Học
 @endsection
 
 @section('body')

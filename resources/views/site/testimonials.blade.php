@@ -1,7 +1,14 @@
 @extends('layouts.main')
 
-@section('jumbotron')
+@section('title')
+Mọi người nói gì
+@endsection
 
+@section('meta_description')
+Hãy tìm hiểu xem mọi người nói gì về Hỏi Đáp Y Học?
+@endsection
+
+@section('jumbotron')
 <div class="jumbotron">
     <div class="container">
         <h2 class="jumbotron__heading">Mọi người nói gì về Hỏi Đáp Y Học</h2>
@@ -11,11 +18,6 @@
         </a>
     </div>
 </div>
-@stop
-
-
-@section('title')
-Testimonials
 @stop
 
 @section('body')

@@ -33,6 +33,7 @@ Route::model('permissions', '\Quiz\Models\Enstrust\Permission');
 Route::model('tags', '\Quiz\lib\Tagging\Tag');
 Route::model('testimonials', '\Quiz\Models\Testimonial');
 Route::model('video', '\Quiz\Models\Video');
+Route::model('files', '\Quiz\Models\Upload');
 
 /** ------------------------------------------
  *  HomePage Group
@@ -104,7 +105,9 @@ Route::group(array('prefix' => 'api/v2'), function()
      *  ------------------------------------------
      */
     Route::post('files/paste', 'API\UploadV2Controller@paste');
-    Route::resource('files','API\UploadV2Controller');
+    Route::resource('files','API\UploadV2Controller',[
+        'only' => ['store', 'show']
+    ]);
 
     /** ------------------------------------------
      *  Tags

@@ -24,7 +24,7 @@ class RoleV2Controller extends APIController {
     {
         $roles = $this->builder($request,$this->role);
 
-        $result = response()->api()->withCollection($roles, new RoleTransformers());
+        $result = response()->api()->withPaginator($roles, new RoleTransformers());
 
         return $result;
     }

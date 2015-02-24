@@ -35,7 +35,7 @@ class PermissionV2Controller extends APIController {
 	{
         $permissions = $this->builder($request,$this->permission);
 
-        $result = response()->api()->withCollection($permissions, new PermissionTransformers());
+        $result = response()->api()->withPaginator($permissions, new PermissionTransformers());
 
         return $result;
 	}

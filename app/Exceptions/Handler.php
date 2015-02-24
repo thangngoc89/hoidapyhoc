@@ -3,8 +3,8 @@
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Request;
 
 class Handler extends ExceptionHandler {
 
@@ -39,6 +39,7 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
+        dd(Request::url());
 		if ($this->isHttpException($e))
 		{
             return $this->renderHttpException($e);

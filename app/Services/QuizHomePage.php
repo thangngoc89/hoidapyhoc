@@ -74,7 +74,8 @@ class QuizHomePage {
         if (! $this->auth->check())
             abort(403);
 
-        $this->result = $this->exam->where('user_id',$this->auth->user()->id);
+        $this->result = $this->auth->user()->exams();
+
         $this->name = 'Đề thi đã gửi';
     }
 

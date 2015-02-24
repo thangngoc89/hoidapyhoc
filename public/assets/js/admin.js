@@ -7,13 +7,6 @@
 
     var app = angular.module('myApp', ['ng-admin']);
 
-    app.directive('createdAt', function () {
-        return {
-            restrict: 'E',
-            template: '<span>{{entry.values.created_at.date}}</span>'
-        };
-    });
-
     /* Pass csrf token to X-CSRF-TOKEN header on every request */
     app.config(['$httpProvider',function($httpProvider){
         $httpProvider.defaults.headers.common['X-XSRF-TOKEN'] = document.getElementsByTagName('csrf')[0].getAttribute("content")
@@ -130,11 +123,10 @@
         user.listView()
             .title('All users')
             .addField(new Field('id'))
-            .fields([new Field('user').isDetailLink(true)])
+            .fields([new Field('username').isDetailLink(true)])
             .addField(new Field('email'))
-            .addField(new Field('created_at'))
-            .addField(new Field('updated_at'))
-            .listActions(['edit', 'delete']);
+            .addField(new Field('created_at', 'date'))
+            .listActions(['show','edit', 'delete']);
 
         user.creationView()
             .title('Create User')

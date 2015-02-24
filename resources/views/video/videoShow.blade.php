@@ -18,6 +18,7 @@
 <meta property="og:video:height" content="360">
 <meta property="og:video:type" content="video/mp4">
 <meta property="og:image" content="{{ $video->thumb }}">
+<meta name="pubdate" content="{{ $video->updated_at->format('c') }}" />
 
 <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>

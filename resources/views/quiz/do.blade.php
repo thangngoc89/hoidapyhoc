@@ -41,6 +41,10 @@
     {{ $t->user->getName() }}
 @endsection
 
+@section('header')
+<meta name="pubdate" content="{{ $t->updated_at->format('c') }}" />
+@endsection
+
 {{--Body Section--}}
 @section('body')
 <div class="container">

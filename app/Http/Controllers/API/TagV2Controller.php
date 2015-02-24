@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Quiz\Http\Requests\API\TagDeleteRequest;
 use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Quiz\lib\API\Tag\TagTransformers;
-use Sorskod\Larasponse\Larasponse;
 
 class TagV2Controller extends APIController {
 
@@ -20,10 +19,6 @@ class TagV2Controller extends APIController {
      */
     private $auth;
     /**
-     * @var Larasponse
-     */
-    private $fractal;
-    /**
      * @var Tag
      */
     private $tag;
@@ -32,22 +27,19 @@ class TagV2Controller extends APIController {
      * @param Tag $tag
      * @param Request $request
      * @param Guard $auth
-     * @param Larasponse $fractal
      */
-    public function __construct(Tag $tag, Request $request, Guard $auth, Larasponse $fractal)
+    public function __construct(Tag $tag, Request $request, Guard $auth)
     {
         $this->request = $request;
         $this->auth = $auth;
-        $this->fractal = $fractal;
         $this->tag = $tag;
     }
-
 
 	public function index()
 	{
         $tags = $this->builder($this->request,$this->tag,['name']);
 
-        $result = $this->fractal->paginatedCollection($tags, new TagTransformers());
+        $result = response()->api()->withPaginator($tags, new TagTransformers());
 
         return $result;
     }
@@ -60,30 +52,19 @@ class TagV2Controller extends APIController {
 	 */
 	public function show($tag)
 	{
-        return $this->fractal->item($tag, new TagTransformers());
+        return response()->api()->withItem($tag, new TagTransformers());
 	}
 
     /**
      * Update the specified resource in storage.
      *
      * @param $test
-     * @param ExamEditRequest $request
-     * @param ExamTransformers $transformer
      * @internal param int $id
      * @return Response
      */
-    public function update($test, ExamEditRequest $request, ExamTransformers $transformer)
+    public function update($tag)
     {
-        return $this->tryCatch(function() use ($transformer,$request, $test)
-        {
-            $test = new ExamEditSaver($request->all(),$test);
-            $test = $test->save();
-            $response = $transformer->createResponse($test);
-
-            event( new ExamUpdateEvent($test));
-
-            return $response;
-        });
+        //
     }
 
     /**
@@ -95,7 +76,7 @@ class TagV2Controller extends APIController {
     {
         $tags = $this->tag->searchByName($query)->paginate(20);
 
-        return $this->fractal->paginatedCollection($tags, new TagTransformers());
+        return response()->api()->withPaginator($tags, new TagTransformers());
 
     }
 	/**

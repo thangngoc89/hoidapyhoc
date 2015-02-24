@@ -3,11 +3,11 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Quiz\Commands\Upload\UploadNewFileCommand;
-use Quiz\Events\NewFileUploaded;
 use Quiz\Exceptions\ApiException;
 use Quiz\Http\Requests\uploadFileRequest;
 use Quiz\lib\Helpers\Str;
 use Quiz\lib\Repositories\Upload\UploadRepository as Upload;
+use Quiz\lib\API\File\FileTransformers;
 use Image;
 
 class UploadV2Controller extends APIController {
@@ -16,19 +16,19 @@ class UploadV2Controller extends APIController {
      */
     private $upload;
     /**
-     * @var Guard
-     */
-    private $auth;
-
-    /**
      * @param Upload $upload
      * @param Guard $auth
      */
     public function __construct (Upload $upload, Guard $auth)
     {
         $this->upload = $upload;
-        $this->auth = $auth;
     }
+
+    public function show($upload)
+    {
+        return response()->api()->withItem($upload, new FileTransformers());
+    }
+
 
     public function store(uploadFileRequest $request)
     {
@@ -41,8 +41,6 @@ class UploadV2Controller extends APIController {
             return $this->throwError($e);
         }
     }
-
-
 
     /**
      * Process a paste in base64 encoded image

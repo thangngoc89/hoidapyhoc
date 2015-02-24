@@ -4,24 +4,16 @@ use Illuminate\Http\Request;
 use Quiz\lib\API\Testimonial\TestimonialTransformers;
 use Quiz\Models\Testimonial;
 
-use Sorskod\Larasponse\Larasponse;
-
 class TestimonialV2Controller extends APIController {
 
-    protected $testimonial;
-    /**
-     * @var Larasponse
-     */
-    private $fractal;
+    private $testimonial;
 
     /**
      * @param Testimonial $testimonial
-     * @param Larasponse $fractal
      * @internal param Request $request
      */
-    public function __construct(Testimonial $testimonial, Larasponse $fractal)
+    public function __construct(Testimonial $testimonial)
     {
-        $this->fractal = $fractal;
         $this->testimonial = $testimonial;
         $this->middleware('admin', ['except' => ['index']]);
 
@@ -31,9 +23,9 @@ class TestimonialV2Controller extends APIController {
     {
         $testimonials = $this->builder($request,$this->testimonial);
 
-        $result = $this->fractal->paginatedCollection($testimonials, new TestimonialTransformers());
+        $result = response()->api()->withPaginator($testimonials, new TestimonialTransformers());
 
-        return $this->makeResponse($result);
+        return $result;
     }
 
     /**
@@ -44,7 +36,7 @@ class TestimonialV2Controller extends APIController {
      */
     public function show($testi)
     {
-        return $this->fractal->item($testi, new TestimonialTransformers());
+        return response()->api()->withItem($testi, new TestimonialTransformers());
     }
 
     /**

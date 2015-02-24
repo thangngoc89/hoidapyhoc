@@ -3,8 +3,8 @@
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Request;
 
 class Handler extends ExceptionHandler {
 
@@ -39,6 +39,11 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
+//        $path = parse_url(Request::url())['path'];
+//
+//        if (starts_with($path, '/api'))
+//            return $this->apiResponse($e);
+
 		if ($this->isHttpException($e))
 		{
             return $this->renderHttpException($e);
@@ -101,6 +106,20 @@ class Handler extends ExceptionHandler {
         {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
         }
+    }
+
+    #TODO: Need more love here
+    private function apiResponse(Exception $e)
+    {
+        $message = [
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+        ];
+
+        $error_code = ($e->getCode() && $e->getCode() >= 100) ?: 500;
+
+        return response()->api()->setStatusCode(500)->withError($message, $error_code);
     }
 
 }

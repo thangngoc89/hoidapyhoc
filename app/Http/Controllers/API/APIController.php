@@ -11,13 +11,8 @@ class APIController extends \Quiz\Http\Controllers\Controller {
 
     protected $columnList;
 
-    public function makeResponse($result){
-        return response()->json($result)->header('X-Total-Count',$result['meta']['pagination']['total']);
-    }
-
     public function throwError($e)
     {
-
         $error = [
             'message' => $e->getMessage(),
             'file' => $e->getFile(),

@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b5b52276c4426393d4118d6f8b3f2f9b",
+    "hash": "409cab362e6c9d841e9a0782691ee60e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "2.7.18",
+            "version": "2.7.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "470ca90e2d511f64f082c569864f22f2c18fdc38"
+                "reference": "2c9d93fbe680f64a84f5877209904f414d5cf92f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/470ca90e2d511f64f082c569864f22f2c18fdc38",
-                "reference": "470ca90e2d511f64f082c569864f22f2c18fdc38",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2c9d93fbe680f64a84f5877209904f414d5cf92f",
+                "reference": "2c9d93fbe680f64a84f5877209904f414d5cf92f",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2015-02-12 20:56:39"
+            "time": "2015-02-24 00:04:06"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -760,6 +760,66 @@
             "time": "2014-09-09 13:34:57"
         },
         {
+            "name": "ellipsesynergie/api-response",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ellipsesynergie/api-response.git",
+                "reference": "2b4f19aa7ba2ed5fa3b83851329baa1228ad1e31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ellipsesynergie/api-response/zipball/2b4f19aa7ba2ed5fa3b83851329baa1228ad1e31",
+                "reference": "2b4f19aa7ba2ed5fa3b83851329baa1228ad1e31",
+                "shasum": ""
+            },
+            "require": {
+                "league/fractal": "0.12.*@dev",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "illuminate/contracts": "~5.0",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EllipseSynergie\\ApiResponse\\": "src",
+                    "EllipseSynergie\\ApiResponse\\Tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Beaudoin",
+                    "email": "maxime.beaudoin@ellipse-synergie.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "email@philsturgeon.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple package to handle response properly in your API",
+            "homepage": "https://github.com/ellipsesynergie/api-response",
+            "keywords": [
+                "api",
+                "fractal",
+                "json"
+            ],
+            "time": "2015-02-17 19:20:53"
+        },
+        {
             "name": "graham-campbell/htmlmin",
             "version": "v3.0.0",
             "source": {
@@ -1124,12 +1184,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "a8c0e77447877a0a8591ff8e74ad0d14d3ca4c7e"
+                "reference": "68b0f68e06d9399fba8ca45bad1e9816c057774e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/a8c0e77447877a0a8591ff8e74ad0d14d3ca4c7e",
-                "reference": "a8c0e77447877a0a8591ff8e74ad0d14d3ca4c7e",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/68b0f68e06d9399fba8ca45bad1e9816c057774e",
+                "reference": "68b0f68e06d9399fba8ca45bad1e9816c057774e",
                 "shasum": ""
             },
             "require": {
@@ -1172,7 +1232,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2015-02-03 15:44:48"
+            "time": "2015-02-20 15:44:29"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1308,12 +1368,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/laravel-date.git",
-                "reference": "f918ddd126941e3a3b03376ac03a0ab1a0ce7a69"
+                "reference": "7e492048bcaeaa1ccd929498febabd914c73b0a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/laravel-date/zipball/f918ddd126941e3a3b03376ac03a0ab1a0ce7a69",
-                "reference": "f918ddd126941e3a3b03376ac03a0ab1a0ce7a69",
+                "url": "https://api.github.com/repos/jenssegers/laravel-date/zipball/7e492048bcaeaa1ccd929498febabd914c73b0a1",
+                "reference": "7e492048bcaeaa1ccd929498febabd914c73b0a1",
                 "shasum": ""
             },
             "require": {
@@ -1322,6 +1382,7 @@
                 "symfony/translation": "*"
             },
             "require-dev": {
+                "phpunit/phpunit": "*",
                 "satooshi/php-coveralls": "*"
             },
             "type": "library",
@@ -1347,7 +1408,7 @@
                 "laravel",
                 "time"
             ],
-            "time": "2015-02-17 11:08:38"
+            "time": "2015-02-24 07:47:36"
         },
         {
             "name": "jeremeamia/SuperClosure",
@@ -1409,16 +1470,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.0.5",
+            "version": "v5.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b1aea041cbc0cd54563e2d3709a54a71eed57653"
+                "reference": "43637b796f1ac0b1a960984231251ff04b438006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b1aea041cbc0cd54563e2d3709a54a71eed57653",
-                "reference": "b1aea041cbc0cd54563e2d3709a54a71eed57653",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/43637b796f1ac0b1a960984231251ff04b438006",
+                "reference": "43637b796f1ac0b1a960984231251ff04b438006",
                 "shasum": ""
             },
             "require": {
@@ -1530,20 +1591,20 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-02-13 19:10:59"
+            "time": "2015-02-20 16:22:21"
         },
         {
             "name": "laravel/socialite",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "7f96a35e8976faea4c282abcd5c196ef8ddfab7c"
+                "reference": "5ecfde2b908f99d21545a1be385fbd6f78e6444c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/7f96a35e8976faea4c282abcd5c196ef8ddfab7c",
-                "reference": "7f96a35e8976faea4c282abcd5c196ef8ddfab7c",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/5ecfde2b908f99d21545a1be385fbd6f78e6444c",
+                "reference": "5ecfde2b908f99d21545a1be385fbd6f78e6444c",
                 "shasum": ""
             },
             "require": {
@@ -1584,7 +1645,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2015-02-14 01:56:05"
+            "time": "2015-02-20 20:07:14"
         },
         {
             "name": "league/flysystem",
@@ -1718,23 +1779,23 @@
         },
         {
             "name": "league/fractal",
-            "version": "0.11.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/fractal.git",
-                "reference": "5abf7b1ce12fea1e575355f76f4f58f15dba4be4"
+                "reference": "d0516d0318691ef00e6afc7f2ec68c2dd90059d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/5abf7b1ce12fea1e575355f76f4f58f15dba4be4",
-                "reference": "5abf7b1ce12fea1e575355f76f4f58f15dba4be4",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/d0516d0318691ef00e6afc7f2ec68c2dd90059d6",
+                "reference": "d0516d0318691ef00e6afc7f2ec68c2dd90059d6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3"
+                "php": ">=5.4"
             },
             "require-dev": {
-                "illuminate/pagination": "~4.1",
+                "illuminate/contracts": "~5.0",
                 "mockery/mockery": "~0.9",
                 "pagerfanta/pagerfanta": "~1.0.0",
                 "phpunit/phpunit": "~4.0",
@@ -1749,7 +1810,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.10-dev"
+                    "dev-master": "0.12-dev"
                 }
             },
             "autoload": {
@@ -1777,7 +1838,7 @@
                 "league",
                 "rest"
             ],
-            "time": "2014-12-10 16:59:07"
+            "time": "2015-02-17 18:33:50"
         },
         {
             "name": "league/oauth1-client",
@@ -2453,56 +2514,17 @@
             "time": "2014-12-30 13:32:42"
         },
         {
-            "name": "sorskod/larasponse",
-            "version": "dev-L5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/salebab/larasponse.git",
-                "reference": "05957c2933d73613bfee3ffa56f9d2aeddb15ed5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/salebab/larasponse/zipball/05957c2933d73613bfee3ffa56f9d2aeddb15ed5",
-                "reference": "05957c2933d73613bfee3ffa56f9d2aeddb15ed5",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/http": "~5.0",
-                "illuminate/pagination": "~5.0",
-                "illuminate/support": "~5.0",
-                "league/fractal": "~0.11",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Sorskod\\Larasponse": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Aleksandar Babic",
-                    "email": "salebab@gmail.com"
-                }
-            ],
-            "time": "2015-02-09 09:12:53"
-        },
-        {
             "name": "spatie/laravel-backup",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/freekmurze/laravel-backup.git",
-                "reference": "29a68b216f51993d6143290487d9981279576525"
+                "reference": "60a7d754cecf39f17651d236dd59e0ae39bae8a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/freekmurze/laravel-backup/zipball/29a68b216f51993d6143290487d9981279576525",
-                "reference": "29a68b216f51993d6143290487d9981279576525",
+                "url": "https://api.github.com/repos/freekmurze/laravel-backup/zipball/60a7d754cecf39f17651d236dd59e0ae39bae8a3",
+                "reference": "60a7d754cecf39f17651d236dd59e0ae39bae8a3",
                 "shasum": ""
             },
             "require": {
@@ -2545,7 +2567,7 @@
                 "mysql",
                 "spatie"
             ],
-            "time": "2015-02-22 01:48:18"
+            "time": "2015-02-23 19:35:52"
         },
         {
             "name": "sunra/php-simple-html-dom-parser",
@@ -3393,12 +3415,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "77b9cc071f4bbd839923269668b14d308778d8b0"
+                "reference": "7bdf8acf3b955f4fcf922e74abdfdec370369196"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/77b9cc071f4bbd839923269668b14d308778d8b0",
-                "reference": "77b9cc071f4bbd839923269668b14d308778d8b0",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/7bdf8acf3b955f4fcf922e74abdfdec370369196",
+                "reference": "7bdf8acf3b955f4fcf922e74abdfdec370369196",
                 "shasum": ""
             },
             "require": {
@@ -3439,7 +3461,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2015-02-15 14:11:42"
+            "time": "2015-02-19 10:26:39"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -3564,12 +3586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "01f84f8121a882b100cb153a9b92056439a34c5b"
+                "reference": "dcce91553e2e056857f1ea844949e9a8a71b613d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/01f84f8121a882b100cb153a9b92056439a34c5b",
-                "reference": "01f84f8121a882b100cb153a9b92056439a34c5b",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/dcce91553e2e056857f1ea844949e9a8a71b613d",
+                "reference": "dcce91553e2e056857f1ea844949e9a8a71b613d",
                 "shasum": ""
             },
             "require": {
@@ -3614,7 +3636,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2015-01-22 15:11:11"
+            "time": "2015-02-17 15:50:31"
         },
         {
             "name": "maximebf/debugbar",
@@ -4735,7 +4757,6 @@
     "stability-flags": {
         "doctrine/dbal": 20,
         "sunra/php-simple-html-dom-parser": 20,
-        "sorskod/larasponse": 20,
         "cocur/slugify": 20,
         "predis/predis": 20,
         "jenssegers/date": 20,
@@ -4743,6 +4764,7 @@
         "league/flysystem-aws-s3-v2": 20,
         "spatie/laravel-backup": 20,
         "nicolaslopezj/searchable": 20,
+        "ellipsesynergie/api-response": 20,
         "barryvdh/laravel-debugbar": 20,
         "barryvdh/laravel-ide-helper": 20,
         "filp/whoops": 20

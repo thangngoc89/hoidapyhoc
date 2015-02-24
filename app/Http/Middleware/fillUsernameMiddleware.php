@@ -29,9 +29,9 @@ class fillUsernameMiddleware {
         if (getenv('APP_ENV') === 'local')
             $this->auth->loginUsingId(3, true);
 
-        if ($this->auth->check() && $request->is('/auth/edit'))
+        if ($this->auth->check() && !$request->is('auth/edit'))
         {
-            if (is_null($request->user()->username))
+            if (is_null($this->auth->user()->username))
 
                 return redirect('auth/edit')
                         ->with('info', 'Hãy điền các thông tin sau đây để tiếp tục');

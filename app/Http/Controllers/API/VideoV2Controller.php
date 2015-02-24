@@ -1,42 +1,22 @@
 <?php namespace Quiz\Http\Controllers\API;
 
-use Quiz\Commands\Exam\ExamCheckCommand;
-
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-
-use Quiz\Http\Requests\Exam\ExamCreateRequest;
-use Quiz\Commands\Exam\ExamCreateCommand;
-
-use Quiz\Http\Requests\Exam\ExamUpdateRequest;
-use Quiz\Commands\Exam\ExamUpdateCommand;
-
-use Quiz\Http\Requests\Exam\ExamCheckRequest;
-
-use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
-use Quiz\lib\Repositories\History\HistoryRepository as History;
-
+use Quiz\lib\Repositories\Video\VideoRepository as Video;
 use Quiz\lib\API\Exam\ExamTransformers;
 
-class ExamV2Controller extends APIController {
+class VideoV2Controller extends APIController {
 
-    /**
-     * @var History
-     */
-    private $history;
-    /**
-     * @var Request
-     */
     private $request;
+    private $video;
 
     /**
-     * @param Exam $test
-     * @param History $history
+     * @param Video $video
      * @param Request $request
      */
-    public function __construct(History $history, Request $request)
+    public function __construct(Video $video, Request $request)
     {
-        $this->history = $history;
+        $this->video = $video;
         $this->request = $request;
         $this->middleware('auth', ['except' => 'index']);
     }
@@ -56,15 +36,12 @@ class ExamV2Controller extends APIController {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(ExamCreateRequest $request, ExamTransformers $transformer)
+	public function store()
 	{
         try {
             $exam = $this->dispatch(new ExamCreateCommand($request));
 
-            #TODO: Move link generated into javascript
-            $response = $transformer->createResponse($exam);
-
-            return response()->json($response, 201);
+            return $this->show($exam);
 
         } catch (\Exception $e) {
 
@@ -79,9 +56,9 @@ class ExamV2Controller extends APIController {
      * @param Exam $exam
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($exam)
+	public function show($video)
 	{
-        return response()->api()->withItem($exam, new ExamTransformers());
+        return response()->api()->withItem($video, new ExamTransformers());
 	}
 
     /**

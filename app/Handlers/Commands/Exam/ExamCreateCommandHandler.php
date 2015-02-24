@@ -6,7 +6,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Quiz\Exceptions\ApiException;
 use Quiz\Events\Exam\ExamCreatedEvent;
 use Quiz\Models\Exam;
-use Quiz\Models\Question;
 
 class ExamCreateCommandHandler {
 

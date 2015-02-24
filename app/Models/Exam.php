@@ -67,14 +67,14 @@ class Exam extends Model {
 
 
     // These relationships were kept for further migration
-    public function category()
-    {
-        return $this->belongsTo('Quiz\Models\Category','cid');
-    }
-    public function question()
-    {
-        return $this->hasMany('Quiz\Models\Question','test_id');
-    }
+//    public function category()
+//    {
+//        return $this->belongsTo('Quiz\Models\Category','cid');
+//    }
+//    public function question()
+//    {
+//        return $this->hasMany('Quiz\Models\Question','test_id');
+//    }
 
 
 

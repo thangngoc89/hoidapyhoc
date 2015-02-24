@@ -15,7 +15,6 @@ class AddIndexToTestsTable extends Migration {
 		Schema::table('tests', function($table)
         {
            $table->index('name');
-           $table->index('description');
         });
 	}
 

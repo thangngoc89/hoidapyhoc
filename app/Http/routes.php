@@ -38,23 +38,23 @@ Route::model('video', '\Quiz\Models\Video');
  *  HomePage Group
  *  ------------------------------------------
  */
-get('{home}','HomeController@index')->where('home', '^(|home)$');
-get('thongke','HomeController@stat');
-get('cleanCache','HomeController@cleanCache');
-get('testimonials','HomeController@testimonials');
+Route::get('{home}','HomeController@index')->where('home', '^(|home)$');
+Route::get('thongke','HomeController@stat');
+Route::get('cleanCache','HomeController@cleanCache');
+Route::get('testimonials','HomeController@testimonials');
 
-get('admin','HomeController@admin');
+Route::get('admin','HomeController@admin');
 
 /** ------------------------------------------
  *  Auth and User Group
  *  ------------------------------------------
  */
-get('@{username}','UserController@profile');
-get('users','UserController@index');
+Route::get('@{username}','UserController@profile');
+Route::get('users','UserController@index');
 
-get('auth/external/{provider}','Auth\AuthController@external');
-get('auth/edit','UserController@getFinish');
-post('auth/edit','UserController@postFinish');
+Route::get('auth/external/{provider}','Auth\AuthController@external');
+Route::get('auth/edit','UserController@getFinish');
+Route::post('auth/edit','UserController@postFinish');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
@@ -94,30 +94,35 @@ Route::group(array('prefix' => 'api/v2'), function()
      *  Exams
      *  ------------------------------------------
      */
-    post('exams/{exams}/check', 'API\ExamV2Controller@check');
-    post('exams/{exams}/start', 'API\ExamV2Controller@start');
-    get('exams/{exams}/leaderboard','API\ExamV2Controller@leaderboard');
+    Route::post('exams/{exams}/check', 'API\ExamV2Controller@check');
+    Route::post('exams/{exams}/start', 'API\ExamV2Controller@start');
+    Route::get('exams/{exams}/leaderboard','API\ExamV2Controller@leaderboard');
     Route::resource('exams', 'API\ExamV2Controller');
 
     /** ------------------------------------------
      *  Files
      *  ------------------------------------------
      */
-    post('files/paste', 'API\UploadV2Controller@paste');
+    Route::post('files/paste', 'API\UploadV2Controller@paste');
     Route::resource('files','API\UploadV2Controller');
 
     /** ------------------------------------------
      *  Tags
      *  ------------------------------------------
      */
-    get('tags/search/{query}', 'API\TagV2Controller@search');
+    Route::get('tags/search/{query}', 'API\TagV2Controller@search');
     Route::resource('tags','API\TagV2Controller');
+
+    /** ------------------------------------------
+     *  Search
+     *  ------------------------------------------
+     */
+    Route::get('search','API\SearchV2Controller@index');
 
     /** ------------------------------------------
      *  Others
      *  ------------------------------------------
      */
-    Route::resource('search','API\SearchV2Controller');
     Route::resource('users','API\UserV2Controller');
     Route::resource('roles','API\RoleV2Controller');
     Route::resource('permissions','API\PermissionV2Controller');
@@ -129,24 +134,24 @@ Route::group(array('prefix' => 'api/v2'), function()
  *  Tag Group
  *  ------------------------------------------
  */
-get('tag', 'TagController@index');
-get('tag/{slug}', 'TagController@show');
+Route::get('tag', 'TagController@index');
+Route::get('tag/{slug}', 'TagController@show');
 
 /** ------------------------------------------
  *  Rescources Group
  *  ------------------------------------------
  */
-get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
-get('files/image/{size}/{file}','ResourcesController@image');
-get('files/pdf/{file}','ResourcesController@pdf');
+Route::get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
+Route::get('files/image/{size}/{file}','ResourcesController@image');
+Route::get('files/pdf/{file}','ResourcesController@pdf');
 
 /** ------------------------------------------
  *  Sitemap
  *  ------------------------------------------
  */
-get('{sitemap}.xml','Site\SitemapController@index');
+Route::get('{sitemap}.xml','Site\SitemapController@index');
 
-get('test','TestController@index');
+Route::get('test','TestController@index');
 
 // Redirect old url
 Route::get('quiz/t/{slug}','Site\RedirectController@quiz');

@@ -65,16 +65,15 @@ class SearchV2Controller extends Controller {
      */
     public function getExamsResponse($query)
     {
-        $tests = $this->exam
-            ->search($query)
-            ->orderBy('name','asc')
-            ->take(5)
-            ->get(array('id','slug','name'));
+        $exams = \Cache::tags('exams')->remember('exams_search_'.$query, 60, function () use ($query)
+        {
+            return $this->exam
+                ->search($query)
+                ->take(5)
+                ->get(array('id','slug','name'));
+        });
 
-//        $tests = $this->exam->whereRaw('MATCH(name) AGAINST(\'?\' IN BOOLEAN MODE)',[$query])
-//            ->get(['id','slug','name']);
-
-        $mapper = $tests->map(function($test){
+        $mapper = $exams->map(function($test){
                 return [
                     'name' => $test->name,
                     'url'  => url("quiz/lam-bai/{$test->slug}/{$test->id}"),
@@ -91,11 +90,13 @@ class SearchV2Controller extends Controller {
      */
     public function getTagsResponse($query)
     {
-        $tags = $this->tag
-            ->where('name', 'like', '%' . $query . '%')
-            ->has('exams')
-            ->take(5)
-            ->get(array('slug', 'name'));
+        $tags = \Cache::tags('tags')->remember('tags_search_'.$query, 60, function () use ($query)
+        {
+            return $this->tag
+                ->search($query)
+                ->take(5)
+                ->get(array('slug', 'name'));
+        });
 
         $mapper = $tags->map(function($tag){
             return [
@@ -110,11 +111,13 @@ class SearchV2Controller extends Controller {
 
     public function getVideosResponse($query)
     {
-        $videos = $this->video
+        $videos = \Cache::tags('videos')->remember('videos_search_'.$query, 60, function () use ($query)
+        {
+            return $this->video
             ->search($query)
-            ->orderBy('title','asc')
             ->take(5)
             ->get(array('id','slug','title'));
+        });
 
         $mapper = $videos->map(function($video){
             return [

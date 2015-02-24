@@ -45,6 +45,7 @@ class Exam extends Model {
         static::saved(function($exam)
         {
             \Cache::tags('tests')->flush();
+            \Cache::tags('exams')->flush();
             \Cache::tags('exam'.$exam->id)->flush();
         });
     }

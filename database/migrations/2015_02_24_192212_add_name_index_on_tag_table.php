@@ -14,7 +14,7 @@ class AddNameIndexOnTagTable extends Migration {
 	{
 		Schema::table('tagging_tags', function($table)
         {
-           $table->index('name'); 
+           $table->index('name');
         });
 	}
 

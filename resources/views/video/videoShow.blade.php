@@ -19,7 +19,9 @@
 <meta property="og:video:type" content="video/mp4">
 <meta property="og:image" content="{{ $video->thumb }}">
 <meta name="pubdate" content="{{ $video->updated_at->format('c') }}" />
-
+    @foreach($video->tagged as $tag)
+    <meta property="og:video:tag" content="{!! $tag->name !!}" />
+    @endforeach
 <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
 <style>
 div.videocontent {

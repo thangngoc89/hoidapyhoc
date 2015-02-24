@@ -42,7 +42,11 @@
 @endsection
 
 @section('header')
-<meta name="pubdate" content="{{ $t->updated_at->format('c') }}" />
+    <meta name="pubdate" content="{{ $t->updated_at->format('c') }}" />
+    @foreach($t->tagged as $tag)
+    <meta property="og:article:tag" content="{!! $tag->name !!}" />
+    @endforeach
+
 @endsection
 
 {{--Body Section--}}

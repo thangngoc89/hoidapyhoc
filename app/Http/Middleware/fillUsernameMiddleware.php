@@ -29,7 +29,7 @@ class fillUsernameMiddleware {
         if (getenv('APP_ENV') === 'local')
             $this->auth->loginUsingId(3, true);
 
-        if ($this->auth->check() && !$request->is('/auth/edit'))
+        if ($this->auth->check() && !$request->is('auth/edit'))
         {
             if (is_null($this->auth->user()->username))
 

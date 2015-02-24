@@ -13,7 +13,6 @@ class APIController extends \Quiz\Http\Controllers\Controller {
 
     public function throwError($e)
     {
-
         $error = [
             'message' => $e->getMessage(),
             'file' => $e->getFile(),

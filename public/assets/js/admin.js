@@ -18,6 +18,12 @@
                 response.totalCount = data.meta.pagination.total;
                 data = data.data;
             }
+
+            if (operation == 'get')
+            {
+                data = data.data;
+            }
+
             //console.log(response);
             return data;
         });
@@ -126,7 +132,7 @@
             .fields([new Field('username').isDetailLink(true)])
             .addField(new Field('email'))
             .addField(new Field('created_at', 'date'))
-            .listActions(['show','edit', 'delete']);
+            .listActions(['show', 'edit', 'delete']);
 
         user.creationView()
             .title('Create User')

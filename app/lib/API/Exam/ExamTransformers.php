@@ -2,6 +2,7 @@
 
 use League\Fractal\TransformerAbstract;
 use Quiz\lib\API\File\FileTransformers;
+use Quiz\lib\API\Tag\TagTransformers;
 use Quiz\lib\API\User\UserTransformers;
 use Quiz\Models\Exam;
 use Quiz\Models\History;
@@ -14,7 +15,7 @@ class ExamTransformers extends TransformerAbstract {
      * @var array
      */
     protected $availableIncludes = [
-        'user','file'
+        'user','file','tagged'
     ];
 
     /**
@@ -73,6 +74,16 @@ class ExamTransformers extends TransformerAbstract {
         $user = $exam->user;
 
         return $this->item($user, new UserTransformers());
+    }
+
+    /**
+     * Include Tagged
+     *
+     * @return \League\Fractal\Resource\Collection;
+     */
+    public function includeTagged(Exam $exam)
+    {
+        return $this->collection($exam->tagged, new TagTransformers());
     }
 
 } 

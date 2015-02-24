@@ -42,8 +42,6 @@ class UploadV2Controller extends APIController {
         }
     }
 
-
-
     /**
      * Process a paste in base64 encoded image
      *

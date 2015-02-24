@@ -2,6 +2,9 @@
 
 abstract class AbstractEloquentRepository {
 
+    #TODO: Add more keyword here
+    protected static $whereKeyword = ['=','between','like','>','<'];
+
     public function all()
     {
         return $this->model->all();
@@ -32,6 +35,10 @@ abstract class AbstractEloquentRepository {
 
     public function where($key, $method, $value = null)
     {
+        if ($value == null && in_array($method, static::$whereKeyword))
+        {
+            return $this->model->where($key, '=', $method);
+        }
         return $this->model->where($key, $method, $value);
     }
 

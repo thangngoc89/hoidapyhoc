@@ -32,15 +32,23 @@ class EloquentVideoRepository extends AbstractEloquentRepository implements Vide
             $relatedVideos = $q->where('videos.id', '<>', $video->id)->limit($amount)->get()->unique();
         }]);
 
-        $count = $relatedVideos->count();
+
+        if (is_null($relatedVideos))
+        {
+            $count = 0;
+            $currentIds = [];
+        } else {
+            $count = $relatedVideos->count();
+            $currentIds = $relatedVideos->lists('id');
+        }
         if ($count < $amount)
         {
-            $currentIds = $relatedVideos->lists('id');
             $currentIds []= $video->id;
 
-            $moreRelatedVideos = $this->video->whereRaw('RAND()')->whereNotIn('id',$currentIds)->take($amount-$count)->get();
-            $relatedVideos = $relatedVideos->merge($moreRelatedVideos);
+            $moreRelatedVideos = $this->model->orderByRaw('RAND()')->whereNotIn('id',$currentIds)->take($amount-$count)->get();
+            $relatedVideos = is_null($relatedVideos) ? $moreRelatedVideos : $relatedVideos->merge($moreRelatedVideos);
         }
+
 
         return $relatedVideos;
     }

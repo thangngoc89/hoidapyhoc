@@ -85,6 +85,12 @@ abstract class AbstractEloquentRepository {
         return $this->model->orderBy($column, $direction);
     }
 
+    public function orderByRaw($query)
+    {
+        return $this->model->orderBy($query);
+    }
+
+
     public function latest()
     {
         return $this->model->latest();

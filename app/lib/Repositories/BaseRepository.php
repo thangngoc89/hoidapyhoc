@@ -32,6 +32,8 @@ interface BaseRepository {
 
     public function orderBy($column, $direction = 'ASC');
 
+    public function orderByRaw($query);
+
     public function latest();
 
     public function sortByDesc($callback);

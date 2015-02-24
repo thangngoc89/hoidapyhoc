@@ -141,11 +141,10 @@ return [
         'Intervention\Image\ImageServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
         'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
-        'Sorskod\Larasponse\LarasponseServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
         'GrahamCampbell\HTMLMin\HTMLMinServiceProvider',
         'Spatie\Backup\BackupServiceProvider',
-
+        'EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider',
         /*
          * Dev
          */

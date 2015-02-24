@@ -2,9 +2,10 @@
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Quiz\Http\Requests\API\UserDeleteRequest;
 use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\Models\User;
-use Sorskod\Larasponse\Larasponse;
 
 use Quiz\lib\API\User\UserTransformers;
 
@@ -20,23 +21,17 @@ class UserV2Controller extends APIController {
      * @var Guard
      */
     private $auth;
-    /**
-     * @var Larasponse
-     */
-    private $fractal;
 
     /**
      * @param UserRepository $user
      * @param Request $request
      * @param Guard $auth
-     * @param Larasponse $fractal
      */
-    public function __construct(User $user, Request $request, Guard $auth, Larasponse $fractal)
+    public function __construct(User $user, Request $request, Guard $auth)
     {
         $this->user = $user;
         $this->request = $request;
         $this->auth = $auth;
-        $this->fractal = $fractal;
 
         $this->middleware('admin');
     }
@@ -44,9 +39,10 @@ class UserV2Controller extends APIController {
 	{
         $user = $this->builder($this->request,$this->user,['email','username','name']);
 
-        $result = $this->fractal->paginatedCollection($user, new UserTransformers());
-
-        return $result;
+        return response()->api()->withPaginator(
+            $user,
+            new UserTransformers()
+        );
 	}
 
 	/**
@@ -68,7 +64,7 @@ class UserV2Controller extends APIController {
 	 */
 	public function show($user)
 	{
-        return $this->fractal->item($user, new UserTransformers());
+        return response()->api()->withItem($user, new UserTransformers());
     }
 
 
@@ -90,23 +86,10 @@ class UserV2Controller extends APIController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($user, UserDeleteRequest $request)
 	{
-        $user = $this->user->findOrFail($id);
         $user->delete();
-        return 'Deleted';
+        return response('', 204);
 	}
-
-    private function responseMap($object)
-    {
-        return [
-            'id'            => $object->id,
-            'name'          => $object->name,
-            'email'         => $object->email,
-            'username'      => $object->username,
-            'history'       => $object->history->count(),
-            'avatar'        => $object->getAvatar(),
-        ];
-    }
 
 }

@@ -8,7 +8,6 @@ use Quiz\Http\Requests\API\PermissionDeleteRequest;
 use Quiz\Http\Requests\API\PermissionUpdateRequest;
 
 use Quiz\lib\API\Permission\PermissionTransformers;
-use Sorskod\Larasponse\Larasponse;
 
 class PermissionV2Controller extends APIController {
 
@@ -16,21 +15,14 @@ class PermissionV2Controller extends APIController {
      * @var Permission $permission
      */
     protected $permission;
-    /**
-     * @var Larasponse
-     */
-    private $fractal;
 
     /**
      * @param Permission $permission
      * @param Request $request
-     * @param Larasponse $fractal
      */
-    public function __construct(Permission $permission, Larasponse $fractal)
+    public function __construct(Permission $permission)
     {
         $this->permission = $permission;
-        $this->fractal = $fractal;
-
         $this->middleware('admin');
     }
 
@@ -43,7 +35,7 @@ class PermissionV2Controller extends APIController {
 	{
         $permissions = $this->builder($request,$this->permission);
 
-        $result = $this->fractal->paginatedCollection($permissions, new PermissionTransformers());
+        $result = response()->api()->withCollection($permissions, new PermissionTransformers());
 
         return $result;
 	}
@@ -74,7 +66,7 @@ class PermissionV2Controller extends APIController {
 	 */
 	public function show($perm)
 	{
-        return $this->fractal->item($perm, new PermissionTransformers());
+        return response()->api()->withItem($perm, new PermissionTransformers());
 	}
 
 	/**

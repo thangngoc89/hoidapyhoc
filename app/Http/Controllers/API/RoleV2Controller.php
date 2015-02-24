@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Quiz\Http\Requests\API\RoleCreateRequest;
 use Quiz\Http\Requests\API\RoleUpdateRequest;
-use Sorskod\Larasponse\Larasponse;
 use Quiz\Models\Enstrust\Role;
 use Quiz\Models\Enstrust\Permission;
 use Quiz\lib\API\Role\RoleTransformers;
@@ -12,19 +11,12 @@ class RoleV2Controller extends APIController {
 
     protected $role;
     /**
-     * @var Larasponse
-     */
-    private $fractal;
-    /**
      * @param Role $role
      * @param Request $request
-     * @param Larasponse $fractal
      */
-    public function __construct(Role $role, Larasponse $fractal)
+    public function __construct(Role $role)
     {
         $this->role = $role;
-        $this->fractal = $fractal;
-
         $this->middleware('admin');
     }
 
@@ -32,9 +24,9 @@ class RoleV2Controller extends APIController {
     {
         $roles = $this->builder($request,$this->role);
 
-        $result = $this->fractal->paginatedCollection($roles, new RoleTransformers());
+        $result = response()->api()->withCollection($roles, new RoleTransformers());
 
-        return $this->makeResponse($result);
+        return $result;
     }
 
     /**
@@ -45,7 +37,7 @@ class RoleV2Controller extends APIController {
      */
     public function show($role)
     {
-        return $this->fractal->item($role, new RoleTransformers());
+        return response()->api()->withItem($role, new RoleTransformers());
     }
 
     /**

@@ -30,23 +30,16 @@ class ExamV2Controller extends APIController {
      * @var Request
      */
     private $request;
-    /**
-     * @var Larasponse
-     */
-    private $fractal;
-
 
     /**
      * @param Exam $test
      * @param History $history
      * @param Request $request
-     * @param Larasponse $fractal
      */
-    public function __construct(History $history, Request $request, Larasponse $fractal)
+    public function __construct(History $history, Request $request)
     {
         $this->history = $history;
         $this->request = $request;
-        $this->fractal = $fractal;
         $this->middleware('auth', ['except' => 'index']);
     }
 
@@ -55,7 +48,7 @@ class ExamV2Controller extends APIController {
 	{
         $exam = $this->builder($this->request,$exam,['name']);
 
-        $result = $this->fractal->paginatedCollection($exam, new ExamTransformers());
+        $result = response()->api()->withPaginator($exam, new ExamTransformers());
 
         return $result;
     }
@@ -90,7 +83,7 @@ class ExamV2Controller extends APIController {
 	 */
 	public function show($exam)
 	{
-        return $this->fractal->item($exam, new ExamTransformers());
+        return response()->api()->withItem($exam, new ExamTransformers());
 	}
 
     /**

@@ -1,5 +1,6 @@
 <?php namespace Quiz\Http\Controllers\Web;
 
+use Quiz\Commands\GitDeploy;
 use Quiz\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AdminController extends Controller {
 
     public function deploy(Request $request)
     {
-        return $this->dispatch($request);
+        return $this->dispatch(new GitDeploy($request));
     }
 
 

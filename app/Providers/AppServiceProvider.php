@@ -1,6 +1,7 @@
 <?php namespace Quiz\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Log;
 
 class AppServiceProvider extends ServiceProvider {
 

@@ -3,8 +3,6 @@
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 
-use Quiz\Models\Upload;
-
 class EventServiceProvider extends ServiceProvider {
 
 	/**
@@ -44,5 +42,4 @@ class EventServiceProvider extends ServiceProvider {
             \Quiz\Handlers\Events\RotateImage::class,
         ]
 	];
-
 }

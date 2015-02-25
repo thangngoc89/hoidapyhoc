@@ -5,6 +5,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Request;
+use Log;
 
 class Handler extends ExceptionHandler {
 
@@ -54,6 +55,11 @@ class Handler extends ExceptionHandler {
 
             if ($e instanceof ApiException)
                 \Log::error($e);
+
+//            if (env('APP_ENV') === 'production')
+//            {
+
+//            }
 
             return $this->renderExceptionWithWhoops($e);
         }

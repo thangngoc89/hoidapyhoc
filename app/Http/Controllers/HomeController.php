@@ -93,6 +93,10 @@ class HomeController extends Controller {
 
     public function cleanCache(GetQuiz $get)
     {
+        \Log::error('some thing');
+
+        die();
+
         $link = \Input::get('link');
 
         return $get->get($link)->parse();

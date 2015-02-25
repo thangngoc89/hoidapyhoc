@@ -23,12 +23,12 @@ class AppServiceProvider extends ServiceProvider {
             }
 
             $slackHandler = new \Monolog\Handler\SlackHandler(
-                'https://hooks.slack.com/services/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',
-                '#random',
-                'khoanguyenme'
+                'xoxp-3624260307-3624260313-3842138482-ce4515',
+                'random'
             );
             $monolog->pushHandler($slackHandler);
-            $slackHandler->setFormatter(new \Monolog\Formatter\NormalizerFormatter());
+            $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
+
         });
 
         $this->app->validator->resolver(function($translator, $data, $rules, $messages)

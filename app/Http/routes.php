@@ -48,7 +48,11 @@ Route::get('testimonials','HomeController@testimonials');
  *  Admin Group
  *  ------------------------------------------
  */
-Route::get('admin','Web\AdminController@index');
+Route::group(array('prefix' => 'admin'), function()
+{
+    Route::get('/','Web\AdminController@index');
+    Route::post('deploy','Web\AdminController@deploy');
+});
 
 /** ------------------------------------------
  *  Auth and User Group

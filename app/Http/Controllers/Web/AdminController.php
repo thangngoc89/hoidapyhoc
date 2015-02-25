@@ -10,9 +10,9 @@ class AdminController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin',['except' => ['deploy']] );
     }
-	/**
+	/**e
 	 * Display admin page
 	 *
 	 * @return Response

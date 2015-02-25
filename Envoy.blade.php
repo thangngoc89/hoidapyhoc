@@ -8,7 +8,6 @@
 @task('git')
 	cd /home/nginx/hoidapyhoc
 	echo "Pulling file and install repo"
-	git stash
 	git pull origin master
 	composer install
 @endtask

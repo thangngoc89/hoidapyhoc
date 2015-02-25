@@ -64,7 +64,8 @@ class GitDeployHandler {
 
     private function runDeploy()
     {
-        echo 'starting deployment';
+        system('/home/nginx/hoidapyhoc envoy run deploy');
+        echo "Deployment signal received";
     }
 
 }

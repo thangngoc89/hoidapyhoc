@@ -12,7 +12,7 @@ class AdminController extends Controller {
     {
         $this->middleware('admin',['except' => ['deploy']] );
     }
-	/**e
+	/**
 	 * Display admin page
 	 *
 	 * @return Response

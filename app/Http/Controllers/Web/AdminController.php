@@ -27,12 +27,4 @@ class AdminController extends Controller {
         return $this->dispatch(new GitDeploy($request));
     }
 
-    public function envoy()
-    {
-        system('/home/nginx/hoidapyhoc envoy run deploy');
-        echo "Deployment signal received";
-    }
-
-
-
 }

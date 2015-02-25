@@ -52,6 +52,7 @@ Route::group(array('prefix' => 'admin'), function()
 {
     Route::get('/','Web\AdminController@index');
     Route::post('deploy','Web\AdminController@deploy');
+    Route::get('envoy','Web\AdminController@envoy');
 });
 
 /** ------------------------------------------

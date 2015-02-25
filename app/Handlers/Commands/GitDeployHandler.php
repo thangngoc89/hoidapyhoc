@@ -28,6 +28,7 @@ class GitDeployHandler {
 		$request = $command->request;
 
         $this->checkHeader($request);
+
         if ($this->checkSignature($request))
             $this->runDeploy();
 	}
@@ -37,11 +38,8 @@ class GitDeployHandler {
         $githubDelivery = $request->header('X-GitHub-Delivery');
         $event = $request->header('X-GitHub-Event');
 
-        if ( empty($githubDelivery) )
-            abort(400);
-
-        if ( $event != 'ping' )
-            abort(400);
+        if ( empty($githubDelivery) || $event != 'ping' )
+            return $this->badRequestResponse('Your request are not from Github');
     }
 
     private function checkSignature(Request $request)
@@ -56,11 +54,19 @@ class GitDeployHandler {
         $payloadHash = hash_hmac($algo, $payload, $secretKey);
 
         if ($hash !== $payloadHash) {
-            die('Secret key was not matched.');
+            return $this->badRequestResponse('Secret key are not matched');
         }
 
         return true;
     }
+
+    private function badRequestResponse($message)
+    {
+        \Log::info($message);
+
+        return response($message, 400);
+    }
+
 
     private function runDeploy()
     {

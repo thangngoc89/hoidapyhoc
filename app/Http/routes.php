@@ -44,7 +44,11 @@ Route::get('thongke','HomeController@stat');
 Route::get('cleanCache','HomeController@cleanCache');
 Route::get('testimonials','HomeController@testimonials');
 
-Route::get('admin','HomeController@admin');
+/** ------------------------------------------
+ *  Admin Group
+ *  ------------------------------------------
+ */
+Route::get('admin','Web\AdminController@index');
 
 /** ------------------------------------------
  *  Auth and User Group

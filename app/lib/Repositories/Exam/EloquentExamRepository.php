@@ -29,8 +29,8 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
         $tests = \Cache::tags('history','user'.$user->id)
                 ->rememberForever($key,function() use ($user) {
 
-                    return $this->model->select('tests.id')
-                        ->join('history', 'history.test_id', '=', 'tests.id')
+                    return $this->model->select('exams.id')
+                        ->join('history', 'history.test_id', '=', 'exams.id')
                         ->where('history.user_id', $user->id)
                         ->groupBy('id')
                         ->get()

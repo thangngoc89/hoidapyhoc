@@ -46,7 +46,7 @@ class ExamUpdateRequest extends Request {
         $exam = $this->getExam();
 
         $rules = [
-            'name' => 'required|min:6|unique:tests,id,'.$exam->id,
+            'name' => 'required|min:6|unique:exams,id,'.$exam->id,
             'thoigian' => 'required|integer|between:5,200',
             'begin' => 'required|integer|min:1',
             'tags'   => 'required',

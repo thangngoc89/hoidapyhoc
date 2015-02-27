@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b4002974b2692943b50f06548a7e0b88",
+    "hash": "16409de470b30eedc58ac70d53611af9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2557,6 +2557,56 @@
             "time": "2014-12-30 13:32:42"
         },
         {
+            "name": "sofa/revisionable",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jarektkaczyk/revisionable.git",
+                "reference": "b71c2c90fc96ca1fdab6bf9ceaebe617b413a2bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jarektkaczyk/revisionable/zipball/b71c2c90fc96ca1fdab6bf9ceaebe617b413a2bc",
+                "reference": "b71c2c90fc96ca1fdab6bf9ceaebe617b413a2bc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "cartalyst/sentry": "~2.0",
+                "illuminate/auth": "~4.2.9",
+                "illuminate/database": "~4.2.9",
+                "mockery/mockery": "*",
+                "phpspec/phpspec": "~2.0@dev",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/migrations"
+                ],
+                "psr-4": {
+                    "Sofa\\Revisionable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jarek Tkaczyk",
+                    "email": "jarek@softonsofa.com",
+                    "homepage": "http://softonsofa.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Nice and easy way to handle revisions of your db.",
+            "time": "2015-02-27 11:48:59"
+        },
+        {
             "name": "spatie/laravel-backup",
             "version": "dev-master",
             "source": {
@@ -4808,6 +4858,7 @@
         "spatie/laravel-backup": 20,
         "nicolaslopezj/searchable": 20,
         "ellipsesynergie/api-response": 20,
+        "sofa/revisionable": 20,
         "barryvdh/laravel-debugbar": 20,
         "barryvdh/laravel-ide-helper": 20,
         "filp/whoops": 20

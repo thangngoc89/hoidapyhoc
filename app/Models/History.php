@@ -6,7 +6,7 @@ use Quiz\lib\Helpers\LocalizationDateTrait;
 class History extends Model {
 
     protected $table = 'history';
-    protected $fillable = array('test_id','user_id');
+    protected $fillable = ['test_id','user_id'];
 
     use LocalizationDateTrait;
 

@@ -18,11 +18,4 @@ class Taggable extends Eloquent {
 	protected $table = 'taggables';
 	public $timestamps = false;
 
-    public static function boot() {
-        Taggable::saving(function($taggable)
-        {
-//           return false;
-        });
-    }
-
 }

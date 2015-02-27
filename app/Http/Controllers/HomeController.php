@@ -91,15 +91,24 @@ class HomeController extends Controller {
         return view('site.stat', compact('stat'));
     }
 
-    public function cleanCache(GetQuiz $get)
+    public function parseQuiz(GetQuiz $get)
     {
-        \Log::error('some thing');
-
-        die();
-
         $link = \Input::get('link');
 
         return $get->get($link)->parse();
+    }
+
+    public function cleanCache()
+    {
+        $revisions = \DB::table('revisions')
+            ->orderBy('revisions.created_at', 'desc')
+            ->get();
+
+        $revisions = array_map(function ($revision) {
+            return \App::make('Sofa\Revisionable\Presenter', [(array) $revision]);
+        }, $revisions);
+
+        return view('site.revision', compact('revisions'));
 
     }
 

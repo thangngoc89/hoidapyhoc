@@ -59,7 +59,7 @@ class TagController extends Controller {
 
         $exams = \Cache::tags('tags','index')->remember($key, 10, function() use ($tag, $exams)
         {
-            return $exams->withAllTags($tag->name)->with('tagged','user')->paginate(20);
+            return $exams->withAllTags($tag->name)->with('tagged','user')->latest()->paginate(20);
         });
 
         $exams->appends($this->request->except('page'));

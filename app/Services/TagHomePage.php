@@ -88,9 +88,14 @@ class TagHomePage {
 
     public function popularTab()
     {
-        $this->tags = $this->tag->has('exams')->with('exams')->take($this->perPage)->get()->sortByDesc(function($query) {
-                    return $query->exams->count();
-                });
+        $this->tags = $this->tag->has('exams')
+                                ->with('exams')
+                                ->take($this->perPage)
+                                ->get()
+                                ->sortByDesc(function($query) {
+                                    return $query->exams->count();
+                                });
+
         $this->name = 'Tag nổi bật';
     }
 

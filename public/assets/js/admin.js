@@ -37,31 +37,33 @@
         });
     });
 
-    app.config(function (NgAdminConfigurationProvider, Application, Entity, Field, Reference, ReferencedList, ReferenceMany) {
-        function truncate(value) {
+    app.config(function (NgAdminConfigurationProvider) {
+
+        function truncate(value, limit) {
+            if (!limit)
+                limit = 40;
+
             if (!value) {
                 return '';
             }
-            return value.length > 40 ? value.substr(0, 40) + '...' : value;
+            return value.length > limit ? value.substr(0, limit) + '...' : value;
         }
+        var nga = NgAdminConfigurationProvider;
 
-
-        var app = new Application('Hỏi Đáp Y Học')
-            // remember to change the following to your api link
+        var app = nga.application('Hỏi Đáp Y Học')
             .baseApiUrl(location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/api/v2/');
 
-        var user = new Entity('users');
-        var role = new Entity('roles');
-        var permission = new Entity('permissions');
-        var tag = new Entity('tags');
-        var testimonial = new Entity('testimonials');
+        var permission = nga.entity('permissions');
+        var role = nga.entity('roles');
+        var user = nga.entity('users');
+        var video = nga.entity('videos');
+        var tag = nga.entity('tags');
 
-        app
-            .addEntity(user)
-            .addEntity(role)
-            .addEntity(permission)
-            .addEntity(testimonial)
-            .addEntity(tag);
+        app.addEntity(permission);
+        app.addEntity(role);
+        app.addEntity(user);
+        app.addEntity(video);
+        app.addEntity(tag);
 
         /*
          * Permission section
@@ -70,21 +72,28 @@
         permission.dashboardView().disable();
         permission.listView()
             .title('All permissions')
-            .addField(new Field('id'))
-            .addField(new Field('name')
-            )
-            .addField(new Field('display_name')
-                .label('Display Name')
-            )
+            .description('Lists of all available permissions')
+            .fields([
+                nga.field('id'),
+                nga.field('name'),
+                nga.field('display_name'),
+            ])
             .listActions(['edit', 'delete']);
 
         permission.creationView()
-            .addField(new Field('name').validation({required: true, minlength: 3}) )
-            .addField(new Field('display_name').validation({required: true, minlength: 3}) );
+            .fields([
+                nga.field('name')
+                    .attributes({ placeholder: 'Fill in the permission name' })
+                    .validation({ required: true, minlength: 3, maxlength: 100 }),
+                nga.field('display_name')
+                    .attributes({ placeholder: 'Fill in the permission name' })
+                    .validation({ required: true, minlength: 3, maxlength: 100 }),
+            ]);
 
         permission.editionView()
-            .addField(new Field('name').validation({required: true, minlength: 3}) )
-            .addField(new Field('display_name').validation({required: true, minlength: 3}) );
+            .fields([
+                permission.creationView().fields()
+            ]);
 
         /*
          * Role section
@@ -94,151 +103,192 @@
 
         role.listView()
             .title('All roles')
-            .addField(new Field('name').isDetailLink(true))
-            .addField(new Field('count').label('# of Users'))
+            .description('Lists of all available roles')
+            .fields([
+                nga.field('name')
+                    .isDetailLink(true),
+                nga.field('count').label('# of Users')
+            ])
             .listActions(['edit', 'delete']);
 
         role.creationView()
-            .addField(new Field('name').validation({required: true, minlength: 3}) )
-            .addField(new ReferenceMany('permissions')
+            .fields([
+                nga.field('name')
+                    .validation({required: true, minlength: 3}),
+                nga.field('permissions', 'reference_many')
                 .targetEntity(permission)
-                .targetField(new Field('display_name'))
-        );
+                .targetField(nga.field('display_name')),
+            ]);
+
         role.editionView()
-            .addField(new Field('name').validation({required: true, minlength: 3}) )
-            .addField(new ReferenceMany('permissions')
-                .targetEntity(permission)
-                .targetField(new Field('display_name'))
-        );
+            .fields([
+                role.creationView().fields(),
+            ]);
 
         /*
-         * User section
-         *
-         */
+        * User section
+        *
+        */
 
 
         user.dashboardView()
-            .title('Newest User')
+            .title('New Users')
             .sortField('id')
             .sortDir('DESC')
-            .order(3)
+            .order(1)
             .limit(10)
-            .addField(new Field('id').label('ID'))
-            .addField(new Field('username'));
+            .fields([
+                nga.field('id'),
+                nga.field('username').isDetailLink(true)
+            ]);
 
         user.listView()
             .title('All users')
-            .addField(new Field('id'))
-            .fields([new Field('username').isDetailLink(true)])
-            .addField(new Field('email'))
-            .addField(new Field('created_at', 'date'))
-            .listActions(['show', 'edit', 'delete']);
-
-        user.creationView()
-            .title('Create User')
-            .addField(new Field('username').validation({required: true, minlength: 3}) )
-            .addField(new Field('email').type('email').validation({required: true}) )
-            .addField(new Field('password').type('password').validation({required: true, minlength: 6}))
-            .addField(new Field('password_confirmation').type('password').validation({required: true, minlength: 6}))
-            .addField(new Field('confirmed').type('boolean'))
-            .addField(new ReferenceMany('roles')
-                .targetEntity(role)
-                .targetField(new Field('name'))
-        );
+            .fields([
+                user.dashboardView().fields(),
+                nga.field('email','email'),
+                nga.field('created_at', 'date').editable(false)
+            ])
+            .listActions(['show', 'edit']);
 
         user.editionView()
             .title('Edit user "{{ entry.values.username }}"')
-            .actions(['list', 'delete'])
-            .addField(new Field('id').editable(false))
-            .addField(new Field('username'))
-            .addField(new Field('email'))
-            .addField(new Field('password')
-                .type('password')
-                .defaultValue(null)
-                .validation({minlength: 6}))
-            .addField(new Field('password_confirmation')
-                .type('password')
-                .defaultValue(null)
-                .validation({minlength: 6}))
-            .addField(new Field('confirmed').type('boolean'))
-            .addField(new ReferenceMany('roles')
-                .targetEntity(role)
-                .targetField(new Field('name'))
-        );
+            .actions(['list'])
+            .fields([
+                user.listView().fields(),
+                nga.field('roles','reference_many')
+                    .targetEntity(role)
+                    .targetField(nga.field('name'))
+            ]);
 
+        user.showView()
+            .title('{{ entry.values.username }}\'s infomation')
+            .fields([
+               user.editionView().fields()
+            ]);
 
         /*
-         * Tag section
+         * Videos section
          *
          */
 
-
-        tag.menuView()
-            .order(3)
-            .icon('<span class="glyphicon glyphicon-tags"></span>');
-
-        tag.dashboardView()
-            .title('Recent tags')
-            .order(3)
+        video.dashboardView()
+            .title('New Users')
+            .sortField('id')
+            .sortDir('DESC')
+            .order(1)
             .limit(10)
             .fields([
-                new Field('id'),
-                new Field('name'),
-                new Field('suggest').label('Is suggest ?').type('boolean')
+                nga.field('id'),
+                nga.field('title').isDetailLink(true)
             ]);
 
-        tag.listView()
-            .infinitePagination(false) // by default, the list view uses infinite pagination. Set to false to use regulat pagination
+        video.listView()
+            .title('All videos')
             .fields([
-                new Field('id').label('ID'),
-                new Field('name'),
-                new Field('suggest').type('boolean').cssClasses(function(entry) { // add custom CSS classes to inputs and columns
-                    if (entry.values.suggest) {
-                        return 'bg-success text-center';
-                    }
-                    return 'bg-warning text-center';
-                }),
+                video.dashboardView().fields(),
+                nga.field('tags', 'reference_many')
+                    .targetEntity(tag)
+                    .targetField(nga.field('name'))
+                    .singleApiCall(function (tagIds) {
+                        return { 'id': tagIds };
+                    }),
+                nga.field('created_at', 'date').editable(false)
             ])
-            .listActions(['show','delete']);
+            .listActions(['show', 'edit']);
 
-        tag.showView()
+        video.editionView()
+            .title('Edit video "{{ entry.values.username }}"')
             .fields([
-                new Field('name'),
-                new Field('suggest').type('boolean')
-            ]);
-        tag.deletionView()
-            .title('Delete Tag {{ entry.values.name }}');
-
-        /*
-         * Testimonial section
-         *
-         */
-
-
-        testimonial.menuView()
-            .order(3)
-            .icon('<span class="fa fa-thumbs-up"></span>');
-
-        testimonial.dashboardView().disable();
-
-        testimonial.listView()
-            .title('All Testimonials')
-            .fields([
-                new Field('name'),
-                new Field('isHome').type('boolean'),
-                new Field('content').type('wysiwyg').map(truncate),
+                nga.field('title'),
+                nga.field('user_id','reference')
+                    .label('User')
+                    .targetEntity(user)
+                    .targetField(nga.field('username')),
+                nga.field('source'),
+                nga.field('thumb'),
+                nga.field('duration')
             ])
-            .listActions(['show','edit']);
+            .actions(['list']);
 
-        testimonial.showView()
-            .title('Testimonials of {{ entry.values.name }}')
+        video.showView()
             .fields([
-                testimonial.listView().fields(),
-                new Field('link'),
-                new Field('content').type('wysiwyg'),
-                new Field('avatar')
+                video.editionView().fields(),
+                nga.field('views')
             ]);
+        //
+        ///*
+        // * Tag section
+        // *
+        // */
+        //
+        //
+        //tag.menuView()
+        //    .order(3)
+        //    .icon('<span class="glyphicon glyphicon-tags"></span>');
+        //
+        //tag.dashboardView()
+        //    .title('Recent tags')
+        //    .order(3)
+        //    .limit(10)
+        //    .fields([
+        //        new Field('id'),
+        //        new Field('name'),
+        //        new Field('suggest').label('Is suggest ?').type('boolean')
+        //    ]);
+        //
+        //tag.listView()
+        //    .infinitePagination(false) // by default, the list view uses infinite pagination. Set to false to use regulat pagination
+        //    .fields([
+        //        new Field('id').label('ID'),
+        //        new Field('name'),
+        //        new Field('suggest').type('boolean').cssClasses(function(entry) { // add custom CSS classes to inputs and columns
+        //            if (entry.values.suggest) {
+        //                return 'bg-success text-center';
+        //            }
+        //            return 'bg-warning text-center';
+        //        }),
+        //    ])
+        //    .listActions(['show','delete']);
+        //
+        //tag.showView()
+        //    .fields([
+        //        new Field('name'),
+        //        new Field('suggest').type('boolean')
+        //    ]);
+        //tag.deletionView()
+        //    .title('Delete Tag {{ entry.values.name }}');
+        //
+        ///*
+        // * Testimonial section
+        // *
+        // */
+        //
+        //
+        //testimonial.menuView()
+        //    .order(3)
+        //    .icon('<span class="fa fa-thumbs-up"></span>');
+        //
+        //testimonial.dashboardView().disable();
+        //
+        //testimonial.listView()
+        //    .title('All Testimonials')
+        //    .fields([
+        //        new Field('name'),
+        //        new Field('isHome').type('boolean'),
+        //        new Field('content').type('wysiwyg').map(truncate),
+        //    ])
+        //    .listActions(['show','edit']);
+        //
+        //testimonial.showView()
+        //    .title('Testimonials of {{ entry.values.name }}')
+        //    .fields([
+        //        testimonial.listView().fields(),
+        //        new Field('link'),
+        //        new Field('content').type('wysiwyg'),
+        //        new Field('avatar')
+        //    ]);
 
-        NgAdminConfigurationProvider.configure(app);
+        nga.configure(app);
     });
 }());

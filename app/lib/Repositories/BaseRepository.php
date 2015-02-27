@@ -16,6 +16,8 @@ interface BaseRepository {
 
     public function where($key, $method, $value = null);
 
+    public function whereIn($key, $array);
+
     public function orWhere($key, $value);
 
     public function search($query, $divided = 4);

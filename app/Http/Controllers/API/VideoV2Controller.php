@@ -22,11 +22,11 @@ class VideoV2Controller extends APIController {
     }
 
 
-	public function index(Video $exam)
+	public function index(Video $video)
 	{
-        $exam = $this->builder($this->request,$exam,['title']);
+        $video = $this->builder($this->request, $video,['title']);
 
-        $result = response()->api()->withPaginator($exam, new VideoTransformers());
+        $result = response()->api()->withPaginator($video, new VideoTransformers());
 
         return $result;
     }
@@ -58,7 +58,7 @@ class VideoV2Controller extends APIController {
 	 */
 	public function show($video)
 	{
-        return response()->api()->withItem($video, new ExamTransformers());
+        return response()->api()->withItem($video, new VideoTransformers());
 	}
 
     /**

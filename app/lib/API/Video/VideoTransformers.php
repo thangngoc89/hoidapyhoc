@@ -1,11 +1,11 @@
-<?php namespace Quiz\lib\API\Exam;
+<?php namespace Quiz\lib\API\Video;
 
 use League\Fractal\TransformerAbstract;
 use Quiz\lib\API\Tag\TagTransformers;
 use Quiz\lib\API\User\UserTransformers;
 use Quiz\Models\Video;
 
-class ExamTransformers extends TransformerAbstract {
+class VideoTransformers extends TransformerAbstract {
 
     /**
      * List of resources possible to include
@@ -27,7 +27,7 @@ class ExamTransformers extends TransformerAbstract {
     {
         return [
             'id'            => (int) $video->id,
-            'video'         => (string) $video->name,
+            'title'         => (string) $video->title,
             'user_id'       => (int) $video->user_id,
             'slug'          => (string) $video->slug,
             'description'   => (string) $video->description,

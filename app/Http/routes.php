@@ -122,7 +122,7 @@ Route::group(array('prefix' => 'api/v2'), function()
     Route::resource('roles','API\RoleV2Controller');
     Route::resource('permissions','API\PermissionV2Controller');
     Route::resource('testimonials','API\TestimonialV2Controller');
-    Route::resource('videos','API\TestimonialV2Controller');
+    Route::resource('videos','API\VideoV2Controller');
 
 });
 

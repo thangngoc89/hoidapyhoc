@@ -42,6 +42,11 @@ abstract class AbstractEloquentRepository {
         return $this->model->where($key, $method, $value);
     }
 
+    public function whereIn($key, $array)
+    {
+        return $this->model->whereIn($key, $array);
+    }
+
     public function whereRaw($query, $variables = null)
     {
         return $this->model->whereRaw($query, $variables);

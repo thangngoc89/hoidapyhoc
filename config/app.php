@@ -145,6 +145,7 @@ return [
         'GrahamCampbell\HTMLMin\HTMLMinServiceProvider',
         'Spatie\Backup\BackupServiceProvider',
         'EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider',
+        'Sofa\Revisionable\Laravel\FiveServiceProvider',
         /*
          * Dev
          */

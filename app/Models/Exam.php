@@ -6,6 +6,7 @@ use Quiz\lib\Helpers\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Quiz\lib\Helpers\LocalizationDateTrait;
+use Sofa\Revisionable\Laravel\RevisionableTrait;
 
 class Exam extends Model {
 
@@ -13,6 +14,7 @@ class Exam extends Model {
     use TaggableTrait;
     use LocalizationDateTrait;
     use SearchableTrait;
+    use RevisionableTrait;
 
     protected $table = 'tests';
 
@@ -24,6 +26,24 @@ class Exam extends Model {
             'description' => 8,
             'content' => 5,
         ]
+    ];
+
+    protected $revisionable = [
+        'name',
+        'description',
+        'content',
+        'begin',
+        'thoigian',
+        'is_file',
+        'file_id',
+        'questions'
+    ];
+
+    protected $nonRevisionable = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'views'
     ];
 
     public static function boot()

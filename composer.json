@@ -19,7 +19,8 @@
 		"spatie/laravel-backup": "dev-master",
 		"nicolaslopezj/searchable": "dev-master",
 		"ellipsesynergie/api-response": "0.9.*@dev",
-		"rap2hpoutre/laravel-log-viewer": "0.1.*"
+		"rap2hpoutre/laravel-log-viewer": "0.1.*",
+		"sofa/revisionable": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

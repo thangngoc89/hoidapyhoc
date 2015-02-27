@@ -21,7 +21,16 @@ class RouteServiceProvider extends ServiceProvider {
     public function boot(Router $router)
     {
         parent::boot($router);
-        //
+
+        $router->model('exams', \Quiz\Models\Exam::class);
+        $router->model('quiz', \Quiz\Models\Exam::class);
+        $router->model('users', \Quiz\Models\User::class);
+        $router->model('roles', \Quiz\Models\Enstrust\Role::class);
+        $router->model('permissions', \Quiz\Models\Enstrust\Permission::class);
+        $router->model('tags', \Quiz\lib\Tagging\Tag::class);
+        $router->model('testimonials', \Quiz\Models\Testimonial::class);
+        $router->model('video', \Quiz\Models\Video::class);
+        $router->model('files', \Quiz\Models\Upload::class);
     }
     /**
      * Define the routes for the application.

@@ -3,7 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Quiz\lib\Repositories\Video\VideoRepository as Video;
-use Quiz\lib\API\Exam\ExamTransformers;
+use Quiz\lib\API\Video\VideoTransformers;
 
 class VideoV2Controller extends APIController {
 
@@ -22,11 +22,11 @@ class VideoV2Controller extends APIController {
     }
 
 
-	public function index(Exam $exam)
+	public function index(Video $exam)
 	{
-        $exam = $this->builder($this->request,$exam,['name']);
+        $exam = $this->builder($this->request,$exam,['title']);
 
-        $result = response()->api()->withPaginator($exam, new ExamTransformers());
+        $result = response()->api()->withPaginator($exam, new VideoTransformers());
 
         return $result;
     }

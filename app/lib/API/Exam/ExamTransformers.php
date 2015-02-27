@@ -57,11 +57,17 @@ class ExamTransformers extends TransformerAbstract {
         ];
     }
 
+    /**
+     * Include File
+     *
+     * @return \League\Fractal\Resource\Item;
+     */
     public function includeFile(Exam $exam)
     {
         if ($exam->is_file)
             return $this->item($exam->file, new FileTransformers());
-        return '';
+
+        return;
     }
 
     /**

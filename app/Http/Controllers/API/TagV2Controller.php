@@ -74,10 +74,10 @@ class TagV2Controller extends APIController {
      */
     public function search($query)
     {
+        #TODO: Add serialize here (for search accurate)
         $tags = $this->tag->searchByName($query)->paginate(20);
 
         return response()->api()->withPaginator($tags, new TagTransformers());
-
     }
 	/**
 	 * Remove the specified resource from storage.

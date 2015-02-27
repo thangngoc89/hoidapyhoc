@@ -17,7 +17,6 @@
     <div class="container">
         <div class="row" id="signup-form">
 
-
         {!! Form::open(['class' => 'col-md-8 col-md-offset-2']) !!}
 
         <div class="panel panel-default registration">
@@ -52,7 +51,11 @@
                     <div class="form-group row">
                         {!! Form::label('email','Email',['class' => 'col-md-4 control-label'] ) !!}
                         <div class="col-md-8">
-                        {!! Form::text('email',$user->email, ['class' => 'form-control input-md', 'disabled' => 'disabled']) !!}
+                        @if (empty($user->email))
+                            {!! Form::email('email',$user->email, ['class' => 'form-control input-md']) !!}
+                        @else
+                            {!! Form::email('email',$user->email, ['class' => 'form-control input-md', 'disabled' => 'disabled']) !!}
+                        @endif
                         </div>
                     </div>
                 </fieldset>

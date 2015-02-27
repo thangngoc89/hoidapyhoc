@@ -45,7 +45,8 @@ class UserController extends Controller {
     public function getFinish()
     {
         $user = $this->auth->user();
-        if (!is_null($user->username))
+
+        if (!is_null($user->username) && $user->email)
             return redirect('/@'.$user->username)->with('info','Bạn đã hoàn tất quá trình đăng kí');
 
         return view('user.authEdit',compact('user'));

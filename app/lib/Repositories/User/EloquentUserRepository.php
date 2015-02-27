@@ -27,10 +27,13 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
     public function findByEmailOrCreate($userData,$provider)
     {
         $user = $this->model->where('email',$userData->email)->first();
+
         if (is_null($user))
         {
+            $email = (is_null($userData->email)) ? $userData->email : '';
+
             $user = new User ([
-                'email'    => $userData->email,
+                'email'    => $email,
                 'avatar'   => $userData->avatar,
                 'name'     => $userData->user['name'],
             ]);

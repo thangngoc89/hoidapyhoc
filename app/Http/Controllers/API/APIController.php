@@ -56,9 +56,11 @@ class APIController extends \Quiz\Http\Controllers\Controller {
 
     private function parseKeywords()
     {
-        $keywords = ['page','q','_sortField','_sortDir','_perPage'];
+        $keywords = ['_filters', 'page', 'q', '_sortField','_sortDir','_perPage'];
         foreach ($keywords as $keyword)
+        {
             $this->{$keyword}();
+        }
     }
 
     /**
@@ -103,5 +105,16 @@ class APIController extends \Quiz\Http\Controllers\Controller {
     private function _perPage()
     {
         $this->query = $this->query->paginate($this->input->_perPage);
+    }
+
+    private function _filters()
+    {
+        $filters = json_decode($this->input->_filters);
+
+        if (is_null($filters))
+            return;
+
+        if ($filters->id)
+            $this->query = $this->query->whereIn('id',$filters->id);
     }
 }

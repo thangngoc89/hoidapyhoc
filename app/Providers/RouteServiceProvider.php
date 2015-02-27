@@ -31,6 +31,11 @@ class RouteServiceProvider extends ServiceProvider {
      */
     public function map(Router $router)
     {
+        $router->get('admin/logs', [
+            'uses' => 'Rap2hpoutre\LaravelLogViewer\LogViewerController@index',
+            'middleware' => ['admin']
+        ]);
+
         $router->group(['namespace' => $this->namespace], function($router)
         {
             require app_path('Http/routes.php');

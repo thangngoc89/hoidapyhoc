@@ -12,24 +12,23 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-        Log::listen(function()
+        /*
+         * Register extra monolog handler
+         */
+        $monolog = Log::getMonolog();
+
+        if (env('APP_ENV') === 'local')
         {
-            $monolog = Log::getMonolog();
+            $monolog->pushHandler($chromeHandler = new \Monolog\Handler\ChromePHPHandler());
+            $chromeHandler->setFormatter(new \Monolog\Formatter\ChromePHPFormatter());
+        }
 
-            if (env('APP_ENV') === 'local')
-            {
-                $monolog->pushHandler($chromeHandler = new \Monolog\Handler\ChromePHPHandler());
-                $chromeHandler->setFormatter(new \Monolog\Formatter\ChromePHPFormatter());
-            }
-
-            $slackHandler = new \Monolog\Handler\SlackHandler(
-                'xoxp-3624260307-3624260313-3842138482-ce4515',
-                'random'
-            );
-            $monolog->pushHandler($slackHandler);
-            $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
-
-        });
+        $slackHandler = new \Monolog\Handler\SlackHandler(
+            'xoxp-3624260307-3624260313-3865278269-1baa67',
+            '#general'
+        );
+        $monolog->pushHandler($slackHandler);
+        $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
 
         $this->app->validator->resolver(function($translator, $data, $rules, $messages)
         {
@@ -59,8 +58,8 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         $this->app->bind(
-            'Quiz\lib\Repositories\Exam\ExamRepository',
-            'Quiz\lib\Repositories\Exam\EloquentExamRepository'
+            \Quiz\lib\Repositories\Exam\ExamRepository::class,
+            \Quiz\lib\Repositories\Exam\EloquentExamRepository::class
         );
 
         $this->app->bind(

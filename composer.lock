@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "409cab362e6c9d841e9a0782691ee60e",
+    "hash": "b4002974b2692943b50f06548a7e0b88",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2468,6 +2468,49 @@
                 "shell"
             ],
             "time": "2015-02-12 19:35:52"
+        },
+        {
+            "name": "rap2hpoutre/laravel-log-viewer",
+            "version": "v0.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rap2hpoutre/laravel-log-viewer.git",
+                "reference": "2b484e67b76f1c9d8da6baaabd4353b8147cfa5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rap2hpoutre/laravel-log-viewer/zipball/2b484e67b76f1c9d8da6baaabd4353b8147cfa5f",
+                "reference": "2b484e67b76f1c9d8da6baaabd4353b8147cfa5f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "4.2.*|5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/controllers"
+                ],
+                "psr-0": {
+                    "Rap2hpoutre\\LaravelLogViewer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "rap2hpoutre",
+                    "email": "raphael@ornikar.com"
+                }
+            ],
+            "description": "A Laravel log reader",
+            "keywords": [
+                "log",
+                "log-reader",
+                "log-viewer",
+                "logging"
+            ],
+            "time": "2015-02-22 09:31:32"
         },
         {
             "name": "react/promise",

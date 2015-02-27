@@ -14,7 +14,6 @@
 
 @task('file')
     echo "Backup and re-complied everything"
-    php artisan backup:run
     php artisan migrate --env=local
     php artisan cache:clear
     php artisan clear-compiled

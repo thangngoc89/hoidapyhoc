@@ -25,7 +25,7 @@ class ExamCreateRequest extends Request {
 	public function rules()
 	{
 		return [
-			'name' => 'required|min:6|unique:tests',
+			'name' => 'required|min:6|unique:exams',
             'thoigian' => 'required|integer|between:5,200',
             'content' => 'required',
             'begin' => 'required|integer|min:1',

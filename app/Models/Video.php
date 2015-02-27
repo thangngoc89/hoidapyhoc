@@ -16,6 +16,7 @@ class Video extends Model {
 
     protected $table = 'videos';
     protected $fillable = ['title','link','thumb','description','source'];
+    protected $guarded = ['views'];
 
     protected $searchable = [
         'columns' => [

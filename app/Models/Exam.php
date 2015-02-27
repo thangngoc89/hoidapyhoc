@@ -18,7 +18,8 @@ class Exam extends Model {
 
     protected $table = 'exams';
 
-    protected $fillable = array('name','content','begin','thoigian','description','is_file','file_id','questions');
+    protected $fillable = ['name','content','begin','thoigian','description','is_file','file_id','questions'];
+    protected $guarded = ['views'];
 
     protected $searchable = [
         'columns' => [

@@ -16,7 +16,7 @@ class Exam extends Model {
     use SearchableTrait;
     use RevisionableTrait;
 
-    protected $table = 'tests';
+    protected $table = 'exams';
 
     protected $fillable = array('name','content','begin','thoigian','description','is_file','file_id','questions');
 

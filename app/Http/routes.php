@@ -20,22 +20,6 @@ Route::pattern('exams', '[0-9]+');
 Route::pattern('permissions', '[0-9]+');
 
 /** ------------------------------------------
- *  Route model binding
- *  ------------------------------------------
- */
-Route::model('exams', '\Quiz\Models\Exam');
-Route::model('quiz', '\Quiz\Models\Exam');
-Route::model('user', '\Quiz\Models\User');
-// API Part
-Route::model('users', '\Quiz\Models\User');
-Route::model('roles', '\Quiz\Models\Enstrust\Role');
-Route::model('permissions', '\Quiz\Models\Enstrust\Permission');
-Route::model('tags', '\Quiz\lib\Tagging\Tag');
-Route::model('testimonials', '\Quiz\Models\Testimonial');
-Route::model('video', '\Quiz\Models\Video');
-Route::model('files', '\Quiz\Models\Upload');
-
-/** ------------------------------------------
  *  HomePage Group
  *  ------------------------------------------
  */
@@ -152,7 +136,7 @@ Route::get('tag/{slug}', 'TagController@show');
  *  Rescources Group
  *  ------------------------------------------
  */
-Route::get('files/user/{user}/avatar.jpg','ResourcesController@userAvatar');
+Route::get('files/user/{users}/avatar.jpg','ResourcesController@userAvatar');
 Route::get('files/image/{size}/{file}','ResourcesController@image');
 Route::get('files/pdf/{file}','ResourcesController@pdf');
 

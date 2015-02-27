@@ -18,6 +18,8 @@
     php artisan cache:clear
     php artisan clear-compiled
     php artisan optimize
+    php artisan route:clear
+    php artisan route:cache
     gulp --production
     gulp version
     echo "Deployment complete"

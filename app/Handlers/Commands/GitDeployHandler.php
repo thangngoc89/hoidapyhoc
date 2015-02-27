@@ -70,7 +70,7 @@ class GitDeployHandler {
 
     private function runDeploy()
     {
-        system('/home/nginx/hoidapyhoc envoy run deploy');
+        exec('cd /home/nginx/hoidapyhoc && envoy run deploy');
         echo "Deployment signal received";
     }
 

@@ -40,7 +40,6 @@ class FillMissingUserInfo {
 
         if ($this->auth->check() && ! $request->is('auth/edit'))
         {
-            \Log::info($request);
             $user = $this->auth->user();
 
             if ( is_null($user->username) || empty($user->email) )

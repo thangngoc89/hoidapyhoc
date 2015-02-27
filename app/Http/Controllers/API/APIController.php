@@ -24,13 +24,13 @@ class APIController extends \Quiz\Http\Controllers\Controller {
         return response()->json($error, 500);
     }
 
-    public function builder($input, $model, $search = array())
+    public function builder($input, $model, $search = array(), $eagerLoad = array())
     {
         $this->setColumnList($model);
         // Set some share data in class
         $this->search = $search;
 
-        $this->query = $model;
+        $this->query = $model->with($eagerLoad);
 
         $this->input = $input;
 

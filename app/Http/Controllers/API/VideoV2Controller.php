@@ -22,11 +22,11 @@ class VideoV2Controller extends APIController {
     }
 
 
-	public function index(Video $video)
+	public function index()
 	{
-        $video = $this->builder($this->request, $video,['title']);
+        $videos = $this->builder($this->request, $this->video ,['title'], ['tagged','user']);
 
-        $result = response()->api()->withPaginator($video, new VideoTransformers());
+        $result = response()->api()->withPaginator($videos, new VideoTransformers());
 
         return $result;
     }

@@ -70,9 +70,9 @@ class GitDeployHandler {
 
     private function runDeploy()
     {
-        $info = exec('cd /home/nginx/hoidapyhoc && envoy run deploy');
+        $info = shell_exec('cd /home/nginx/hoidapyhoc && envoy run deploy');
 
-        \Log::info('Deploy output', $info);
+        \Log::info('Deploy output', ['output' => $info] );
 
         echo "Deployment signal received";
     }

@@ -36,7 +36,7 @@ class TagV2Controller extends APIController {
 
 	public function index()
 	{
-        $tags = $this->builder($this->request,$this->tag,['name']);
+        $tags = $this->builder($this->request, $this->tag, ['name'], ['exams','videos']);
 
         $result = response()->api()->withPaginator($tags, new TagTransformers());
 

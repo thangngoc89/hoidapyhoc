@@ -9,8 +9,8 @@ use Quiz\lib\Helpers\Str;
 
 class Video extends Model {
 
-    use TaggableTrait;
     use SoftDeletes;
+    use TaggableTrait;
     use LocalizationDateTrait;
     use SearchableTrait;
 
@@ -28,6 +28,8 @@ class Video extends Model {
 
     public static function boot()
     {
+        parent::boot();
+
         static::saving(function ($video) {
             $video->slug = Str::slug(trim($video->title));
         });

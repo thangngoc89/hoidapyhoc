@@ -41,10 +41,9 @@ class ExamV2Controller extends APIController {
         $this->middleware('auth', ['except' => 'index']);
     }
 
-
 	public function index(Exam $exam)
 	{
-        $exam = $this->builder($this->request,$exam,['name']);
+        $exam = $this->builder($this->request,$exam, ['name'], ['tagged','file']);
 
         $result = response()->api()->withPaginator($exam, new ExamTransformers());
 

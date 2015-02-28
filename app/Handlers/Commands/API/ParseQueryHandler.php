@@ -11,7 +11,7 @@ class ParseQueryHandler {
 
     protected $input;
 
-    protected $columnList;
+    protected $columnsList;
 
 	/**
 	 * Create the command handler.
@@ -51,7 +51,7 @@ class ParseQueryHandler {
     {
         foreach ($this->input->all() as $col)
         {
-            if (in_array($col, $this->columnList))
+            if (in_array($col, $this->columnsList))
             {
                 if (!empty($col) and $col != 0)
                     $this->query = $this->query->where($col,$this->input->get($col));
@@ -70,10 +70,18 @@ class ParseQueryHandler {
 
     /**
      * @param mixed $columnList
+     * return void
      */
     public function setColumnList($model)
     {
-        $this->columnList = \Schema::getColumnListing($model->getTable());
+        $table = $model->getTable();
+
+        $columnsList = \Cache::tags($table)->rememberForever("{$table}_columns_list", function() use ($table)
+        {
+            return \Schema::getColumnListing($table);
+        });
+        
+        $this->columnsList = $columnsList;
     }
 
     private function page()
@@ -96,7 +104,7 @@ class ParseQueryHandler {
     private function _sortField()
     {
         // Prevent sort by un exists column cause query error
-        if (!in_array($this->input->_sortField, $this->columnList))
+        if (!in_array($this->input->_sortField, $this->columnsList))
             return false;
 
         $this->query = $this->query->orderBy($this->input->_sortField,$this->input->_sortDir);

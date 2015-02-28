@@ -53,16 +53,18 @@
         var app = nga.application('Hỏi Đáp Y Học')
             .baseApiUrl(location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/api/v2/');
 
+        var exam = nga.entity('exams');
         var permission = nga.entity('permissions');
         var role = nga.entity('roles');
         var user = nga.entity('users');
         var video = nga.entity('videos');
         var tag = nga.entity('tags');
 
+        app.addEntity(exam);
+        app.addEntity(video);
+        app.addEntity(user);
         app.addEntity(permission);
         app.addEntity(role);
-        app.addEntity(user);
-        app.addEntity(video);
         app.addEntity(tag);
 
         /*
@@ -179,6 +181,7 @@
          *
          */
         video.menuView()
+            .order(2)
             .icon('<span class="fa fa-youtube"></span>');
 
         video.dashboardView()
@@ -199,6 +202,7 @@
                 nga.field('tags', 'reference_many')
                     .targetEntity(tag)
                     .targetField(nga.field('name'))
+                    .perPage(30)
                     .singleApiCall(function (tagIds) {
                         return { 'id': tagIds };
                     }),
@@ -229,9 +233,27 @@
             ]);
 
         /*
-        * Tag section
-        *
-        */
+         * Exams section
+         *
+         */
+        exam.menuView()
+            .order(1);
+
+        exam.dashboardView()
+            .title('New Exams')
+            .sortField('id')
+            .sortDir('DESC')
+            .order(1)
+            .limit(10)
+            .fields([
+                nga.field('id').editable(false),
+                nga.field('name').isDetailLink(true)
+            ]);
+
+        /*
+         * Tag section
+         *
+         */
 
 
         tag.menuView()

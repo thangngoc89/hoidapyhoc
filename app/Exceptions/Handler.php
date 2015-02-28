@@ -50,6 +50,13 @@ class Handler extends ExceptionHandler {
             if ($e instanceof \Illuminate\Session\TokenMismatchException)
                 return response()->api()->setStatusCode(400)->withError("Can't verify CSRF Token", 'GEN-CSRF-TOKEN-ERROR');
 
+            $error = [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ];
+
+            return response()->json($error, 500);
         }
 
 		if ($this->isHttpException($e))
@@ -59,14 +66,6 @@ class Handler extends ExceptionHandler {
 		else
 		{
 //            return parent::render($request, $e);
-
-            if ($e instanceof ApiException)
-                \Log::error($e);
-
-//            if (env('APP_ENV') === 'production')
-//            {
-
-//            }
 
             return $this->renderExceptionWithWhoops($e);
         }
@@ -119,20 +118,6 @@ class Handler extends ExceptionHandler {
         {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
         }
-    }
-
-    #TODO: Need more love here
-    private function apiResponse(Exception $e)
-    {
-        $message = [
-            'message' => $e->getMessage(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-        ];
-
-        $error_code = ($e->getCode() && $e->getCode() >= 100) ?: 500;
-
-        return response()->api()->setStatusCode(500)->withError($message, $error_code);
     }
 
 }

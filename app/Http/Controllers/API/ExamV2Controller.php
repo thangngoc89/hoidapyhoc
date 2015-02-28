@@ -57,19 +57,12 @@ class ExamV2Controller extends APIController {
 	 */
 	public function store(ExamCreateRequest $request, ExamTransformers $transformer)
 	{
-        try {
-            $exam = $this->dispatch(new ExamCreateCommand($request));
+        $exam = $this->dispatch(new ExamCreateCommand($request));
 
-            #TODO: Move link generated into javascript
-            $response = $transformer->createResponse($exam);
+        #TODO: Move link generated into javascript
+        $response = $transformer->createResponse($exam);
 
-            return response()->json($response, 201);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-
-        }
+        return response()->json($response, 201);
     }
 
 	/**
@@ -94,19 +87,12 @@ class ExamV2Controller extends APIController {
      */
     public function update($exam, ExamUpdateRequest $request, ExamTransformers $transformer)
     {
-        try {
-            $exam = $this->dispatch(new ExamUpdateCommand($exam, $request));
+        $exam = $this->dispatch(new ExamUpdateCommand($exam, $request));
 
-            #TODO: Move link generated into javascript
-            $response = $transformer->createResponse($exam);
+        #TODO: Move link generated into javascript
+        $response = $transformer->createResponse($exam);
 
-            return response()->json($response, 200);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-
-        }
+        return response()->json($response, 200);
     }
 
     /**
@@ -117,24 +103,17 @@ class ExamV2Controller extends APIController {
      */
     public function start($exam, Guard $auth)
     {
-        try {
-            $history = $this->history->firstOrCreate([
-                'user_id' => $auth->user()->id,
-                'test_id' => $exam->id,
-                'isDone'  => 0
-            ]);
+        $history = $this->history->firstOrCreate([
+            'user_id' => $auth->user()->id,
+            'test_id' => $exam->id,
+            'isDone'  => 0
+        ]);
 
-            $response = [
-                'user_history_id' => $history->id
-            ];
+        $response = [
+            'user_history_id' => $history->id
+        ];
 
-            return response()->json($response, 201);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-
-        }
+        return response()->json($response, 201);
     }
 
     /**
@@ -146,16 +125,9 @@ class ExamV2Controller extends APIController {
      */
     public function check ($exam, ExamCheckRequest $request)
     {
-        try {
-            $history = $this->dispatch(new ExamCheckCommand($exam, $request));
+        $history = $this->dispatch(new ExamCheckCommand($exam, $request));
 
-            return response()->json($history, 200);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-
-        }
+        return response()->json($history, 200);
     }
 
     /**

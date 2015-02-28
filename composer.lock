@@ -765,12 +765,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ellipsesynergie/api-response.git",
-                "reference": "2b4f19aa7ba2ed5fa3b83851329baa1228ad1e31"
+                "reference": "bad1a7859d4dd201ef9514eda9023da7d89fbf5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ellipsesynergie/api-response/zipball/2b4f19aa7ba2ed5fa3b83851329baa1228ad1e31",
-                "reference": "2b4f19aa7ba2ed5fa3b83851329baa1228ad1e31",
+                "url": "https://api.github.com/repos/ellipsesynergie/api-response/zipball/bad1a7859d4dd201ef9514eda9023da7d89fbf5f",
+                "reference": "bad1a7859d4dd201ef9514eda9023da7d89fbf5f",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +817,7 @@
                 "fractal",
                 "json"
             ],
-            "time": "2015-02-17 19:20:53"
+            "time": "2015-02-27 18:30:14"
         },
         {
             "name": "graham-campbell/htmlmin",

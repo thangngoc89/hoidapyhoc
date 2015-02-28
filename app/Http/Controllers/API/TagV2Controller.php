@@ -78,6 +78,38 @@ class TagV2Controller extends APIController {
 
         return response()->api()->withPaginator($tags, new TagTransformers());
     }
+
+    public function search2($query)
+    {
+        $redis = \Redis::connection();
+
+//        $redis->zAdd('tagsAutocomplete','0','member','0', 'members');
+
+        $store = (\Input::get('store') == 'true') ? true : false;
+
+        if ($store)
+        {
+            $tags = $this->tag->orderBy('name')->get();
+
+            foreach ($tags as $tag)
+            {
+                $score = '0';
+                $member = $tag->name;
+                $redis->zadd('tags', $store, $member);
+            }
+        }
+        $query = call_user_func(config('tagging.displayer'), $query);
+
+        $items = $redis->zrangebylex("tags","[$query","[$query\xff",Array("LIMIT","0","10"));
+
+        $ret = [];
+        foreach($items as $item)
+        {
+            $ret[] = ['name' => $item];
+        }
+
+        return response()->json(['data' => $ret]);
+    }
 	/**
 	 * Remove the specified resource from storage.
 	 *

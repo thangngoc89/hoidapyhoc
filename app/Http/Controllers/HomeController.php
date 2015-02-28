@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Filesystem\Factory as Filesystem;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\History\HistoryRepository;
+use Quiz\lib\Repositories\Tag\TagRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
 use Quiz\lib\Tagging\Tag;
@@ -11,6 +12,7 @@ use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
 use Quiz\Models\Video;
 use Quiz\Services\Leecher\CSYK\GetQuiz;
+use RedCard;
 
 class HomeController extends Controller {
 
@@ -98,17 +100,8 @@ class HomeController extends Controller {
         return $get->get($link)->parse();
     }
 
-    public function cleanCache()
+    public function cleanCache(TagRepository $tagRepository)
     {
-        $revisions = \DB::table('revisions')
-            ->orderBy('revisions.created_at', 'desc')
-            ->get();
-
-        $revisions = array_map(function ($revision) {
-            return \App::make('Sofa\Revisionable\Presenter', [(array) $revision]);
-        }, $revisions);
-
-        return view('site.revision', compact('revisions'));
 
     }
 

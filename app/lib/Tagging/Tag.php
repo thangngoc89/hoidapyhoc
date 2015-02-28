@@ -4,22 +4,6 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 use Quiz\lib\Tagging\TaggingUtil;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-/**
- * Copyright (C) 2014 Robert Conner
- *
- * @property integer $id 
- * @property string $slug 
- * @property string $name 
- * @property string $description 
- * @property boolean $suggest 
- * @property-read \Illuminate\Database\Eloquent\Collection|\$related[] $morphedByMany 
- * @method static \Illuminate\Database\Query\Builder|\Quiz\lib\Tagging\Tag whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Quiz\lib\Tagging\Tag whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\Quiz\lib\Tagging\Tag whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\Quiz\lib\Tagging\Tag whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\Quiz\lib\Tagging\Tag whereSuggest($value)
- * @method static \Quiz\lib\Tagging\Tag suggested()
- */
 class Tag extends Eloquent {
 
     use SearchableTrait;

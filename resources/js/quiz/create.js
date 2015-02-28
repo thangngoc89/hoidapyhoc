@@ -442,19 +442,19 @@
             persist: false,
             create: true,
             maxItems: 5,
-            render: {
-                option: function(item, escape) {
-
-                    return '<div><span class="post-tag">' + escape(item.name) + '</span>'
-                    + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
-                    '<span class="item-multiplier-count">' + item.count +
-                    '</span></span></div>';
-                }
-            },
+            //render: {
+            //    option: function(item, escape) {
+            //
+            //        return '<div><span class="post-tag">' + escape(item.name) + '</span>'
+            //        + '<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;' +
+            //        '<span class="item-multiplier-count">' + item.count +
+            //        '</span></span></div>';
+            //    }
+            //},
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/api/v2/tags/search/' + encodeURIComponent(query),
+                    url: '/api/v2/tags/search2/' + encodeURIComponent(query),
                     type: 'GET',
                     error: function() {
                         callback();

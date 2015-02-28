@@ -146,6 +146,7 @@ return [
         'Spatie\Backup\BackupServiceProvider',
         'EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider',
         'Sofa\Revisionable\Laravel\FiveServiceProvider',
+        'VictorSigma\RedCard\RedCardServiceProvider',
         /*
          * Dev
          */

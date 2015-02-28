@@ -12,24 +12,6 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-        /*
-         * Register extra monolog handler
-         */
-        $monolog = Log::getMonolog();
-
-        if (env('APP_ENV') === 'local')
-        {
-            $monolog->pushHandler($chromeHandler = new \Monolog\Handler\ChromePHPHandler());
-            $chromeHandler->setFormatter(new \Monolog\Formatter\ChromePHPFormatter());
-        }
-
-        $slackHandler = new \Monolog\Handler\SlackHandler(
-            'xoxp-3624260307-3624260313-3865278269-1baa67',
-            '#general'
-        );
-        $monolog->pushHandler($slackHandler);
-        $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
-
         $this->app->validator->resolver(function($translator, $data, $rules, $messages)
         {
             return new \Quiz\lib\Repositories\Exam\QuestionValidator($translator, $data, $rules, $messages);
@@ -79,11 +61,6 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bind(
             'Quiz\lib\Repositories\History\HistoryRepository',
             'Quiz\lib\Repositories\History\EloquentHistoryRepository'
-        );
-
-        $this->app->bind(
-            'League\Fractal\Serializer\SerializerAbstract',
-            'League\Fractal\Serializer\ArraySerializer'
         );
 	}
 

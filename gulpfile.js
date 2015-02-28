@@ -22,8 +22,8 @@ elixir(function(mix) {
             'bower_components/toastr/toastr.js',
             'bower_components/bootstrap-sweetalert/lib/sweet-alert.js',
             'bower_components/jquery-unveil/jquery.unveil.js',
-            //'bower_components/jquery-form/jquery.form.js',
-            'bower_components/selectize/dist/js/standalone/selectize.js'
+            'bower_components/selectize/dist/js/standalone/selectize.js',
+            'bower_components/jquery-stickit/src/jquery.stickit.js'
         ], 'public/assets/js/vendor.js', 'bower_components')
         .scripts([
             'jquery.alterclass.js',

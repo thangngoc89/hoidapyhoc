@@ -45,6 +45,13 @@ class Handler extends ExceptionHandler {
 //        if (starts_with($path, '/api'))
 //            return $this->apiResponse($e);
 
+        if ($request->ajax())
+        {
+            if ($e instanceof \Illuminate\Session\TokenMismatchException)
+                return response()->api()->setStatusCode(400)->withError("Can't verify CSRF Token", 'GEN-CSRF-TOKEN-ERROR');
+
+        }
+
 		if ($this->isHttpException($e))
 		{
             return $this->renderHttpException($e);

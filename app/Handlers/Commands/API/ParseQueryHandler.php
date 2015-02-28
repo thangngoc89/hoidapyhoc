@@ -80,7 +80,7 @@ class ParseQueryHandler {
         {
             return \Schema::getColumnListing($table);
         });
-        
+
         $this->columnsList = $columnsList;
     }
 

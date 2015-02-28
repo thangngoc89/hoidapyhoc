@@ -3,8 +3,14 @@ function sticky()
     width=parseInt($(window).width());
 
     if(width>767) {
-        $("#quiz-sidebar, #mainRow").stick_in_parent();
-        console.log('triggerd sticky');
+        //$("#quiz-sidebar, #mainRow").stick_in_parent();
+        $('#quiz-sidebar').stickit({
+            scope: StickScope.Parent,
+            className: 'stick',
+            top: 0,
+            extraHeight: 14
+        });
+
     }
 }
 function resize_do(){

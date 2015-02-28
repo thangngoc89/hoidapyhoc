@@ -18,9 +18,11 @@
 {{--Body Section--}}
 @section('body')
 <div class="container">
+    {!! Form::open(['url' => 'api/v2/tests', 'id' => 'frmTest', 'data-toggle' => 'validator' ]) !!}
     <div class="row" id="mainRow">
         @include('quiz.createContent')
     </div>
+    {!! Form::close() !!}
 </div>
 
 <div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="answerModalLabel" aria-hidden="true">

@@ -1,4 +1,3 @@
-{!! Form::open(['url' => 'api/v2/tests', 'id' => 'frmTest', 'data-toggle' => 'validator' ]) !!}
 <div class="col-md-8 threads-inner white">
     <div class="wrap">
         <div class="form-row">
@@ -149,6 +148,5 @@
         </div>
     </div>
 </div>
-{!! Form::close() !!}
 
 

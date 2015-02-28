@@ -41,12 +41,11 @@
             event.preventDefault();
             post();
         });
-        sticky();
         editor();
         uploader();
         
         preventClosing();
-
+        sticky();
     }
 
     function initEdit()

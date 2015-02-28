@@ -24,9 +24,8 @@ class VideoController extends Controller {
     public function __construct(Video $video, Request $request)
     {
         $this->video = $video;
-
-        $this->middleware( 'view_throttle', [ 'only' => ['show'] ] );
         $this->request = $request;
+        $this->middleware( 'view_throttle', [ 'only' => ['show'] ] );
     }
 
 	/**
@@ -58,6 +57,9 @@ class VideoController extends Controller {
 	 */
 	public function show($slug, $video)
 	{
+        if ($slug != $video->slug)
+            return redirect()->to($video->link());
+
         $relatedVideos = $this->video->getRelatedVideosByTags($video);
 
         event(new VideoViewEvent($video, $this->request));

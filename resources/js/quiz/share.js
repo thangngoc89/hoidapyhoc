@@ -3,7 +3,6 @@ function sticky()
     width=parseInt($(window).width());
 
     if(width>767) {
-        //$("#quiz-sidebar, #mainRow").stick_in_parent();
         $('#quiz-sidebar').stickit({
             scope: StickScope.Parent,
             className: 'stick',

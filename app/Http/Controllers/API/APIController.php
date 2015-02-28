@@ -1,6 +1,5 @@
 <?php namespace Quiz\Http\Controllers\API;
 
-
 use Quiz\Commands\API\ParseQuery;
 
 class APIController extends \Quiz\Http\Controllers\Controller {

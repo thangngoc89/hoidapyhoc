@@ -3,7 +3,6 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
 use Quiz\Http\Requests\API\TagDeleteRequest;
 use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Quiz\lib\API\Tag\TagTransformers;

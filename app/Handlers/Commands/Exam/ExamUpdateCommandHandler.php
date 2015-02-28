@@ -4,6 +4,7 @@ use Quiz\Commands\Exam\ExamUpdateCommand;
 
 use Illuminate\Queue\InteractsWithQueue;
 use Quiz\Events\Exam\ExamUpdatedEvent;
+use Quiz\Exceptions\ApiException;
 use Quiz\Exceptions\ExamSaveException;
 use Quiz\Models\Exam;
 
@@ -40,10 +41,10 @@ class ExamUpdateCommandHandler {
             $exam->user_id_edited = \Auth::user()->id;
 
             if (count($request->questions) != $exam->questions_count)
-                throw new ExamSaveException ("Questions are not equal");
+                throw new ApiException ("Questions are not equal");
 
             if (!$exam->save())
-                throw new ExamSaveException ("Can not update exam");
+                throw new ApiException ("Can not update exam");
 
             $exam->retag($request->tags);
 

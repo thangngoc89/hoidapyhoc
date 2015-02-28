@@ -106,7 +106,9 @@ Route::group(array('prefix' => 'api/v2'), function()
      *  ------------------------------------------
      */
     Route::get('tags/search/{query}', 'API\TagV2Controller@search');
-    Route::resource('tags','API\TagV2Controller');
+    Route::resource('tags','API\TagV2Controller',[
+        'only' => ['index','update','delete','show']
+    ]);
 
     /** ------------------------------------------
      *  Search

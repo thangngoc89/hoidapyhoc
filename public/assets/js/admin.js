@@ -69,6 +69,9 @@
          * Permission section
          *
          */
+        permission.menuView()
+            .icon('<span class="fa fa-key"></span>');
+
         permission.dashboardView().disable();
         permission.listView()
             .title('All permissions')
@@ -99,6 +102,9 @@
          * Role section
          *
          */
+        role.menuView()
+            .icon('<span class="fa fa-user-secret"></span>');
+
         role.dashboardView().disable();
 
         role.listView()
@@ -129,7 +135,8 @@
         * User section
         *
         */
-
+        user.menuView()
+            .icon('<span class="fa fa-users"></span>');
 
         user.dashboardView()
             .title('New Users')
@@ -171,6 +178,8 @@
          * Videos section
          *
          */
+        video.menuView()
+            .icon('<span class="fa fa-youtube"></span>');
 
         video.dashboardView()
             .title('New Users')
@@ -179,7 +188,7 @@
             .order(1)
             .limit(10)
             .fields([
-                nga.field('id'),
+                nga.field('id').editable(false),
                 nga.field('title').isDetailLink(true)
             ]);
 
@@ -195,76 +204,79 @@
                     }),
                 nga.field('created_at', 'date').editable(false)
             ])
-            .listActions(['show', 'edit']);
+            .listActions(['show', 'edit', 'delete']);
 
         video.editionView()
-            .title('Edit video "{{ entry.values.username }}"')
+            .title('Edit video "{{ entry.values.title }}"')
             .fields([
-                nga.field('title'),
-                nga.field('user_id','reference')
-                    .label('User')
-                    .targetEntity(user)
-                    .targetField(nga.field('username')),
+                video.listView().fields(),
+                nga.field('description'),
+                nga.field('link'),
                 nga.field('source'),
                 nga.field('thumb'),
-                nga.field('duration')
+                nga.field('duration'),
             ])
             .actions(['list']);
 
         video.showView()
             .fields([
                 video.editionView().fields(),
+                nga.field('user_id','reference')
+                    .label('User')
+                    .targetEntity(user)
+                    .targetField(nga.field('username')),
                 nga.field('views')
             ]);
-        //
-        ///*
-        // * Tag section
-        // *
-        // */
-        //
-        //
-        //tag.menuView()
-        //    .order(3)
-        //    .icon('<span class="glyphicon glyphicon-tags"></span>');
-        //
-        //tag.dashboardView()
-        //    .title('Recent tags')
-        //    .order(3)
-        //    .limit(10)
-        //    .fields([
-        //        new Field('id'),
-        //        new Field('name'),
-        //        new Field('suggest').label('Is suggest ?').type('boolean')
-        //    ]);
-        //
-        //tag.listView()
-        //    .infinitePagination(false) // by default, the list view uses infinite pagination. Set to false to use regulat pagination
-        //    .fields([
-        //        new Field('id').label('ID'),
-        //        new Field('name'),
-        //        new Field('suggest').type('boolean').cssClasses(function(entry) { // add custom CSS classes to inputs and columns
-        //            if (entry.values.suggest) {
-        //                return 'bg-success text-center';
-        //            }
-        //            return 'bg-warning text-center';
-        //        }),
-        //    ])
-        //    .listActions(['show','delete']);
-        //
-        //tag.showView()
-        //    .fields([
-        //        new Field('name'),
-        //        new Field('suggest').type('boolean')
-        //    ]);
-        //tag.deletionView()
-        //    .title('Delete Tag {{ entry.values.name }}');
-        //
-        ///*
-        // * Testimonial section
-        // *
-        // */
-        //
-        //
+
+        /*
+        * Tag section
+        *
+        */
+
+
+        tag.menuView()
+            .icon('<span class="glyphicon glyphicon-tags"></span>');
+
+        tag.dashboardView()
+            .title('Recent tags')
+            .order(3)
+            .limit(10)
+            .fields([
+                nga.field('id'),
+                nga.field('name'),
+                nga.field('suggest','boolean')
+                    .label('Is suggest ?')
+            ]);
+
+        tag.listView()
+            .fields([
+                nga.field('name'),
+                nga.field('suggest','boolean')
+                    .cssClasses(function(entry) {
+                    if (entry.values.suggest) {
+                        return 'bg-success text-center';
+                    }
+                    return 'bg-warning text-center';
+                }),
+            ])
+            .listActions(['edit','delete']);
+
+        tag.editionView()
+            .fields([
+                nga.field('name'),
+                nga.field('description'),
+                nga.field('suggest','boolean')
+
+            ]);
+        tag.deletionView()
+            .title('Delete Tag "{{ entry.values.name }}"');
+
+        /*
+        * Testimonial section
+        *
+        */
+
+
         //testimonial.menuView()
         //    .order(3)
         //    .icon('<span class="fa fa-thumbs-up"></span>');
@@ -274,9 +286,9 @@
         //testimonial.listView()
         //    .title('All Testimonials')
         //    .fields([
-        //        new Field('name'),
-        //        new Field('isHome').type('boolean'),
-        //        new Field('content').type('wysiwyg').map(truncate),
+        //        nga.field('name'),
+        //        nga.field('isHome').type('boolean'),
+        //        nga.field('content').type('wysiwyg').map(truncate),
         //    ])
         //    .listActions(['show','edit']);
         //
@@ -284,9 +296,9 @@
         //    .title('Testimonials of {{ entry.values.name }}')
         //    .fields([
         //        testimonial.listView().fields(),
-        //        new Field('link'),
-        //        new Field('content').type('wysiwyg'),
-        //        new Field('avatar')
+        //        nga.field('link'),
+        //        nga.field('content').type('wysiwyg'),
+        //        nga.field('avatar')
         //    ]);
 
         nga.configure(app);

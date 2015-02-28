@@ -30,6 +30,7 @@ class VideoTransformers extends TransformerAbstract {
             'title'         => (string) $video->title,
             'user_id'       => (int) $video->user_id,
             'slug'          => (string) $video->slug,
+            'link'          => (string) $video->link,
             'description'   => (string) $video->description,
             'thumb'         => (string) $video->thumb,
             'duration'      => (string) $video->duration,

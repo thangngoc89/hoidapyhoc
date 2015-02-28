@@ -15,8 +15,9 @@ class Video extends Model {
     use SearchableTrait;
 
     protected $table = 'videos';
-    protected $fillable = ['title','link','thumb','description','source'];
+    protected $fillable = ['title','link','thumb','description','source','duration'];
     protected $guarded = ['views'];
+//    protected $dates = ['deleted_at'];
 
     protected $searchable = [
         'columns' => [

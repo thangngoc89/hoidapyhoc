@@ -48,17 +48,12 @@ class RoleV2Controller extends APIController {
      */
     public function store(RoleCreateRequest $request)
     {
-        try {
-            $role = $this->role->create($request->all());
+        $role = $this->role->create($request->all());
 
-            $role->perms()->sync($request->permissions);
+        $role->perms()->sync($request->permissions);
 
-            return response()->json($this->show($role), 201);
+        return response()->json($this->show($role), 201);
 
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
     }
 
     /**
@@ -69,19 +64,13 @@ class RoleV2Controller extends APIController {
      */
     public function update($role, RoleUpdateRequest $request)
     {
-        try {
-            $role->name = $request->name;
+        $role->name = $request->name;
 
-            $role->save();
+        $role->save();
 
-            $role->perms()->sync($request->permissions);
+        $role->perms()->sync($request->permissions);
 
-            return response()->json($this->show($role), 201);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
+        return $this->show($role);
     }
     /**
      * Delete a resource
@@ -92,19 +81,11 @@ class RoleV2Controller extends APIController {
     public function destroy($role)
     {
         #TODO: Add this validation on model's boot
-        try
-        {
-            if ($role->users()->count() > 0)
-                throw new \Exception ('This Role was assigned to user(s). CAN NOT delete');
+        if ($role->users()->count() > 0)
+            throw new \Exception ('This Role was assigned to user(s). CAN NOT delete');
 
-            $role->delete();
+        $role->delete();
 
-            $response = ['message' => 'Role Deleted'];
-
-            return response()->json($response, 204);
-
-        } catch (\Exception $e){
-            $this->throwError($e);
-        }
+        return response()->json('', 204);
     }
 }

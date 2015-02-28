@@ -40,10 +40,6 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-//        $path = parse_url(Request::url())['path'];
-//
-//        if (starts_with($path, '/api'))
-//            return $this->apiResponse($e);
 
         if ($request->ajax())
         {
@@ -65,8 +61,6 @@ class Handler extends ExceptionHandler {
 		}
 		else
 		{
-//            return parent::render($request, $e);
-
             return $this->renderExceptionWithWhoops($e);
         }
 

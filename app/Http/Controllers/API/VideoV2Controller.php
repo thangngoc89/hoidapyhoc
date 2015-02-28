@@ -40,9 +40,9 @@ class VideoV2Controller extends APIController {
 	 */
 	public function store()
 	{
-            $exam = $this->dispatch(new ExamCreateCommand($request));
+        $exam = $this->dispatch(new ExamCreateCommand($request));
 
-            return $this->show($exam);
+        return $this->show($exam);
     }
 
 	/**
@@ -65,16 +65,9 @@ class VideoV2Controller extends APIController {
      */
     public function update($video, VideoUpdateRequest $request)
     {
-        try {
-            $video = $this->dispatch(new VideoUpdateCommand($video, $request));
+        $video = $this->dispatch(new VideoUpdateCommand($video, $request));
 
-            return $this->show($video);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-
-        }
+        return $this->show($video);
     }
 
 	/**

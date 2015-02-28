@@ -47,15 +47,9 @@ class PermissionV2Controller extends APIController {
      */
     public function store(PermissionCreateRequest $request)
     {
-        try {
-            $perm = $this->permission->create($request->all());
+        $perm = $this->permission->create($request->all());
 
-            return response()->json($this->show($perm), 201);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
+        return response()->json($this->show($perm), 201);
     }
 
 	/**
@@ -96,14 +90,8 @@ class PermissionV2Controller extends APIController {
 	 */
 	public function destroy($perm, PermissionDeleteRequest $request)
 	{
-        try {
-            $perm->delete();
+        $perm->delete();
 
-            return response()->json('Deleted', 204);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
+        return response()->json('', 204);
 	}
 }

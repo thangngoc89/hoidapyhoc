@@ -45,19 +45,9 @@ class TestimonialV2Controller extends APIController {
      * @param \Quiz\Models\Testimonial
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleCreateRequest $request)
+    public function store()
     {
-        try {
-            $role = $this->role->create($request->all());
 
-            $role->perms()->sync($request->permissions);
-
-            return response()->json($this->show($role), 201);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
     }
 
     /**
@@ -66,21 +56,9 @@ class TestimonialV2Controller extends APIController {
      * @param \Quiz\Models\Testimonial
      * @return \Illuminate\Http\Response
      */
-    public function update($role, RoleUpdateRequest $request)
+    public function update()
     {
-        try {
-            $role->name = $request->name;
 
-            $role->save();
-
-            $role->perms()->sync($request->permissions);
-
-            return response()->json($this->show($role), 201);
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
     }
     /**
      * Delete a resource
@@ -88,21 +66,8 @@ class TestimonialV2Controller extends APIController {
      * @param \Quiz\Models\Enstrust\Role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($role)
+    public function destroy()
     {
-        try
-        {
-            if ($role->users()->count() > 0)
-                throw new \Exception ('This Role was assigned to user(s). CAN NOT delete');
 
-            $role->delete();
-
-            $response = ['message' => 'Role Deleted'];
-
-            return response()->json($response, 204);
-
-        } catch (\Exception $e){
-            $this->throwError($e);
-        }
     }
 }

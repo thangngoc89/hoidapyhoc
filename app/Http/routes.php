@@ -90,7 +90,9 @@ Route::group(array('prefix' => 'api/v2'), function()
     Route::post('exams/{exams}/check', 'API\ExamV2Controller@check');
     Route::post('exams/{exams}/start', 'API\ExamV2Controller@start');
     Route::get('exams/{exams}/leaderboard','API\ExamV2Controller@leaderboard');
-    Route::resource('exams', 'API\ExamV2Controller');
+    Route::resource('exams', 'API\ExamV2Controller',[
+        'only' => ['index','store','show','update','destroy']
+    ]);
 
     /** ------------------------------------------
      *  Files
@@ -107,7 +109,7 @@ Route::group(array('prefix' => 'api/v2'), function()
      */
     Route::get('tags/search/{query}', 'API\TagV2Controller@search');
     Route::resource('tags','API\TagV2Controller',[
-        'only' => ['index','update','delete','show']
+        'only' => ['index','show','update','destroy']
     ]);
 
     /** ------------------------------------------
@@ -120,11 +122,21 @@ Route::group(array('prefix' => 'api/v2'), function()
      *  Others
      *  ------------------------------------------
      */
-    Route::resource('users','API\UserV2Controller');
-    Route::resource('roles','API\RoleV2Controller');
-    Route::resource('permissions','API\PermissionV2Controller');
-    Route::resource('testimonials','API\TestimonialV2Controller');
-    Route::resource('videos','API\VideoV2Controller');
+    Route::resource('users','API\UserV2Controller',[
+        'only' => ['index','store','show','update','destroy']
+    ]);
+    Route::resource('roles','API\RoleV2Controller',[
+        'only' => ['index','store','show','update','destroy']
+    ]);
+    Route::resource('permissions','API\PermissionV2Controller',[
+        'only' => ['index','store','show','update','destroy']
+    ]);
+    Route::resource('testimonials','API\TestimonialV2Controller',[
+        'only' => ['index','store','show','update','destroy']
+    ]);
+    Route::resource('videos','API\VideoV2Controller',[
+        'only' => ['index','store','show','update','destroy']
+    ]);
 
 });
 

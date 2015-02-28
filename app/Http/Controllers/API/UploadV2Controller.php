@@ -32,14 +32,7 @@ class UploadV2Controller extends APIController {
 
     public function store(uploadFileRequest $request)
     {
-        try
-        {
-            return $this->dispatch(new UploadNewFileCommand($request));
-
-        } catch (\Exception $e) {
-
-            return $this->throwError($e);
-        }
+        return $this->dispatch(new UploadNewFileCommand($request));
     }
 
     /**

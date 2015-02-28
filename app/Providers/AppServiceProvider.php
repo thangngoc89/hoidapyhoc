@@ -30,8 +30,8 @@ class AppServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		$this->app->bind(
-			'Illuminate\Contracts\Auth\Registrar',
-			'Quiz\Services\Registrar'
+			\Illuminate\Contracts\Auth\Registrar::class,
+			\Quiz\Services\Registrar::class
 		);
 
         $this->app->bind(
@@ -45,22 +45,22 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         $this->app->bind(
-            'Quiz\lib\Repositories\User\UserRepository',
-            'Quiz\lib\Repositories\User\EloquentUserRepository'
+            \Quiz\lib\Repositories\User\UserRepository::class,
+            \Quiz\lib\Repositories\User\EloquentUserRepository::class
         );
 
         $this->app->bind(
-            'Quiz\lib\Repositories\Upload\UploadRepository',
-            'Quiz\lib\Repositories\Upload\EloquentUploadRepository'
+            \Quiz\lib\Repositories\Upload\UploadRepository::class,
+            \Quiz\lib\Repositories\Upload\EloquentUploadRepository::class
         );
         $this->app->bind(
-            'Quiz\lib\Repositories\Tag\TagRepository',
-            'Quiz\lib\Repositories\Tag\EloquentTagRepository'
+            \Quiz\lib\Repositories\Tag\TagRepository::class,
+            \Quiz\lib\Repositories\Tag\EloquentTagRepository::class
         );
 
         $this->app->bind(
-            'Quiz\lib\Repositories\History\HistoryRepository',
-            'Quiz\lib\Repositories\History\EloquentHistoryRepository'
+            \Quiz\lib\Repositories\History\HistoryRepository::class,
+            \Quiz\lib\Repositories\History\EloquentHistoryRepository::class
         );
 	}
 

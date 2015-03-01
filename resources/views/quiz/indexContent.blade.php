@@ -26,7 +26,7 @@
         @foreach ($exams as $exam)
             <article class="media media--conversation
                 {{--If user done this test then make it grey--}}
-                @if (!($doneTestId) || !in_array($exam->id, $doneTestId))
+                @if (!($doneTestId['doneTestId']) || !in_array($exam->id, $doneTestId['doneTestId']))
                 updated
                 @endif">
                  <div class="media--conversation__avatar">
@@ -37,7 +37,7 @@
 
                  <div class="media-body media--conversation__body">
                      <h5 class="media-heading media--conversation__heading">
-                         <a href="{{ $exam->link() }}" title="{{ $exam-> name }}">{{ str_limit($exam->name,45) }}</a>
+                         <a href="{{ $exam->link() }}" title="{{ $exam->name }}">{{ str_limit($exam->name,45) }}</a>
                      </h5>
                      @foreach ($exam->tagged as $examag)
                         <a href="/tag/{{ $examag->slug }}" class="post-tag" title="" rel="tag">{{ $examag->name }}</a>

@@ -52,7 +52,6 @@ class TagController extends Controller {
             abort(404);
 
         #TODO: Expand function when have new taggable object
-        $doneTestId = ($auth->check()) ? $exams->doneTestId($auth->user()) : false;
         $name = "Tag {$tag->name}";
 
         $key = $this->request->url().$this->request->page;
@@ -64,7 +63,7 @@ class TagController extends Controller {
 
         $exams->appends($this->request->except('page'));
 
-        return view('quiz.index',compact('exams','name','doneTestId'));
+        return view('quiz.index',compact('exams','name'));
 	}
 
 }

@@ -15,6 +15,7 @@ class ComposerServiceProvider extends ServiceProvider {
         // Using class based composers...
         View::composer('partials.tags', 'Quiz\lib\Composers\TagsListComposer');
         View::composer(['partials.header','site.admin'], 'Quiz\lib\Composers\EncryptedTokenComposer');
+        View::composer('quiz.indexContent', 'Quiz\lib\Composers\UserDoneExamIds');
     }
 	/**
 	 * Register any application services.

@@ -250,6 +250,11 @@
                 nga.field('name').isDetailLink(true)
             ]);
 
+        exam.listView()
+            .fields([
+                nga.field('name')
+            ])
+            .listActions(['edit','delete']);
         /*
          * Tag section
          *

@@ -13,6 +13,7 @@ use Quiz\Commands\Exam\ExamUpdateCommand;
 
 use Quiz\Http\Requests\Exam\ExamCheckRequest;
 
+use Quiz\Http\Requests\ExamDeleteRequest;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\lib\Repositories\History\HistoryRepository as History;
 
@@ -158,10 +159,12 @@ class ExamV2Controller extends APIController {
 	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($exam)
+	public function destroy($exam, ExamDeleteRequest $request)
 	{
-//        $test->delete();
-        return 'Deleted';
+        if (! $exam->delete())
+            return response()->api()->errorInternalError('Error happpen during delete this exam');
+
+        return response('',204);
 	}
 
 }

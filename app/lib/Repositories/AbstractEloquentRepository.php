@@ -166,6 +166,9 @@ abstract class AbstractEloquentRepository {
 
     public function get($array = array())
     {
+        if (is_null($array))
+            return $this->model->get();
+
         return $this->model->get($array = array());
     }
 

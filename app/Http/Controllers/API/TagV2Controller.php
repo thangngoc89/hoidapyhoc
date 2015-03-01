@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Quiz\Commands\API\TagAutoCompleteCommand;
 use Quiz\Http\Requests\API\TagDeleteRequest;
 use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Quiz\lib\API\Tag\TagTransformers;
@@ -66,24 +67,10 @@ class TagV2Controller extends APIController {
         //
     }
 
-    /**
-     * Return an array of tag base on query
-     *
-     * @param $query
-     */
-    public function search($query)
+    public function autoComplete($query)
     {
-        #TODO: Add serialize here (for search accurate)
-        $tags = $this->tag->searchByName($query)->paginate(20);
-
-        return response()->api()->withPaginator($tags, new TagTransformers());
-    }
-
-    public function search2($query)
-    {
+        $tags = $this->dispatch(new TagAutoCompleteCommand($query));
         $redis = \Redis::connection();
-
-//        $redis->zAdd('tagsAutocomplete','0','member','0', 'members');
 
         $store = (\Input::get('store') == 'true') ? true : false;
 

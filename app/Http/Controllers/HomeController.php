@@ -87,7 +87,7 @@ class HomeController extends Controller {
             $history = $history->count();
             $video = $video->count();
 
-            $stat = [$user,$test,$history, $video];
+            $stat = [$user, $test, $history, $video];
             \Cache::put($key, $stat, 30);
         }
         return view('site.stat', compact('stat'));
@@ -102,6 +102,7 @@ class HomeController extends Controller {
 
     public function cleanCache(TagRepository $tagRepository)
     {
+        \Log::alert('Error');
 
     }
 

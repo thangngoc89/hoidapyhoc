@@ -16,6 +16,7 @@ class LogServiceProvider extends ServiceProvider {
         $this->bootChromePHP($monolog);
 
         $this->bootSlack($monolog);
+
 	}
 	/**
 	 * Register the application services.
@@ -45,10 +46,11 @@ class LogServiceProvider extends ServiceProvider {
     {
         $slackHandler = new \Monolog\Handler\SlackHandler(
             'xoxp-3624260307-3624260313-3865278269-1baa67',
-            '#general'
+            'general'
         );
         $monolog->pushHandler($slackHandler);
         $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
+        $slackHandler->setLevel(100);
     }
 
 }

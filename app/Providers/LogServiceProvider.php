@@ -50,7 +50,6 @@ class LogServiceProvider extends ServiceProvider {
         );
         $monolog->pushHandler($slackHandler);
         $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
-        $slackHandler->setLevel(100);
     }
 
 }

@@ -3,8 +3,7 @@
 use Illuminate\Http\Request;
 use Quiz\Http\Requests\API\RoleCreateRequest;
 use Quiz\Http\Requests\API\RoleUpdateRequest;
-use Quiz\Models\Enstrust\Role;
-use Quiz\Models\Enstrust\Permission;
+use Quiz\Models\Role;
 use Quiz\lib\API\Role\RoleTransformers;
 
 class RoleV2Controller extends APIController {

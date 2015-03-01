@@ -25,8 +25,8 @@ class RouteServiceProvider extends ServiceProvider {
         $router->model('exams', \Quiz\Models\Exam::class);
         $router->model('quiz', \Quiz\Models\Exam::class);
         $router->model('users', \Quiz\Models\User::class);
-        $router->model('roles', \Quiz\Models\Enstrust\Role::class);
-        $router->model('permissions', \Quiz\Models\Enstrust\Permission::class);
+        $router->model('roles', \Quiz\Models\Role::class);
+        $router->model('permissions', \Quiz\Models\Permission::class);
         $router->model('tags', \Quiz\lib\Tagging\Tag::class);
         $router->model('testimonials', \Quiz\Models\Testimonial::class);
         $router->model('videos', \Quiz\Models\Video::class);

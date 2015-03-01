@@ -1,7 +1,7 @@
 <?php namespace Quiz\lib\API\Role;
 
 use League\Fractal\TransformerAbstract;
-use Quiz\Models\Enstrust\Role;
+use Quiz\Models\Role;
 
 class RoleTransformers extends TransformerAbstract {
 

@@ -21,7 +21,8 @@
 		"ellipsesynergie/api-response": "0.9.*@dev",
 		"rap2hpoutre/laravel-log-viewer": "0.1.*",
 		"sofa/revisionable": "dev-master",
-		"laracasts/presenter": "dev-master"
+		"laracasts/presenter": "dev-master",
+        "zizaco/entrust": "dev-laravel-5"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
@@ -35,8 +36,7 @@
 			"database"
 		],
 		"psr-4": {
-			"Quiz\\": "app/",
-            "Zizaco\\Entrust\\": "app/lib/Entrust"
+			"Quiz\\": "app/"
 		}
 	},
 	"autoload-dev": {

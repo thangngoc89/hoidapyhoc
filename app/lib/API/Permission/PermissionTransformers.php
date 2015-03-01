@@ -1,7 +1,7 @@
 <?php namespace Quiz\lib\API\Permission;
 
 use League\Fractal\TransformerAbstract;
-use Quiz\Models\Enstrust\Permission;
+use Quiz\Models\Permission;
 
 class PermissionTransformers extends TransformerAbstract {
 

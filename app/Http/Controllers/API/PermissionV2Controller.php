@@ -1,7 +1,7 @@
 <?php namespace Quiz\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Quiz\Models\Enstrust\Permission;
+use Quiz\Models\Permission;
 
 use Quiz\Http\Requests\API\PermissionCreateRequest;
 use Quiz\Http\Requests\API\PermissionDeleteRequest;

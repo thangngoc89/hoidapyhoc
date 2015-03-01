@@ -50,8 +50,10 @@ class Tag extends Eloquent {
 	
 	public function save(array $options = array()) {
 		$validator = \Validator::make(
-			array('name' => $this->name, 'description' => $this->description),
-			array('name' => 'required|min:1')
+			[
+                'name' => $this->name,
+            ],
+			config('tagging.rules')
 		);
 		
 		if($validator->passes()) {
@@ -60,9 +62,10 @@ class Tag extends Eloquent {
 			
 			$this->slug = call_user_func($normalizer, $this->name);
 			parent::save($options);
-		} else {
-			throw new \Exception('Tag Name is required');
 		}
+//        else {
+//			throw new \Exception('Tag Name is required');
+//		}
 	}
 
     public function count() {

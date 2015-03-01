@@ -221,7 +221,7 @@
                 nga.field('thumb'),
                 nga.field('duration'),
             ])
-            .actions(['list']);
+            .actions(['list','delete']);
 
         video.showView()
             .fields([

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "16409de470b30eedc58ac70d53611af9",
+    "hash": "1f85acfb5428c6074d4f6dcc36debf31",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1468,6 +1468,52 @@
                 "tokenizer"
             ],
             "time": "2015-01-26 23:07:39"
+        },
+        {
+            "name": "laracasts/presenter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laracasts/Presenter.git",
+                "reference": "b284f3137f990efd6e95df49d254f1ccc4541e92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laracasts/Presenter/zipball/b284f3137f990efd6e95df49d254f1ccc4541e92",
+                "reference": "b284f3137f990efd6e95df49d254f1ccc4541e92",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpspec/phpspec": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Laracasts\\Presenter": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Way",
+                    "email": "jeffrey@laracasts.com"
+                }
+            ],
+            "description": "Simple view presenters",
+            "keywords": [
+                "laravel",
+                "presenter",
+                "view"
+            ],
+            "time": "2014-09-13 13:18:07"
         },
         {
             "name": "laravel/framework",
@@ -4861,6 +4907,7 @@
         "nicolaslopezj/searchable": 20,
         "ellipsesynergie/api-response": 20,
         "sofa/revisionable": 20,
+        "laracasts/presenter": 20,
         "barryvdh/laravel-debugbar": 20,
         "barryvdh/laravel-ide-helper": 20,
         "filp/whoops": 20

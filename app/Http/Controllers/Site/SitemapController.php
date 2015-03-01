@@ -47,7 +47,9 @@ class SitemapController extends Controller {
 	 */
 	public function index($sitemap, Request $request, Cache $cache)
 	{
-        $key = $request->url();
+        $key = md5($request->url());
+
+        $cache = $cache->driver('file');
 
         if ($cache->has($key))
             return $cache->get($key);
@@ -64,11 +66,14 @@ class SitemapController extends Controller {
 
     /**
      * @param $sitemap
+     *
+     * return mixed
      */
     private function generateSitemap($sitemap)
     {
         try {
             $sitemap = Str::camel($sitemap);
+
             return $this->{$sitemap}();
 
         } catch (\Exception $e) {
@@ -104,7 +109,7 @@ class SitemapController extends Controller {
      */
     public function sitemapTags()
     {
-        $tags = $this->tag->get();
+        $tags = $this->tag->all();
         return view('site.sitemap.tags',compact('tags'))->render();
     }
 
@@ -114,7 +119,7 @@ class SitemapController extends Controller {
      */
     public function sitemapVideos()
     {
-        $videos = $this->video->get();
+        $videos = $this->video->all();
         return view('site.sitemap.videos',compact('videos'))->render();
     }
 
@@ -124,7 +129,7 @@ class SitemapController extends Controller {
      */
     public function sitemapUsers()
     {
-        $users = $this->user->get();
+        $users = $this->user->all();
         return view('site.sitemap.users',compact('users'))->render();
     }
 }

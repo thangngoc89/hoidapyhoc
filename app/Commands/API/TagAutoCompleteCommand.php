@@ -16,7 +16,6 @@ class TagAutoCompleteCommand extends Command {
      */
 	public function __construct($query)
 	{
-		//
         $this->query = $query;
     }
 

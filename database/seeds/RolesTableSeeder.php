@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Quiz\Models\Enstrust\Role;
+use Quiz\Models\Role;
 use Quiz\Models\User;
 
 class RolesTableSeeder extends Seeder {

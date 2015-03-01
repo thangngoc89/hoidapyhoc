@@ -146,6 +146,7 @@ return [
         'Spatie\Backup\BackupServiceProvider',
         'EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider',
         'Sofa\Revisionable\Laravel\FiveServiceProvider',
+        'Zizaco\Entrust\EntrustServiceProvider',
         /*
          * Dev
          */
@@ -213,6 +214,7 @@ return [
         'Slugify'   => 'Cocur\Slugify\Bridge\Laravel\SlugifyFacade',
         'Image'     => 'Intervention\Image\Facades\Image',
         'Date'      => 'Jenssegers\Date\Date',
+        'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
 	],
 
 ];

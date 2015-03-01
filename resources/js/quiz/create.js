@@ -454,7 +454,7 @@
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/api/v2/tags/search2/' + encodeURIComponent(query),
+                    url: '/api/v2/tags/autocomplete/' + encodeURIComponent(query),
                     type: 'GET',
                     error: function() {
                         callback();

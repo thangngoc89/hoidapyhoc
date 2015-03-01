@@ -33,7 +33,7 @@ class TagFillRedisAutoCompleteHandler {
 	{
 		$sortedSetName = $command->sortedSetName;
 
-        $tags = $this->tag->orderBy('name')->get('name');
+        $tags = $this->tag->orderBy('name')->get();
 
         Redis::pipeline(function($pipe) use ($sortedSetName, $tags)
         {

@@ -69,30 +69,17 @@ class TagV2Controller extends APIController {
 
     public function autoComplete($query)
     {
-        $tags = $this->dispatch(new TagAutoCompleteCommand($query));
-        $redis = \Redis::connection();
+        $items = $this->dispatch(new TagAutoCompleteCommand($query));
 
-        $store = (\Input::get('store') == 'true') ? true : false;
-
-        if ($store)
-        {
-            $tags = $this->tag->orderBy('name')->get();
-
-            foreach ($tags as $tag)
-            {
-                $score = '0';
-                $member = $tag->name;
-                $redis->zadd('tags', $store, $member);
-            }
-        }
-        $query = call_user_func(config('tagging.displayer'), $query);
-
-        $items = $redis->zrangebylex("tags","[$query","[$query\xff",Array("LIMIT","0","10"));
+        #TODO : Move this into fractal
 
         $ret = [];
         foreach($items as $item)
         {
-            $ret[] = ['name' => $item];
+            if (is_array($item))
+                $ret[] = ['name' => $item['name']];
+            else
+                $ret[] = ['name' => $item];
         }
 
         return response()->json(['data' => $ret]);

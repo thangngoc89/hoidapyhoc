@@ -46,7 +46,7 @@ interface BaseRepository {
 
     public function has($relation);
 
-    public function get();
+    public function get($array = array());
 
     public function paginate($number);
 

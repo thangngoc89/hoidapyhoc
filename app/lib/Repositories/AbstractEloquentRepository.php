@@ -164,9 +164,9 @@ abstract class AbstractEloquentRepository {
         return $this->model->has($relation);
     }
 
-    public function get()
+    public function get($array = array())
     {
-        return $this->model->get();
+        return $this->model->get($array = array());
     }
 
     public function paginate($number)

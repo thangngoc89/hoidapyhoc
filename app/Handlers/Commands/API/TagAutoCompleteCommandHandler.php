@@ -83,7 +83,9 @@ class TagAutoCompleteCommandHandler {
     private function getResultFromRedis()
     {
         $limit = (string) $this->limit;
-        $$this->result = $this->redis->zrangebylex("tags","[$this->query","[$this->query\xff",["LIMIT","0",$limit]);
+        $query = $this->query;
+
+        $this->result = $this->redis->zrangebylex($this->redisCard,"[$query","[$query\xff",["LIMIT","0",$limit]);
     }
 
     /**

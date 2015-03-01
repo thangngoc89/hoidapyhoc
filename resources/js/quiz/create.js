@@ -56,7 +56,7 @@
         $ele.description.val(test.description);
         $ele.content.html(test.content);
 
-        $ele.begin.val(parseInt(test.beginFrom));
+        $ele.begin.val(parseInt(test.begin));
         $ele.time.val(parseInt(test.thoigian));
 
         if(test.file)
@@ -229,7 +229,10 @@
     function setupQuestion()
     {
         if (global.data.test)
-            addQuestion(global.data.test.questionsCount,global.data.test.questions);
+        {
+            questionsCount = global.data.test.questions.length;
+            addQuestion(questionsCount,global.data.test.questions);
+        }
         else
             addQuestion(5,false);
     }

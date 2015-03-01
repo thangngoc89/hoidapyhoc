@@ -37,8 +37,9 @@ class ExamTransformers extends TransformerAbstract {
             'description'   => (string) $exam->description,
             'content'       => (string) $exam->content,
             'thoigian'      => (int) $exam->thoigian,
-            'beginFrom'     => (int) $exam->begin,
+            'begin'         => (int) $exam->begin,
             'tags'          => $exam->tagged->lists('name'),
+            'tags_id'       => $exam->tagged->lists('id'),
             'approved'      => (boolean) $exam->is_approve,
             #TODO: Drop this key, can count via array
             'questionsCount'=> (int) $exam->questions_count,

@@ -13,6 +13,7 @@
     }]);
 
     app.config(function(RestangularProvider) {
+
         RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
             if (operation == "getList") {
                 response.totalCount = data.meta.pagination.total;
@@ -48,6 +49,7 @@
             }
             return value.length > limit ? value.substr(0, limit) + '...' : value;
         }
+
         var nga = NgAdminConfigurationProvider;
 
         var app = nga.application('Hỏi Đáp Y Học')
@@ -185,7 +187,7 @@
             .icon('<span class="fa fa-youtube"></span>');
 
         video.dashboardView()
-            .title('New Users')
+            .title('New Videos')
             .sortField('id')
             .sortDir('DESC')
             .order(1)
@@ -202,7 +204,6 @@
                 nga.field('tags', 'reference_many')
                     .targetEntity(tag)
                     .targetField(nga.field('name'))
-                    .perPage(30)
                     .singleApiCall(function (tagIds) {
                         return { 'id': tagIds };
                     }),
@@ -252,9 +253,50 @@
 
         exam.listView()
             .fields([
-                nga.field('name')
+                nga.field('name'),
+                nga.field('tags_id', 'reference_many')
+                    .label('Tags')
+                    .targetEntity(tag)
+                    .targetField(nga.field('name'))
+                    .perPage(30)
+                    .singleApiCall(function (tagIds) {
+                        return { 'id': tagIds };
+                    }),
+                nga.field('created_at', 'date').editable(false)
             ])
-            .listActions(['edit','delete']);
+            .listActions(['edit','show','delete']);
+
+        exam.editionView()
+            .title('Edit exam "{{ entry.values.name }}"')
+            .fields([
+                nga.field('name'),
+                nga.field('description'),
+                nga.field('content','wysiwyg'),
+                nga.field('questions','json'),
+                nga.field('file','json'),
+                nga.field('thoigian','number')
+                    .label('Time'),
+                nga.field('begin','number')
+                    .label('Begin From'),
+                nga.field('tags'),
+                nga.field('created_at', 'date').editable(false)
+
+            ])
+            .actions(['list','show','delete']);
+
+        exam.showView()
+            .title('View exam info "{{ entry.values.name }}"')
+            .fields([
+                exam.editionView().fields(),
+                nga.field('tags_id', 'reference_many')
+                    .label('Tags')
+                    .targetEntity(tag)
+                    .targetField(nga.field('name'))
+                    .perPage(30)
+                    .singleApiCall(function (tagIds) {
+                        return { 'id': tagIds };
+                    }),
+            ]);
         /*
          * Tag section
          *

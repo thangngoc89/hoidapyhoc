@@ -40,7 +40,7 @@ class TagFillRedisAutoCompleteHandler {
             foreach ($tags as $tag)
             {
                 $score = '0';
-                $member = $tag->name;
+                $member = $tag->slug.":".$tag->name;
                 $pipe->zadd($sortedSetName, $score, $member);
             }
         });

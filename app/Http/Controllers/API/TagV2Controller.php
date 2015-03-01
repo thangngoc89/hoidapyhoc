@@ -79,7 +79,10 @@ class TagV2Controller extends APIController {
             if (is_array($item))
                 $ret[] = ['name' => $item['name']];
             else
+            {
+                $item = explode(':', $item)[1];
                 $ret[] = ['name' => $item];
+            }
         }
 
         return response()->json(['data' => $ret]);

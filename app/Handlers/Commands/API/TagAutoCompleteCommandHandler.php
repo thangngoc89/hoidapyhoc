@@ -70,8 +70,8 @@ class TagAutoCompleteCommandHandler {
      */
     private function setQuery($query)
     {
-        // Normalize query string
-        $query = call_user_func(config('tagging.displayer'), $query);
+        // Normalize query string (creating slug)
+        $query = call_user_func(config('tagging.normalizer'), $query);
 
         // Set query string
         $this->query = $query;

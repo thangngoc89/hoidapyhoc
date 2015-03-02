@@ -64,7 +64,7 @@ class Tag extends Eloquent {
 			parent::save($options);
 		}
         else {
-			\Log::alert('Validation error for tag name' . $this->name);
+			\Log::alert('Validation error for tag name ' . $this->name);
 		}
 	}
 

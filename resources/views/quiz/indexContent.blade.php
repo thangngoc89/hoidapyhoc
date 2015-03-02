@@ -37,28 +37,28 @@
 
                  <div class="media-body media--conversation__body">
                      <h5 class="media-heading media--conversation__heading">
-                         <a href="{{ $exam->link() }}" title="{{ $exam->name }}">{{ str_limit($exam->name,45) }}</a>
+                         <a href="{{ $exam->present()->link }}" title="{{ $exam->name }}">{{ str_limit($exam->name,45) }}</a>
                      </h5>
                      @foreach ($exam->tagged as $examTag)
-                        <a href="/tag/{{ $examTag->slug }}" class="post-tag" title="" rel="tag">{{ $examTag->name }}</a>
+                        <a href="{{ $examTag->present()->link }}" class="post-tag" title="" rel="tag">{{ $examTag->name }}</a>
                      @endforeach
                      <span class="text-muted label-small last-updated">
-                         đăng vào <a href="{{ $exam->link() }}">{{ $exam->created_at->diffForHumans() }}</a>
+                         đăng vào <a href="{{ $exam->present()->link }}">{{ $exam->present()->createdDate }}</a>
                          &nbsp;
-                         <a href="{{ $exam->link() }}" title="{{ $exam->questions_count }} câu hỏi">
-                            <i class="fa fa-puzzle-piece"></i> {{ $exam->questions_count }}</a>
-                         &nbsp; <a href="{{ $exam->link() }}" title="{{ $exam->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $exam->thoigian }}</a>
+                         <a href="{{ $exam->present()->link }}" title="{{ $exam->questionsCount }} câu hỏi">
+                            <i class="fa fa-puzzle-piece"></i> {{ $exam->questionsCount }}</a>
+                         &nbsp; <a href="{{ $exam->present()->link }}" title="{{ $exam->thoigian }} phút"><i class="fa fa-clock-o"></i> {{ $exam->thoigian }}</a>
                      </span>
                  </div>
 
                  <div class="media--conversation__meta">
                      <span class="media--conversation__replies">
-                         <a href="{{ $exam->link() }}">{{ $exam->countHistory() }}</a>lượt thi
+                         <a href="{{ $exam->present()->link }}">{{ $exam->countHistory() }}</a>lượt thi
                      </span>
                  </div>
                 <div class="media--conversation__meta hide-mobile">
                      <span class="media--conversation__replies">
-                         <a href="{{ $exam->link() }}">{{ $exam->views }}</a>lượt xem
+                         <a href="{{ $exam->present()->link }}">{{ $exam->views }}</a>lượt xem
                      </span>
                 </div>
             </article>

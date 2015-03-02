@@ -63,9 +63,9 @@ class Tag extends Eloquent {
 			$this->slug = call_user_func($normalizer, $this->name);
 			parent::save($options);
 		}
-//        else {
-//			throw new \Exception('Tag Name is required');
-//		}
+        else {
+			\Log::alert('Validation error for tag name' . $this->name);
+		}
 	}
 
     public function count() {

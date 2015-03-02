@@ -2,12 +2,16 @@ function quizDoInt()
 {
     handleTabs();
     resize_do();
+    sticky();
+
     $(window).on('resize', (function(){
         resize_do();
+        sticky();
     }))
     .on('scroll', (function(){
         resize_do();
     }));
+
     $('#btnSheet').on('click', function(){
         $('.quiz-sidebar-section').slideToggle();
     });
@@ -34,10 +38,6 @@ function quizDoInt()
         toastr.info('Bắt đầu làm bài thôi nào ^_^');
         choiceDo();
         setCounter();
-
-        // Go to do tab
-
-        sticky();
 
         global.preventClose = true;
         preventClosing();

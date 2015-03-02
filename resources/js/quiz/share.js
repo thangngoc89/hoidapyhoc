@@ -3,6 +3,8 @@ function sticky()
     width=parseInt($(window).width());
 
     if(width>767) {
+        $('quiz-sidebar').stickit('destroy');
+
         $('#quiz-sidebar').stickit({
             scope: StickScope.Parent,
             className: 'stick',
@@ -16,7 +18,7 @@ function resize_do(){
     width=parseInt($(window).width());
     scrollTop=parseInt($(window).scrollTop());
     if(width<=767){
-        if(scrollTop>=100){
+        if(scrollTop>=50){
             $('#quiz-sidebar').addClass('quiz-side-fixed');
         }
         else{

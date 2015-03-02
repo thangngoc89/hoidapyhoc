@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Quiz\lib\Helpers\LocalizationDateTrait;
 use Sofa\Revisionable\Laravel\RevisionableTrait;
+use Laracasts\Presenter\PresentableTrait;
+use Quiz\lib\API\Exam\ExamPresenter;
 
 class Exam extends Model {
 
@@ -15,8 +17,7 @@ class Exam extends Model {
     use LocalizationDateTrait;
     use SearchableTrait;
     use RevisionableTrait;
-
-    protected $table = 'exams';
+    use PresentableTrait;
 
     protected $fillable = ['name','content','begin','thoigian','description','is_file','file_id','questions'];
     protected $guarded = ['views'];
@@ -46,6 +47,8 @@ class Exam extends Model {
         'deleted_at',
         'views'
     ];
+
+    protected $presenter = ExamPresenter::class;
 
     public static function boot()
     {
@@ -87,27 +90,20 @@ class Exam extends Model {
         return $this->belongsTo('Quiz\Models\User');
     }
 
-
-    // These relationships were kept for further migration
-//    public function category()
-//    {
-//        return $this->belongsTo('Quiz\Models\Category','cid');
-//    }
-//    public function question()
-//    {
-//        return $this->hasMany('Quiz\Models\Question','test_id');
-//    }
-
-
+    /**
+     * Return collection of tags related to the tagged model
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function tagged() {
+        return $this->morphToMany('Quiz\Models\Tag', 'taggable');
+    }
 
     /*
      * Frontend Content
      */
     public function link($type = null)
     {
-//        if ($type == 'bangdiem')
-//            return '/quiz/bang-diem/'.$this->slug.'/'.$this->id;
-
         if ($type == 'edit')
             return '/quiz/'.$this->id.'/edit';
 

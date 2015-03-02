@@ -9,15 +9,6 @@ use Quiz\lib\Tagging\Tag;
 trait TaggableTrait {
 
 	/**
-	 * Return collection of tags related to the tagged model
-	 *
-	 * @return \Illuminate\Database\Eloquent\Collection
-	 */
-	public function tagged() {
-		return $this->morphToMany('Quiz\lib\Tagging\Tag', 'taggable');
-	}
-	
-	/**
 	 * Perform the action of tagging the model with the given string
 	 *
 	 * @param $tagName string or array

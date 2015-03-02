@@ -1,7 +1,7 @@
 <?php namespace Quiz\lib\Repositories\Tag;
 
 use Quiz\lib\Repositories\AbstractEloquentRepository;
-use Quiz\lib\Tagging\Tag;
+use Quiz\Models\Tag;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 
 class EloquentTagRepository extends AbstractEloquentRepository implements TagRepository {

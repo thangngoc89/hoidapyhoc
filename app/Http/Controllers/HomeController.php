@@ -1,6 +1,5 @@
 <?php namespace Quiz\Http\Controllers;
 
-use Illuminate\Contracts\Filesystem\Factory as Filesystem;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\History\HistoryRepository;
 use Quiz\lib\Repositories\Tag\TagRepository;
@@ -12,7 +11,6 @@ use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
 use Quiz\Models\Video;
 use Quiz\Services\Leecher\CSYK\GetQuiz;
-use RedCard;
 
 class HomeController extends Controller {
 
@@ -102,8 +100,7 @@ class HomeController extends Controller {
 
     public function cleanCache(TagRepository $tagRepository)
     {
-        \Log::alert('Error');
-
+//        dd(class_exists('Quiz\lib\Tag\TagPresenter'));
     }
 
 }

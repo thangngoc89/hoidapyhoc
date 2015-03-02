@@ -10,5 +10,4 @@
 {{--if (raf) raf(cb);--}}
 {{--else window.addEventListener('load', cb);--}}
 {{--</script>--}}
-
-{!! HTML::style($link) !!}
+<link media="all" type="text/css" rel="stylesheet" href="{{ $link }}">

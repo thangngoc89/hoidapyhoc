@@ -11,7 +11,7 @@ trait TaggableTrait {
 	/**
 	 * Return collection of tags related to the tagged model
 	 *
-	 * @return Illuminate\Database\Eloquent\Collection
+	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
 	public function tagged() {
 		return $this->morphToMany('Quiz\lib\Tagging\Tag', 'taggable');

@@ -39,8 +39,8 @@
                      <h5 class="media-heading media--conversation__heading">
                          <a href="{{ $exam->link() }}" title="{{ $exam->name }}">{{ str_limit($exam->name,45) }}</a>
                      </h5>
-                     @foreach ($exam->tagged as $examag)
-                        <a href="/tag/{{ $examag->slug }}" class="post-tag" title="" rel="tag">{{ $examag->name }}</a>
+                     @foreach ($exam->tagged as $examTag)
+                        <a href="/tag/{{ $examTag->slug }}" class="post-tag" title="" rel="tag">{{ $examTag->name }}</a>
                      @endforeach
                      <span class="text-muted label-small last-updated">
                          đăng vào <a href="{{ $exam->link() }}">{{ $exam->created_at->diffForHumans() }}</a>

@@ -4,6 +4,12 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"type": "project",
+    "repositories": [
+        {
+            "type":"vcs",
+            "url":"http://github.com/thangngoc89/laravel-date"
+        }
+    ],
 	"require": {
 		"laravel/framework": "5.0.x",
         "illuminate/html": "5.0.x",
@@ -13,7 +19,7 @@
 		"cocur/slugify": "dev-master",
 		"predis/predis": "~1.1@dev",
 		"intervention/image": "master",
-		"jenssegers/date": "dev-master",
+		"jenssegers/date": "dev-fix-vi-lang",
 		"graham-campbell/htmlmin": "~3.0@dev",
 		"league/flysystem-aws-s3-v2": "~1.0@dev",
 		"spatie/laravel-backup": "dev-master",

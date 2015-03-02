@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6887cf9a3cd527998dce91abcfd9b738",
+    "hash": "5648af8ec04018edf523922b3ed10698",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -765,12 +765,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ellipsesynergie/api-response.git",
-                "reference": "bad1a7859d4dd201ef9514eda9023da7d89fbf5f"
+                "reference": "198e2655f8966477e8a9dc9553ad55c9f3ae6056"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ellipsesynergie/api-response/zipball/bad1a7859d4dd201ef9514eda9023da7d89fbf5f",
-                "reference": "bad1a7859d4dd201ef9514eda9023da7d89fbf5f",
+                "url": "https://api.github.com/repos/ellipsesynergie/api-response/zipball/198e2655f8966477e8a9dc9553ad55c9f3ae6056",
+                "reference": "198e2655f8966477e8a9dc9553ad55c9f3ae6056",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +817,7 @@
                 "fractal",
                 "json"
             ],
-            "time": "2015-02-27 18:30:14"
+            "time": "2015-03-02 16:53:23"
         },
         {
             "name": "graham-campbell/htmlmin",
@@ -1365,16 +1365,16 @@
         },
         {
             "name": "jenssegers/date",
-            "version": "dev-master",
+            "version": "dev-fix-vi-lang",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jenssegers/laravel-date.git",
-                "reference": "d30ab1b3aeb42eba124f31efd6ad15e411433958"
+                "url": "https://github.com/thangngoc89/laravel-date.git",
+                "reference": "56bc0e60ed97a118b0a324b091123ec37138e6c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/laravel-date/zipball/d30ab1b3aeb42eba124f31efd6ad15e411433958",
-                "reference": "d30ab1b3aeb42eba124f31efd6ad15e411433958",
+                "url": "https://api.github.com/repos/thangngoc89/laravel-date/zipball/56bc0e60ed97a118b0a324b091123ec37138e6c2",
+                "reference": "56bc0e60ed97a118b0a324b091123ec37138e6c2",
                 "shasum": ""
             },
             "require": {
@@ -1392,7 +1392,6 @@
                     "Jenssegers\\Date": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1409,7 +1408,10 @@
                 "laravel",
                 "time"
             ],
-            "time": "2015-02-25 12:41:21"
+            "support": {
+                "source": "https://github.com/thangngoc89/laravel-date/tree/fix-vi-lang"
+            },
+            "time": "2015-03-02 17:34:51"
         },
         {
             "name": "jeremeamia/SuperClosure",

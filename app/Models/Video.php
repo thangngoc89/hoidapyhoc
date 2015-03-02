@@ -47,7 +47,14 @@ class Video extends Model {
         return "/video/".$this->slug."/".$this->id;
     }
 
+    /**
+     * Name auto-mutator
+     */
+    public function setTitleAttribute($value) {
+        $displayer = config('tagging.displayer');
+        $displayer = empty($displayer) ? '\Illuminate\Support\Str::title' : $displayer;
 
-
+        $this->attributes['title'] = call_user_func($displayer, $value);
+    }
 
 }

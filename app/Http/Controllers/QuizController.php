@@ -68,7 +68,7 @@ class QuizController extends Controller {
         $t->load('tagged');
 
         if ($t->slug != $slug)
-            return redirect()->to($t->link());
+            return redirect()->to($t->present()->link);
 
         $haveHistory = false;
 

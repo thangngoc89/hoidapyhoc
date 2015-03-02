@@ -162,6 +162,7 @@ return [
 		'Quiz\Providers\ConfigServiceProvider',
 		'Quiz\Providers\EventServiceProvider',
 		'Quiz\Providers\RouteServiceProvider',
+		'Quiz\Providers\LogServiceProvider',
 	],
 
 	/*

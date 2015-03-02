@@ -1,10 +1,9 @@
 <?php namespace Quiz\lib\Composers;
 
-use Quiz\lib\Tagging\Tag;
+use Quiz\lib\Repositories\Tag\TagRepository as Tag;
 use Illuminate\Contracts\View\View;
 
 class TagsListComposer {
-
 
     private $tag;
     /**

@@ -43,8 +43,8 @@ class ExamTransformers extends TransformerAbstract {
     {
         return [
             'id'        => $exam->id,
-            'url'       => $exam->link(),
-            'editUrl'   => $exam->link('edit'),
+            'url'       => $exam->present()->link,
+            'editUrl'   => $exam->present()->link('edit'),
         ];
     }
 

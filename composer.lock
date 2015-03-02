@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5648af8ec04018edf523922b3ed10698",
+    "hash": "3fe25901734fbda371fbeca0abdef780",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1365,16 +1365,16 @@
         },
         {
             "name": "jenssegers/date",
-            "version": "dev-fix-vi-lang",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thangngoc89/laravel-date.git",
-                "reference": "56bc0e60ed97a118b0a324b091123ec37138e6c2"
+                "url": "https://github.com/jenssegers/laravel-date.git",
+                "reference": "c94babb5cf417151d6b54dfd4fd78d62f38cf5c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thangngoc89/laravel-date/zipball/56bc0e60ed97a118b0a324b091123ec37138e6c2",
-                "reference": "56bc0e60ed97a118b0a324b091123ec37138e6c2",
+                "url": "https://api.github.com/repos/jenssegers/laravel-date/zipball/c94babb5cf417151d6b54dfd4fd78d62f38cf5c1",
+                "reference": "c94babb5cf417151d6b54dfd4fd78d62f38cf5c1",
                 "shasum": ""
             },
             "require": {
@@ -1392,6 +1392,7 @@
                     "Jenssegers\\Date": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1408,10 +1409,7 @@
                 "laravel",
                 "time"
             ],
-            "support": {
-                "source": "https://github.com/thangngoc89/laravel-date/tree/fix-vi-lang"
-            },
-            "time": "2015-03-02 17:34:51"
+            "time": "2015-03-02 18:19:30"
         },
         {
             "name": "jeremeamia/SuperClosure",

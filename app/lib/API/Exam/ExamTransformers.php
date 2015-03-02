@@ -18,15 +18,6 @@ class ExamTransformers extends TransformerAbstract {
         'user','file','tagged'
     ];
 
-    /**
-     * List of resources include by default
-     *
-     * @var array
-     */
-    protected $defaultIncludes = [
-        'file'
-    ];
-
     public function transform(Exam $exam)
     {
         return [
@@ -41,8 +32,7 @@ class ExamTransformers extends TransformerAbstract {
             'tags'          => $exam->tagged->lists('name'),
             'tags_id'       => $exam->tagged->lists('id'),
             'approved'      => (boolean) $exam->is_approve,
-            #TODO: Drop this key, can count via array
-            'questionsCount'=> (int) $exam->questions_count,
+            'file'          => $this->file($exam->file),
             'questions'     => $exam->questions,
             'created_at'    => (string) $exam->created_at,
             'updated_at'    => (string) $exam->updated_at
@@ -58,17 +48,21 @@ class ExamTransformers extends TransformerAbstract {
         ];
     }
 
-    /**
-     * Include File
-     *
-     * @return \League\Fractal\Resource\Item;
-     */
-    public function includeFile(Exam $exam)
+    private function file($upload)
     {
-        if ($exam->is_file)
-            return $this->item($exam->file, new FileTransformers());
+        if (is_null($upload))
+            return null;
 
-        return;
+        return [
+            'id'                => (int)$upload->id,
+            'name'              => (string) $upload->filename,
+            'original_filename' => (string) $upload->orginal_filename,
+            'link'              => (string) $upload->url(),
+            'mime'              => (string) $upload->mimetype,
+            'size'              => (int) $upload->size,
+            'extension'         => (string) $upload->extension,
+            'created_at'        => (string) $upload->created_at,
+        ];
     }
 
     /**

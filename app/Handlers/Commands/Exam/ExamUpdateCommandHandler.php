@@ -1,5 +1,6 @@
 <?php namespace Quiz\Handlers\Commands\Exam;
 
+use Illuminate\Auth\Guard;
 use Quiz\Commands\Exam\ExamUpdateCommand;
 
 use Illuminate\Queue\InteractsWithQueue;
@@ -9,16 +10,21 @@ use Quiz\Exceptions\ExamSaveException;
 use Quiz\Models\Exam;
 
 class ExamUpdateCommandHandler {
+    /**
+     * @var Guard
+     */
+    private $auth;
 
-	/**
-	 * Create the command handler.
-	 *
-	 * @return void
-	 */
-	public function __construct()
+    /**
+     * Create the command handler.
+     *
+     * @param Guard $auth
+     * @return \Quiz\Handlers\Commands\Exam\ExamUpdateCommandHandler
+     */
+	public function __construct(Guard $auth)
 	{
-		//
-	}
+        $this->auth = $auth;
+    }
 
 	/**
 	 * Handle the command.
@@ -32,30 +38,17 @@ class ExamUpdateCommandHandler {
         $request = $command->request;
         $exam = $command->exam;
 
-        \DB::beginTransaction();
+        $exam->fill($request->all());
 
-        try {
+        $exam->user_id_edited = $this->auth->user()->id;
 
-            $exam->fill($request->all());
+        if (count($request->questions) != $exam->questions_count)
+            throw new ApiException ("Questions are not equal");
 
-            $exam->user_id_edited = \Auth::user()->id;
+        if (!$exam->save())
+            throw new ApiException ("Can not update exam");
 
-            if (count($request->questions) != $exam->questions_count)
-                throw new ApiException ("Questions are not equal");
-
-            if (!$exam->save())
-                throw new ApiException ("Can not update exam");
-
-            $exam->retag($request->tags);
-
-       } catch (\Exception $e) {
-
-            \DB::rollback();
-
-            return false;
-        }
-
-        \DB::commit();
+        $exam->retag($request->tags);
 
         event( new ExamUpdatedEvent($exam));
 

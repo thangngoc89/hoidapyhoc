@@ -1,5 +1,6 @@
 <?php namespace Quiz\Handlers\Commands\Exam;
 
+use Illuminate\Contracts\Auth\Guard;
 use Quiz\Commands\Exam\ExamCreateCommand;
 
 use Illuminate\Queue\InteractsWithQueue;
@@ -8,16 +9,21 @@ use Quiz\Events\Exam\ExamCreatedEvent;
 use Quiz\Models\Exam;
 
 class ExamCreateCommandHandler {
+    /**
+     * @var Guard
+     */
+    private $auth;
 
     /**
      * Create the command handler.
      *
-     * @param array $attributes
+     * @param Guard $auth
+     * @internal param array $attributes
      * @return \Quiz\Handlers\Commands\Exam\ExamCreateCommandHandler
      */
-	public function __construct()
+	public function __construct(Guard $auth)
 	{
-
+        $this->auth = $auth;
     }
 
 	/**
@@ -30,27 +36,13 @@ class ExamCreateCommandHandler {
 	{
         $request = $command->request;
 
-        \DB::beginTransaction();
+        $exam = new Exam($request->all());
+        $exam->user_id = $this->auth->user()->id;
 
-        try {
+        if (!$exam->save())
+            throw new ApiException("Could not save exam");
 
-            $exam = new Exam($request->all());
-            $exam->user_id = \Auth::user()->id;
-            if (!$exam->save())
-                throw new ApiException("Could not save exam");
-
-            \Log::info($request->tags);
-
-            $exam->retag($request->tags);
-
-        } catch (\Exception $e) {
-
-            \DB::rollback();
-
-            return false;
-        }
-
-        \DB::commit();
+        $exam->retag($request->tags);
 
         event( new ExamCreatedEvent($exam) );
 

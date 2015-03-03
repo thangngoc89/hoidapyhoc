@@ -12,4 +12,8 @@ return [
      * Maximum tags per item
      */
     'maxTag'        => 5,
+    /*
+     * Redis sorted set name
+     */
+    'redisCard'     => 'tags_complete',
 ];

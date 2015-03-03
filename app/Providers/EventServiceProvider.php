@@ -22,15 +22,22 @@ class EventServiceProvider extends ServiceProvider {
         \Quiz\Events\Exam\ExamViewEvent::class => [
             \Quiz\Handlers\Events\IncreaseViewCount::class,
         ],
-        \Quiz\Events\Exam\ExamUpdatedEvent::class => [
-            \Quiz\Handlers\Events\Exam\RebakeHistoryScore::class,
-        ],
+//        \Quiz\Events\Exam\ExamUpdatedEvent::class => [
+//            \Quiz\Handlers\Events\Exam\RebakeHistoryScore::class,
+//        ],
         /** ------------------------------------------
          *  Video's events
          *  ------------------------------------------
          */
         \Quiz\Events\Video\VideoViewEvent::class => [
             \Quiz\Handlers\Events\IncreaseViewCount::class,
+        ],
+        /** ------------------------------------------
+         *  Tag's events
+         *  ------------------------------------------
+         */
+        \Quiz\Events\API\TagCreatedEvent::class => [
+            \Quiz\Handlers\Events\API\PushNewTagToRedisAutoComplete::class
         ],
 
         /** ------------------------------------------

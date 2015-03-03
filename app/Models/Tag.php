@@ -1,5 +1,6 @@
 <?php namespace Quiz\Models;
 
+use Quiz\Events\API\TagCreatedEvent;
 use Quiz\lib\Tagging\Tag as BaseTagModel;
 use Quiz\lib\API\Tag\TagPresenter;
 use Laracasts\Presenter\PresentableTrait;
@@ -23,6 +24,11 @@ class Tag extends BaseTagModel {
         static::saving(function()
         {
             \Cache::tags('tags')->flush();
+        });
+
+        static::created(function($tag)
+        {
+           event( new TagCreatedEvent($tag) );
         });
     }
 

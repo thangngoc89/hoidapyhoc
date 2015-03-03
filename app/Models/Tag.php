@@ -27,11 +27,6 @@ class Tag extends BaseTagModel {
         {
             \Cache::tags('tags')->flush();
         });
-
-        static::created(function($tag)
-        {
-           event( new TagCreatedEvent($tag) );
-        });
     }
 
     public function exams() {

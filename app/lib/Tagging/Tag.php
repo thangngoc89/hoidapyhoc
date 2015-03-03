@@ -2,6 +2,7 @@
 
 use Quiz\lib\Tagging\TaggingUtil;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Quiz\Events\API\TagCreatedEvent;
 
 class Tag extends Eloquent {
 
@@ -13,6 +14,16 @@ class Tag extends Eloquent {
 	public function __construct(array $attributes = array()) {
 		parent::__construct($attributes);
 	}
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($tag)
+        {
+            event( new TagCreatedEvent($tag) );
+        });
+    }
 
 	public function save(array $options = array()) {
 		$validator = \Validator::make(

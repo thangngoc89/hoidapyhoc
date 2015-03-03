@@ -3,7 +3,7 @@
 use Quiz\Events\Event;
 
 use Illuminate\Queue\SerializesModels;
-use Quiz\Models\Tag;
+use Quiz\lib\Tagging\Tag;
 
 class TagCreatedEvent extends Event {
 

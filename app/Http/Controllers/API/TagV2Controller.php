@@ -100,13 +100,4 @@ class TagV2Controller extends APIController {
         return response('',204);
 	}
 
-    public function store(Request $request)
-    {
-        $tag = $this->tag->fill($request->all());
-
-        $tag->save();
-
-    }
-
-
 }

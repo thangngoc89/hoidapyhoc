@@ -149,8 +149,8 @@ trait TaggableTrait {
         if (is_null($tag))
         {
             $tag = new Tag([
-                'name'=>call_user_func($displayer, $tagName),
-                'slug'=>$tagSlug,
+                'name' => call_user_func($displayer, $tagName),
+                'slug' => $tagSlug,
             ]);
             $tag = $this->tagged()->save($tag);
         }

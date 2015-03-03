@@ -6,7 +6,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 use Redis;
 
-class PushNewTagToRedisAutoComplete implements ShouldBeQueued{
+class PushNewTagToRedisAutoComplete implements ShouldBeQueued {
 
     private $redis;
 

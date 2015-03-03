@@ -48,6 +48,15 @@ class Video extends Model {
     }
 
     /**
+     * Return collection of tags related to the tagged model
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function tagged() {
+        return $this->morphToMany('Quiz\Models\Tag', 'taggable');
+    }
+
+    /**
      * Name auto-mutator
      */
     public function setTitleAttribute($value) {

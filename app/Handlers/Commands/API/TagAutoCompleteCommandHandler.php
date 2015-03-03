@@ -15,7 +15,7 @@ class TagAutoCompleteCommandHandler {
     private $redis;
     private $result;
     private $limit = 10;
-    private $redisCard = 'tags_complete';
+    private $redisCard;
     /**
      * @var TagRepository
      */
@@ -44,6 +44,8 @@ class TagAutoCompleteCommandHandler {
 	{
 		$this->setQuery($command->query);
 
+        $this->setRedisCard(config('tagging.redisCard'));
+
         $this->selectMethod();
 
         return $this->result;
@@ -59,7 +61,7 @@ class TagAutoCompleteCommandHandler {
         }
         else
         {
-            $this->dispatch( new TagFillRedisAutoComplete($this->redisCard) );
+            $this->dispatch( new TagFillRedisAutoComplete($this->getRedisCard()) );
             $this->getResultFromDB();
         }
     }
@@ -70,11 +72,27 @@ class TagAutoCompleteCommandHandler {
      */
     private function setQuery($query)
     {
-        // Normalize query string (creating slug)
-        $query = call_user_func(config('tagging.normalizer'), $query);
-
-        // Set query string
         $this->query = $query;
+    }
+
+    /**
+     * Make slug
+     *
+     * @param $query
+     */
+    private function serializeQueryForRedis()
+    {
+        $this->query = call_user_func(config('tagging.normalizer'), $this->query);
+    }
+
+    /**
+     * Make a displayer Str::title
+     *
+     * @param $query
+     */
+    private function serializeQueryForDb()
+    {
+        $this->query = call_user_func(config('tagging.displayer'), $this->query);
     }
 
     /**
@@ -82,10 +100,12 @@ class TagAutoCompleteCommandHandler {
      */
     private function getResultFromRedis()
     {
+        $this->serializeQueryForRedis();
+
         $limit = (string) $this->limit;
         $query = $this->query;
 
-        $this->result = $this->redis->zrangebylex($this->redisCard,"[$query","[$query\xff",["LIMIT","0",$limit]);
+        $this->result = $this->redis->zrangebylex($this->getRedisCard(),"[$query","[$query\xff",["LIMIT","0",$limit]);
     }
 
     /**
@@ -93,10 +113,28 @@ class TagAutoCompleteCommandHandler {
      */
     private function getResultFromDB()
     {
+        $this->serializeQueryForDb();
+
         $this->result = $this->tag->search($this->query)
                             ->take($this->limit)
                             ->get()
                             ->toArray();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRedisCard()
+    {
+        return $this->redisCard;
+    }
+
+    /**
+     * @param mixed $redisCard
+     */
+    public function setRedisCard($redisCard)
+    {
+        $this->redisCard = $redisCard;
     }
 
 }

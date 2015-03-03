@@ -30,13 +30,18 @@ class FillMissingUserInfo {
             $this->auth->loginUsingId(3, true);
 
         $path = $this->getRequestPath($request);
-        $ignorePaths = ['/files','/build','/_debugbar'];
+        $ignorePaths = ['/files','/build','/_debugbar','/auth/logout'];
 
         foreach($ignorePaths as $ignorePath)
         {
             if (starts_with($path, $ignorePath))
                 return $next($request);
         }
+
+        // Don't applied this middleware to un-reading request.
+        // The user won't able is post anything
+        if ( ! $this->isReading($request))
+            return $next($request);
 
         if ($this->auth->check() && ! $request->is('auth/edit'))
         {
@@ -57,6 +62,11 @@ class FillMissingUserInfo {
         $path = parse_url($url)['path'];
 
         return $path;
+    }
+
+    private function isReading($request)
+    {
+        return in_array($request->method(), ['HEAD', 'GET', 'OPTIONS']);
     }
 
 }

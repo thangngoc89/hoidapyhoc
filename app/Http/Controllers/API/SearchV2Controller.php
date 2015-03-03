@@ -5,8 +5,8 @@ use Quiz\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Quiz\lib\Repositories\Exam\ExamRepository;
-use Quiz\lib\Tagging\Tag;
-use Quiz\Models\Video;
+use Quiz\lib\Repositories\Tag\TagRepository as Tag;
+use Quiz\lib\Repositories\Video\VideoRepository as Video;
 
 class SearchV2Controller extends Controller {
     /**

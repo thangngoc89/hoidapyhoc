@@ -21,6 +21,8 @@ class Tag extends BaseTagModel {
 
     public static function boot()
     {
+        parent::boot();
+
         static::saving(function()
         {
             \Cache::tags('tags')->flush();

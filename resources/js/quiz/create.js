@@ -363,7 +363,7 @@
         $("div#images-uploader").dropzone({
             url: '/api/v2/files',
             paramName: "file",
-            headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
+            headers: {'X-CSRF-Token': $('meta[name="csrf"]').attr('content')},
             maxFilesize: 3, // MB
             parallelUploads: 1,
             acceptedFiles: 'image/*',
@@ -384,7 +384,7 @@
         $("div#pdf-uploader").dropzone({
             url: '/api/v2/files',
             paramName: "file",
-            headers: {'X-XSRF-Token': $('meta[name="csrf"]').attr('content')},
+            headers: {'X-CSRF-Token': $('meta[name="csrf"]').attr('content')},
             maxFilesize: 10,
             parallelUploads: 1,
             acceptedFiles: 'application/pdf',
@@ -432,7 +432,7 @@
                 type: "json"
             },
             headers: {
-                'X-XSRF-Token' : $('meta[name="csrf"]').attr('content')
+                'X-CSRF-Token' : $('meta[name="csrf"]').attr('content')
             }
         });
         $('a[href*="froala.com"]').closest('div').hide();

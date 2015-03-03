@@ -1,7 +1,8 @@
 $(function() {
+
     $.ajaxSetup({
         headers: {
-            'X-XSRF-Token': $('meta[name="csrf"]').attr('content')
+            'X-CSRF-Token': $('meta[name="csrf"]').attr('content'),
         }
     });
     $("img").unveil(200);

@@ -16,22 +16,7 @@ class VerifyCsrfToken extends BaseVerifier {
     {
         if ($request->is('admin/deploy'))
             return $next($request);
+
         return parent::handle($request, $next);
-    }
-
-    /**
-     * Determine if the session and input CSRF tokens match.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
-    protected function tokensMatch($request)
-    {
-        $token = $request->session()->token();
-
-        $header = $request->header('X-XSRF-Token');
-
-        return StringUtils::equals($token, $request->input('_token')) ||
-        ($header && StringUtils::equals($token, $this->encrypter->decrypt($header)));
     }
 }

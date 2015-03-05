@@ -62,6 +62,10 @@ class AppServiceProvider extends ServiceProvider {
             \Quiz\lib\Repositories\History\HistoryRepository::class,
             \Quiz\lib\Repositories\History\EloquentHistoryRepository::class
         );
+        $this->app->bind(
+            \Quiz\lib\Repositories\Profile\ProfileRepository::class,
+            \Quiz\lib\Repositories\Profile\EloquentProfileRepository::class
+        );
 	}
 
 }

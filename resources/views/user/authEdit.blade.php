@@ -30,8 +30,8 @@
                         {!! Form::label('username','Tên thành viên',['class' => 'col-md-4 control-label'] ) !!}
                         <div class="col-md-8">
                         {!! Form::text('username',$user->username, ['class' => 'form-control input-md',
-                                                        'required','pattern' => '^[A-Za-z0-9_]{3,20}$',
-                                                        'title' => 'Tên thành viên từ 3-20 kí tự, chỉ gồm kí tự, số và dấu _'
+                                                        'required','pattern' => '^[A-Za-z0-9]{3,20}$',
+                                                        'title' => 'Tên thành viên từ 3-20 kí tự, chỉ gồm chữ cáo và số'
                                                         ]) !!}
 
                         </div>
@@ -51,7 +51,7 @@
                     <div class="form-group row">
                         {!! Form::label('email','Email',['class' => 'col-md-4 control-label'] ) !!}
                         <div class="col-md-8">
-                        @if (empty($user->email))
+                        @if ( ! $user->email )
                             {!! Form::email('email',$user->email, ['class' => 'form-control input-md']) !!}
                         @else
                             {!! Form::email('email',$user->email, ['class' => 'form-control input-md', 'disabled' => 'disabled']) !!}

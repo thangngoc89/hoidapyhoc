@@ -61,7 +61,7 @@ class EloquentHistoryRepository extends AbstractEloquentRepository implements Hi
     public function recentDoneExam($userId, $limit = 5)
     {
         return $this->model->where('user_id',$userId)
-            ->with('exam')
+            ->with('exam.tagged')
             ->done()
             ->isFirst()
             ->orderBy('updated_at','DESC')

@@ -1,12 +1,12 @@
 <?php namespace Quiz\lib\Repositories\User;
 
 use Quiz\lib\Repositories\AbstractEloquentRepository;
-use Quiz\Models\Profile;
 use Quiz\Models\User;
+use Quiz\lib\Repositories\Profile\ProfileRepository as Profile;
 
 class EloquentUserRepository extends AbstractEloquentRepository implements UserRepository {
     /**
-     * @var Exam
+     * @var User
      */
     protected $model;
     /**
@@ -15,7 +15,7 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
     private $profile;
 
     /**
-     * @param Exam $model
+     * @param User $model
      * @param Profile $profile
      */
     public function __construct(User $model, Profile $profile)
@@ -24,23 +24,79 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
         $this->profile = $profile;
     }
 
-    public function findByEmailOrCreate($userData,$provider)
+    /**
+     * @param $data
+     * @return User
+     */
+    public function createUserAndProfileFromSocialiteData($data)
     {
-        $user = $this->model->where('email',$userData->email)->first();
+        $user = $this->model->fill([
+            'email'    => $data->email,
+            'avatar'   => $data->photoURL,
+            'name'     => $data->displayName,
+        ]);
 
-        if (is_null($user))
-        {
-            $email = (is_null($userData->email)) ? $userData->email : '';
+        $user->confirmed = true;
 
-            $user = new User ([
-                'email'    => $email,
-                'avatar'   => $userData->avatar,
-                'name'     => $userData->user['name'],
-            ]);
-            $user->save();
-        }
-        $this->profile->findOrCreateProfile($user, $userData, $provider);
+        $user->save();
+
+        $profile = $this->profile->createProfileFromSocialiteData($data, $user);
+
+        if ( ! $profile )
+            throw new \Exception('Can not create profile from socialite data');
 
         return $user;
+    }
+
+    /**
+     * @param $data
+     * @return User | bool
+     */
+    public function findUserFromSocialiteData($data)
+    {
+        if ( $data->email )
+        {
+            $user = $this->model->whereEmail($data->email)->first();
+
+            if ($user)
+            {
+                $this->checkAndCreateProfileOfThisProvider($data, $user);
+
+                return $user;
+            }
+        }
+
+        $profile = $this->profile->findProfileFromSocialiteData($data);
+
+        #TODO: Update new access_token
+        if ( $profile && ! is_null($profile->user) )
+            return $profile->user;
+
+        return false;
+    }
+
+    /**
+     * @param $data
+     * @param $user
+     */
+    private function checkAndCreateProfileOfThisProvider($data, User $user)
+    {
+        $profiles = $user->profiles;
+
+        if ( ! is_null($profiles)) {
+
+            $providers = $profiles->lists('provider');
+
+            if ( in_array($data->provider, $providers) )
+                return;
+            else
+                $this->profile->createProfileFromSocialiteData($data, $user);
+
+        } else {
+
+            $this->profile->createProfileFromSocialiteData($data, $user);
+
+        }
+
     }
 }

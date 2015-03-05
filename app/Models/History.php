@@ -14,18 +14,18 @@ class History extends Model {
     {
         parent::boot();
 
-        History::saving(function($history)
+        static::saving(function($history)
         {
             /**
              * Append is first attribute
              */
-            $oldHistory  = History::where('test_id','=',$history->test_id)
+            $oldHistory  = static::where('test_id','=',$history->test_id)
                 ->where('user_id','=',$history->user_id)
                 ->count();
             if ($oldHistory == 0)
                 $history->is_first = true;
         });
-        History::saved(function($history){
+        static::saved(function($history){
             \Cache::tags('history','user'.$history->user_id)->flush();
             \Cache::tags('exam'.$history->test_id,'history'.$history->test_id)->flush();
         });

@@ -32,11 +32,12 @@ Trang cá nhân - {{ $user->name }}
                         {{ $h->updated_at->diffForHumans() }},
                         <a href="{{ $user->profileLink() }}">{{ $user->getName() }}</a>
                         đã làm đề thi
-                        <a href="{{ $h->exam->link() }}">{{$h->exam->name}}</a>
+                        <a href="{{ $h->exam->present()->link }}">
+                        {{$h->exam->name}}</a>
                     </h5>
                     <p>
                         @foreach ($h->exam->tagged as $tag)
-                            <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
+                            <a href="{{ $tag->present()->link }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
                         @endforeach đạt
                         {{ $h->score }}/<strong>{{ $h->exam->questionsCount }}</strong> điểm.
                     </p>
@@ -44,7 +45,7 @@ Trang cá nhân - {{ $user->name }}
 
                 <div class="media--conversation__meta">
                     <span class="label label-info">
-                        <a href="{{ $h->exam->link() }}">Làm ngay</a>
+                        <a href="{{ $h->exam->present()->link }}">Làm ngay</a>
                     </span>
                 </div>
             </article>

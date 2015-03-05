@@ -58,9 +58,12 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
         {
             $user = $this->model->whereEmail($data->email)->first();
 
-            #TODO: Add new profile if user is logging in with different provider
             if ($user)
+            {
+                $this->checkAndCreateProfileOfThisProvider($data, $user);
+
                 return $user;
+            }
         }
 
         $profile = $this->profile->findProfileFromSocialiteData($data);
@@ -70,5 +73,30 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
             return $profile->user;
 
         return false;
+    }
+
+    /**
+     * @param $data
+     * @param $user
+     */
+    private function checkAndCreateProfileOfThisProvider($data, User $user)
+    {
+        $profiles = $user->profiles;
+
+        if ( ! is_null($profiles)) {
+
+            $providers = $profiles->lists('provider');
+
+            if ( in_array($data->provider, $providers) )
+                return;
+            else
+                $this->profile->createProfileFromSocialiteData($data, $user);
+
+        } else {
+
+            $this->profile->createProfileFromSocialiteData($data, $user);
+
+        }
+
     }
 }

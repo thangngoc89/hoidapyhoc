@@ -89,6 +89,10 @@ class AuthenticateUser {
         return $this->dataNormalizer($data);
     }
 
+    /**
+     * @param $data
+     * @return object
+     */
     private function dataNormalizer($data)
     {
         return $this->dataNormalizer->normalizer($data);

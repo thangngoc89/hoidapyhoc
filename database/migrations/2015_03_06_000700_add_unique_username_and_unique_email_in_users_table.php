@@ -12,7 +12,9 @@ class AddUniqueUsernameAndUniqueEmailInUsersTable extends Migration {
 	 */
 	public function up()
 	{
-
+        // Remove possible duplicate rows before add unique
+        DB::statement('DELETE n1 FROM users n1, users n2 WHERE n1.id > n2.id AND n1.email = n2.email');
+        DB::statement('DELETE n1 FROM users n1, users n2 WHERE n1.id > n2.id AND n1.username = n2.username');
 		Schema::table('users', function($table)
         {
             $table->unique('email');

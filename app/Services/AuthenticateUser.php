@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Collection;
 use Laravel\Socialite\Contracts\Factory as Socialite;
+use Quiz\lib\Auth\SocialiteDataNormalizer;
 use Quiz\lib\Repositories\User\UserRepository;
 use Quiz\Models\Profile;
 
@@ -24,22 +25,22 @@ class AuthenticateUser {
      */
     private $auth;
     /**
-     * @var Profile
+     * @var SocialiteDataNormalizer
      */
-    private $profile;
+    private $dataNormalizer;
 
     /**
      * @param UserRepository $user
      * @param Socialite $socialite
      * @param Guard $auth
-     * @param Profile $profile
+     * @param SocialiteDataNormalizer $dataNormalizer
      */
-    public function __construct(UserRepository $user, Socialite $socialite, Guard $auth, Profile $profile)
+    public function __construct(UserRepository $user, Socialite $socialite, Guard $auth, SocialiteDataNormalizer $dataNormalizer)
     {
         $this->user = $user;
         $this->socialite = $socialite;
         $this->auth = $auth;
-        $this->profile = $profile;
+        $this->dataNormalizer = $dataNormalizer;
     }
 
 
@@ -55,8 +56,6 @@ class AuthenticateUser {
         if ( ! $hasCode) return $this->getAuthorizationFirst($provider);
 
         $userData = $this->getUserDataFromProvider($provider);
-
-        dd($userData);
 
         $user = $this->findOrCreateUser($userData);
 
@@ -86,6 +85,9 @@ class AuthenticateUser {
 
         // Push provider to data object
         $data->provider = strtolower($provider);
+
+        // Normalizer data for provider
+        $data = $this->dataNormalizer->normalizer($data);
 
         return $data;
     }

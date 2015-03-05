@@ -32,8 +32,8 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
     {
         $user = $this->model->fill([
             'email'    => $data->email,
-            'avatar'   => $data->avatar,
-            'name'     => $data->user['name'],
+            'avatar'   => $data->photoURL,
+            'name'     => $data->displayName,
         ]);
 
         $user->confirmed = true;

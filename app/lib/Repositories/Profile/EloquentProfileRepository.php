@@ -46,17 +46,7 @@ class EloquentProfileRepository extends AbstractEloquentRepository implements Pr
      */
     public function createProfileFromSocialiteData($data, User $user)
     {
-        $profile = $this->model->create([
-            'token'         => $data->token,
-            'provider'      => $data->provider,
-            'identifier'    => $data->id,
-            'photoURL'      => ($data->avatar) ?: '',
-            'profileURL'    => ($data->user['link']) ?: '',
-            'gender'        => ($data->user['gender']) ?: '',
-            'language'      => ($data->user['locale']) ?: '',
-            'email'         => ($data->email) ?: '',
-            'displayName'   => $data->user['name'],
-        ]);
+        $profile = $this->model->create( (array) $data);
 
         $profile->user()->associate($user);
 

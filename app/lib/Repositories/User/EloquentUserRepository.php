@@ -6,7 +6,7 @@ use Quiz\Models\User;
 
 class EloquentUserRepository extends AbstractEloquentRepository implements UserRepository {
     /**
-     * @var Exam
+     * @var User
      */
     protected $model;
     /**
@@ -15,7 +15,7 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
     private $profile;
 
     /**
-     * @param Exam $model
+     * @param User $model
      * @param Profile $profile
      */
     public function __construct(User $model, Profile $profile)
@@ -26,21 +26,61 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
 
     public function findByEmailOrCreate($userData,$provider)
     {
-        $user = $this->model->where('email',$userData->email)->first();
+        // TODO: Implement findByEmailOrCreate function
+    }
 
-        if (is_null($user))
+    /**
+     * @param $userData
+     * @param $provider
+     */
+    public function createNewUserAndProfileFromData($userData, $provider)
+    {
+        $email = ($userData->email) ?: $this->createFakeEmail($userData, $provider);
+
+        $user = $this->model->fill([
+            'email'    => $email,
+            'avatar'   => $userData->avatar,
+            'name'     => $userData->user['name'],
+        ]);
+
+        $user->save();
+
+        $profile = $this->profile->createProfile($user, $userData, $provider);
+
+        return $profile;
+    }
+
+    #TODO: Refactor
+
+    /**
+     * Generate fake email address from user's external data
+     *
+     * @param $userData  || Data receive from socialite
+     * @param $provider  || Provider name
+     * @return string
+     */
+    private function createFakeEmail($userData, $provider)
+    {
+        $username = $this->providerAbbr($provider) . $userData->id;
+
+        $email = $username . '@fake.hoidapyhoc.com';
+
+        return $email;
+    }
+
+    /**
+     * Make abbrevation from provider name
+     * @param $provider
+     * @return string
+     */
+    private function providerAbbr($provider)
+    {
+        $provider = strtolower($provider);
+
+        switch($provider)
         {
-            $email = (is_null($userData->email)) ? $userData->email : '';
-
-            $user = new User ([
-                'email'    => $email,
-                'avatar'   => $userData->avatar,
-                'name'     => $userData->user['name'],
-            ]);
-            $user->save();
+            case 'facebook' : return 'fb';
+            case 'google' : return 'gg';
         }
-        $this->profile->findOrCreateProfile($user, $userData, $provider);
-
-        return $user;
     }
 }

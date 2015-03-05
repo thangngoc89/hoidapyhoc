@@ -80,6 +80,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function joined()
     {
+        #TODO: Refactor this into presenter
         return $this->created_at->diffForHumans();
     }
 

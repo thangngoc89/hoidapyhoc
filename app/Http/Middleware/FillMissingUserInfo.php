@@ -26,8 +26,8 @@ class FillMissingUserInfo {
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest() && getenv('APP_ENV') === 'local')
-            $this->auth->loginUsingId(3, true);
+//        if ($this->auth->guest() && getenv('APP_ENV') === 'local')
+//            $this->auth->loginUsingId(3, true);
 
         $path = $this->getRequestPath($request);
         $ignorePaths = ['/files','/build','/_debugbar','/auth/logout'];

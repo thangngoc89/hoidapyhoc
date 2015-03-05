@@ -56,7 +56,9 @@ class AuthenticateUser {
 
         $userData = $this->getUserDataFromProvider($provider);
 
-        $user = $this->findOrCreateUser($userData, $provider);
+        dd($userData);
+
+        $user = $this->findOrCreateUser($userData);
 
         $this->auth->login($user, true);
 
@@ -80,27 +82,32 @@ class AuthenticateUser {
      */
     private function getUserDataFromProvider($provider)
     {
-        return $this->socialite->driver($provider)->user();
+        $data = $this->socialite->driver($provider)->user();
+
+        // Push provider to data object
+        $data->provider = strtolower($provider);
+
+        return $data;
     }
 
     /**
      * @param $userData
-     * @param $provider
      * @return \Quiz\Models\User
      */
-    private function findOrCreateUser($userData, $provider)
+    private function findOrCreateUser($userData)
     {
-        $profile = $this->profile->where('identifier', $userData->id)->first();
+        $user = $this->user->findUserFromSocialiteData($userData);
 
-        if ( is_null($profile) )
+        if ( ! $user )
         {
-            $profile = $this->user->createNewUserAndProfileFromData($userData, $provider);
-        }
+            $user = $this->user->createUserAndProfileFromSocialiteData($userData);
 
-        if ( ! $profile->user instanceof \Quiz\Models\User )
+            // Fire event: user.created
+        }
+        if ( ! $user instanceof \Quiz\Models\User )
             throw new \Exception("Can not find user instance");
 
-        return $profile->user;
+        return $user;
     }
 
     public function testFacebookLogin()

@@ -1,8 +1,8 @@
 <?php namespace Quiz\lib\Repositories\User;
 
 use Quiz\lib\Repositories\AbstractEloquentRepository;
-use Quiz\Models\Profile;
 use Quiz\Models\User;
+use Quiz\lib\Repositories\Profile\ProfileRepository as Profile;
 
 class EloquentUserRepository extends AbstractEloquentRepository implements UserRepository {
     /**
@@ -24,63 +24,51 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
         $this->profile = $profile;
     }
 
-    public function findByEmailOrCreate($userData,$provider)
-    {
-        // TODO: Implement findByEmailOrCreate function
-    }
-
     /**
-     * @param $userData
-     * @param $provider
+     * @param $data
+     * @return User
      */
-    public function createNewUserAndProfileFromData($userData, $provider)
+    public function createUserAndProfileFromSocialiteData($data)
     {
-        $email = ($userData->email) ?: $this->createFakeEmail($userData, $provider);
-
         $user = $this->model->fill([
-            'email'    => $email,
-            'avatar'   => $userData->avatar,
-            'name'     => $userData->user['name'],
+            'email'    => $data->email,
+            'avatar'   => $data->avatar,
+            'name'     => $data->user['name'],
         ]);
+
+        $user->confirmed = true;
 
         $user->save();
 
-        $profile = $this->profile->createProfile($user, $userData, $provider);
+        $profile = $this->profile->createProfileFromSocialiteData($data, $user);
 
-        return $profile;
-    }
+        if ( ! $profile )
+            throw new \Exception('Can not create profile from socialite data');
 
-    #TODO: Refactor
-
-    /**
-     * Generate fake email address from user's external data
-     *
-     * @param $userData  || Data receive from socialite
-     * @param $provider  || Provider name
-     * @return string
-     */
-    private function createFakeEmail($userData, $provider)
-    {
-        $username = $this->providerAbbr($provider) . $userData->id;
-
-        $email = $username . '@fake.hoidapyhoc.com';
-
-        return $email;
+        return $user;
     }
 
     /**
-     * Make abbrevation from provider name
-     * @param $provider
-     * @return string
+     * @param $data
+     * @return User | bool
      */
-    private function providerAbbr($provider)
+    public function findUserFromSocialiteData($data)
     {
-        $provider = strtolower($provider);
-
-        switch($provider)
+        if ( $data->email )
         {
-            case 'facebook' : return 'fb';
-            case 'google' : return 'gg';
+            $user = $this->model->whereEmail($data->email)->first();
+
+            #TODO: Add new profile if user is logging in with different provider
+            if ($user)
+                return $user;
         }
+
+        $profile = $this->profile->findProfileFromSocialiteData($data);
+
+        #TODO: Update new access_token
+        if ( $profile && ! is_null($profile->user) )
+            return $profile->user;
+
+        return false;
     }
 }

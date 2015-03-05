@@ -10,6 +10,7 @@ use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
 use Quiz\Models\Video;
+use Quiz\Services\AuthenticateUser;
 use Quiz\Services\Leecher\CSYK\GetQuiz;
 
 class HomeController extends Controller {
@@ -98,9 +99,9 @@ class HomeController extends Controller {
         return $get->get($link)->parse();
     }
 
-    public function cleanCache(TagRepository $tagRepository)
+    public function cleanCache(AuthenticateUser $authenticate)
     {
-//        dd(class_exists('Quiz\lib\Tag\TagPresenter'));
+        return $authenticate->testFacebookLogin();
     }
 
 }

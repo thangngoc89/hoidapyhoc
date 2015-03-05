@@ -4,8 +4,7 @@ use Quiz\lib\Repositories\BaseRepository;
 
 interface UserRepository extends BaseRepository {
 
-    public function findByEmailOrCreate($userData,$provider);
+    public function createUserAndProfileFromSocialiteData($userData);
 
-    public function createNewUserAndProfileFromData($userData, $provider);
-
+    public function findUserFromSocialiteData($socialiteData);
 }

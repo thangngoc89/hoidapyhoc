@@ -21,7 +21,7 @@ class DropUnusedTablesForPeformance extends Migration {
             Schema::drop('categories');
             Schema::drop('comments');
             Schema::drop('posts');
-            Schema::drop('question');
+            Schema::drop('questions');
         });
 	}
 

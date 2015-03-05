@@ -8,7 +8,8 @@ class SocialiteDataNormalizer {
      */
     public function normalizer($data)
     {
-        switch ($data->provider)
+        $provider = strtolower($data->provider);
+        switch ($provider)
         {
             case 'facebook' :
                 return $this->facebookNormalizer($data);

@@ -86,10 +86,12 @@ class AuthenticateUser {
         // Push provider to data object
         $data->provider = strtolower($provider);
 
-        // Normalizer data for provider
-        $data = $this->dataNormalizer->normalizer($data);
+        return $this->dataNormalizer($data);
+    }
 
-        return $data;
+    private function dataNormalizer($data)
+    {
+        return $this->dataNormalizer->normalizer($data);
     }
 
     /**
@@ -119,7 +121,7 @@ class AuthenticateUser {
             'id'        => '795824050479589',
             'nickname'  => null,
             'name'      => 'Nguyễn Khoa',
-            'email'     => 'contact@tienganhratde.com',
+            'email'     => null,
             'avatar'    => 'https://graph.facebook.com/v2.2/795824050479589/picture?type=normal',
             'user'      => [
                 "id"            => "795824050479589",
@@ -134,11 +136,13 @@ class AuthenticateUser {
                 "timezone"      => 7,
                 "updated_time"  => "2014-12-24T09:40:57+0000",
                 "verified"      => true,
-            ]
+            ],
+            'provider'  => 'facebook',
         ];
         $userData = (object) $userData;
+        $userData =  $this->dataNormalizer($userData);
 
-        return $this->findOrCreateUser($userData, 'Facebook');
+        return $this->findOrCreateUser($userData);
     }
 
 }

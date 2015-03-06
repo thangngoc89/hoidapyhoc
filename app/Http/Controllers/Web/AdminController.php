@@ -1,10 +1,12 @@
 <?php namespace Quiz\Http\Controllers\Web;
 
+use Illuminate\Contracts\Auth\Guard;
 use Quiz\Commands\GitDeploy;
 use Quiz\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Quiz\Models\User;
 
 class AdminController extends Controller {
 
@@ -13,7 +15,7 @@ class AdminController extends Controller {
         $this->middleware('admin',['except' => ['deploy']] );
     }
 	/**
-	 * Display admin page
+	 * Display ng-admin page
 	 *
 	 * @return Response
 	 */
@@ -22,9 +24,33 @@ class AdminController extends Controller {
         return view('site.admin');
 	}
 
+    /**
+     * Receive Github deployment signal
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function deploy(Request $request)
     {
         return $this->dispatch(new GitDeploy($request));
+    }
+
+    /**
+     * Let admin to impersonate a valid user account
+     *
+     * @param $user
+     * @param Guard $auth
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function impersonate($user, Guard $auth)
+    {
+        if ( ! $user instanceof User )
+            throw new \BadMethodCallException('You have to give a valid user model');
+
+        $auth->logout();
+        $auth->login($user, false);
+
+        return redirect('/')->with('success','Impersonating ' . $user->username);
     }
 
 }

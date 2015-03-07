@@ -107,8 +107,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function profileLink()
     {
-        $url = '/@'.$this->username;
-        return $url;
+        if ( is_null($this->username) )
+            return "/profile/{$this->id}";
+
+        return '/@'.$this->username;
     }
 
 }

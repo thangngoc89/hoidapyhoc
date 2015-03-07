@@ -72,11 +72,9 @@ class UserController extends Controller {
      * @param $username
      * @return \Illuminate\View\View
      */
-    public function profile($username)
+    public function profile($user)
     {
         #TODO: Add recent upload exam
-        $user = $this->user->getFirstBy('username', $username);
-
         $history = $this->history->recentDoneExam($user->id);
 
         return view('user.profile',compact('user','history'));

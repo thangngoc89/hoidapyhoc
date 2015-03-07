@@ -31,6 +31,16 @@ class RouteServiceProvider extends ServiceProvider {
         $router->model('testimonials', \Quiz\Models\Testimonial::class);
         $router->model('videos', \Quiz\Models\Video::class);
         $router->model('files', \Quiz\Models\Upload::class);
+
+        $router->bind('username', function($username)
+        {
+            $user =  \Quiz\Models\User::whereUsername($username)->first();
+
+            if (is_null($user))
+                abort(404);
+
+            return $user;
+        });
     }
     /**
      * Define the routes for the application.

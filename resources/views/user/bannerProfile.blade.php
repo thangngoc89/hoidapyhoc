@@ -5,7 +5,7 @@
          </a>
         <ul class="naked banner-profile__links">
             <li>
-                <a href="{{ $user->profileLink() }}">@ {{ $user->username }}</a>
+                <a href="{{ $user->profileLink() }}">{{ "@" . $user->username }}</a>
             </li>
             @foreach ($user->profiles as $p)
                 <li>

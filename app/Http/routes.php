@@ -44,6 +44,7 @@ Route::group(array('prefix' => 'admin'), function()
  *  ------------------------------------------
  */
 Route::get('@{username}','UserController@profile');
+Route::get('profile/{users}','UserController@profile');
 Route::get('users','UserController@index');
 
 Route::get('auth/external/{provider}','Auth\AuthController@external');

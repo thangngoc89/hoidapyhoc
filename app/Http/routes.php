@@ -23,10 +23,10 @@ Route::pattern('permissions', '[0-9]+');
  *  HomePage Group
  *  ------------------------------------------
  */
-Route::get('{home}','HomeController@index')->where('home', '^(|home)$');
-Route::get('thongke','HomeController@stat');
+Route::get('/',['uses' => 'HomeController@index', 'as' => 'home']);
+Route::get('thongke',['uses' => 'HomeController@statistic', 'as' => 'site.statistic']);
+Route::get('testimonials', ['uses' => 'HomeController@testimonials', 'as' => 'site.testimonials']);
 Route::get('cleanCache','HomeController@cleanCache');
-Route::get('testimonials','HomeController@testimonials');
 
 /** ------------------------------------------
  *  Admin Group
@@ -61,7 +61,7 @@ Route::controllers([
 Route::resource('quiz','QuizController');
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('lam-bai/{slug}/{exams}', 'QuizController@show');
+    Route::get('lam-bai/{slug}/{exams}', ['uses' => 'QuizController@show', 'as' => 'quiz.do']);
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 });
 

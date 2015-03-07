@@ -147,6 +147,7 @@ return [
         'EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider',
         'Sofa\Revisionable\Laravel\FiveServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
+        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         /*
          * Dev
          */
@@ -209,6 +210,7 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
         'HTML'      => 'Illuminate\Html\HtmlFacade',
         'Form'      => 'Illuminate\Html\FormFacade',
@@ -216,6 +218,7 @@ return [
         'Image'     => 'Intervention\Image\Facades\Image',
         'Date'      => 'Jenssegers\Date\Date',
         'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
+        'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
 	],
 
 ];

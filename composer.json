@@ -22,7 +22,8 @@
 		"rap2hpoutre/laravel-log-viewer": "0.1.*",
 		"sofa/revisionable": "dev-master",
 		"laracasts/presenter": "dev-master",
-        "zizaco/entrust": "dev-laravel-5"
+        "zizaco/entrust": "dev-laravel-5",
+		"davejamesmiller/laravel-breadcrumbs": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

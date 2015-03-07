@@ -1,6 +1,5 @@
 @extends('layouts.main')
 
-
 @section('jumbotron')
 <div class="jumbotron">
     <div class="container">
@@ -52,6 +51,8 @@
 {{--Body Section--}}
 @section('body')
 <div class="container">
+    {!! Breadcrumbs::render('quiz.do', $t) !!}
+
     <div class="row" id="mainRow">
     @include('quiz.doContent')
     </div>

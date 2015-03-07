@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('jumbotron')
-
 <div class="jumbotron">
     <div class="container">
         <h2 class="jumbotron__heading">{{ $name }}</h2>
@@ -25,6 +24,7 @@ Tổng hợp đề thi Y Khoa. Làm đề thi trắc nghiệm trực tuyến
 
 @section('body')
 <div class="container">
+    {!! Breadcrumbs::render('quiz') !!}
     <div class="row">
         <div class="threads-inner white col-md-8">
             @include('quiz.indexContent')

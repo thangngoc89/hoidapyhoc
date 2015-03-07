@@ -125,15 +125,13 @@ class QuizController extends Controller {
             'type' => 'create',
         ];
 
-        $data = json_encode($data);
-
         return view('quiz.create',compact('data','name'));
     }
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param int $id
 	 * @return \Illuminate\View\View
 	 */
 	public function edit($exam, ExamTransformers $transformer)
@@ -144,8 +142,6 @@ class QuizController extends Controller {
             'type' => 'edit',
             'test' => $transformer->transform($exam),
         ];
-
-        $data = json_encode($data);
 
         return view('quiz.create',compact('data','name'));
 	}

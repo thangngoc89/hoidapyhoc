@@ -16,7 +16,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
 		'Quiz\Http\Middleware\VerifyCsrfToken',
-		'Quiz\Http\Middleware\FillMissingUserInfo',
+		\Quiz\Http\Middleware\FillMissingUserInfo::class,
 	];
 
 	/**

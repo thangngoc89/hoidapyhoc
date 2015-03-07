@@ -62,9 +62,6 @@ Route::resource('quiz','QuizController');
 Route::group(array('prefix' => 'quiz'), function()
 {
     Route::get('lam-bai/{slug}/{exams}', 'QuizController@show');
-
-    #TODO: Remove this route
-    Route::get('bang-diem/{slug}/{exams}', 'QuizController@leaderBoard');
     Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
 });
 

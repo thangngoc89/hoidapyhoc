@@ -72,8 +72,8 @@ Route::group(array('prefix' => 'quiz'), function()
  */
 Route::group(array('prefix' => 'video'), function()
 {
-    Route::get('{slug}/{videos}', 'VideoController@show');
-    Route::get('/', 'VideoController@index');
+    Route::get('{slug}/{videos}', ['uses' => 'VideoController@show', 'as' => 'video.show']);
+    Route::get('/', ['uses' => 'VideoController@index', 'as' => 'video.index']);
 });
 
 /** ------------------------------------------
@@ -167,4 +167,4 @@ Route::get('test','TestController@index');
 // Redirect old url
 Route::get('quiz/t/{slug}','Site\RedirectController@quiz');
 Route::get('quiz/c/{slug}','Site\RedirectController@category');
-Route::get('user/profile/{username}','Site\RedirectController@userProfile');
+Route::get('user/profile/{user}','Site\RedirectController@userProfile');

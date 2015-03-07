@@ -148,6 +148,7 @@ return [
         'Sofa\Revisionable\Laravel\FiveServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+        'GrahamCampbell\Throttle\ThrottleServiceProvider',
         /*
          * Dev
          */
@@ -219,6 +220,7 @@ return [
         'Date'      => 'Jenssegers\Date\Date',
         'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
         'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
+        'Throttle'  => 'GrahamCampbell\Throttle\Facades\Throttle',
 	],
 
 ];

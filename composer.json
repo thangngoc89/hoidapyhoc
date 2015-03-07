@@ -23,7 +23,8 @@
 		"sofa/revisionable": "dev-master",
 		"laracasts/presenter": "dev-master",
         "zizaco/entrust": "dev-laravel-5",
-		"davejamesmiller/laravel-breadcrumbs": "dev-master"
+		"davejamesmiller/laravel-breadcrumbs": "dev-master",
+		"graham-campbell/throttle": "~3.0@dev"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

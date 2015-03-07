@@ -79,7 +79,8 @@ Route::group(array('prefix' => 'video'), function()
  *  API V2 Group
  *  ------------------------------------------
  */
-Route::group(array('prefix' => 'api/v2'), function()
+
+Route::group(['prefix' => 'api/v2', 'before' => 'throttle:15,1'], function()
 {
     /** ------------------------------------------
      *  Exams

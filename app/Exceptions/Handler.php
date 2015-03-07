@@ -40,11 +40,13 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-
         if ($request->ajax())
         {
             if ($e instanceof \Illuminate\Session\TokenMismatchException)
                 return response()->api()->setStatusCode(400)->withError("Can't verify CSRF Token", 'GEN-CSRF-TOKEN-ERROR');
+
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException)
+                return response()->api()->setStatusCode(429)->withError('Reach API access limit. Please try again after 1 minute');
 
             $error = [
                 'message' => $e->getMessage(),

@@ -37,6 +37,7 @@ div.videocontent {
 @section('body')
 <div class="video video__lesson">
     <div class="container wrap--video">
+        {!! Breadcrumbs::render('video.show', $video) !!}
         <div class="row">
             <div class="col-md-9">
                 <article class="article clearfix">

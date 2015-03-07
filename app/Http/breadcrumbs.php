@@ -49,3 +49,20 @@ Breadcrumbs::register('quiz.edit', function($breadcrumbs, $exam)
     $breadcrumbs->push($exam->name, route('quiz.do', $exam->id));
     $breadcrumbs->push('Sửa', route('quiz.edit', $exam->id));
 });
+
+// Home > Video
+
+Breadcrumbs::register('video.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Video', route('video.index'));
+});
+
+// Home > Video > [Video]
+
+Breadcrumbs::register('video.show', function($breadcrumbs, $video)
+{
+    $breadcrumbs->parent('video.index');
+    $breadcrumbs->push($video->title, route('video.index', $video->id));
+});
+

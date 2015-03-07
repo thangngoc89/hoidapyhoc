@@ -1,9 +1,8 @@
 @extends('layouts.main')
 
 @section('title')
-    Tổng hợp Video Y Khoa
+    Video Y Khoa
 @endsection
-
 
 @section('jumbotron')
 <div class="jumbotron">
@@ -22,6 +21,7 @@
 <main>
     <div class="piece">
         <div class="container wrap">
+            {!! Breadcrumbs::render('video.index') !!}
 
             <?php  $i=1; ?>
 

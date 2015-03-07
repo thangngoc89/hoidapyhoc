@@ -26,6 +26,8 @@ class FillMissingUserInfo {
      */
     public function handle($request, Closure $next)
     {
+        // If this is a unauthenticated request
+        // skip it immedialy
         if ($this->auth->guest())
             return $next($request);
 

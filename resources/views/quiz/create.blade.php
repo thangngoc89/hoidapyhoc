@@ -18,6 +18,11 @@
 {{--Body Section--}}
 @section('body')
 <div class="container">
+    @if ( Route::currentRouteName() == 'quiz.create')
+        {!! Breadcrumbs::render('quiz.create') !!}
+    @else
+        {!! Breadcrumbs::render('quiz.edit', (object) $data['test'] ) !!}
+    @endif
     {!! Form::open(['url' => 'api/v2/tests', 'id' => 'frmTest', 'data-toggle' => 'validator' ]) !!}
     <div class="row" id="mainRow">
         @include('quiz.createContent')
@@ -47,7 +52,7 @@
 @include('components._loadCSS',['link' => elixir('css/editor.css')])
 <script src="/assets/js/editor.js"></script>
 <script>
-    global.data = {!! $data !!};
+    global.data = {!! json_encode($data) !!};
     $(document).ready(function(){
         $(window).quiz();
     });

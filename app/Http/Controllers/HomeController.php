@@ -75,7 +75,7 @@ class HomeController extends Controller {
      * @param History $history
      * @return \Illuminate\View\View
      */
-    public function stat(UserRepository $user, ExamRepository $test, HistoryRepository $history, Video $video)
+    public function statistic(UserRepository $user, ExamRepository $test, HistoryRepository $history, Video $video)
     {
         $key = 'siteStat';
         if (\Cache::has($key)) {

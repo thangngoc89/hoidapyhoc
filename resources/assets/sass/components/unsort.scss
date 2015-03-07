@@ -1671,7 +1671,7 @@ input+span.error {
 
 .forum .breadcrumb {
   padding: 34px 0 50px 0;
-  margin: -40px 0 0 80px;
+  margin: -40px 0 0 35px;
   position: relative;
   font-size: 16px;
   background: none;
@@ -1694,7 +1694,7 @@ input+span.error {
   display: block;
   position: absolute;
   height: 100%;
-  border-left: 1px solid #eee;
+  border-left: 1px solid $grey-light;
   left: -50px;
   top: 0;
 }
@@ -1706,10 +1706,10 @@ input+span.error {
 }
 
 .forum .breadcrumb:after {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $grey-light;
   content: "";
   display: block;
-  width: 1110px;
+  width: 1150px;
   height: 1px;
   position: relative;
   left: -50px;

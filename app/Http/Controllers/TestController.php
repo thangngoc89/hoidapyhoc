@@ -30,6 +30,7 @@ class TestController extends Controller {
     {
         $this->cache = $cache;
         $this->video = $video;
+        $this->middleware('admin');
     }
 
     public function index(GetVideoLink $getLink, GetVideoInfo $getInfo)
@@ -37,7 +38,6 @@ class TestController extends Controller {
         set_time_limit(0);
 
         $baseUrl = 'http://www.medicalvideos.org/videos/load/recent/';
-
 
         for ($i=1; $i<10; $i++)
         {
@@ -51,7 +51,6 @@ class TestController extends Controller {
             {
                 if (!$this->saveVideo($getInfo, $video))
                     return;
-
 
                 sleep(2);
             }

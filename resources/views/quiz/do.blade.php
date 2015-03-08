@@ -31,7 +31,10 @@
 @stop
 
 @section('meta_description')
-<?php $meta_desc = str_limit(strip_tags($t->content), 150); ?>
+<?php
+    $meta_desc = str_limit(strip_tags($t->content), 600);
+    $meta_desc = str_replace('  ',' ',$meta_desc);
+?>
     @if (!empty($t->description))
             {{ $t->description }}
     @elseif (!$t->is_file && strlen($meta_desc) > 0)

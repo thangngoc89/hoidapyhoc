@@ -20,5 +20,6 @@ storage/app/uploads
 public/assets/js/editor.js
 public/assets/js/script.js
 public/assets/js/vendor.js
+app/lib/larasearch
 _ide_helper.php
 _ide_helper_models.php

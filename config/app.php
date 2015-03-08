@@ -134,10 +134,10 @@ return [
 		'Illuminate\Auth\Passwords\PasswordResetServiceProvider',
 		'Illuminate\Session\SessionServiceProvider',
 		'Illuminate\Translation\TranslationServiceProvider',
+
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
-
         'Intervention\Image\ImageServiceProvider',
         'Laravel\Socialite\SocialiteServiceProvider',
         'Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider',
@@ -165,6 +165,7 @@ return [
 		'Quiz\Providers\EventServiceProvider',
 		'Quiz\Providers\RouteServiceProvider',
 		'Quiz\Providers\LogServiceProvider',
+        \Quiz\lib\Repositories\RepositoryServiceProvider::class,
 	],
 
 	/*

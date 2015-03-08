@@ -10,7 +10,6 @@ use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
 use Quiz\Models\Video;
-use Quiz\Services\AuthenticateUser;
 use Quiz\Services\Leecher\CSYK\GetQuiz;
 
 class HomeController extends Controller {
@@ -99,9 +98,11 @@ class HomeController extends Controller {
         return $get->get($link)->parse();
     }
 
-    public function cleanCache(AuthenticateUser $authenticate)
+    public function cleanCache(ExamRepository $exam)
     {
-        return $authenticate->testFacebookLogin();
+        $exams = $exam->all();
+
+        dd($exams);
     }
 
 }

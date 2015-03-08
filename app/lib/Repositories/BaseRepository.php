@@ -2,15 +2,26 @@
 
 interface BaseRepository {
 
+    /**
+     * Return all items of model
+     *
+     * @return mixed
+     */
     public function all();
 
+    /**
+     * Find a item via id
+     *
+     * @param $id
+     * @return mixed
+     */
     public function find($id);
 
     public function findOrFail($id);
 
-    public function firstOrNew($array);
+    public function firstOrNew($attributes);
 
-    public function firstOrCreate($array);
+    public function firstOrCreate($attributes);
 
     public function whereRaw($query, $variables = null);
 

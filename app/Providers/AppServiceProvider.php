@@ -39,10 +39,10 @@ class AppServiceProvider extends ServiceProvider {
             \Quiz\lib\Repositories\Video\EloquentVideoRepository::class
         );
 
-        $this->app->bind(
-            \Quiz\lib\Repositories\Exam\ExamRepository::class,
-            \Quiz\lib\Repositories\Exam\EloquentExamRepository::class
-        );
+//        $this->app->bind(
+//            \Quiz\lib\Repositories\Exam\ExamRepository::class,
+//            \Quiz\lib\Repositories\Exam\EloquentExamRepository::class
+//        );
 
         $this->app->bind(
             \Quiz\lib\Repositories\User\UserRepository::class,

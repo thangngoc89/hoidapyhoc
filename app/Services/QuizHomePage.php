@@ -32,15 +32,9 @@ class QuizHomePage {
         $this->exam = $exam;
         $this->cache = $cache;
     }
+
     public function execute($request)
     {
-//        $key = $request->url().$request->tab.$request->page;
-
-//        $cache = $this->cache->tags('index','tests');
-
-//        if ($cache->has($key) && getenv('APP_ENV') != 'local')
-//            return $cache->get($key);
-
         $this->request = $request;
 
         $tab = $this->switchMethod();
@@ -49,8 +43,6 @@ class QuizHomePage {
 
         $view = $this->makeView();
 
-//        $cache->put($key,$view,20);
-
         return $view;
     }
 
@@ -58,7 +50,7 @@ class QuizHomePage {
     {
         if (! $this->auth->check())
             abort(403);
-        $this->result = $this->exam->doneTest($this->auth->user());
+        $this->result = $this->exam->whereIn( 'id',$this->exam->doneTestId($this->auth->user()) );
 
         $this->name = 'Các đề bạn đã làm';
     }

@@ -3,13 +3,8 @@ namespace Quiz\Services\Validator;
 
 use Illuminate\Validation\Validator;
 
-/**
- * Custom validator for input questions array
- *
- * Class QuestionValidator
- * @package Quiz\lib\Repositories\Exam
- */
-class QuestionValidator extends Validator {
+
+class CustomValidator extends Validator {
 
     public function validateQuestions($attribute, $value, $parameters)
     {
@@ -39,6 +34,11 @@ class QuestionValidator extends Validator {
             return false;
         return true;
 
+    }
+
+    public function validateUsername($attribute, $value, $parameters)
+    {
+        return preg_match('/^[A-Za-z0-9_]{1,20}$/', $value);
     }
 
 }

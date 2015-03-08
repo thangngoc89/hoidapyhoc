@@ -14,12 +14,7 @@ class AppServiceProvider extends ServiceProvider {
 	{
         $this->app->validator->resolver(function($translator, $data, $rules, $messages)
         {
-            return new \Quiz\Services\Validator\QuestionValidator($translator, $data, $rules, $messages);
-        });
-
-        $this->app->validator->resolver(function($translator, $data, $rules, $messages)
-        {
-            return new \Quiz\Services\Validator\UsernameValidator($translator, $data, $rules, $messages);
+            return new \Quiz\Services\Validator\CustomValidator($translator, $data, $rules, $messages);
         });
 	}
 

@@ -14,7 +14,7 @@
                 <a href="/tag/{{ $tag->slug }}" class="post-tag" title="" rel="tag">{{ $tag->name }}</a>
             @endforeach
             <span class="text-muted label-small last-updated">
-                đăng vào {{ $t->created_at->diffForHumans() }}
+                đăng vào {{ $t->present()->createdDate }}
                 | {{ $t->questionsCount }} câu hỏi
                 | {{ $t->thoigian }} phút
             </span></h4>
@@ -25,23 +25,12 @@
 </div>
 @endsection
 
-
 @section('title')
     {{ trim($t->name) }}
 @stop
 
 @section('meta_description')
-<?php
-    $meta_desc = str_limit(strip_tags($t->content), 600);
-    $meta_desc = str_replace('  ',' ',$meta_desc);
-?>
-    @if (!empty($t->description))
-            {{ $t->description }}
-    @elseif (!$t->is_file && strlen($meta_desc) > 0)
-        {{ $meta_desc }}
-    @else
-        Đề thi {{ $t->name }} - Làm đề thi trắc nghiệm Y Học Online. Kho đề thi trắc nghiệm Y Học lớn nhất
-    @endif
+{!! $t->present()->metaDescription() !!}
 @endsection
 
 
@@ -51,9 +40,10 @@
 
 @section('header')
     <meta name="pubdate" content="{{ $t->updated_at->format('c') }}" />
-    @foreach($t->tagged as $tag)
-    <meta property="og:article:tag" content="{!! $tag->name !!}" />
-    @endforeach
+    {{-- TODO: This is a wrong open graph tag --}}
+    {{--@foreach($t->tagged as $tag)--}}
+    {{--<meta property="og:article:tag" content="{!! $tag->name !!}" />--}}
+    {{--@endforeach--}}
 
 @endsection
 

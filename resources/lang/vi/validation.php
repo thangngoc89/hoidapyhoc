@@ -74,6 +74,7 @@ return [
     "unique"           => "Trường :attribute đã đươc dùng. Vui lòng chọn một :attribute khác.",
     "url"              => "Trường :attribute không giống với định dạng một URL.",
     "questions"        => "Cấu trúc câu hỏi nhập vào không hợp lệ",
+    "username"         => "Tên thành viên chỉ không quá 20 kí tự bao gồm chữ cái và số",
 
     /*
     |--------------------------------------------------------------------------

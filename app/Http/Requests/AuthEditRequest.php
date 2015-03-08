@@ -26,7 +26,7 @@ class AuthEditRequest extends Request {
         $user = \Auth::user();
 		return [
 			'name'  => 'required|min:6',
-            'username'  => 'required|min:3|alpha_num|unique:users,id,'.$user->id,
+            'username'  => 'required|min:3|username|unique:users,id,'.$user->id,
             'email' => 'email',
 		];
 	}

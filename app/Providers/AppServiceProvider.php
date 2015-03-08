@@ -14,7 +14,12 @@ class AppServiceProvider extends ServiceProvider {
 	{
         $this->app->validator->resolver(function($translator, $data, $rules, $messages)
         {
-            return new \Quiz\lib\Repositories\Exam\QuestionValidator($translator, $data, $rules, $messages);
+            return new \Quiz\Services\Validator\QuestionValidator($translator, $data, $rules, $messages);
+        });
+
+        $this->app->validator->resolver(function($translator, $data, $rules, $messages)
+        {
+            return new \Quiz\Services\Validator\UsernameValidator($translator, $data, $rules, $messages);
         });
 	}
 
@@ -38,11 +43,6 @@ class AppServiceProvider extends ServiceProvider {
             \Quiz\lib\Repositories\Video\VideoRepository::class,
             \Quiz\lib\Repositories\Video\EloquentVideoRepository::class
         );
-
-//        $this->app->bind(
-//            \Quiz\lib\Repositories\Exam\ExamRepository::class,
-//            \Quiz\lib\Repositories\Exam\EloquentExamRepository::class
-//        );
 
         $this->app->bind(
             \Quiz\lib\Repositories\User\UserRepository::class,

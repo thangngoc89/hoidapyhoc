@@ -1,4 +1,5 @@
-<?php namespace Quiz\lib\Repositories\Exam;
+<?php
+namespace Quiz\Services\Validator;
 
 use Illuminate\Validation\Validator;
 

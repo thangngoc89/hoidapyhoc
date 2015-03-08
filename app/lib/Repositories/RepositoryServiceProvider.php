@@ -15,6 +15,16 @@ class RepositoryServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+        //
+	}
+
+	/**
+	 * Register the application services.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
         /**
          * Exam Repository
          *
@@ -31,16 +41,6 @@ class RepositoryServiceProvider extends ServiceProvider {
                 new LaravelCache($app['cache'], 'exams')
             );
         });
-	}
-
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		//
 	}
 
 }

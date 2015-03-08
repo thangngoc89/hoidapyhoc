@@ -143,6 +143,7 @@ class Exam extends Model {
     /**
      * Count questions
      *
+     * @return int
      */
     public function getQuestionsCountAttribute()
     {

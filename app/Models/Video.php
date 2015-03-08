@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Iverberk\Larasearch\Traits\SearchableTrait as ElasticSearchableTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Tagging\TaggableTrait;
@@ -12,7 +13,8 @@ class Video extends Model {
     use SoftDeletes;
     use TaggableTrait;
     use LocalizationDateTrait;
-    use SearchableTrait;
+//    use SearchableTrait;
+    use ElasticSearchableTrait;
 
     protected $table = 'videos';
     protected $fillable = ['title','link','thumb','description','source','duration'];

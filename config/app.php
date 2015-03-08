@@ -149,6 +149,7 @@ return [
         'Zizaco\Entrust\EntrustServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         'GrahamCampbell\Throttle\ThrottleServiceProvider',
+        'Iverberk\Larasearch\LarasearchServiceProvider',
         /*
          * Dev
          */

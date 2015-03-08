@@ -6,6 +6,7 @@ use Quiz\lib\Repositories\Tag\TagRepository;
 use Quiz\lib\Repositories\User\UserRepository;
 
 use Quiz\lib\Tagging\Tag;
+use Quiz\Models\Exam;
 use Quiz\Models\History;
 use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
@@ -99,9 +100,13 @@ class HomeController extends Controller {
         return $get->get($link)->parse();
     }
 
-    public function cleanCache(AuthenticateUser $authenticate)
+    public function cleanCache()
     {
-        return $authenticate->testFacebookLogin();
+        $query = (\Input::get('q')) ?: 'born';
+        $results = Exam::search($query)->getResults();
+
+        dd($results);
+
     }
 
 }

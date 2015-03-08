@@ -22,3 +22,5 @@ public/assets/js/script.js
 public/assets/js/vendor.js
 _ide_helper.php
 _ide_helper_models.php
+
+app/lib/larasearch

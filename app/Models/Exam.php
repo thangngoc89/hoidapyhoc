@@ -1,6 +1,8 @@
 <?php namespace Quiz\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Iverberk\Larasearch\Traits\SearchableTrait as ElasticSearchableTrait;
+use Iverberk\Larasearch\Traits\TransformableTrait;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,14 +15,27 @@ use Quiz\lib\API\Exam\ExamPresenter;
 class Exam extends Model {
 
     use SoftDeletes;
-    use TaggableTrait;
-    use LocalizationDateTrait;
-    use SearchableTrait;
+    use TaggableTrait, LocalizationDateTrait;
+//    use SearchableTrait;
     use RevisionableTrait;
     use PresentableTrait;
+    use ElasticSearchableTrait;
 
     protected $fillable = ['name','content','begin','thoigian','description','is_file','file_id','questions'];
     protected $guarded = ['views'];
+
+    public function transform($relations = false)
+    {
+        return [
+            'name' => $this->name,
+            'content' => strip_tags($this->content),
+            'thoigian' => $this->thoigian,
+            'description' => $this->description,
+            'created_at' => (string) $this->created_at,
+            'updated_at' => (string) $this->updated_at,
+            'deleted_at' => (string) $this->deleted_at
+        ];
+    }
 
     protected $searchable = [
         'columns' => [
@@ -147,6 +162,11 @@ class Exam extends Model {
     public function getQuestionsCountAttribute()
     {
         return count($this->questions);
+    }
+
+    public function getContentAttribute($content)
+    {
+        return html_entity_decode($content);
     }
 
 }

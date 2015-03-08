@@ -24,7 +24,8 @@
 		"laracasts/presenter": "dev-master",
         "zizaco/entrust": "dev-laravel-5",
 		"davejamesmiller/laravel-breadcrumbs": "dev-master",
-		"graham-campbell/throttle": "~3.0@dev"
+		"graham-campbell/throttle": "~3.0@dev",
+		"elasticsearch/elasticsearch": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
@@ -38,7 +39,8 @@
 			"database"
 		],
 		"psr-4": {
-			"Quiz\\": "app/"
+			"Quiz\\": "app/",
+			"Iverberk\\Larasearch\\": "app/lib/larasearch/src/"
 		}
 	},
 	"autoload-dev": {

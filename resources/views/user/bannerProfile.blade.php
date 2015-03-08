@@ -1,7 +1,7 @@
 <div class="banner banner-profile">
     <div class="container">
          <a href="{{ $user->profileLink() }}">
-            <img src="{{ $user->getAvatar() }}" class="profile__avatar" alt="{{ $user->username }}">
+            <img src="{{ $user->getAvatar() }}" width="178" height="178" class="profile__avatar" alt="{{ $user->username }}">
          </a>
         <ul class="naked banner-profile__links">
             <li>
@@ -9,7 +9,8 @@
             </li>
             @foreach ($user->profiles as $p)
                 <li>
-                    <a href="{{ $p->profileURL }}">{{ $p->provider }}</a>
+                    <a href="{{ $p->profileURL }}">
+                        <i class="fa {{ "fa-" . $p->provider }}"></i> {{ $p->provider }}</a>
                 </li>
             @endforeach
         </ul>

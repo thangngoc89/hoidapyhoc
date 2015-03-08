@@ -29,20 +29,19 @@
                         <i class="icon-chat-4"></i> Diễn đàn
                     </a>
                 </li>
-
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <!--<li id="navbar-notifications" class="badge dropdown">
-                        1
-                        <ul class="dropdown-menu" data-model="Forum">
-                                            <li>
-                                    <a href="https://laracasts.com/discuss/channels/general-discussion/l5-use-flysystem-replicate-adapter-with-filesystem?page=1#reply-28833" data-click="clearNotification" data-notification-id="40043">usman mentioned you in "Add new Adapter to Laravel Filesystem"</a>                </li>
+                {{--<li id="navbar-notifications" class="badge dropdown">--}}
+                        {{--1--}}
+                        {{--<ul class="dropdown-menu" data-model="Forum">--}}
+                                            {{--<li>--}}
+                                    {{--<a href="https://laracasts.com/discuss/channels/general-discussion/l5-use-flysystem-replicate-adapter-with-filesystem?page=1#reply-28833" data-click="clearNotification" data-notification-id="40043">usman mentioned you in "Add new Adapter to Laravel Filesystem"</a>                </li>--}}
 
-                            <li>
-                                <form method="POST" action="https://laracasts.com/discuss/notifications/mentions" accept-charset="UTF-8" class="text-center"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="MpFOyCHwKW5wkiFtDLx6Sm7Vk3kt1h5VjyBne6f5">                    <input class="naked-btn" type="submit" value="Clear All">                </form>            </li>
-                        </ul>
-                    </li>-->
+                            {{--<li>--}}
+                                {{--<form method="POST" action="https://laracasts.com/discuss/notifications/mentions" accept-charset="UTF-8" class="text-center"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="MpFOyCHwKW5wkiFtDLx6Sm7Vk3kt1h5VjyBne6f5">                    <input class="naked-btn" type="submit" value="Clear All">                </form>            </li>--}}
+                        {{--</ul>--}}
+                    {{--</li>--}}
                 @if (! \Auth::check())
                 <li>
                     <button type="button" class="navbar-link btn btn-join" data-toggle="modal" data-target="#loginModal">Đăng nhập</button>
@@ -52,24 +51,19 @@
                 <li class="dropdown" id="user-options">
                     <a href="#" class="dropdown-toggle navbar-link" data-toggle="dropdown">
                         {{ $user->name }} <b class="caret"></b>
-                        <img src="{{ $user->getAvatar() }}" class="nav-gravatar" alt="{{ $user->getName() }}">
+                        <img src="{{ $user->getAvatar() }}" width="48" height="48" class="nav-gravatar" alt="{{ $user->getName() }}">
                     </a>
 
                     <ul class="dropdown-menu dropdown-with-icons">
                         <li>
                             <a href="{{ $user->profileLink() }}">
-                                <i class="icon-profile-1"></i> Trang cá nhân
-                            </a>
-                        </li>
+                                <i class="icon-profile-1"></i> Trang cá nhân</a></li>
                         <li>
                             <a href="">
-                                <i class="icon-link-2"></i> Thiết lập tài khoản
-                            </a>
-                        </li>
+                                <i class="icon-link-2"></i> Thiết lập tài khoản</a></li>
                         <li>
                             <a href="/auth/logout?return={{ url() }}">
-                                <i class="icon-log-out-1"></i> Thoát
-                            </a>
+                                <i class="icon-log-out-1"></i> Thoát</a>
                         </li>
                     </ul>
                 </li>
@@ -94,7 +88,6 @@
                     </li>
                 </ul>
             </li>
-
             <!-- Forum -->
             <li id="navbar-link--deploy">
                 <a href="https://ask.hoidapyhoc.com" class="navbar-link" target="_blank">Diễn đàn</a>

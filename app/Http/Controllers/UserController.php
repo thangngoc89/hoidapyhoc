@@ -4,6 +4,7 @@ use Illuminate\Auth\Guard;
 use Quiz\Http\Requests\AuthEditRequest;
 use Quiz\lib\Repositories\User\UserRepository as User;
 use Quiz\lib\Repositories\History\HistoryRepository as History;
+use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 
 class UserController extends Controller {
     /**
@@ -14,22 +15,17 @@ class UserController extends Controller {
      * @var User
      */
     private $user;
-    /**
-     * @var History
-     */
-    private $history;
 
     /**
      * @param Guard $auth
      * @param User $user
      * @param History $history
      */
-    public function __construct(Guard $auth, User $user, History $history)
+    public function __construct(Guard $auth, User $user)
     {
         $this->middleware('auth');
         $this->auth = $auth;
         $this->user = $user;
-        $this->history = $history;
     }
 
     public function index()
@@ -72,12 +68,14 @@ class UserController extends Controller {
      * @param $username
      * @return \Illuminate\View\View
      */
-    public function profile($user)
+    public function profile($user, History $history, Exam $exam)
     {
-        #TODO: Add recent upload exam
-        $history = $this->history->recentDoneExam($user->id);
+        $history = $history->recentDoneExam($user->id);
 
-        return view('user.profile',compact('user','history'));
+        #TODO: Move this to repository
+        $postedExams = $user->exams()->with('tagged')->orderBy('updated_at','DESC')->take(5)->get();
+
+        return view('user.profile',compact('user','history', 'postedExams'));
     }
 
 }

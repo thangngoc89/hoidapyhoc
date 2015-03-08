@@ -10,4 +10,6 @@ interface ExamRepository extends BaseRepository {
 
     public function getByIdOrSlug($id,$slug);
 
+    public function relatedExams($exam, $amount = 5);
+
 }

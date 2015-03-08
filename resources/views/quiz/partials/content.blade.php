@@ -44,8 +44,5 @@
         {!! $t->content !!}
     @endif
     </div>
-    <div class="the-end">
-        <h1>-- Hết --</h1>
-    </div>
 </div>
 @endif

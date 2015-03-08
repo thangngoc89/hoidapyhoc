@@ -56,4 +56,40 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
         });
     }
 
+    public function relatedExams($exam, $amount = 5)
+    {
+        $exam = $this->getItem($exam);
+
+        $exam->load(['tagged.exams' => function ($q) use ( &$relatedExams, $exam, $amount ) {
+            $relatedExams = $q->where('exams.id', '<>', $exam->id)->limit($amount)->get()->unique();
+        }]);
+
+
+        if (is_null($relatedExams))
+        {
+            $count = 0;
+            $currentIds = [];
+        } else {
+            $count = $relatedExams->count();
+            $currentIds = $relatedExams->lists('id');
+        }
+        if ($count < $amount)
+        {
+            $currentIds []= $exam->id;
+
+            $moreRelatedExams = $this->model->orderByRaw('RAND()')->whereNotIn('id',$currentIds)->take($amount-$count)->get();
+            $relatedExams = is_null($relatedExams) ? $moreRelatedExams : $relatedExams->merge($moreRelatedExams);
+        }
+
+
+        return $relatedExams;
+    }
+
+    private function getItem($exam)
+    {
+        if ($exam instanceof $this->model)
+            return $exam;
+
+        return $this->model->find($exam);
+    }
 }

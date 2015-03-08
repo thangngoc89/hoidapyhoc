@@ -32,14 +32,7 @@ span.timecou{
 {
   display:block;
 }
-.the-end{
-  display: block;
-  padding-top: 3em;
 
-  h1{
-    text-align: center;
-  }
-}
 .pagination > li > a, .pagination > li > span {
   border: 0;
 }
@@ -59,6 +52,15 @@ span.timecou{
   }
 }
 
+.related-exams {
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+
+}
+.related-exams__content {
+  padding-top: 10px;
+  font-size: 16px;
+}
 
 /*Facebook comment*/
 .fb_iframe_widget, .fb_iframe_widget span,.fb_iframe_widget span iframe[style] {

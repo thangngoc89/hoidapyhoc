@@ -79,7 +79,9 @@ class QuizController extends Controller {
         // Define for blade template
         $viewHistory = false;
 
-        return view('quiz.do',compact('t','haveHistory','viewHistory'));
+        $relatedExams = $this->exam->relatedExams($t, 10);
+
+        return view('quiz.do',compact('t','haveHistory','viewHistory','relatedExams'));
 	}
 
     /**

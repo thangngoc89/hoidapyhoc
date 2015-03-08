@@ -30,11 +30,17 @@
     {{ trim($t->name) }}
 @stop
 
-@if (!empty($t->description))
-    @section('meta_description')
-        {{ $t->description }}
-    @endsection
-@endif
+@section('meta_description')
+<?php $meta_desc = str_limit(strip_tags($t->content), 150); ?>
+    @if (!empty($t->description))
+            {{ $t->description }}
+    @elseif (!$t->is_file && strlen($meta_desc) > 0)
+        {{ $meta_desc }}
+    @else
+        Đề thi {{ $t->name }} - Làm đề thi trắc nghiệm Y Học Online. Kho đề thi trắc nghiệm Y Học lớn nhất
+    @endif
+@endsection
+
 
 @section('meta_author')
     {{ $t->user->getName() }}
@@ -55,6 +61,31 @@
 
     <div class="row" id="mainRow">
     @include('quiz.doContent')
+    </div>
+    <div class="row">
+        <div class="col-md-12 white related-exams">
+            <div class="lessons-nav lessons-nav--forum inline-nav">
+                <div class="container">
+                    <ul class="lessons-nav__primary">
+                        <li class="active">
+                            <a href="#related-exams">
+                                <span id="related-exams">Đề thi ngẫu nhiên</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="related-exams__content">
+                <ol>
+                    @foreach($relatedExams as $relatedExam)
+                    <li>
+                        <a href="{{ $relatedExam->present()->link }}">
+                        {{ $relatedExam->name }}
+                        </a>
+                    </li>
+                    @endforeach
+                </ol>
+            </div>
+        </div>
     </div>
 </div>
 @stop

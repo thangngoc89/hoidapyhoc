@@ -31,7 +31,7 @@ Breadcrumbs::register('quiz', function($breadcrumbs)
 Breadcrumbs::register('quiz.do', function($breadcrumbs, $exam)
 {
     $breadcrumbs->parent('quiz');
-    $breadcrumbs->push($exam->name, route('quiz.do', $exam->id));
+    $breadcrumbs->push($exam->name, route('quiz.do', [$exam->slug, $exam->id]  ));
 });
 
 // Home > Quiz > Create
@@ -63,6 +63,6 @@ Breadcrumbs::register('video.index', function($breadcrumbs)
 Breadcrumbs::register('video.show', function($breadcrumbs, $video)
 {
     $breadcrumbs->parent('video.index');
-    $breadcrumbs->push($video->title, route('video.index', $video->id));
+    $breadcrumbs->push($video->title, route('video.index', [$video->slug, $video->id]));
 });
 

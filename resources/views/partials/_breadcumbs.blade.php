@@ -13,7 +13,8 @@
 				</li>
 			@else
 				<li class="active" itemprop="child" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <span itemprop="title">{{{ $breadcrumb->title }}}</span>
+				    <a href="{{{ $breadcrumb->url }}}" itemprop="url">
+                        <span itemprop="title">{{{ $breadcrumb->title }}}</span></a>
 				</li>
 			@endif
 		@endforeach

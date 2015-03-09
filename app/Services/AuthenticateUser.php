@@ -55,6 +55,8 @@ class AuthenticateUser {
     {
         if ( ! $hasCode) return $this->getAuthorizationFirst($provider);
 
+        \Log::debug('Tracking failed social authentication', ['code' => \Request::get('code')] );
+
         $userData = $this->getUserDataFromProvider($provider);
 
         $user = $this->findOrCreateUser($userData);

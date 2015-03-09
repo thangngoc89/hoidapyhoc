@@ -254,9 +254,7 @@ class CacheDecorator extends AbstractExamDecorator {
         $key = 'user_done_exams';
 
         if ($this->cache->has($key))
-        {
             return $this->cache->get($key);
-        }
 
         $exams = $this->exam->doneTest($user);
 
@@ -265,14 +263,12 @@ class CacheDecorator extends AbstractExamDecorator {
         return $this->exam->doneTest($user);
     }
 
-    public function doneTestId(User $user)
+    public function doneTestId($user)
     {
         $key = 'user_done_exam_ids' . $user->id;
 
         if ($this->cache->has($key))
-        {
             return $this->cache->get($key);
-        }
 
         $examIds = $this->exam->doneTestId($user);
 
@@ -291,9 +287,7 @@ class CacheDecorator extends AbstractExamDecorator {
         $key = 'relatedExams_' . $exam->id;
 
         if ($this->cache->has($key))
-        {
             return $this->cache->get($key);
-        }
 
         $exams = $this->exam->relatedExams($exam, $amount);
 
@@ -302,5 +296,67 @@ class CacheDecorator extends AbstractExamDecorator {
         return $exams;
     }
 
+    /**
+     * Return an collection of exams were posted by user
+     *
+     * @param $userId
+     * @param null $paginated
+     * @return \Illuminate\Support\Collection;
+     */
+    public function getUserPostedExamWithRelations($userId, $paginate = false, array $relations = [])
+    {
+        $key = md5( 'user_' . $userId . '_posted_exam_with_relations_' . implode('_', $relations) . \Request::get('page') );
 
+        if ($this->cache->has($key))
+            return $this->cache->get($key);
+
+        $exams = $this->exam->getUserPostedExamWithRelations($userId, $paginate, $relations);
+
+        $this->cache->put($key, $exams);
+
+        return $exams;
+    }
+
+    /**
+     * Return an collection of latest exams with relations
+     *
+     * @param bool $paginate
+     * @param bool $approved
+     * @return \Illuminate\Support\Collection;
+     */
+    public function getLatestExamsWithRelations($paginate = false, array $relations = [], $approved = true)
+    {
+        $key = md5( 'latest_exams_' . \Request::get('page') );
+
+        if ($this->cache->has($key))
+            return $this->cache->get($key);
+
+        $exams = $this->exam->getLatestExamsWithRelations($paginate, $relations, $approved);
+
+        $this->cache->put($key, $exams);
+
+        return $exams;
+    }
+
+    /**
+     * Return an collection of exams were done by user
+     *
+     * @param $userId
+     * @param bool $paginate
+     * @param array $relations
+     * @return \Illuminate\Support\Collection;
+     */
+    public function getUserDoneExamsWithRelations($userId, $paginate = false, array $relations = [])
+    {
+        $key = md5( 'user_' . $userId . '_done_exams_' . \Request::get('page') );
+
+        if ($this->cache->has($key))
+            return $this->cache->get($key);
+
+        $exams = $this->exam->getUserPostedExamWithRelations($userId, $paginate, $relations);
+
+        $this->cache->put($key, $exams);
+
+        return $exams;
+    }
 }

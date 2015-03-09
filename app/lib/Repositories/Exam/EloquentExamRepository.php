@@ -18,23 +18,22 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
         $this->model = $model;
     }
 
-    public function doneTest(User $user)
-    {
-        $exams = $this->model->whereIn('id',$this->doneTestId($user))->get();
-
-        return $exams;
-    }
-
     /**
      * Return an array of done exam by user
      * @param $user
      * @return mixed
      */
-    public function doneTestId(User $user)
+    public function doneTestId($user)
     {
+        #TODO: Refactor and make this plain userId
+        if ($user instanceof User)
+            $userId = $user->id;
+        else
+            $userId = $user;
+
         $exams = $this->model->select('exams.id')
             ->join('history', 'history.test_id', '=', 'exams.id')
-            ->where('history.user_id', $user->id)
+            ->where('history.user_id', $userId)
             ->groupBy('id')
             ->get()
             ->modelKeys();
@@ -72,5 +71,51 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
 
 
         return $relatedExams;
+    }
+
+    /**
+     * Return an collection of exams were posted by user
+     *
+     * @param $userId
+     * @param null $paginated
+     * @return \Illuminate\Support\Collection;
+     */
+    public function getUserPostedExamWithRelations($userId, $paginate = false, array $relations = [])
+    {
+        $query = $this->model->with($relations)->whereUserId($userId);
+
+        return $this->paginateOrGet($query, $paginate);
+
+    }
+
+    /**
+     * Return an collection of latest exams with relations
+     *
+     * @param bool $paginate
+     * @param bool $approved
+     * @return \Illuminate\Support\Collection;
+     */
+    public function getLatestExamsWithRelations($paginate = false, array $relations = [], $approved = true)
+    {
+        #TODO: Add is_approve query here
+        $query = $this->model->with($relations)->latest();
+
+        return $this->paginateOrGet($query, $paginate);
+    }
+
+
+    /**
+     * Return an collection of exams were done by user
+     *
+     * @param $userId
+     * @param bool $paginate
+     * @param array $relations
+     * @return \Illuminate\Support\Collection;
+     */
+    public function getUserDoneExamsWithRelations($userId, $paginate = false, array $relations = [])
+    {
+        $query = $this->model->whereIn('id' , $this->doneTestId($userId));
+
+        return $this->paginateOrGet($query, $paginate);
     }
 }

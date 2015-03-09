@@ -242,4 +242,17 @@ abstract class AbstractEloquentRepository {
     {
         return $this->model->withAllTags($string);
     }
+
+    /**
+     * @param $query
+     * @param $paginate
+     * @return mixed
+     */
+    protected function paginateOrGet($query, $paginate)
+    {
+        if ($paginate)
+            return $query->paginate($paginate);
+
+        return $query->get();
+    }
 } 

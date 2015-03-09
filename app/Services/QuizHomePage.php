@@ -16,6 +16,7 @@ class QuizHomePage {
     private $request;
     private $result;
     private $name;
+    private $paginate = 10;
     /**
      * @var Cache
      */
@@ -50,23 +51,29 @@ class QuizHomePage {
     {
         if (! $this->auth->check())
             abort(403);
-        $this->result = $this->exam->whereIn( 'id',$this->exam->doneTestId($this->auth->user()) );
+        $this->result = $this->exam->whereIn( 'id' ,$this->exam->doneTestId($this->auth->user()) );
+
+        $userId = $this->auth->user()->id;
+
+        $this->result = $this->exam->getUserDoneExamsWithRelations($userId, $this->paginate , ['tagged','user']);
 
         $this->name = 'Các đề bạn đã làm';
     }
 
     private function latestTab()
     {
-        $this->result = $this->exam->latest();
+        $this->result = $this->exam->getLatestExamsWithRelations($this->paginate, ['tagged','user']);
         $this->name = 'Quiz';
     }
 
     private function yourExamTab()
     {
-        if (! $this->auth->check())
+        if ( ! $this->auth->check() )
             abort(403);
 
-        $this->result = $this->auth->user()->exams();
+        $userId = $this->auth->user()->id;
+
+        $this->result = $this->exam->getUserPostedExamWithRelations($userId, $this->paginate , ['tagged','user']);
 
         $this->name = 'Đề thi đã gửi';
     }
@@ -89,7 +96,7 @@ class QuizHomePage {
 
     private function makeView()
     {
-        $exams = $this->result->with('tagged','user')->paginate(10);;
+        $exams = $this->result;
 
         // Appends pagination
         $exams->appends($this->request->except('page'));

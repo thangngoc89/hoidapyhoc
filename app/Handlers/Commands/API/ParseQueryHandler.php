@@ -51,8 +51,6 @@ class ParseQueryHandler {
 
     private function whereClause()
     {
-        \Log::info('whereClause debug', $this->input->all());
-
         foreach ($this->input->all() as $col)
         {
             if (in_array($col, $this->columnsList))

@@ -59,7 +59,8 @@ class AuthenticateUser {
 
         if ($code == null)
             return redirect('/auth/login')
-                    ->with('info','Không thể xác thực. Vui lòng chấp nhận quyền truy cập của Hỏi Đáp Y Học ở Google/Facebook');
+                    ->with('info','Không thể xác thực tài khoản.<br>
+                        Vui lòng chấp nhận quyền truy cập của Hỏi Đáp Y Học ở Google/Facebook');
 
         $userData = $this->getUserDataFromProvider($provider);
 

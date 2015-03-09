@@ -23,10 +23,10 @@ Route::pattern('permissions', '[0-9]+');
  *  HomePage Group
  *  ------------------------------------------
  */
-Route::get('/',['uses' => 'HomeController@index', 'as' => 'home']);
-Route::get('thongke',['uses' => 'HomeController@statistic', 'as' => 'site.statistic']);
-Route::get('testimonials', ['uses' => 'HomeController@testimonials', 'as' => 'site.testimonials']);
-Route::get('cleanCache','HomeController@cleanCache');
+Route::get('/',['uses' => 'Web\HomeController@index', 'as' => 'home']);
+Route::get('thongke',['uses' => 'Web\HomeController@statistic', 'as' => 'site.statistic']);
+Route::get('testimonials', ['uses' => 'Web\HomeController@testimonials', 'as' => 'site.testimonials']);
+Route::get('cleanCache','Web\HomeController@cleanCache');
 
 /** ------------------------------------------
  *  Admin Group
@@ -43,13 +43,13 @@ Route::group(array('prefix' => 'admin'), function()
  *  Auth and User Group
  *  ------------------------------------------
  */
-Route::get('@{username}','UserController@profile');
-Route::get('profile/{users}','UserController@profile');
-Route::get('users','UserController@index');
+Route::get('@{username}','Web\UserController@profile');
+Route::get('profile/{users}','Web\UserController@profile');
+Route::get('users','Web\UserController@index');
 
 Route::get('auth/external/{provider}','Auth\AuthController@external');
-Route::get('auth/edit','UserController@getFinish');
-Route::post('auth/edit','UserController@postFinish');
+Route::get('auth/edit','Web\UserController@getFinish');
+Route::post('auth/edit','Web\UserController@postFinish');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
@@ -59,11 +59,11 @@ Route::controllers([
  *  Quiz Group
  *  ------------------------------------------
  */
-Route::resource('quiz','QuizController');
+Route::resource('quiz','Web\QuizController');
 Route::group(array('prefix' => 'quiz'), function()
 {
-    Route::get('lam-bai/{slug}/{exams}', ['uses' => 'QuizController@show', 'as' => 'quiz.do']);
-    Route::get('ket-qua/{slug}/{id}', 'QuizController@showHistory');
+    Route::get('lam-bai/{slug}/{exams}', ['uses' => 'Web\QuizController@show', 'as' => 'quiz.do']);
+    Route::get('ket-qua/{slug}/{id}', 'Web\QuizController@showHistory');
 });
 
 /** ------------------------------------------
@@ -72,8 +72,8 @@ Route::group(array('prefix' => 'quiz'), function()
  */
 Route::group(array('prefix' => 'video'), function()
 {
-    Route::get('{slug}/{videos}', ['uses' => 'VideoController@show', 'as' => 'video.show']);
-    Route::get('/', ['uses' => 'VideoController@index', 'as' => 'video.index']);
+    Route::get('{slug}/{videos}', ['uses' => 'Web\VideoController@show', 'as' => 'video.show']);
+    Route::get('/', ['uses' => 'Web\VideoController@index', 'as' => 'video.index']);
 });
 
 /** ------------------------------------------
@@ -145,16 +145,16 @@ Route::group(['prefix' => 'api/v2', 'before' => 'throttle:15,1'], function()
  *  Tag Group
  *  ------------------------------------------
  */
-Route::get('tag', 'TagController@index');
-Route::get('tag/{slug}', 'TagController@show');
+Route::get('tag', 'Web\TagController@index');
+Route::get('tag/{slug}', 'Web\TagController@show');
 
 /** ------------------------------------------
  *  Rescources Group
  *  ------------------------------------------
  */
-Route::get('files/user/{users}/avatar.jpg','ResourcesController@userAvatar');
-Route::get('files/image/{size}/{file}','ResourcesController@image');
-Route::get('files/pdf/{file}','ResourcesController@pdf');
+Route::get('files/user/{users}/avatar.jpg','Web\ResourcesController@userAvatar');
+Route::get('files/image/{size}/{file}','Web\ResourcesController@image');
+Route::get('files/pdf/{file}','Web\ResourcesController@pdf');
 
 /** ------------------------------------------
  *  Sitemap

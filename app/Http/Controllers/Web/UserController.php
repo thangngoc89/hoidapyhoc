@@ -1,6 +1,7 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Web;
 
 use Illuminate\Auth\Guard;
+use Quiz\Http\Controllers\Controller;
 use Quiz\Http\Requests\AuthEditRequest;
 use Quiz\lib\Repositories\User\UserRepository as User;
 use Quiz\lib\Repositories\History\HistoryRepository as History;

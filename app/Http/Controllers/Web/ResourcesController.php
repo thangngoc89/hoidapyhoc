@@ -1,4 +1,4 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Web;
 
 use Quiz\Commands\Site\ImageServer;
 use Quiz\Commands\Site\ShowUserAvatar;

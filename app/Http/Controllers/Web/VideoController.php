@@ -1,4 +1,4 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Web;
 
 use Quiz\Events\Video\VideoViewEvent;
 use Quiz\Http\Requests;

@@ -1,5 +1,6 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Web;
 
+use Quiz\Http\Controllers\Controller;
 use Quiz\lib\Repositories\Exam\ExamRepository;
 use Quiz\lib\Repositories\History\HistoryRepository;
 use Quiz\lib\Repositories\Tag\TagRepository;

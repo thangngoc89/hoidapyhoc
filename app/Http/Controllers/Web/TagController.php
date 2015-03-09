@@ -1,4 +1,4 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Web;
 
 use Illuminate\Auth\Guard;
 use Quiz\Http\Requests;

@@ -1,7 +1,8 @@
-<?php namespace Quiz\Http\Controllers;
+<?php namespace Quiz\Http\Controllers\Web;
 
 use Illuminate\Auth\Guard;
 use Quiz\Events\Exam\ExamViewEvent;
+use Quiz\Http\Controllers\Controller;
 use Quiz\lib\API\Exam\ExamTransformers;
 use Quiz\lib\Repositories\Exam\ExamRepository as Exam;
 use Quiz\lib\Repositories\History\HistoryRepository as History;

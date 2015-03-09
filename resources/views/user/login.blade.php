@@ -2,7 +2,10 @@
 @section('title')
 Đăng nhập
 @parent
+@stop
 
+@section('meta_description')
+Đăng nhập vào Hỏi Đáp Y Học
 @stop
 
 <!DOCTYPE html>
@@ -29,5 +32,6 @@
                 Copyright @ <a href="/">Hỏi Đáp Y Học 2015</a>
             </div>
         </div>
+        @include('partials.script')
     </body>
 </html>

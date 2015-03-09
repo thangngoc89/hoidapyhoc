@@ -55,7 +55,11 @@ class AuthenticateUser {
     {
         if ( ! $hasCode) return $this->getAuthorizationFirst($provider);
 
-        \Log::debug('Tracking failed social authentication', ['code' => \Request::get('code')] );
+        $code = \Request::get('code');
+
+        if ($code == null)
+            return redirect('/auth/login')
+                    ->with('info','Không thể xác thực. Vui lòng chấp nhận quyền truy cập của Hỏi Đáp Y Học ở Google/Facebook');
 
         $userData = $this->getUserDataFromProvider($provider);
 

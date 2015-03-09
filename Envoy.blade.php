@@ -2,7 +2,10 @@
 
 @macro('deploy')
     git
-    file
+    migrate
+    optimize
+    assets
+    queue
 @endmacro
 
 @task('git')
@@ -12,9 +15,12 @@
 	composer install
 @endtask
 
-@task('file')
-    echo "Backup and re-complied everything"
+@task('migrate')
     php artisan migrate --env=local
+@endtask
+
+@task('optimize')
+    echo "Optimize framework"
     php artisan cache:clear
     php artisan clear-compiled
     php artisan optimize
@@ -24,10 +30,16 @@
 
     php artisan route:clear
     php artisan route:cache
+@endtask
 
+@task('assets')
+    echo "Compliling assets"
     gulp --production
     gulp version
-    echo "Deployment complete"
+@endtask
+
+@task('queue')
+    php artisan queue:listen > /home/nginx/hoidapyhoc/storage/queue.log
 @endtask
 
 @after

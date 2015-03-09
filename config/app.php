@@ -13,7 +13,6 @@ return [
 	|
 	*/
 
-//	'debug' => false,
 	'debug' => env('APP_DEBUG'),
 
 	/*
@@ -166,6 +165,7 @@ return [
 		'Quiz\Providers\RouteServiceProvider',
 		'Quiz\Providers\LogServiceProvider',
         \Quiz\lib\Repositories\RepositoryServiceProvider::class,
+        \Quiz\lib\ExternalLink\Shorten\LinkShortenServiceProvider::class,
 	],
 
 	/*

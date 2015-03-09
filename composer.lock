@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9f35cfb3db4cba724b5de09cf16b32a7",
+    "hash": "baed1ea722bd647a264a65f3a56cc363",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1240,6 +1240,57 @@
                 "stream"
             ],
             "time": "2014-10-12 19:18:40"
+        },
+        {
+            "name": "hpatoio/bitly-api",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hpatoio/bitly-api.git",
+                "reference": "13873b6862a1b8267f52e740e0728c590a90d3b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hpatoio/bitly-api/zipball/13873b6862a1b8267f52e740e0728c590a90d3b4",
+                "reference": "13873b6862a1b8267f52e740e0728c590a90d3b4",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/guzzle": "~3.0"
+            },
+            "require-dev": {
+                "behat/behat": "~2.0",
+                "behat/mink": "~1.5",
+                "phpunit/phpunit": "~3.7"
+            },
+            "suggest": {
+                "hpatoio/bitly-bundle": "for integration with Symfony2 web framework"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hpatoio\\Bitly\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-SA-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Simone Fumagalli",
+                    "email": "simone@iliveinperego.com"
+                }
+            ],
+            "description": "PHP Library based on Guzzle to consume Bit.ly API",
+            "homepage": "http://www.iliveinperego.com/",
+            "keywords": [
+                "Behat",
+                "Guzzle",
+                "api",
+                "bitly"
+            ],
+            "time": "2014-09-06 10:56:59"
         },
         {
             "name": "illuminate/html",

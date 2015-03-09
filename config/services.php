@@ -34,15 +34,15 @@ return [
 		'secret' => '',
 	],
     'google' => [
-        'client_id' => getenv('GOOGLE_CLIENT_ID'),
-        'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://'.getenv('HOST_NAME').'/auth/external/google'
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => 'http://'.env('HOST_NAME').'/auth/external/google'
     ],
 
     'facebook' => [
-        'client_id' => getenv('FACEBOOK_CLIENT_ID'),
-        'client_secret' => getenv('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'http://'.getenv('HOST_NAME').'/auth/external/facebook'
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => 'http://'.env('HOST_NAME').'/auth/external/facebook'
     ],
 
     'flickr' => [
@@ -54,5 +54,9 @@ return [
         'api_key' => env('SLACK_API_KEY'),
         'channel' => env('SLACK_CHANNEL'),
     ],
+
+    'bitly' => [
+        'access_token' => env('BITLY_ACCESS_TOKEN')
+    ]
 
 ];

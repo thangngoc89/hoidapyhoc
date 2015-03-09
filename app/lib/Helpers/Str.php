@@ -59,6 +59,26 @@ class Str extends \Illuminate\Support\Str {
         return $icons[rand(0,$iconsLength-1)];
     }
 
+    /**
+     * Generate an decoded url
+     *
+     * @param $link
+     * @return string
+     */
+    public static function encodeUrl($link)
+    {
+        #TODO: Write test
+        $link = parse_url($link);
 
+        $encodedLink = $link['scheme'] . "://" . $link['host'];
 
-} 
+        $encodedLink .= (isset($link['path'])) ? $link['path'] : '';
+
+        $encodedLink .= (isset($link['query'])) ? urlencode($link['query']) : '';
+
+        $encodedLink .= (isset($link['fragment'])) ? '#'.$link['fragment'] : '';
+
+        return $encodedLink;
+    }
+
+}

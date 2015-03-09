@@ -65,7 +65,19 @@ interface BaseRepository {
 
     public function count();
 
+    /**
+     * Return table name of the model
+     *
+     * @return string
+     */
     public function getTable();
+
+    /**
+     * Return a array of all columns present in the models
+     *
+     * @return array
+     */
+    public function getColumnsList();
 
     /**
      * Tag a taggable item

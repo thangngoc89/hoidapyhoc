@@ -142,7 +142,7 @@ class CacheDecorator extends AbstractExamDecorator {
 
     public function with($with)
     {
-        return $this->exam->withAllTags($with);
+        return $this->exam->with($with);
     }
 
     public function load($relationship)
@@ -177,7 +177,35 @@ class CacheDecorator extends AbstractExamDecorator {
 
     public function getTable()
     {
-        return $this->exam->getTable();
+        $key = 'table_name';
+
+        if ($this->cache->has($key))
+            return $this->cache->get($key);
+
+        $tableName = $this->exam->getTable();
+
+        $this->cache->put($key, $tableName);
+
+        return $tableName;
+    }
+
+    /**
+     * Return a array of all columns present in the models
+     *
+     * @return array
+     */
+    public function getColumnsList()
+    {
+        $key = 'columns_list';
+
+        if ($this->cache->has($key))
+            return $this->cache->get($key);
+
+        $columnsList = $this->exam->getColumnsList();
+
+        $this->cache->put($key, $columnsList);
+
+        return $columnsList;
     }
 
     /**
@@ -273,4 +301,6 @@ class CacheDecorator extends AbstractExamDecorator {
 
         return $exams;
     }
+
+
 }

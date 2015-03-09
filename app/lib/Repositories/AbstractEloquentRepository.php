@@ -182,7 +182,6 @@ abstract class AbstractEloquentRepository {
         return $this->model->first();
     }
 
-
     public function count()
     {
         return $this->model->count();
@@ -191,6 +190,16 @@ abstract class AbstractEloquentRepository {
     public function getTable()
     {
         return $this->model->getTable();
+    }
+
+    /**
+     * Return a array of all columns present in the models
+     *
+     * @return array
+     */
+    public function getColumnsList()
+    {
+        return \Schema::getColumnListing($this->getTable());
     }
 
 

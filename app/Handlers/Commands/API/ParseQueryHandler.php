@@ -31,6 +31,7 @@ class ParseQueryHandler {
 	public function handle(ParseQuery $command)
 	{
         $this->setColumnList($command->model);
+
         // Set some share data in class
         $this->search = $command->search;
 
@@ -40,6 +41,7 @@ class ParseQueryHandler {
 
         // Apply where clause
         $this->whereClause();
+
         // Apply API keywords
         $this->parseKeywords();
 
@@ -49,12 +51,14 @@ class ParseQueryHandler {
 
     private function whereClause()
     {
+        \Log::info('whereClause debug', $this->input->all());
+
         foreach ($this->input->all() as $col)
         {
             if (in_array($col, $this->columnsList))
             {
                 if (!empty($col) and $col != 0)
-                    $this->query = $this->query->where($col,$this->input->get($col));
+                    $this->query = $this->query->where($col, '=', $this->input->get($col));
             }
         }
     }
@@ -74,14 +78,11 @@ class ParseQueryHandler {
      */
     public function setColumnList($model)
     {
+        #TODO: Move all models into repository and use cache for this method
+        
         $table = $model->getTable();
 
-        $columnsList = \Cache::tags($table)->rememberForever("{$table}_columns_list", function() use ($table)
-        {
-            return \Schema::getColumnListing($table);
-        });
-
-        $this->columnsList = $columnsList;
+        $this->columnsList = \Schema::getColumnListing($table);
     }
 
     private function page()
@@ -92,9 +93,10 @@ class ParseQueryHandler {
     private function q()
     {
         if (empty($this->search))
-            return false;
+            return;
+
         if (empty($this->input->q))
-            return false;
+            return;
         // Search here with given cloumn
         foreach ($this->search as $col)
         {
@@ -105,7 +107,7 @@ class ParseQueryHandler {
     {
         // Prevent sort by un exists column cause query error
         if (!in_array($this->input->_sortField, $this->columnsList))
-            return false;
+            return;
 
         $this->query = $this->query->orderBy($this->input->_sortField,$this->input->_sortDir);
     }

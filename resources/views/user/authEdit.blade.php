@@ -62,10 +62,8 @@
             </div>
 
             <div class="panel-footer clearfix">
-
                 <div class="pull-right sign-up-buttons">
                     {!! Form::submit('Lưu',['class' => 'btn btn-primary']) !!}
-
                 </div>
             </div>
         </div>

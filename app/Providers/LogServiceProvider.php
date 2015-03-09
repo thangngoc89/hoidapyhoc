@@ -33,10 +33,10 @@ class LogServiceProvider extends ServiceProvider {
      */
     private function bootChromePHP($monolog)
     {
-        if (env('APP_ENV') === 'local') {
+        if (env('APP_ENV') != 'local')
+            return;
             $monolog->pushHandler($chromeHandler = new \Monolog\Handler\ChromePHPHandler());
             $chromeHandler->setFormatter(new \Monolog\Formatter\ChromePHPFormatter());
-        }
     }
 
     /**
@@ -44,12 +44,16 @@ class LogServiceProvider extends ServiceProvider {
      */
     private function bootSlack($monolog)
     {
-        $slackHandler = new \Monolog\Handler\SlackHandler(
-            'xoxp-3624260307-3624260313-3865278269-1baa67',
-            'general'
-        );
-        $monolog->pushHandler($slackHandler);
-        $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
+        if (env('APP_ENV') != 'local')
+        {
+            $slackHandler = new \Monolog\Handler\SlackHandler(
+                config('services.slack.api_key'),
+                config('services.slack.channel')
+            );
+            $monolog->pushHandler($slackHandler);
+            $slackHandler->setLevel(100);
+            $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
+        }
     }
 
 }

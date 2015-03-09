@@ -48,6 +48,11 @@ return [
     'flickr' => [
         'client_id' => 'a84b8e83825245304cac128ce9811ca5',
         'client_secret' => 'bb38d596ba93acc5',
-    ]
+    ],
+
+    'slack' => [
+        'api_key' => env('SLACK_API_KEY'),
+        'channel' => env('SLACK_CHANNEL'),
+    ],
 
 ];

@@ -98,11 +98,9 @@ class HomeController extends Controller {
         return $get->get($link)->parse();
     }
 
-    public function cleanCache(ExamRepository $exam)
+    public function cleanCache()
     {
-        $exams = $exam->all();
-
-        dd($exams);
+        \Log::info('khoa');
     }
 
 }

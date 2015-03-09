@@ -68,11 +68,10 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
 
-    __gaTracker('create', 'UA-57021343-1', 'auto');
+    __gaTracker('create', '{!! config('quiz.service.googleAnalytics') !!}', 'auto');
     __gaTracker('set', 'forceSSL', true);
     __gaTracker('require', 'displayfeatures');
     __gaTracker('send','pageview');
 
 </script>
 @yield('script')
-

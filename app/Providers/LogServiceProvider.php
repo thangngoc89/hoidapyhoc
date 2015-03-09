@@ -44,8 +44,9 @@ class LogServiceProvider extends ServiceProvider {
      */
     private function bootSlack($monolog)
     {
-        if (env('APP_ENV') != 'local')
-        {
+        if (env('APP_ENV') === 'local')
+            return;
+
             $slackHandler = new \Monolog\Handler\SlackHandler(
                 config('services.slack.api_key'),
                 config('services.slack.channel')
@@ -53,7 +54,6 @@ class LogServiceProvider extends ServiceProvider {
             $monolog->pushHandler($slackHandler);
             $slackHandler->setLevel(100);
             $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
-        }
     }
 
 }

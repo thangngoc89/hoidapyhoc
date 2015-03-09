@@ -39,4 +39,12 @@ interface CacheInterface {
      */
     public function forever($key, $value);
 
+    /**
+     * Set tag for object
+     *
+     * @param $tag
+     * @return mixed
+     */
+    public function setTag($tag);
+
 } 

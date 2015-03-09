@@ -249,30 +249,16 @@ class CacheDecorator extends AbstractExamDecorator {
         return $this->exam->withAllTags($string);
     }
 
-    public function doneTest(User $user)
-    {
-        $key = 'user_done_exams';
-
-        if ($this->cache->has($key))
-            return $this->cache->get($key);
-
-        $exams = $this->exam->doneTest($user);
-
-        $this->cache->put($key, $exams);
-
-        return $this->exam->doneTest($user);
-    }
-
     public function doneTestId($user)
     {
         $key = 'user_done_exam_ids' . $user->id;
 
-        if ($this->cache->has($key))
-            return $this->cache->get($key);
+        if ($this->cache->setTag(['exams','history'])->has($key))
+            return $this->cache->setTag(['exams','history'])->get($key);
 
         $examIds = $this->exam->doneTestId($user);
 
-        $this->cache->put($key, $examIds);
+        $this->cache->setTag(['exams','history'])->put($key, $examIds);
 
         return $this->exam->doneTestId($user);
     }
@@ -350,12 +336,12 @@ class CacheDecorator extends AbstractExamDecorator {
     {
         $key = md5( 'user_' . $userId . '_done_exams_' . \Request::get('page') );
 
-        if ($this->cache->has($key))
-            return $this->cache->get($key);
+        if ($this->cache->setTag(['exams','history'])->has($key))
+            return $this->cache->setTag(['exams','history'])->get($key);
 
         $exams = $this->exam->getUserPostedExamWithRelations($userId, $paginate, $relations);
 
-        $this->cache->put($key, $exams);
+        $this->cache->setTag(['exams','history'])->put($key, $exams);
 
         return $exams;
     }

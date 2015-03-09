@@ -85,4 +85,17 @@ class LaravelCache implements CacheInterface {
     {
         return $this->cache->tags($this->tag)->forever($key, $value);
     }
+
+    /**
+     * Set tag for object
+     *
+     * @param $tag
+     * @return mixed
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
 }

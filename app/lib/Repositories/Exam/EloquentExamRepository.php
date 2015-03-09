@@ -82,7 +82,7 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
      */
     public function getUserPostedExamWithRelations($userId, $paginate = false, array $relations = [])
     {
-        $query = $this->model->with($relations)->whereUserId($userId);
+        $query = $this->model->with($relations)->whereUserId($userId)->latest();
 
         return $this->paginateOrGet($query, $paginate);
 
@@ -114,7 +114,7 @@ class EloquentExamRepository extends AbstractEloquentRepository implements ExamR
      */
     public function getUserDoneExamsWithRelations($userId, $paginate = false, array $relations = [])
     {
-        $query = $this->model->whereIn('id' , $this->doneTestId($userId));
+        $query = $this->model->whereIn('id' , $this->doneTestId($userId))->latest();
 
         return $this->paginateOrGet($query, $paginate);
     }

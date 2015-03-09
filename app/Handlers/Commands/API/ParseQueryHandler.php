@@ -79,7 +79,7 @@ class ParseQueryHandler {
     public function setColumnList($model)
     {
         #TODO: Move all models into repository and use cache for this method
-        
+
         $table = $model->getTable();
 
         $this->columnsList = \Schema::getColumnListing($table);

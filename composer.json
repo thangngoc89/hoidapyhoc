@@ -39,7 +39,8 @@
 		],
 		"psr-4": {
 			"Quiz\\": "app/"
-		}
+		},
+        "files": ["app/Http/helpers.php"]
 	},
 	"autoload-dev": {
 		"classmap": [

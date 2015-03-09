@@ -50,6 +50,15 @@ class Str extends \Illuminate\Support\Str {
         return mb_convert_encoding('&amp;#' . intval($u) . ';', 'UTF-8', 'HTML-ENTITIES');
     }
 
+    public static function random_video_icon()
+    {
+        $icons = config('quiz.video.icons');
+
+        $iconsLength = count($icons);
+
+        return $icons[rand(0,$iconsLength-1)];
+    }
+
 
 
 } 

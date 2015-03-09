@@ -22,7 +22,8 @@ elixir(function(mix) {
             'bower_components/bootstrap-sweetalert/lib/sweet-alert.js',
             'bower_components/jquery-unveil/jquery.unveil.js',
             'bower_components/selectize/dist/js/standalone/selectize.js',
-            'bower_components/jquery-stickit/src/jquery.stickit.js'
+            'bower_components/jquery-stickit/src/jquery.stickit.js',
+            'bower_components/socialcount/dist/socialcount.js'
         ], 'public/assets/js/vendor.js', 'bower_components')
         .scripts([
             'jquery.alterclass.js',
@@ -30,11 +31,10 @@ elixir(function(mix) {
             'quiz/share.js',
             'quiz/history.js',
             'quiz/do.js',
-            'quiz/create.js'
+            'quiz/create.js',
         ], 'public/assets/js/script.js')
         .scripts([
             'bower_components/FroalaWysiwygEditor/js/froala_editor.min.js',
-            //'bower_components/FroalaWysiwygEditor/js/langs/vi.js',
             'bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js',
             'bower_components/dropzone/dist/dropzone.js'
         ], 'public/assets/js/editor.js','bower_components')

@@ -21,7 +21,6 @@
 
 @task('optimize')
     echo "Optimize framework"
-    php artisan cache:clear
     php artisan clear-compiled
     php artisan optimize
 

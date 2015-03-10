@@ -25,7 +25,7 @@ class VideoPresenter extends Presenter {
     }
 
     /**
-     * Return meta description SEO tag
+     * Return a nice source link
      *
      * @return string
      */
@@ -45,7 +45,6 @@ class VideoPresenter extends Presenter {
         }
 
         return "<a href='$shortenLink' target='_blank'>$host</a>";
-
     }
 
 }

@@ -3,6 +3,7 @@
 
     @include('partials.header')
     <body class="forum">
+
     {{--<div>--}}
         {{--<form method="GET" action="https://laracasts.com/search" accept-charset="UTF-8" class="global-search" style="display: block;">--}}
             {{--<input autocomplete="off" placeholder="Search..." name="q" type="search">--}}

@@ -16,7 +16,8 @@
     "ng-admin": "master",
     "dropzone": "~4.0.1",
     "jquery-stickit": "~0.1.11",
-    "socialcount": "~0.1.10"
+    "socialcount": "~0.1.10",
+    "RRSSB": "~1.6.5"
   },
   "resolutions": {
     "angular": "~1.3.1"

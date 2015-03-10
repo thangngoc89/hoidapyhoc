@@ -26,7 +26,6 @@
 <style>
 div.videocontent {
     width: 100%;
-    max-width: 848px;
 }
 
 .video-js {padding-top: 56.25%}
@@ -37,9 +36,12 @@ div.videocontent {
 @section('body')
 <div class="video video__lesson">
     <div class="container wrap--video">
-        {!! Breadcrumbs::render('video.show', $video) !!}
+
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-sm-10 col-md-offset-1 col-sm-offset-0">
+            {!! Breadcrumbs::render('video.show', $video) !!}
+            </div>
+            <div class="col-sm-10 col-md-offset-1 col-sm-offset-0">
                 <article class="article clearfix">
                     <div class="videocontent">
                         <video id="video_player" class="video-js vjs-default-skin" controls preload="auto" width="auto" height="auto"
@@ -50,22 +52,33 @@ div.videocontent {
                                 </p>
                         </video>
                     </div>
-
-                    <h1 class="lesson-title">{{ $video->title }}</h1>
-
+                    <div class="row">
+                        <h1 class="lesson-title col-sm-8">{{ $video->title }}</h1>
+                        <div class="lesson-body col-sm-4" style="text-align: right">
+                            <i class="fa fa-eye"></i> {{ $video->views }}
+                        </div>
+                    </div>
                     <p class="lesson-title-meta">
                         Đăng vào lúc: {{ $video->updated_at->diffForHumans() }}
                     </p>
-
                     <div class="lesson-body col-sm-12">
-                        <p>{{ $video->description }} <a href="{{ $video->source }}">nguồn</a></p>
+                        <p>{{ $video->description }}</p>
+                    <div class="lesson-body col-sm-12">
+                        Nguồn : {!! $video->present()->source !!}
                     </div>
+                    </div>
+                    <p class="lesson-tags">
+                        <strong>Tag:</strong>
+                        @foreach($video->tagged as $tag)
+                            <a href="{{ $tag->link() }}" class="post-tag">{{ $tag->name }}</a>&nbsp;
+                        @endforeach
+                    </p>
                 </article>
             </div>
 
-            <aside class="video-sidebar col-md-3">
-                @include('video.videoShowSideBar')
-            </aside>
+            {{--<aside class="video-sidebar col-md-3">--}}
+                {{--@  include('video.videoShowSideBar')--}}
+            {{--</aside>--}}
         </div>
     </div>
 </div>

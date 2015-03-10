@@ -38,7 +38,7 @@ div.videocontent {
     <div class="container wrap--video">
         {!! Breadcrumbs::render('video.show', $video) !!}
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-sm-10 col-md-offset-1 col-sm-offset-0">
                 <article class="article clearfix">
                     <div class="videocontent">
                         <video id="video_player" class="video-js vjs-default-skin" controls preload="auto" width="auto" height="auto"
@@ -49,14 +49,19 @@ div.videocontent {
                                 </p>
                         </video>
                     </div>
-                    <h1 class="lesson-title">{{ $video->title }}</h1>
+                    <div class="row">
+                        <h1 class="lesson-title col-sm-8">{{ $video->title }}</h1>
+                        <div class="lesson-body col-sm-4" style="text-align: right">
+                            <i class="fa fa-eye"></i> {{ $video->views }}
+                        </div>
+                    </div>
                     <p class="lesson-title-meta">
                         Đăng vào lúc: {{ $video->updated_at->diffForHumans() }}
                     </p>
                     <div class="lesson-body col-sm-12">
                         <p>{{ $video->description }}</p>
                     <div class="lesson-body col-sm-12">
-                        Nguồn : <a href="{{ $video->source }}">{{ $video->source }}</a>
+                        Nguồn : {!! $video->present()->source !!}
                     </div>
                     </div>
                     <p class="lesson-tags">

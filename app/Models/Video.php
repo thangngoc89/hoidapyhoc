@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laracasts\Presenter\PresentableTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Quiz\lib\ExternalLink\Shorten\BitlyShorten;
+use Quiz\lib\ExternalLink\Shorten\ShortenInterface;
 use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
@@ -60,11 +62,18 @@ class Video extends Model {
     /**
      * Title auto-mutator
      */
-    public function setTitleAttribute($value) {
+    public function setTitleAttribute($value)
+    {
         $displayer = config('tagging.displayer');
         $displayer = empty($displayer) ? '\Illuminate\Support\Str::title' : $displayer;
 
         $this->attributes['title'] = call_user_func($displayer, $value);
+    }
+
+    public function getVideoSourceAttribute()
+    {
+        #TODO: rename this from database (reverse for PHP Class)
+        return $this->source;
     }
 
 }

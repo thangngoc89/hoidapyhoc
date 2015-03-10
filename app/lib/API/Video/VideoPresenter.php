@@ -1,6 +1,7 @@
 <?php namespace Quiz\lib\API\Video;
 
 use Laracasts\Presenter\Presenter;
+use Quiz\lib\ExternalLink\Shorten\ShortenInterface;
 
 class VideoPresenter extends Presenter {
 
@@ -28,14 +29,22 @@ class VideoPresenter extends Presenter {
      *
      * @return string
      */
-    public function source(ShortenInterface)
+    public function source()
     {
-        $parsedLink = parse_url($this->source);
+        $parsedLink = parse_url($this->videoSource);
 
         $host = $parsedLink['host'];
 
-        $shortLink =
-        return "<a href='$host'>{{ $video->source }}</a>";
+        #TODO: Make this a non-blocking method
+        try {
+            $shortener = \App::make(ShortenInterface::class);
+            $shortenLink = $shortener->shorten($this->videoSource);
+        } catch (\RuntimeException $e)
+        {
+            $shortenLink = $this->videoSource;
+        }
+
+        return "<a href='$shortenLink' target='_blank'>$host</a>";
 
     }
 

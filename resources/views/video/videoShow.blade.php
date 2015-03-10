@@ -26,7 +26,6 @@
 <style>
 div.videocontent {
     width: 100%;
-    max-width: 848px;
 }
 
 .video-js {padding-top: 56.25%}
@@ -39,7 +38,7 @@ div.videocontent {
     <div class="container wrap--video">
         {!! Breadcrumbs::render('video.show', $video) !!}
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-10 col-md-offset-1">
                 <article class="article clearfix">
                     <div class="videocontent">
                         <video id="video_player" class="video-js vjs-default-skin" controls preload="auto" width="auto" height="auto"
@@ -50,22 +49,28 @@ div.videocontent {
                                 </p>
                         </video>
                     </div>
-
                     <h1 class="lesson-title">{{ $video->title }}</h1>
-
                     <p class="lesson-title-meta">
                         Đăng vào lúc: {{ $video->updated_at->diffForHumans() }}
                     </p>
-
                     <div class="lesson-body col-sm-12">
-                        <p>{{ $video->description }} <a href="{{ $video->source }}">nguồn</a></p>
+                        <p>{{ $video->description }}</p>
+                    <div class="lesson-body col-sm-12">
+                        Nguồn : <a href="{{ $video->source }}">{{ $video->source }}</a>
                     </div>
+                    </div>
+                    <p class="lesson-tags">
+                        <strong>Tag:</strong>
+                        @foreach($video->tagged as $tag)
+                            <a href="{{ $tag->link() }}" class="post-tag">{{ $tag->name }}</a>&nbsp;
+                        @endforeach
+                    </p>
                 </article>
             </div>
 
-            <aside class="video-sidebar col-md-3">
-                @include('video.videoShowSideBar')
-            </aside>
+            {{--<aside class="video-sidebar col-md-3">--}}
+                {{--@  include('video.videoShowSideBar')--}}
+            {{--</aside>--}}
         </div>
     </div>
 </div>

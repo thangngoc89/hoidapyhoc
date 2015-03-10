@@ -2,22 +2,23 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laracasts\Presenter\PresentableTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;
+use Quiz\lib\API\Video\VideoPresenter;
 
 class Video extends Model {
 
-    use SoftDeletes;
-    use TaggableTrait;
-    use LocalizationDateTrait;
+    use SoftDeletes, TaggableTrait, LocalizationDateTrait, PresentableTrait;
     use SearchableTrait;
 
     protected $table = 'videos';
     protected $fillable = ['title','link','thumb','description','source','duration'];
     protected $guarded = ['views'];
     protected $dates = ['deleted_at'];
+    protected $presenter = VideoPresenter::class;
 
     protected $searchable = [
         'columns' => [
@@ -57,7 +58,7 @@ class Video extends Model {
     }
 
     /**
-     * Name auto-mutator
+     * Title auto-mutator
      */
     public function setTitleAttribute($value) {
         $displayer = config('tagging.displayer');

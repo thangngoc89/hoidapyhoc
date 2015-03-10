@@ -47,7 +47,7 @@ Rút gọn link, tạo link cực ngắn với tên miền yhoc.co :: Power by H
                         <div class="input-group col-md-8 col-md-offset-2">
                               <input type="url" class="form-control" id="input-url" placeholder="Nhập link cần rút gọn" name="link" required>
                               <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit" id="btn-shorten" data-loading="Đang xử lí">
+                                <button class="btn btn-primary" type="submit" id="btn-shorten" data-loading="Đang xử lí" disabled>
                                     <i class="fa fa-arrow-right"></i> <span>Rút gọn</span></button>
                               </span>
                         </div>
@@ -68,6 +68,7 @@ Rút gọn link, tạo link cực ngắn với tên miền yhoc.co :: Power by H
 
 @section('script')
 <script>
+var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
 $(function() {
 
     $submitButton =$('#btn-shorten');
@@ -93,6 +94,7 @@ $(function() {
             },
             success: function (data) {
                 $submitButton.button('reset');
+                $submitButton.attr('disabled', true);
                 $inputShortenUrl
                     .val(data.url)
                     .tooltip('show')
@@ -104,6 +106,19 @@ $(function() {
     $("input[type='url']").on('focus', function($e)
     {
         $(this).select();
+    });
+
+    // Check url on type
+    $inputUrl.on('keyup',function($e)
+    {
+        url = $(this).val();
+        if (regex.test(url))
+        {
+            $submitButton.removeAttr('disabled');
+        } else {
+            $submitButton.attr('disabled', true)
+        }
+
     });
 });
 </script>

@@ -60,25 +60,17 @@ class Str extends \Illuminate\Support\Str {
     }
 
     /**
-     * Generate an decoded url
+     * @Return all links from given string (maybe even a URL itself)
      *
-     * @param $link
-     * @return string
+     * @param string $string
+     * @return array
      */
-    public static function encodeUrl($link)
-    {
-        #TODO: Write test
-        $link = parse_url($link);
+    public static function getUrls($string) {
 
-        $encodedLink = $link['scheme'] . "://" . $link['host'];
-
-        $encodedLink .= (isset($link['path'])) ? $link['path'] : '';
-
-        $encodedLink .= (isset($link['query'])) ? urlencode($link['query']) : '';
-
-        $encodedLink .= (isset($link['fragment'])) ? '#'.$link['fragment'] : '';
-
-        return $encodedLink;
+        $regex = '/https?\:\/\/[^\" ]+/i';
+        preg_match_all($regex, $string, $matches);
+        //return (array_reverse($matches[0]));
+        return ($matches[0]);
     }
 
 }

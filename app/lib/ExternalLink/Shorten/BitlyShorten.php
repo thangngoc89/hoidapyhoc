@@ -45,9 +45,29 @@ class BitlyShorten implements BaseShorten
      */
     private function getShortenLinkFromServer($link)
     {
+        if ( ! $this->checkUrl($link) )
+            return $link;
+
         $response = $this->bitly->shorten(array("longUrl" => $link));
 
         $shortenLink = $response['url'];
         return $shortenLink;
+    }
+
+    /**
+     * Check if this link is already an bit.ly link
+     *
+     * @param $link
+     */
+    private function checkUrl($link)
+    {
+        $parseLink = parse_url($link);
+        $host = $parseLink['host'];
+        $knownHost = ['yhoc.co','bit.ly','bitly.com','j.mp'];
+
+        if ( in_array($host, $knownHost) )
+            return false;
+
+        return true;
     }
 }

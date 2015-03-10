@@ -43,6 +43,7 @@ Rút gọn link, tạo link cực ngắn với tên miền yhoc.co :: Power by H
         <div class="panel panel-default registration">
             <div class="panel-body">
                 <fieldset>
+                    <h3 class="signup-subheading">Rút gọn link:</h3>
                     <div class="form-group row">
                         <div class="input-group col-md-8 col-md-offset-2">
                               <input type="url" class="form-control" id="input-url" placeholder="Nhập link cần rút gọn" name="link" required>
@@ -60,7 +61,29 @@ Rút gọn link, tạo link cực ngắn với tên miền yhoc.co :: Power by H
                 </fieldset>
             </div>
         </div>
+        {!! Form::close() !!}
+
+        {!! Form::open(['class' => 'col-md-8 col-md-offset-2', 'route' => 'api.v2.ultility.link.shorten.paragraph', 'id' => 'form-paragraph']) !!}
+        <div class="panel panel-default registration">
+            <div class="panel-body">
+                <fieldset>
+                    <h3 class="signup-subheading">Rút gọn link trong đoạn văn:</h3>
+                    <div class="form-group row">
+                        <div class="col-md-8 col-md-offset-2">
+                              <textarea class="form-control" id="input-paragraph" rows="10"  placeholder="Nhập văn bản chứa link cần rút gọn" name="paragraph" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="input-group col-md-8 col-md-offset-2">
+                        <button class="btn btn-primary pull-right" type="submit" id="btn-shorten-paragraph" data-loading="Đang xử lí">
+                            <i class="fa fa-arrow-right"></i> <span>Rút gọn</span></button>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
        {!! Form::close() !!}
+
+
         </div>
     </div>
 </main>
@@ -68,8 +91,10 @@ Rút gọn link, tạo link cực ngắn với tên miền yhoc.co :: Power by H
 
 @section('script')
 <script>
-var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
 $(function() {
+
+    // Link validate regex
+    var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
 
     $submitButton =$('#btn-shorten');
     $inputShortenUrl = $("#input-shorten-url");
@@ -96,7 +121,7 @@ $(function() {
                 $submitButton.button('reset');
                 $submitButton.attr('disabled', true);
                 $inputShortenUrl
-                    .val(data.url)
+                    .val(data.data.url)
                     .tooltip('show')
                     .select();
             }
@@ -120,6 +145,36 @@ $(function() {
         }
 
     });
+
+    // Paragraph shortener
+    $inputParagraph = $("#input-paragraph");
+    $submitParagraph = $("#btn-shorten-paragraph");
+
+    $('#form-paragraph').on('submit', function($e)
+        {
+            $e.preventDefault();
+
+            url = $(this).attr('action');
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: url,
+                data: {'paragraph' : $inputParagraph.val() },
+                beforeSend: function(){
+                    $submitParagraph.button('loading');
+                },
+                error: function (data) {
+                    $submitParagraph.button('reset');
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                },
+                success: function (data) {
+                    $submitParagraph.button('reset');
+                    $inputParagraph.val(data.data.paragraph).select();
+                }
+            });
+        });
 });
+
+
 </script>
 @endsection

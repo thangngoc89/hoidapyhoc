@@ -59,6 +59,18 @@ class Str extends \Illuminate\Support\Str {
         return $icons[rand(0,$iconsLength-1)];
     }
 
+    /**
+     * @Return all links from given string (maybe even a URL itself)
+     *
+     * @param string $string
+     * @return array
+     */
+    public static function getUrls($string) {
 
+        $regex = '/https?\:\/\/[^\" ]+/i';
+        preg_match_all($regex, $string, $matches);
+        //return (array_reverse($matches[0]));
+        return ($matches[0]);
+    }
 
-} 
+}

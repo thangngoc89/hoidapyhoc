@@ -77,6 +77,15 @@ Route::group(array('prefix' => 'video'), function()
 });
 
 /** ------------------------------------------
+ *  External Link Group
+ *  ------------------------------------------
+ */
+Route::group(array('prefix' => 'link'), function()
+{
+    Route::get('/', ['uses' => 'Web\ExternalLinkController@index', 'as' => 'link.index']);
+});
+
+/** ------------------------------------------
  *  API V2 Group
  *  ------------------------------------------
  */
@@ -138,6 +147,26 @@ Route::group(['prefix' => 'api/v2', 'before' => 'throttle:15,1'], function()
     Route::resource('videos','API\VideoV2Controller',[
         'only' => ['index','store','show','update','destroy']
     ]);
+
+    /** ------------------------------------------
+     *  Utilities
+     *  ------------------------------------------
+     */
+
+    Route::group(array('prefix' => 'utility'), function()
+    {
+        Route::post('link/shorten', [
+            'uses' => 'API\Utility\ExternalLinkController@shorten',
+            'as' => 'api.v2.ultility.link.shorten'
+        ]);
+
+        Route::post('link/shorten/paragraph', [
+            'uses' => 'API\Utility\ExternalLinkController@paragraphShorten',
+            'as' => 'api.v2.ultility.link.shorten.paragraph'
+        ]);
+
+//        Route::get('link/unshorten', ['uses' => 'API\Utility\LinkController@unshorten', 'as' => 'api.v2.ultility.link.unshorten']);
+    });
 
 });
 

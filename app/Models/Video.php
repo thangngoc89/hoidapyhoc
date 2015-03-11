@@ -33,6 +33,9 @@ class Video extends Model {
 
         static::saving(function ($video) {
             $video->slug = Str::slug(trim($video->title));
+
+            if ( ! $video->user_id )
+                $video->user_id = 3;
         });
 
         // TODO: Delete all tags in hard delete

@@ -21,6 +21,8 @@ class Crawler
     public function setLink($link)
     {
         $this->link = $link;
+
+        return $this;
     }
 
 }

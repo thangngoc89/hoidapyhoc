@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Quiz\Console\Commands\Crawlers\MedicalVideosCrawlerConsole;
 
 class Kernel extends ConsoleKernel {
 
@@ -12,6 +13,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'Quiz\Console\Commands\Inspire',
+        MedicalVideosCrawlerConsole::class,
 	];
 
 	/**

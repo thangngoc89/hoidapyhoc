@@ -24,5 +24,13 @@ return [
             "link-2","profile-1","movie-play-1","magnifying-glass","setting-gears-1","loop-3","box-3","clip-2",
             "phone-3","plane-paper-2","clipboard-1","folder-share-1","wrench","window-3","database","beaker-1",
             "microscope","cards","hand-like-1","hand-like-1-1"],
+    ],
+
+    'crawler' => [
+        'importIO' => [
+            'med_vid_base_url'    => 'http://www.medicalvideos.org/',
+            'med_vid_single_data' => '693c3dc8-bdd9-4d88-84cd-e0cdbaa8f30d',
+            'med_vid_index_data' => '087d429b-55dc-4236-b2c1-6a25f7bd4482',
+        ]
     ]
 ];

@@ -30,8 +30,28 @@ class MedVidCrawler extends ImportIOCrawler
 //                echo $e->getResponse() . "\n";
 //            }
 //        }
+        $result = $this->setPostBody()->set($dataSetId)->get();
 
-        return $this->setPostBody()->set($dataSetId)->get();
+        return $result;
+    }
+
+    /**
+     * Cache execute function for testing purpose only
+     *
+     * @return array
+     */
+    public function executeWithCache()
+    {
+        $key = md5( $this->getLink() . $this->dataSetId );
+
+        if (\Cache::has($key))
+            return \Cache::get($key);
+
+        $result = $this->execute();
+
+        \Cache::forever($key, $result);
+
+        return $result;
     }
 
     public function setPostBody()
@@ -59,6 +79,8 @@ class MedVidCrawler extends ImportIOCrawler
     public function setDataSetId($dataSetId)
     {
         $this->dataSetId = $dataSetId;
+
+        return $this;
     }
 
 }

@@ -70,6 +70,8 @@ class MedicalVideosCrawlerConsole extends Command {
 
             $this->info('Crawled page ' . $i);
 
+            $i++;
+
         } while ( $this->parseResult( $results ) );
 
         $this->info('All links are ready for be crawl. Remember to turn on queue');

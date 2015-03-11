@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "baca5968c51f657f8ae2f3a2e9823be7",
+    "hash": "c165479ef550f52e35e0f416ee416fe2",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "2.7.20",
+            "version": "2.7.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2c9d93fbe680f64a84f5877209904f414d5cf92f"
+                "reference": "9dc3bb6dd6e16a7ed2f6fab73c2ee385145e26c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2c9d93fbe680f64a84f5877209904f414d5cf92f",
-                "reference": "2c9d93fbe680f64a84f5877209904f414d5cf92f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9dc3bb6dd6e16a7ed2f6fab73c2ee385145e26c0",
+                "reference": "9dc3bb6dd6e16a7ed2f6fab73c2ee385145e26c0",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2015-02-24 00:04:06"
+            "time": "2015-03-05 00:07:56"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -621,12 +621,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "cc7e4fefb98b90cef783daf73afcc0d8b6a05653"
+                "reference": "6b6143ba16e5f17242835910173c033a8f73f845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/cc7e4fefb98b90cef783daf73afcc0d8b6a05653",
-                "reference": "cc7e4fefb98b90cef783daf73afcc0d8b6a05653",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/6b6143ba16e5f17242835910173c033a8f73f845",
+                "reference": "6b6143ba16e5f17242835910173c033a8f73f845",
                 "shasum": ""
             },
             "require": {
@@ -685,7 +685,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2015-02-26 10:47:54"
+            "time": "2015-03-05 18:32:56"
         },
         {
             "name": "doctrine/inflector",
@@ -870,16 +870,16 @@
         },
         {
             "name": "graham-campbell/htmlmin",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Laravel-HTMLMin.git",
-                "reference": "e70fa06bb71928a41977343a75cfa021e210f576"
+                "reference": "de12b55cb2449824e102a5dd165289e34a9147e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-HTMLMin/zipball/e70fa06bb71928a41977343a75cfa021e210f576",
-                "reference": "e70fa06bb71928a41977343a75cfa021e210f576",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-HTMLMin/zipball/de12b55cb2449824e102a5dd165289e34a9147e1",
+                "reference": "de12b55cb2449824e102a5dd165289e34a9147e1",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +929,7 @@
                 "laravel",
                 "minifier"
             ],
-            "time": "2015-02-05 18:31:04"
+            "time": "2015-03-10 19:45:07"
         },
         {
             "name": "graham-campbell/throttle",
@@ -1344,12 +1344,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "68b0f68e06d9399fba8ca45bad1e9816c057774e"
+                "reference": "572806fd083b622dd430d76c34564459596fef2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/68b0f68e06d9399fba8ca45bad1e9816c057774e",
-                "reference": "68b0f68e06d9399fba8ca45bad1e9816c057774e",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/572806fd083b622dd430d76c34564459596fef2a",
+                "reference": "572806fd083b622dd430d76c34564459596fef2a",
                 "shasum": ""
             },
             "require": {
@@ -1392,7 +1392,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2015-02-20 15:44:29"
+            "time": "2015-03-09 13:03:15"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1438,16 +1438,16 @@
         },
         {
             "name": "iron-io/iron_core",
-            "version": "1.0.0",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iron-io/iron_core_php.git",
-                "reference": "650565e8ef855c53e6a9a3099fb22b76778a81a8"
+                "reference": "d5afdccb6aea2ce7c71cf9eedabc81dc3771af19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iron-io/iron_core_php/zipball/650565e8ef855c53e6a9a3099fb22b76778a81a8",
-                "reference": "650565e8ef855c53e6a9a3099fb22b76778a81a8",
+                "url": "https://api.github.com/repos/iron-io/iron_core_php/zipball/d5afdccb6aea2ce7c71cf9eedabc81dc3771af19",
+                "reference": "d5afdccb6aea2ce7c71cf9eedabc81dc3771af19",
                 "shasum": ""
             },
             "require": {
@@ -1455,9 +1455,9 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "IronCore\\": "src/"
-                }
+                "classmap": [
+                    "IronCore.class.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1475,10 +1475,6 @@
                     "email": "support@iron.io",
                     "homepage": "http://iron.io",
                     "role": "Developer"
-                },
-                {
-                    "name": "Tino Ehrich",
-                    "email": "tino@bigpun.me"
                 }
             ],
             "description": "Collection of common functions for all iron.io client libraries",
@@ -1487,31 +1483,31 @@
                 "iron",
                 "iron_core"
             ],
-            "time": "2015-02-12 19:54:09"
+            "time": "2014-11-11 11:18:17"
         },
         {
             "name": "iron-io/iron_mq",
-            "version": "dev-master",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iron-io/iron_mq_php.git",
-                "reference": "f36ce9a3bcb68af9c0958264bb91c3c758f98a0f"
+                "reference": "90e796570f61b6e63b44296d7300747c51833b92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iron-io/iron_mq_php/zipball/f36ce9a3bcb68af9c0958264bb91c3c758f98a0f",
-                "reference": "f36ce9a3bcb68af9c0958264bb91c3c758f98a0f",
+                "url": "https://api.github.com/repos/iron-io/iron_mq_php/zipball/90e796570f61b6e63b44296d7300747c51833b92",
+                "reference": "90e796570f61b6e63b44296d7300747c51833b92",
                 "shasum": ""
             },
             "require": {
-                "iron-io/iron_core": "1.*",
+                "iron-io/iron_core": "0.*",
                 "php": ">=5.2.0"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "IronMQ\\": "src/"
-                }
+                "files": [
+                    "IronMQ.class.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1523,10 +1519,6 @@
                     "email": "alexander@iron.io",
                     "homepage": "http://iron.io",
                     "role": "Developer"
-                },
-                {
-                    "name": "Tino Ehrich",
-                    "email": "tino@bigpun.me"
                 }
             ],
             "description": "Client binding for IronMQ (hosted message queue)",
@@ -1536,7 +1528,7 @@
                 "iron",
                 "iron_mq"
             ],
-            "time": "2015-02-14 16:45:07"
+            "time": "2015-02-12 15:38:54"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1778,16 +1770,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.0.13",
+            "version": "v5.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c263240daa383e6b9bd979600dc61dcb2c436d53"
+                "reference": "f61e0098151c73db9068a6be6d86bfc60b01de25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c263240daa383e6b9bd979600dc61dcb2c436d53",
-                "reference": "c263240daa383e6b9bd979600dc61dcb2c436d53",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f61e0098151c73db9068a6be6d86bfc60b01de25",
+                "reference": "f61e0098151c73db9068a6be6d86bfc60b01de25",
                 "shasum": ""
             },
             "require": {
@@ -1899,7 +1891,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-02-27 00:32:38"
+            "time": "2015-03-07 03:18:10"
         },
         {
             "name": "laravel/socialite",
@@ -1957,16 +1949,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "efa1d394bb45b0984a863854c608c607b9c2a9a4"
+                "reference": "51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/efa1d394bb45b0984a863854c608c607b9c2a9a4",
-                "reference": "efa1d394bb45b0984a863854c608c607b9c2a9a4",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a",
+                "reference": "51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a",
                 "shasum": ""
             },
             "require": {
@@ -1978,21 +1970,21 @@
                 "mockery/mockery": "~0.9",
                 "phpspec/phpspec": "~2.0.0",
                 "phpspec/prophecy-phpunit": "~1.0",
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "~4.1",
                 "predis/predis": "~1.0",
                 "tedivm/stash": "~0.12.0"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
-                "league/flysystem-aws-s3-v2": "Use S3 storage with AWS SDK v2",
-                "league/flysystem-aws-s3-v3": "Use S3 storage with AWS SDK v3",
+                "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+                "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
                 "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
                 "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
                 "league/flysystem-copy": "Allows you to use Copy.com storage",
-                "league/flysystem-dropbox": "Use Dropbox storage",
+                "league/flysystem-dropbox": "Allows you to use Dropbox storage",
                 "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
                 "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
-                "league/flysystem-sftp": "Allows SFTP server storage via phpseclib",
+                "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
                 "league/flysystem-webdav": "Allows you to use WebDAV storage",
                 "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
                 "predis/predis": "Allows you to use Predis for caching"
@@ -2036,7 +2028,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2015-01-23 09:43:34"
+            "time": "2015-03-10 11:04:14"
         },
         {
             "name": "league/flysystem-aws-s3-v2",
@@ -2091,12 +2083,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/fractal.git",
-                "reference": "d1fb35a877ef9bacb08430c0e45b785b068e3f24"
+                "reference": "033e8cfdfa69ecdb9bf6b262c7e8c3c9f3e3d10c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/d1fb35a877ef9bacb08430c0e45b785b068e3f24",
-                "reference": "d1fb35a877ef9bacb08430c0e45b785b068e3f24",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/033e8cfdfa69ecdb9bf6b262c7e8c3c9f3e3d10c",
+                "reference": "033e8cfdfa69ecdb9bf6b262c7e8c3c9f3e3d10c",
                 "shasum": ""
             },
             "require": {
@@ -2146,7 +2138,7 @@
                 "league",
                 "rest"
             ],
-            "time": "2015-02-26 21:20:14"
+            "time": "2015-03-06 20:01:44"
         },
         {
             "name": "league/oauth1-client",
@@ -2213,16 +2205,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f"
+                "reference": "c41c218e239b50446fd883acb1ecfd4b770caeae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
-                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c41c218e239b50446fd883acb1ecfd4b770caeae",
+                "reference": "c41c218e239b50446fd883acb1ecfd4b770caeae",
                 "shasum": ""
             },
             "require": {
@@ -2239,6 +2231,7 @@
                 "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
+                "swiftmailer/swiftmailer": "~5.3",
                 "videlalvaro/php-amqplib": "~2.4"
             },
             "suggest": {
@@ -2255,7 +2248,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12.x-dev"
+                    "dev-master": "1.13.x-dev"
                 }
             },
             "autoload": {
@@ -2281,25 +2274,31 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-12-29 21:29:35"
+            "time": "2015-03-05 01:12:12"
         },
         {
             "name": "mrclay/minify",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mrclay/minify.git",
-                "reference": "d245bca4987dec197d1e6d7dc117614b60ff7494"
+                "reference": "3c11ba8232a2155a1a29552aafc528be5fb0a662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mrclay/minify/zipball/d245bca4987dec197d1e6d7dc117614b60ff7494",
-                "reference": "d245bca4987dec197d1e6d7dc117614b60ff7494",
+                "url": "https://api.github.com/repos/mrclay/minify/zipball/3c11ba8232a2155a1a29552aafc528be5fb0a662",
+                "reference": "3c11ba8232a2155a1a29552aafc528be5fb0a662",
                 "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
                 "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "tubalmartin/cssmin": "~2.4.8"
+            },
+            "suggest": {
+                "tubalmartin/cssmin": "Support minify with CSSMin (YUI PHP port)"
             },
             "type": "library",
             "autoload": {
@@ -2313,15 +2312,14 @@
             ],
             "authors": [
                 {
-                    "name": "Steve Clay",
+                    "name": "Stephen Clay",
                     "email": "steve@mrclay.org",
-                    "homepage": "http://www.mrclay.org/",
                     "role": "Developer"
                 }
             ],
             "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
             "homepage": "http://code.google.com/p/minify/",
-            "time": "2014-03-12 12:54:23"
+            "time": "2014-10-30 22:58:02"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2369,16 +2367,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.14.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e"
+                "reference": "9b7665041754eaa9bb2622349bc9adbc1cf61cb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
-                "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/9b7665041754eaa9bb2622349bc9adbc1cf61cb8",
+                "reference": "9b7665041754eaa9bb2622349bc9adbc1cf61cb8",
                 "shasum": ""
             },
             "require": {
@@ -2405,13 +2403,13 @@
                 }
             ],
             "description": "A simple API extension for DateTime.",
-            "homepage": "https://github.com/briannesbitt/Carbon",
+            "homepage": "http://carbon.nesbot.com",
             "keywords": [
                 "date",
                 "datetime",
                 "time"
             ],
-            "time": "2015-02-06 05:07:29"
+            "time": "2015-03-04 04:50:11"
         },
         {
             "name": "nicolaslopezj/searchable",
@@ -2419,12 +2417,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicolaslopezj/searchable.git",
-                "reference": "b746779c42fdf32fc3060ec127ea0355057ead7c"
+                "reference": "88997b35c4ba727c9f6f7b7251bba32468a73619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicolaslopezj/searchable/zipball/b746779c42fdf32fc3060ec127ea0355057ead7c",
-                "reference": "b746779c42fdf32fc3060ec127ea0355057ead7c",
+                "url": "https://api.github.com/repos/nicolaslopezj/searchable/zipball/88997b35c4ba727c9f6f7b7251bba32468a73619",
+                "reference": "88997b35c4ba727c9f6f7b7251bba32468a73619",
                 "shasum": ""
             },
             "require": {
@@ -2456,7 +2454,7 @@
                 "search",
                 "searchable"
             ],
-            "time": "2015-02-07 21:32:58"
+            "time": "2015-03-07 14:17:11"
         },
         {
             "name": "nikic/php-parser",
@@ -2502,117 +2500,6 @@
                 "php"
             ],
             "time": "2015-01-18 11:29:59"
-        },
-        {
-            "name": "orchestra/database",
-            "version": "v3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/orchestral/database.git",
-                "reference": "53a888207ea12e2295f916020ac58eea05c9182e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/database/zipball/53a888207ea12e2295f916020ac58eea05c9182e",
-                "reference": "53a888207ea12e2295f916020ac58eea05c9182e",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "5.0.*",
-                "illuminate/database": "5.0.*",
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Orchestra\\Database\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mior Muhammad Zaki",
-                    "email": "crynobone@gmail.com",
-                    "homepage": "https://github.com/crynobone"
-                },
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com",
-                    "homepage": "https://github.com/taylorotwell"
-                }
-            ],
-            "description": "Database Component for Orchestra Platform",
-            "time": "2015-02-13 16:01:38"
-        },
-        {
-            "name": "orchestra/testbench",
-            "version": "v3.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/orchestral/testbench.git",
-                "reference": "8d0927a7f9b522d2af1e3d228f2f002eb2c122f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/8d0927a7f9b522d2af1e3d228f2f002eb2c122f2",
-                "reference": "8d0927a7f9b522d2af1e3d228f2f002eb2c122f2",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "5.0.*",
-                "orchestra/database": "3.0.*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "behat/behat": "~2.5",
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "behat/behat": "Allow to use Behat for testing your Laravel Application/Package",
-                "phpunit/phpunit": "Allow to use PHPUnit for testing your Laravel Application/Package"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Orchestra\\Testbench\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mior Muhammad Zaki",
-                    "email": "crynobone@gmail.com",
-                    "homepage": "https://github.com/crynobone"
-                }
-            ],
-            "description": "Laravel Package Unit Testing Helper",
-            "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
-            "keywords": [
-                "BDD",
-                "TDD",
-                "laravel",
-                "orchestra-platform",
-                "orchestral",
-                "testing"
-            ],
-            "time": "2015-02-26 16:29:51"
         },
         {
             "name": "predis/predis",
@@ -2871,12 +2758,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jarektkaczyk/revisionable.git",
-                "reference": "b71c2c90fc96ca1fdab6bf9ceaebe617b413a2bc"
+                "reference": "fb772b743b22c46466a7b8db45cf71eb11c48f47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jarektkaczyk/revisionable/zipball/b71c2c90fc96ca1fdab6bf9ceaebe617b413a2bc",
-                "reference": "b71c2c90fc96ca1fdab6bf9ceaebe617b413a2bc",
+                "url": "https://api.github.com/repos/jarektkaczyk/revisionable/zipball/fb772b743b22c46466a7b8db45cf71eb11c48f47",
+                "reference": "fb772b743b22c46466a7b8db45cf71eb11c48f47",
                 "shasum": ""
             },
             "require": {
@@ -2913,7 +2800,7 @@
                 }
             ],
             "description": "Nice and easy way to handle revisions of your db.",
-            "time": "2015-02-27 11:48:59"
+            "time": "2015-03-04 12:20:06"
         },
         {
             "name": "spatie/laravel-backup",
@@ -2921,23 +2808,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/freekmurze/laravel-backup.git",
-                "reference": "2b813fa499a26c6b37b8472830211761ed025b36"
+                "reference": "6b555ff4d1483afc618cea27e19147a8730a3440"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/freekmurze/laravel-backup/zipball/2b813fa499a26c6b37b8472830211761ed025b36",
-                "reference": "2b813fa499a26c6b37b8472830211761ed025b36",
+                "url": "https://api.github.com/repos/freekmurze/laravel-backup/zipball/6b555ff4d1483afc618cea27e19147a8730a3440",
+                "reference": "6b555ff4d1483afc618cea27e19147a8730a3440",
                 "shasum": ""
             },
             "require": {
                 "illuminate/console": "5.*",
                 "illuminate/support": "5.*",
-                "orchestra/testbench": "~3.0",
-                "php": ">=5.4.0"
+                "php": ">=5.4.0",
+                "symfony/finder": "~2.6"
             },
             "require-dev": {
                 "laravel/framework": "5.*",
                 "mockery/mockery": "0.9.*",
+                "orchestra/testbench": "~3.0",
                 "phpunit/phpunit": "4.*",
                 "scrutinizer/ocular": "~1.1"
             },
@@ -2969,7 +2857,7 @@
                 "mysql",
                 "spatie"
             ],
-            "time": "2015-02-26 16:31:07"
+            "time": "2015-03-06 11:14:30"
         },
         {
             "name": "sunra/php-simple-html-dom-parser",
@@ -3815,12 +3703,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Zizaco/entrust.git",
-                "reference": "2996663200c126ec7b6e80e6192a388571c63438"
+                "reference": "83657286c328f25faf811c5a08c1d4ae0b7cb11a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/2996663200c126ec7b6e80e6192a388571c63438",
-                "reference": "2996663200c126ec7b6e80e6192a388571c63438",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/83657286c328f25faf811c5a08c1d4ae0b7cb11a",
+                "reference": "83657286c328f25faf811c5a08c1d4ae0b7cb11a",
                 "shasum": ""
             },
             "require": {
@@ -3874,7 +3762,7 @@
                 "permission",
                 "roles"
             ],
-            "time": "2015-02-11 15:40:04"
+            "time": "2015-03-11 11:52:51"
         }
     ],
     "packages-dev": [
@@ -3884,12 +3772,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "7bdf8acf3b955f4fcf922e74abdfdec370369196"
+                "reference": "77be5170f3777e2e899ec98105ce5686cd4aa63b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/7bdf8acf3b955f4fcf922e74abdfdec370369196",
-                "reference": "7bdf8acf3b955f4fcf922e74abdfdec370369196",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/77be5170f3777e2e899ec98105ce5686cd4aa63b",
+                "reference": "77be5170f3777e2e899ec98105ce5686cd4aa63b",
                 "shasum": ""
             },
             "require": {
@@ -3930,7 +3818,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2015-02-19 10:26:39"
+            "time": "2015-03-07 15:15:23"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -5239,7 +5127,6 @@
         "zizaco/entrust": 20,
         "davejamesmiller/laravel-breadcrumbs": 20,
         "graham-campbell/throttle": 20,
-        "iron-io/iron_mq": 20,
         "barryvdh/laravel-debugbar": 20,
         "barryvdh/laravel-ide-helper": 20,
         "filp/whoops": 20

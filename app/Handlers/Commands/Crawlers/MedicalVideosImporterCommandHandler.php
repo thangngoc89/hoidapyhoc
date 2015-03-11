@@ -145,7 +145,7 @@ class MedicalVideosImporterCommandHandler {
         $video = $this->video->create($formatedData);
 
         if ($tags = $formatedData['tags']) {
-            $video->tag($tags);
+            $video->retag($tags);
         }
     }
 

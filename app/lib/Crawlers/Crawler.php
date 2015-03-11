@@ -1,5 +1,5 @@
 <?php
-namespace Quiz\lib\Crawler;
+namespace Quiz\lib\Crawlers;
 
 class Crawler
 {

@@ -1,8 +1,8 @@
 <?php
-namespace Quiz\lib\Crawler\ImportIO;
+namespace Quiz\lib\Crawlers\ImportIO;
 
 use GuzzleHttp\Client;
-use Quiz\lib\Crawler\Crawler;
+use Quiz\lib\Crawlers\Crawler;
 
 abstract class ImportIOCrawler extends Crawler
 {

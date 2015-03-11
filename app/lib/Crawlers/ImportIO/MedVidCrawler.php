@@ -1,5 +1,5 @@
 <?php
-namespace Quiz\lib\Crawler\ImportIO;
+namespace Quiz\lib\Crawlers\ImportIO;
 
 use GuzzleHttp\Exception\RequestException;
 

@@ -57,6 +57,10 @@ return [
 
     'bitly' => [
         'access_token' => env('BITLY_ACCESS_TOKEN')
-    ]
+    ],
+
+    'importIo' => [
+        'api_key' => env('IMPORT_IO_API_KEY'),
+    ],
 
 ];

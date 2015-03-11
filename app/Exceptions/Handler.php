@@ -57,10 +57,14 @@ class Handler extends ExceptionHandler {
             return response()->json($error, 500);
         }
 
-        if ($e instanceof \GuzzleHttp\Exception\ClientException)
-            return redirect('/')->with('error','Đã có lỗi xảy ra trong quá trình đăng nhập
+        if (env('APP_ENV') != 'local')
+        {
+            if ($e instanceof \GuzzleHttp\Exception\ClientException)
+                return redirect('/')->with('error','Đã có lỗi xảy ra trong quá trình đăng nhập
                                                 <br>Hãy đồng ý truy cập của Hỏi Đáp Y Học tới tài khoản của bạn
                                                 <br>hoặc chọn phương thức đăng nhập khác');
+        }
+
 
 		if ($this->isHttpException($e))
 		{

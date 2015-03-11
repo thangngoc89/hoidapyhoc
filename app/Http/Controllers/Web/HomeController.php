@@ -12,6 +12,7 @@ use Quiz\Models\Testimonial;
 use Quiz\Models\Upload;
 use Quiz\Models\Video;
 use Quiz\Services\Leecher\CSYK\GetQuiz;
+use Quiz\lib\Crawler\ImporterIO\MedVidCrawler;
 
 class HomeController extends Controller {
 
@@ -99,9 +100,11 @@ class HomeController extends Controller {
         return $get->get($link)->parse();
     }
 
-    public function cleanCache()
+    public function cleanCache(MedVidCrawler $crawler)
     {
-        \Log::info('khoa');
+        $result = $crawler->excute();
+
+        return $result;
     }
 
 }

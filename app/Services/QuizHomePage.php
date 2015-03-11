@@ -98,8 +98,11 @@ class QuizHomePage {
     {
         $exams = $this->result;
 
-        // Appends pagination
-        $exams->appends($this->request->except('page'));
+        if ( ! is_null($exams) )
+        {
+            // Appends pagination
+            $exams->appends($this->request->except('page'));
+        }
 
         $name = $this->name;
 

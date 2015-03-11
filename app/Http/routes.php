@@ -90,7 +90,7 @@ Route::group(array('prefix' => 'link'), function()
  *  ------------------------------------------
  */
 
-Route::group(['prefix' => 'api/v2', 'before' => 'throttle:15,1'], function()
+Route::group(['prefix' => 'api/v2', 'before' => 'throttle:40,1'], function()
 {
     /** ------------------------------------------
      *  Exams

@@ -4,8 +4,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laracasts\Presenter\PresentableTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use Quiz\lib\ExternalLink\Shorten\BitlyShorten;
-use Quiz\lib\ExternalLink\Shorten\ShortenInterface;
 use Quiz\lib\Helpers\LocalizationDateTrait;
 use Quiz\lib\Tagging\TaggableTrait;
 use Quiz\lib\Helpers\Str;

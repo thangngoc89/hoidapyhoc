@@ -5,7 +5,6 @@
     migrate
     optimize
     assets
-    queue
 @endmacro
 
 @task('git')

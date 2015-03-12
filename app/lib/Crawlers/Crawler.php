@@ -12,6 +12,10 @@ class Crawler
      */
     public function getLink()
     {
+        if ( ! $this->link )
+        {
+            throw new \BadMethodCallException('Link can not be null');
+        }
         return $this->link;
     }
 

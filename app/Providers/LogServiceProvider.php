@@ -52,7 +52,7 @@ class LogServiceProvider extends ServiceProvider {
                 config('services.slack.channel')
             );
             $monolog->pushHandler($slackHandler);
-            $slackHandler->setLevel(100);
+            $slackHandler->setLevel(300);
             $slackHandler->setFormatter(new \Monolog\Formatter\LineFormatter());
     }
 

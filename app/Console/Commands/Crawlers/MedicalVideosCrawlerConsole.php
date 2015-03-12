@@ -66,7 +66,12 @@ class MedicalVideosCrawlerConsole extends Command {
 
         do {
 
-            $results = $this->crawler->setLink($baseLink.$i)->executeWithCache();
+            if ( env('APP_DEBUG') == 'local')
+            {
+                $results = $this->crawler->setLink($baseLink.$i)->executeWithCache();
+            } else {
+                $results = $this->crawler->setLink($baseLink.$i)->execute();
+            }
 
             $this->info('Crawled page ' . $i);
 

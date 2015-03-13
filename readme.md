@@ -1,8 +1,3 @@
 # Hỏi Đáp Y Học System
 
-
-###Cache List :
-
-'CategoryListDesc' => CategoryListDESC => flush when alter category list
-
-'userDoneList'.$userId => tag(history,user.$userId)
+This repo is for my website: http://hoidapyhoc.com

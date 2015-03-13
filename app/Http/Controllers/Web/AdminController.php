@@ -25,17 +25,6 @@ class AdminController extends Controller {
 	}
 
     /**
-     * Receive Github deployment signal
-     *
-     * @param Request $request
-     * @return mixed
-     */
-    public function deploy(Request $request)
-    {
-        return $this->dispatch(new GitDeploy($request));
-    }
-
-    /**
      * Let admin to impersonate a valid user account
      *
      * @param $user

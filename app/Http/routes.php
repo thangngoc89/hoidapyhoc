@@ -36,7 +36,6 @@ Route::group(array('prefix' => 'admin'), function()
 {
     Route::get('/','Web\AdminController@index');
     Route::get('impersonate/{users}','Web\AdminController@impersonate');
-    Route::post('deploy','Web\AdminController@deploy');
 });
 
 /** ------------------------------------------

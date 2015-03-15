@@ -17,7 +17,7 @@ abstract class AbstractBaseDecorator {
     {
         return $this->repo->findBy($column, $value);
     }
-    
+
     public function findOrFail($id)
     {
         return $this->repo->findOrFail($id);

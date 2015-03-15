@@ -115,12 +115,6 @@ class AuthenticateUser {
     {
         $user = $this->user->findUserFromSocialiteData($userData);
 
-        // TODO: Do we really need to check for this step
-        // because createUserAndProfileFromSocialLiteData already checked for it once
-        if (! $user) {
-            $user = $this->user->findBy('email', $userData->email);
-        }
-
         if (! $user) {
             $user = $this->user->createUserAndProfileFromSocialiteData($userData);
 

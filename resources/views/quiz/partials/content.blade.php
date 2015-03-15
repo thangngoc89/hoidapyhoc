@@ -46,3 +46,9 @@
     </div>
 </div>
 @endif
+<div id="comment" class="fb-comments"
+    data-href="{{ \Request::url() }}"
+    data-numposts="10"
+    data-colorscheme="light"
+    data-width="100%">
+</div>

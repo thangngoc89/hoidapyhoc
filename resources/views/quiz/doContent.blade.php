@@ -8,9 +8,9 @@
                  <li role="presentation">
                     <a href="#leaderBoard" aria-controls="leaderBoard" role="tab" data-toggle="tab">
                         <i class="icon-award-4"></i> Bảng điểm</a> </li>
-                 <li role="presentation">
-                    <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
-                        <i class="icon-chat-4"></i> Bình luận</a> </li>
+                 {{--<li role="presentation">--}}
+                    {{--<a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">--}}
+                        {{--<i class="icon-chat-4"></i> Bình luận</a> </li>--}}
 
                  @if ( \Auth::check())
                     @if (\Auth::user()->can('manage_exams') || \Auth::user()->id == $t->user_id )
@@ -35,15 +35,15 @@
         <div role="tabpanel" class="tab-pane fade" id="leaderBoard">
 
         </div>
-        <!-- Facebook Comment -->
-        <div role="tabpanel" class="tab-pane fade" id="comment">
-            <div class="fb-comments"
-                data-href="{{ \Request::url() }}"
-                data-numposts="10"
-                data-colorscheme="light"
-                data-width="100%">
-            </div>
-        </div>
+        {{--<!-- Facebook Comment -->--}}
+        {{--<div role="tabpanel" class="tab-pane fade" id="comment">--}}
+            {{--<div class="fb-comments"--}}
+                {{--data-href="{{ \Request::url() }}"--}}
+                {{--data-numposts="10"--}}
+                {{--data-colorscheme="light"--}}
+                {{--data-width="100%">--}}
+            {{--</div>--}}
+        {{--</div>--}}
     </div>
 </div>
 <div id="quiz-sidebar" class="col-md-4 white">

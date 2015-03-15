@@ -13,7 +13,6 @@ class PullExternalImage {
      */
     public function __construct (HtmlDomParser $parser)
     {
-
         $this->parser = $parser;
     }
 
@@ -48,8 +47,7 @@ class PullExternalImage {
 
     public function save($fileContent, $filename)
     {
-        if (\File::put('uploads/' . $filename, $fileContent))
-        {
+        if (\File::put('uploads/' . $filename, $fileContent)) {
             return true;
         } else {
             return false;

@@ -13,6 +13,11 @@ abstract class AbstractBaseDecorator {
         return $this->repo->getColumnsList($id);
     }
 
+    public function findBy($column, $value)
+    {
+        return $this->repo->findBy($column, $value);
+    }
+    
     public function findOrFail($id)
     {
         return $this->repo->findOrFail($id);

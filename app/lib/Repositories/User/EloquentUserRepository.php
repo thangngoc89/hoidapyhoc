@@ -54,7 +54,7 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
      */
     public function findUserFromSocialiteData($data)
     {
-        if ( $data->email ) {
+        if ($data->email) {
 
             $user = $this->model->whereEmail($data->email)->first();
 

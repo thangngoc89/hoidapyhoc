@@ -33,7 +33,7 @@ class UserV2Controller extends APIController {
         $this->request = $request;
         $this->auth = $auth;
 
-        $this->middleware('admin');
+        $this->middleware('admin', ['except' => ['index'] ]);
     }
 	public function index()
 	{

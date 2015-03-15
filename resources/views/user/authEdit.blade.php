@@ -27,23 +27,31 @@
 
                     <!-- Text input-->
                     <div class="form-group row">
-                        {!! Form::label('username','Tên thành viên',['class' => 'col-md-4 control-label'] ) !!}
-                        <div class="col-md-8">
-                        {!! Form::text('username',$user->username, ['class' => 'form-control input-md',
-                                                        'required','pattern' => '^[A-Za-z0-9]{3,20}$',
-                                                        'title' => 'Tên thành viên từ 3-20 kí tự, chỉ gồm chữ cáo và số'
-                                                        ]) !!}
-
+                        {!! Form::label('username', 'Tên thành viên',[
+                                'class' => 'col-md-4 control-label'
+                            ])
+                        !!}
+                        <div class="col-md-8" id="username">
+                        {!! Form::text('username', $user->username, [
+                                'class' => 'form-control input-md',
+                                'required','pattern' => '^[A-Za-z0-9]{3,20}$',
+                                'title' => 'Tên thành viên từ 3-20 kí tự, chỉ gồm chữ cáo và số'
+                            ])
+                        !!}
+                        <div class="help-block" style="display:none">Tên thành viên này đã có người sử dụng.</div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         {!! Form::label('name','Tên của bạn',['class' => 'col-md-4 control-label'] ) !!}
                         <div class="col-md-8">
-                        {!! Form::text('name',$user->name, ['class' => 'form-control input-md',
-                                                           'required','pattern' => '.{6,}',
-                                                           'title' => 'Tên tối thiểu 6 kí tự'
-                                                           ]) !!}
+                        {!! Form::text('name',$user->name, [
+                                'class' => 'form-control input-md',
+                                'required',
+                                'pattern' => '.{6,}',
+                                'title' => 'Hãy nhập họ tên đề đủ bạn nhé'
+                            ])
+                        !!}
                         </div>
                     </div>
 
@@ -67,7 +75,7 @@
                 </div>
             </div>
         </div>
-       {!! Form::close() !!}
+        {!! Form::close() !!}
 
         </div>
     </div>
@@ -76,4 +84,45 @@
 
 @section('script')
 <script>new WOW().init();</script>
+<script>
+
+$(function() {
+
+    $("input[name='username']").focusout(function(e)
+    {
+        findUsername($(this).val());
+    });
+
+    var findUsername = function(username)
+    {
+        $.ajax({
+            type: 'GET',
+            dataType: "json",
+            url: '/api/v2/users',
+            data: {username: username},
+            success: function (response) {
+                validateUsername(response);
+            }
+        });
+    }
+
+    var validateUsername = function(response)
+    {
+        div = $("div#username");
+        data = response.data;
+        btnSubmit = $("input[type='submit']");
+
+        if ( data.length > 0 )
+        {
+            div.addClass('has-error');
+            div.find('.help-block').fadeIn(200);
+            btnSubmit.prop('disabled','disabled');
+        } else {
+            div.addClass('has-success');
+            div.find('.help-block').fadeOut(200);
+            btnSubmit.removeProp('disabled');
+        }
+    }
+});
+</script>
 @endsection

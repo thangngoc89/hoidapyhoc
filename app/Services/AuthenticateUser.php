@@ -125,6 +125,12 @@ class AuthenticateUser {
         return $user;
     }
 
+    /**
+     * This is a test method for Facebook login flow
+     *
+     * @return \Quiz\Models\User
+     * @throws \Exception
+     */
     public function testFacebookLogin()
     {
         $userData = [

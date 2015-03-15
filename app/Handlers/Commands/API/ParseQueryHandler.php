@@ -49,14 +49,19 @@ class ParseQueryHandler {
 	}
 
 
+    /**
+     * Apply precise where clause on column with given value
+     */
     private function whereClause()
     {
-        foreach ($this->input->all() as $col)
+        foreach ($this->input->all() as $col => $value)
         {
-            if (in_array($col, $this->columnsList))
+            if ( in_array($col, $this->columnsList))
             {
-                if (!empty($col) and $col != 0)
-                    $this->query = $this->query->where($col, '=', $this->input->get($col));
+                if ( ! empty($value) && $value != '0')
+                {
+                    $this->query = $this->query->where($col, '=', $value);
+                }
             }
         }
     }

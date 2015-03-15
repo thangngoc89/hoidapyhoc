@@ -32,7 +32,7 @@ class FillMissingUserInfo {
             return $next($request);
 
         $path = $this->getRequestPath($request);
-        $ignorePaths = ['/files','/build','/_debugbar','/auth/logout'];
+        $ignorePaths = ['/files','/build','/_debugbar','/auth/logout','/api'];
 
         foreach($ignorePaths as $ignorePath)
         {

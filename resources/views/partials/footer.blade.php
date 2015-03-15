@@ -16,17 +16,6 @@
         </div>
 
         <div class="col-md-2">
-            <h5>Nguồn bổ ích</h5>
-            <ul class="zeroed">
-                <li><a href="http://chiaseykhoa.com/">Chia sẽ Y Khoa</a>
-                </li>
-                <li><a href="//www.facebook.com/groups/thithugiaiphau/">Thi thử giải phẫu</a>
-                </li>
-            </ul>
-        </div>
-
-
-        <div class="col-md-2">
             <h5>Thảo luận</h5>
             <ul class="zeroed">
                 <li><a href="//ask.hoidapyhoc.com">Hỏi Đáp Y Học</a>
@@ -72,6 +61,9 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="col-md-2">
+            @include('partials._ads_responsive')
         </div>
     </div>
 

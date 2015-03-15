@@ -70,3 +70,8 @@
         </article>
     </div>
 </div>
+<div class="forum-sidebar-section">
+    <div class="row">
+        @include('partials._ads')
+    </div>
+</div>

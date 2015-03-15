@@ -1,6 +1,5 @@
 @extends('layouts.main')
 
-
 @section('jumbotron')
 <div class="jumbotron">
     <div class="container">

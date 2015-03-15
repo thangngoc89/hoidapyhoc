@@ -54,14 +54,12 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
      */
     public function findUserFromSocialiteData($data)
     {
-        if ( $data->email )
-        {
+        if ( $data->email ) {
+
             $user = $this->model->whereEmail($data->email)->first();
 
-            if ($user)
-            {
-                $this->checkAndCreateProfileOfThisProvider($data, $user);
-
+            if ($user) {
+                $this->createNewProfileIfNotExits($data, $user);
                 return $user;
             }
         }
@@ -69,33 +67,37 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
         $profile = $this->profile->findProfileFromSocialiteData($data);
 
         #TODO: Update new access_token
-        if ( $profile && ! is_null($profile->user) )
+        if ($profile && ! is_null($profile->user)) {
             return $profile->user;
+        }
 
         return false;
     }
 
     /**
+     * Check for user's providers and create if not exits
+     *
      * @param $data
      * @param $user
      */
-    private function checkAndCreateProfileOfThisProvider($data, User $user)
+    private function createNewProfileIfNotExits($data, User $user)
     {
         $profiles = $user->profiles;
 
-        if ( ! is_null($profiles)) {
+
+        if (! is_null($profiles)) {
 
             $providers = $profiles->lists('provider');
 
-            if ( in_array($data->provider, $providers) )
+            if ( in_array($data->provider, $providers) ) {
                 return;
-            else
+            } else {
                 $this->profile->createProfileFromSocialiteData($data, $user);
-
+            }
         } else {
-
+            // If user have no profiles at all
+            // create new profile for the given provider
             $this->profile->createProfileFromSocialiteData($data, $user);
-
         }
 
     }

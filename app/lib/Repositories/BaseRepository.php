@@ -17,6 +17,8 @@ interface BaseRepository {
      */
     public function find($id);
 
+    public function findBy($column, $value);
+
     public function findOrFail($id);
 
     public function firstOrNew($attributes);

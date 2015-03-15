@@ -2,6 +2,11 @@
 
 abstract class AbstractEloquentRepository {
 
+    /*
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $model;
+
     #TODO: Add more keyword here
     protected static $whereKeyword = ['=','between','like','>','<'];
 
@@ -15,11 +20,17 @@ abstract class AbstractEloquentRepository {
         return $this->model->find($id);
     }
 
+    public function findBy($column, $value)
+    {
+        return $this->model->where($column,'=', $value)->first();
+    }
+
     public function findOrFail($id)
     {
         $entity = $this->find($id);
-        if (is_null($entity))
-            return abort(404);
+
+        if (is_null($entity)) return abort(404);
+
         return $entity;
     }
 

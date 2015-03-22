@@ -22,11 +22,9 @@
     echo "Optimize framework"
     php artisan clear-compiled
     php artisan optimize
-
-    php artisan config:clear
+    
     php artisan config:cache
 
-    php artisan route:clear
     php artisan route:cache
 @endtask
 

@@ -8,7 +8,7 @@
 @endmacro
 
 @task('git')
-	cd /home/nginx/hoidapyhoc
+	cd /home/www/hoidapyhoc
 	echo "Pulling file and install repo"
 	git pull origin master
 	composer install

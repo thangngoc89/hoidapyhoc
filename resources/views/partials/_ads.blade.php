@@ -3,8 +3,8 @@
 <!-- hoidapyhoc.336.280 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:336px;height:280px"
-     data-ad-client="ca-pub-7528759790485071"
-     data-ad-slot="9613576941"></ins>
+     data-ad-client="ca-pub-6277028166908599"
+     data-ad-slot="7966627558"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>

@@ -61,7 +61,7 @@ return [
 			'driver'  => 'iron',
 			'host'    => 'mq-aws-us-east-1.iron.io',
 			'token'   => 'OBJKIhRWPvpT4T2WlA1nQpLsbQs',
-			'project' => '5500a852d9ad600009000156',
+			'project' => '552ebdbf82ad590650b90f58',
 			'queue'   => 'general',
 			'encrypt' => true,
 		],
